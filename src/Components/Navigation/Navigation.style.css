@@ -1,0 +1,55 @@
+/* Main navigation container using Flexbox with flexible units */
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2vh 3vw;
+  gap: 5vw;
+}
+
+/* Logo section using Flexbox and flexible units */
+.logos {
+  display: flex;
+  gap: 2vw;
+  font-size: clamp(1.2rem, 1vw, 2.5rem);
+}
+
+.logos a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+.nav-links {
+  display: flex;
+  gap: 4vw;
+  margin-left: auto;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: inherit;
+  font-size: clamp(0.7rem, 1vw, 1.5rem);
+}
+
+@media (max-width: 500px) {
+
+  .logos a{
+    font-size: 12px;
+  }
+  footer {
+    padding: 10px; 
+  }
+
+  ul {
+    font-size: 10px; 
+  }
+
+  ul li {
+    margin-bottom: 8px; 
+  }
+
+  a {
+    font-size: 7px; 
+  }
+}

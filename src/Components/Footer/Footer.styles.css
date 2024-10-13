@@ -1,0 +1,79 @@
+footer {
+  display: flex;
+  justify-content: space-between; /* Distribute the items evenly */
+  padding: 20px;
+  background-color: #ffffff; /* Light background color for the footer */
+  border-top: 1px solid #ffffff; /* Optional border for separation */
+  margin-left: 20%; /* Adjust as needed */
+  margin-right: 20%; /* Add right margin to center the footer */
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none; /* Remove default list styles */
+  font-size: 18px;
+}
+
+ul li {
+  margin-bottom: 10px; /* Space between list items */
+}
+
+ul li:first-child {
+  font-weight: bold; /* Bold for the section titles */
+}
+
+a {
+  text-decoration: none; /* Remove underline from links */
+  color: #6495ED; /* Preferred link color */
+}
+
+a:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+.footer-container{
+    margin-top: 5%;
+}
+
+@media (max-width:500px) {
+
+  footer {
+    /* display: flex;
+    justify-content: space-between;  */
+    padding: 10px;
+    background-color: #ffffff; 
+    border-top: 1px solid #ffffff; 
+    margin-left: 10%; 
+    margin-right: 0;
+  }
+  
+  ul {
+    margin: 0;
+    padding-right: 40px;
+    list-style-type: none; 
+    font-size: 5px;
+  }
+  
+  ul li {
+    margin-bottom: 0px; 
+  }
+  
+  ul li:first-child {
+    font-weight: bold; 
+  }
+  
+  a {
+    text-decoration: none; 
+    color: #6495ED; 
+  }
+  
+  a:hover {
+    text-decoration: underline; 
+  }
+  
+  .footer-container{
+      margin-top: -5%;
+  }
+  
+}

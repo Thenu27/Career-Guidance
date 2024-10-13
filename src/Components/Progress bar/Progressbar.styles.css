@@ -1,0 +1,79 @@
+.progress-bar {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    border-top: 7px solid #9d9d9d;
+    padding-top: 15px;
+    margin-top: 55px;
+    margin-left: 28px;
+  }
+  
+  .active {
+    background-color: #000000 !important;
+  }
+  
+  .progress-item {
+    display: flex;
+    flex-direction: column-reverse; /* Reverse the order so the label appears above */
+    align-items: center; /* Center the label and circle horizontally */
+    background-color: #ffffff;
+    font-weight: bold;
+    color: #7ea5cc;
+    border: 1px solid #000000;
+    margin-top: -30px;
+    width: 20px;
+    height: 20px;
+    line-height:clamp(5px, 15px,20px);
+    text-align: center;
+    border-radius: 50%;
+    z-index: 99;
+  }
+  
+  .progress-item label {
+    color: black;
+    margin-bottom: 30px; /* Add space between the label and the circle */
+    font-size: clamp(6px, 1vw, 16px); /* Use clamp to make it responsive */
+  }
+
+  @media (max-width:500px){
+
+    .progress-bar {
+      width: 90%;
+      display: flex;
+      justify-content: space-between;
+      border-top: 4px solid #9d9d9d;
+      padding-top: 15px;
+      margin-top: 25px;
+      margin-left: 28px;
+    }
+    
+    .active {
+      background-color: #000000 !important;
+    }
+    
+    .progress-item {
+      display: flex;
+      flex-direction: column-reverse; 
+      align-items: center; 
+      background-color: #ffffff;
+      font-weight: bold;
+      color: #7ea5cc;
+      border: 1px solid #000000;
+      margin-top: -23px;
+      width: 10px;
+      height: 10px;
+      line-height:clamp(5px, 15px,20px);
+      text-align: center;
+      border-radius: 50%;
+      z-index: 99;
+    }
+    
+    .progress-item label {
+      color: black;
+      margin-bottom: 15px; 
+      font-size: 8px;
+      line-height: 6px;
+    }
+    
+  }
+  
