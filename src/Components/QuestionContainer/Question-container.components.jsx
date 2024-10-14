@@ -44,9 +44,7 @@ const QuestionContainer = () =>{
 
     return(
        <div> 
-        <div className='user-info'>
-            
-        </div>
+        
          <h2 className='title'>Answer the following questions to Determine your Mip score</h2>
             <div className='Question-Container'>
 
