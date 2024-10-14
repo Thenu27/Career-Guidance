@@ -1,10 +1,10 @@
 import './Assesment.styles.css';
-import QuestionBox from '../QuestionBox/Question-box.components';
+import QuestionContainer from '../QuestionContainer/Question-container.components';
 
  const Assesment =()=>{
     return(
         <div>
-            <QuestionBox/>
+            <QuestionContainer/>
 
         </div>
     )

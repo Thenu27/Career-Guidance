@@ -1,0 +1,19 @@
+.Question-box{
+    border: 2px solid black;
+    border-radius: 10px;
+    width:550px;
+    margin-left: 3%;
+    margin-top: 1.5%;
+    height: 90px;
+}
+
+.question{
+    text-align: center;
+    margin-top: 1%;
+}
+
+.Question-box-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
