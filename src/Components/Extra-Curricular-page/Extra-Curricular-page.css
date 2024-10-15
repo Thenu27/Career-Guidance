@@ -1,0 +1,14 @@
+.extra-curricular-back-next-btn{
+    margin-top: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 150px;
+    margin-top: -5%;
+    margin-left: 14%;
+}
+
+.extra-curricular-image{
+    display: flex;
+    flex-direction: row;
+    gap: 200px;
+}

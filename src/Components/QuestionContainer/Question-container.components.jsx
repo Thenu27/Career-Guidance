@@ -1,11 +1,14 @@
 import './Question-container.styles.css'
 import { Question } from '../../Question-Data';
 import { useEffect,useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import QuestionBox from '../QuestionBox/QuestionBox.component';
 
 const QuestionContainer = () =>{
     const[shufulledQuestions,setShuffledQuestions]= useState([]);
     const[index,setIndex]=useState(0);
+
+    
 
     const shufulledArray =(Question)=>{;
         const newArray = [...Question];
@@ -31,9 +34,13 @@ const QuestionContainer = () =>{
 
     
     const NextBtnHandler = ()=>{
-       if(index<allQuestionsArray.length-1){
-       setIndex(index+1);
-       } 
+       if(index<allQuestionsArray.length){
+        setIndex(index+1);
+       }
+       
+       
+
+       
     }
 
     const BackBtnHandler = ()=>{
