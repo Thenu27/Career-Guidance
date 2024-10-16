@@ -1,0 +1,20 @@
+.Advance-level-description{
+    width:300px;
+    height: 300px;
+    line-height: 30px;
+}
+
+.Advance-level-page{
+    display: flex;
+    flex-direction: row;
+    gap:90px
+}
+
+.frog-comment-A-level-page{
+    width:200px;
+    height: 100px;
+    border: 1px solid black;
+    border-radius: 10px;
+    text-align: center;
+}
+

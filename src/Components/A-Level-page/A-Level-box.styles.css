@@ -1,0 +1,22 @@
+.Advance-level-box{
+    margin-top: 5%;
+    width: 400px;
+    height: 450px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.Advance-level-btn-container{
+
+    display: flex;
+    flex-direction: column;
+    gap:15px;
+    align-items: center;
+    margin-top: 20%;
+    
+}
+
+.A-level-btn{
+    width:200px;
+    height: 85px;
+}

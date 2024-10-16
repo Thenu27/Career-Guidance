@@ -1,0 +1,37 @@
+.O-level-box{
+    width: 400px;
+    height: 500px;
+    border: 5px solid black;
+    border-radius: 10PX;
+    margin-top: 3%;
+}
+
+.O-level-btn-container{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    /* margin-left: 15%; */
+    align-items: center;
+    margin-top: 5%;
+    
+}
+
+.O-level-btn{
+    width:200px;
+    height: 85px;
+    font-size: 20px;
+    border: 3px solid black;
+    border-radius: 8px;
+}
+
+.O-level-btn:hover{
+    background-color: aliceblue;
+}
+
+.O-level-box-title{
+    font-size: 30px;
+    text-align: center;
+}
+
+
+
