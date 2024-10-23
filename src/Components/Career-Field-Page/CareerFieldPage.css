@@ -1,0 +1,13 @@
+.frog-comment-career-field-page{
+    width: 300px;
+    height: 300px;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-top: 3%;
+}
+
+.Career-Field-Page{
+    display: flex;
+    flex-direction: row;
+    gap:60px
+}

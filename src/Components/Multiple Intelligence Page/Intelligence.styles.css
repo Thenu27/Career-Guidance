@@ -1,0 +1,50 @@
+.intelligence-box{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 650px;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-top: 1%;
+}
+
+.intelligence-page-container{
+    display: flex;
+    flex-direction: row;
+    gap:200px;
+}
+
+.intelligence-page-description{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    line-height: 30px;
+}
+
+.career-selection-btn{
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.intelligence-btn{
+    background-color: black;
+    color: white;
+    padding: 15px;
+    width:300px;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.intelligence-btns-container{
+    display: flex;
+    flex-direction: column;
+    gap:7px;
+    margin-top: -1%;
+}
+.intelligence-box-container-title{
+    text-align: center;
+}
