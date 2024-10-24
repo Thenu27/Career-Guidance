@@ -13,6 +13,8 @@ import AdvanceLevelPage from './Components/A-Level-page/A-level-page.component';
 import CalculatingPage from './Components/CalculatingPage/Calculating-Page.component';
 import IntelligencePage from './Components/Multiple Intelligence Page/IntelligencePage.component';
 import CareerFieldPage from './Components/Career-Field-Page/CareerFieldPage';
+import CareerPage from './Components/Careers-page/CareerPage';
+
 function App() {
   return (
     <div className="App">
@@ -28,6 +30,7 @@ function App() {
               <Route path = "/CalculatePage" element={<CalculatingPage/>}/>
               <Route path = "/IntelligencePage" element={<IntelligencePage/>}/>
               <Route path = "/CareerFields" element={<CareerFieldPage/>}/>
+              <Route path = "/Careers" element={<CareerPage/>}/>
         </Routes>  
        <Footer/>
       </Router>
@@ -36,8 +39,3 @@ function App() {
 }
 
 export default App;
-
-        {/* <Navigation/>    
-        <ProgressBar/>
-        <Home/>
-        <Footer/> */}

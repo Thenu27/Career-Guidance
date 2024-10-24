@@ -1,0 +1,29 @@
+.A-Level-Stream-Box{
+    margin-top: 5%;
+    width: 400px;
+    height: 450px;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.A-Level-Stream-btn-container{
+    width: 300px;
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    margin-left: auto;
+    margin-right: auto;
+    
+    
+    
+}
+
+.A-Level-Stream-btn{
+    width:100px;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}

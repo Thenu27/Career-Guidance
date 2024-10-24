@@ -11,13 +11,16 @@ const CareerFieldsBtnList = [
     "Career field 8",
 ]
 
-const CareerDropdownContainer = () =>{
+const CareerDropdownContainer = ({setShowCareerDropdown,setshowMatchedProfileMsg}) =>{
 
-    const [showMatchedProfileMsg,setshowMatchedProfileMsg] = useState(false);
-    const DropdwonsubmitHandler = () =>{
+    const submitBtnHandler=()=>{
+        setShowCareerDropdown(false);
         setshowMatchedProfileMsg(true);
+        
     }
+
     return(
+    
         <div>
             <h2 className='career-field-dropdown-container-title'>Select 3 Career Fields from the dropdown</h2>
             <div className='career-field-dropdown-container'>
@@ -33,7 +36,7 @@ const CareerDropdownContainer = () =>{
                         </div>
                     })}
                 </div>
-                <button onClick={DropdwonsubmitHandler} className='nextbtn career-field-dropdown-submit-btn'>Submit</button>
+                <button onClick={submitBtnHandler}  className='nextbtn career-field-dropdown-submit-btn'>Submit</button>
             </div>
         </div>
     )

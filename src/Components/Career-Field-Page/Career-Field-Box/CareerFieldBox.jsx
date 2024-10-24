@@ -13,14 +13,15 @@ const CareerFieldsBtnList = [
     "Career 8",
 ]
 
-const CareerFieldBox = () =>{
- 
-  const [showCareerDropdown,setshowCareerDropdown]= useState(false);
-  
+const CareerFieldBox = ({setShowCareerDropdown,setshowCareerFieldBox,setshowMatchedProfileMsg}) =>{
+   
   const CareerFieldSubmitBtnHandler=()=>{
-    setshowCareerDropdown(true)
+
+    setShowCareerDropdown(true);
+    setshowCareerFieldBox(false);
+    setshowMatchedProfileMsg(false);
   }
-  if(!showCareerDropdown){
+  
     return(
         <div>
             <h2 className='career-field-box-title'>Select 3 Career Field That You Like</h2>
@@ -37,10 +38,6 @@ const CareerFieldBox = () =>{
             </div>
         </div>
     )
- }
-else{
- return <CareerDropdownContainer/>
-}
 }
 
 export default CareerFieldBox;

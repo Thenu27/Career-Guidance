@@ -1,0 +1,42 @@
+.career-box{
+    height: 150px;
+    width:500px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.career-box-container{
+    display:flex;
+    flex-direction: column;
+    gap:10px;
+}
+
+.career-side-description{
+    width: 400px;
+}
+
+.Carrer-page{
+    
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.career-page-frog-comment{
+    height: 100px;
+    width:200px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.career-page-frog{
+    display: flex;
+    flex-direction: row;
+    gap:5px;
+}
+
+.career-page-back-next-btn{
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+}

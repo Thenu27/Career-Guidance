@@ -1,0 +1,39 @@
+.O-level-subject-box{
+    width: 700px;
+    height: 500px;
+    border: 5px solid black;
+    border-radius: 10PX;
+    margin-left: -5%;
+}
+
+.O-level-subject-title{
+    text-align: center;
+}
+
+.O-level-subject-component{
+    display: flex;
+    flex-direction: column;
+    gap:1px;
+}
+
+.O-level-subject-btn-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-left: 5%;
+    
+    
+}
+
+.O-subject-level-btn{
+    width:150px;
+    height: 80px;
+}
+
+.O-level-common-subjects-back-next-btn{
+   display: flex;
+   flex-direction: row;
+   gap: 10px;
+   margin-left: 10%;
+}

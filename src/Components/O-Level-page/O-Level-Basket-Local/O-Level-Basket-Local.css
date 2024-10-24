@@ -1,0 +1,23 @@
+.O-levelLocal-Basketsubject-box{
+    width: 700px;
+    height: 500px;
+    border: 5px solid black;
+    border-radius: 10PX;
+    margin-left: -5%;
+}
+
+.O-levelLocal-Basketsubject-btn-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-left: 5%;
+}
+
+.O-levellocal-Basket-btn{
+    width:150px;
+    height: 80px;
+}
+.O-levelLocal-Basketsubject-title{
+    text-align: center;
+}
