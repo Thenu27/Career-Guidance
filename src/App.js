@@ -14,6 +14,7 @@ import CalculatingPage from './Components/CalculatingPage/Calculating-Page.compo
 import IntelligencePage from './Components/Multiple Intelligence Page/IntelligencePage.component';
 import CareerFieldPage from './Components/Career-Field-Page/CareerFieldPage';
 import CareerPage from './Components/Careers-page/CareerPage';
+import SendResultToEmail from './Components/Send-Results/Send-Result-page';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
               <Route path = "/IntelligencePage" element={<IntelligencePage/>}/>
               <Route path = "/CareerFields" element={<CareerFieldPage/>}/>
               <Route path = "/Careers" element={<CareerPage/>}/>
+              <Route path = "/SendResults" element={<SendResultToEmail/>}/>
         </Routes>  
        <Footer/>
       </Router>

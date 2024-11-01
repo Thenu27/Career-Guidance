@@ -1,4 +1,5 @@
 import './A-Level-Basket.css';
+import { useNavigate } from 'react-router-dom';
 
 const ALevelBasketSubjectsList = [
 
@@ -20,6 +21,12 @@ const ALevelBasketSubjectsList = [
 
 const ALevelBasketSubjects = () =>{
 
+    const navigate=useNavigate();
+
+    const BasketNextBtnHandler=()=>{
+        navigate("/CalculatePage")
+    }
+
    
     return(
         <div className='O-levelLocal-Basketsubject-component'>
@@ -39,7 +46,7 @@ const ALevelBasketSubjects = () =>{
                 </div>
                 <div className='O-levelLocal-Basket-subjects-back-next-btn'>
                     <button  className='backbtn '>Back</button>
-                    <button  className='nextbtn '>Next</button>
+                    <button onClick={BasketNextBtnHandler} className='nextbtn '>Next</button>
                 </div>
             </div>
         </div>

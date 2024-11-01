@@ -5,9 +5,10 @@ const OrdinaryLevelBox = ({setshowOLevelSubjectsLocal,setshowOLevelBox}) =>{
 
     const navigate = useNavigate();
 
-    const HaventDoneBtnHandler = ()=>{
+    const HaventDoneBtnHandler=()=>{
         navigate("/Advancelevelpage")
     }
+   
 
     const LocalBtnHandler = ()=>{
         setshowOLevelSubjectsLocal(true);

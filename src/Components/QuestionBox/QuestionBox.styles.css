@@ -17,3 +17,8 @@
     flex-direction: column;
     justify-content: space-evenly;
 }
+
+.answer{
+    width:500px;
+    margin-left: 2%;
+}

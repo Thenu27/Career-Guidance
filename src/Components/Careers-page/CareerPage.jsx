@@ -1,7 +1,14 @@
 import './CareerPage.css';
 import Image from '../Image/Image.components';
+import { useNavigate } from 'react-router-dom';
 
 const CareerPage=()=>{
+
+    const navigate = useNavigate();
+
+    const sendResultsHandler=()=>{
+        navigate("/SendResults")
+    }
 
     return(
         <div className='Carrer-page'>
@@ -10,7 +17,7 @@ const CareerPage=()=>{
                     <p>Congratulations! Based on your Multiple Intelligence Profile (MIP) Score,</p> we have curated a list of careers that best align with your strengths and abilities. 
                     <p>   These careers offer you the opportunity to pursue a path where you can thrive and grow.</p>
 
-                    <button>Send Results to Email</button>
+                    <button onClick={sendResultsHandler}>Send Results to Email</button>
             </div>
             <div className='career-box-container'>
 

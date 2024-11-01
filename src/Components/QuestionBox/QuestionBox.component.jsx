@@ -13,7 +13,8 @@ const QuestionBox =({allQuestionsArray,index})=>{
             
              {allQuestionsArray[index].map(ques=>{
                     return <div className='Question-box'>
-                                <p className='question'>{ques}</p>
+                                <p className='question'>{ques}</p><br/>
+                                <input className='answer' type="range"  name="vol" min="0" max="10"></input>
                             </div>
                 })}
         </div>
