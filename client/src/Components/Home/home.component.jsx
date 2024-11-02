@@ -1,10 +1,26 @@
 import Image from '../Image/Image.components';
 import './home.styles.css';
 import { useNavigate } from 'react-router-dom';
-
+import { useContext } from 'react';
+import { ProgressContext } from '../../context/progress.context';
+import { useEffect } from 'react';
+import Assesment from '../Assesment/Assesment.components';
 
 const Home = () =>{
+
+    const {visitedPages,setVisitedPages} = useContext(ProgressContext)
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        setVisitedPages((prev)=>({
+            ...prev,
+            home:true,
+            assessment:false,
+            option:false,
+            extraCurricular:false
+       }));  
+
+    },[])
 
     const HandleNavigation = ()=>{
     navigate("/Assesment")

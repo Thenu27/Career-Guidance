@@ -3,10 +3,28 @@ import OrdinaryLevelBox from './O-level-Box/O-Level-Box.component';
 import OLevelMainLocalSubjects from './O-Level-Local-Main-Subjects/O-Level-Local-MainSubjects';
 import OLevelBasketLocal from './O-Level-Basket-Local/O-Level-Bakset-Local';
 import Image from '../Image/Image.components';
+import { ProgressContext } from '../../context/progress.context';
+import { useEffect,useContext } from 'react';
 
 import { useState} from 'react';
 
 const OrdinaryLevelPage= ()=>{  
+
+    const {visitedPages,setVisitedPages} = useContext(ProgressContext)
+
+   useEffect(()=>{
+
+      setVisitedPages((prev)=>({
+          ...prev,
+          OLevelPage:true,
+          extraCurricular:true,
+          option:true,
+          home:true,
+          assessment:true
+          
+
+      }))
+  },[])
 
     const [showOLevelBox,setshowOLevelBox] = useState(true);
     const [showOLevelSubjectsLocal,setshowOLevelSubjectsLocal] = useState(false);

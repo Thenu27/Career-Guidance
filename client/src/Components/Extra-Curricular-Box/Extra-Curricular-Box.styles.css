@@ -42,3 +42,13 @@
     
 }
 
+.extra-curricular-btn:hover{
+    background-color: black;
+    color: white;
+}
+
+.extra-curricular-btn-selected{
+    background-color:red;
+    color: black;
+}
+

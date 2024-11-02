@@ -1,9 +1,28 @@
 import './Calculating-page.styles.css';
 import Image from '../Image/Image.components';
-import { useEffect } from 'react';
+import { useEffect,useState,useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ProgressContext } from '../../context/progress.context';
 
 const CalculatingPage = () =>{
+
+    const {visitedPages,setVisitedPages} = useContext(ProgressContext)
+
+    useEffect(()=>{
+ 
+       setVisitedPages((prev)=>({
+           ...prev,
+           CalculatingPage:true,
+           ALevelPage:true,
+           OLevelPage:true,
+           extraCurricular:true,
+           option:true,
+           home:true,
+           assessment:true
+           
+ 
+       }))
+   },[])
 
     const navigate = useNavigate();
 

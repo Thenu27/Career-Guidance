@@ -4,9 +4,28 @@ import ALevelStreamBox from './A-Level-Streams/A-Level-StreamBox';
 import ALevelMainLocalSubjects from './A-Level-Subjects/A-Level-Subjects';
 import ALevelBasketSubjects from './A-Level-Basket/A-Level-Basket';
 import Image from '../Image/Image.components';
-import { useState } from 'react';
+import { useState,useEffect,useContext } from 'react';
+import { ProgressContext } from '../../context/progress.context';
+
 
 const AdvanceLevelPage=()=>{
+
+    const {visitedPages,setVisitedPages} = useContext(ProgressContext)
+
+    useEffect(()=>{
+ 
+       setVisitedPages((prev)=>({
+           ...prev,
+           ALevelPage:true,
+           OLevelPage:true,
+           extraCurricular:true,
+           option:true,
+           home:true,
+           assessment:true
+           
+ 
+       }))
+   },[])
 
     const [showALevelBox,setALevelBox] = useState(true);
     const [showALevelStreamBox,setshowALevelStreamBox] = useState(false);

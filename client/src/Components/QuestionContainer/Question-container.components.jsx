@@ -33,8 +33,10 @@ const QuestionContainer = () =>{
     },[]) 
 
     const dividingQuestionIntoFive=(ArrayToBeDivided)=>{
+        
         const dividedQuestionArray=[];
         let index = 0;
+
        while(index<ArrayToBeDivided.length){
             const part = ArrayToBeDivided.slice(index,index+5);
             dividedQuestionArray.push(part);
@@ -53,18 +55,6 @@ const QuestionContainer = () =>{
         
     },[shufulledQuestions]) 
     
-   
-    // const oneToFourElements = shufulledQuestions.slice(0,4); 
-    // const fiveToEigthElements =   shufulledQuestions.slice(4,8)
-    // const nineToTwelveElements =shufulledQuestions.slice(8,11);
-
-    // const allQuestionsArray = [oneToFourElements,fiveToEigthElements,nineToTwelveElements];
-
-    
-    // const NextBtnHandler = ()=>{
-    //    if(index<shufulledQuestions.length){
-    //     setIndex(index+4);
-    //    }
 
     const NextBtnHandler = ()=>{
         setIndexOfQuestionShown(IndexOfQuestionShown+1)

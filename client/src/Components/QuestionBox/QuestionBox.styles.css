@@ -24,3 +24,23 @@
     width:500px;
     margin-left: 2%;
 }
+
+.question-box-side-box-container{
+    display: flex;
+    flex-direction: row;
+}
+.side-box{
+    margin-top: 5%;
+    width: 30px;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-left: 3%;
+}
+
+.answer-value{
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+
+}

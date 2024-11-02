@@ -1,35 +1,42 @@
 import './QuestionBox.styles.css';
-import QuestionContainer from '../QuestionContainer/Question-container.components';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const QuestionBox =({questionsDividedIntoFive,IndexOfQuestionShown,shufulledQuestions})=>{
     const navigate = useNavigate();
-    // if(NoOfQuestionShown>shufulledQuestions.length){
-    //     navigate('/Option');
-    // }else{
+
+    const[value,setValue]=useState(Array(shufulledQuestions.length).fill(1));
+    
+
+    const valueHandler=(index,event)=>{
+        const newValues=[...value];
+        newValues[index]=event.target.value;
+        setValue(newValues)
+
+    }
+    
+
 
     if(!questionsDividedIntoFive.length ){
         return
-        <div>
-            <p>Loading....</p>
-        </div>
+    
     }
 
     if(IndexOfQuestionShown<questionsDividedIntoFive.length){
     return(
-
        
-        
         <div className='Question-box-container'>
-            
-            
-
              {questionsDividedIntoFive[IndexOfQuestionShown].map((ques,index)=>{
                 
-                    return <div key={index} className='Question-box'>
-                                <p className='question'>{ques}</p><br/>
-                                <input className='answer' type="range"  name="vol" min="0" max="10"></input>
-                            </div>
+                    return <div key={index} className='question-box-side-box-container'>
+                                <div  className='Question-box'>
+                                        <p className='question'>{ques}</p><br/>
+                                        <input className='answer' onChange={(event)=>valueHandler(index,event)} type="range" value={value[index]}  name="vol" min="1" max="10"></input>
+                                </div>
+                                <div className='side-box'>
+                                   <p className='answer-value'>{value[index]}</p> 
+                                </div>
+                           </div>
                 
                 })}
         </div>

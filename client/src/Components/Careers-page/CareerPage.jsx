@@ -10,6 +10,10 @@ const CareerPage=()=>{
         navigate("/SendResults")
     }
 
+    const careerOpenBtnHandler=()=>{
+        window.open("http://localhost:3000/","_blank")
+    }
+
     return(
         <div className='Carrer-page'>
 
@@ -23,7 +27,7 @@ const CareerPage=()=>{
 
                 <div className='career-box'>
                     <h2>Top Career</h2>
-                    <button>Career 1</button>
+                    <button onClick={careerOpenBtnHandler}>Career 1</button>
                     <button>Career 2</button>
                     <button>Career 3</button>
                 </div>

@@ -1,8 +1,21 @@
 import './Option.components.css';
 import Image from '../Image/Image.components';
 import { useNavigate } from 'react-router-dom';
-
+import { ProgressContext } from '../../context/progress.context';
+import { useContext,useEffect } from 'react';
 const Option = () =>{
+
+    const {setVisitedPages,vistedPages} = useContext(ProgressContext);
+
+    useEffect(()=>{
+        
+        setVisitedPages((prev)=>({
+            ...prev,
+            option:true,
+            extraCurricular:false
+        }))        
+    },[])
+
     const navigate = useNavigate();
     const ImprovebtnHandler = ()=>{
         navigate("/ExtraCurricular");

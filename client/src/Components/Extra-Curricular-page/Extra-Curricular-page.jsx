@@ -2,8 +2,25 @@ import './Extra-Curricular-page.css';
 import ExtraCurricularBox from '../Extra-Curricular-Box/Extra-Curricular-Box.components';
 import Image from '../Image/Image.components';
 import { useNavigate } from 'react-router-dom';
+import { useContext,useEffect } from 'react';
+import { ProgressContext } from '../../context/progress.context';
 
  const ExtraCurricularPage = () =>{
+
+   const {visitedPages,setVisitedPages} = useContext(ProgressContext)
+
+   useEffect(()=>{
+
+      setVisitedPages((prev)=>({
+          ...prev,
+          extraCurricular:true,
+          option:true,
+          home:true,
+          assessment:true
+          
+
+      }))
+  },[])
     const navigate =useNavigate();
     const skipbtnHandler=()=>{
        navigate("/Ordinarylevelpage");
