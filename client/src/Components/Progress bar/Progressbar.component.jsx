@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import './Progressbar.styles.css';
 
 const ProgressBar =() =>{
 
+  const[hidden,sethidden]=useState("")
     return(
         <div class="progress-bar"> 
 
