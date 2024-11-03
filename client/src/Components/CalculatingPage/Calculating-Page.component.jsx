@@ -12,6 +12,7 @@ const CalculatingPage = () =>{
  
        setVisitedPages((prev)=>({
            ...prev,
+           
            CalculatingPage:true,
            ALevelPage:true,
            OLevelPage:true,

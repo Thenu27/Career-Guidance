@@ -37,18 +37,18 @@ const ProgressBar =() =>{
               <label>Calculating </label>
             </div> 
 
-            <div className={`progress-item  ${visitedPages["CalculatingPage"]===true?"active":""}`}>
+            <div className={`progress-item  ${visitedPages["IntelligencePage"]===true?"active":""}`}>
+              <label>Intelligence Page </label>
+            </div> 
+            {/* <div className={`progress-item  ${visitedPages["CalculatingPage"]===true?"active":""}`}>
+              <label>Intelligence page </label>
+            </div>  */}
+            {/* <div className={`progress-item  ${visitedPages["CalculatingPage"]===true?"active":""}`}>
               <label>Calculating </label>
             </div> 
             <div className={`progress-item  ${visitedPages["CalculatingPage"]===true?"active":""}`}>
               <label>Calculating </label>
-            </div> 
-            <div className={`progress-item  ${visitedPages["CalculatingPage"]===true?"active":""}`}>
-              <label>Calculating </label>
-            </div> 
-            <div className={`progress-item  ${visitedPages["CalculatingPage"]===true?"active":""}`}>
-              <label>Calculating </label>
-            </div> 
+            </div>  */}
 
 
         

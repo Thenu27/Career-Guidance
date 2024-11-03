@@ -1,7 +1,7 @@
 import './Question-container.styles.css'
 import { Question } from '../../Question-Data';
 import { useEffect,useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import QuestionBox from '../QuestionBox/QuestionBox.component';
 
 
@@ -11,12 +11,14 @@ const QuestionContainer = () =>{
     const[IndexOfQuestionShown,setIndexOfQuestionShown] = useState(0)
     const[shufulledQuestions,setShuffledQuestions]= useState([]); 
     const[questionsDividedIntoFive,setquestionsDividedIntoFive]=useState([]);
+    const[value,setValue]=useState([]);
+    const[questionAndAnswers,setquestionAndAnswers]=useState({});
 
     const shufulledArray =(Question)=>{
-        const newArray = [...Question];
+        const newArray = Object.keys(Question);
         for( let i= newArray.length-1; i>0 ; i--){
             
-            const j = Math.floor(Math.random()*i+1);
+            const j = Math.floor(Math.random()*(i+1));
             [newArray[i],newArray[j]] = [newArray[j],newArray[i]];
         }
         return newArray;
@@ -67,16 +69,35 @@ const QuestionContainer = () =>{
         } 
      }
 
+     
+
+     const answerSubmitHandler=async()=>{
+        console.log("Thenuka",value)
+        const response = await fetch("http://localhost:4000",{
+            method:"post",
+            headers:{
+                "Content-Type":'application/json'
+            },
+
+            body:JSON.stringify({questionAndAnswers})
+        })
+     }
+
     return(
        <div> 
         
          <h2 className='title'>Answer the following questions to Determine your Mip score</h2>
             <div className='Question-Container'>
 
-               <QuestionBox shufulledQuestions={shufulledQuestions} IndexOfQuestionShown={IndexOfQuestionShown}  questionsDividedIntoFive={questionsDividedIntoFive}/>
+               <QuestionBox setquestionAndAnswers={setquestionAndAnswers} questionAndAnswers={questionAndAnswers} value={value} setValue={setValue} shufulledQuestions={shufulledQuestions} IndexOfQuestionShown={IndexOfQuestionShown}  questionsDividedIntoFive={questionsDividedIntoFive}/>
                <div className='NextAndBackbtn'>
+               
                     <button onClick={BackBtnHandler}className='backbtn'>Back</button>
-                    <button onClick={NextBtnHandler} className='nextbtn'>Next</button>
+                    
+                    {IndexOfQuestionShown<questionsDividedIntoFive.length-1?
+                    <button onClick={NextBtnHandler} className='nextbtn'>Next</button>:
+                    <button onClick={()=>{answerSubmitHandler();NextBtnHandler()}} className='nextbtn'>Submit</button>
+                    }  
                </div>
              
             </div>

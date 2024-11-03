@@ -31,7 +31,8 @@ export const ProgressProvider = ({children}) =>{
         extraCurricular:false,
         OLevelPage:false,
         ALevelPage:false,
-        CalculatingPage:false
+        CalculatingPage:false,
+        IntelligencePage:false
       });
 
     const value = {hidden,sethidden,visitedPages,setVisitedPages};

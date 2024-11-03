@@ -1,6 +1,8 @@
 import './Intelligence.styles.css';
 import Image from '../Image/Image.components';
 import { useNavigate } from 'react-router-dom';
+import { ProgressContext } from '../../context/progress.context';
+import { useEffect,useContext } from 'react';
 
 const intelligenceList = [
     "Intelligence 1",
@@ -16,6 +18,26 @@ const intelligenceList = [
 ]
 
 const IntelligencePage = () =>{
+
+    const {setVisitedPages} = useContext(ProgressContext);
+
+    useEffect(()=>{
+
+        setVisitedPages((prev)=>({
+            ...prev,
+            OLevelPage:true,
+            ALevelPage:true,
+            extraCurricular:true,
+            option:true,
+            home:true,
+            assessment:true,
+            CalculatingPage:true,
+            IntelligencePage:true
+            
+  
+        }))
+    },[])
+  
 
     const navigate = useNavigate();
      const careerSelectionBtnHandler=()=>{
