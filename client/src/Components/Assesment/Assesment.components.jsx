@@ -4,16 +4,24 @@ import UserInformation from '../user-information-box/user-infor.components';
 import Image from '../Image/Image.components';
 import { useContext,useEffect, } from 'react';
 import { ProgressContext } from '../../context/progress.context';
+
  const Assesment = ()=>{
 
-    const {visitedPages,setVisitedPages} = useContext(ProgressContext)
+    const {setVisitedPages} = useContext(ProgressContext)
 
     useEffect(()=>{
-        setVisitedPages((prev)=>({
-            ...prev,
-            assessment:true,
+        setVisitedPages(()=>({
+            home: true,
+            assessment: true,
             option:false,
-            extraCurricular:false
+            extraCurricular:false,
+            OLevelPage:false,
+            ALevelPage:false,
+            CalculatingPage:false,
+            IntelligencePage:false,
+            CareerFieldPage:false,
+            CareersPage:false
+            
             
 
         }))

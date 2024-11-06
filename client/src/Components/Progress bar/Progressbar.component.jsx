@@ -40,15 +40,15 @@ const ProgressBar =() =>{
             <div className={`progress-item  ${visitedPages["IntelligencePage"]===true?"active":""}`}>
               <label>Intelligence Page </label>
             </div> 
-            {/* <div className={`progress-item  ${visitedPages["CalculatingPage"]===true?"active":""}`}>
-              <label>Intelligence page </label>
-            </div>  */}
-            {/* <div className={`progress-item  ${visitedPages["CalculatingPage"]===true?"active":""}`}>
-              <label>Calculating </label>
+            
+            <div className={`progress-item  ${visitedPages["CareerFieldPage"]===true?"active":""}`}>
+              <label>Career Field page </label>
             </div> 
-            <div className={`progress-item  ${visitedPages["CalculatingPage"]===true?"active":""}`}>
-              <label>Calculating </label>
-            </div>  */}
+
+            <div className={`progress-item  ${visitedPages["CareersPage"]===true?"active":""}`}>
+              <label>Career page </label>
+            </div> 
+
 
 
         

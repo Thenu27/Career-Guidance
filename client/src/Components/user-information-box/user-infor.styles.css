@@ -92,3 +92,8 @@
     padding: 0;
     border-bottom: 1px solid #cccccc;
   }
+
+  .age-input{
+    width:180px;
+    height: 100px;
+  }

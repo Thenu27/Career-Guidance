@@ -1,42 +1,41 @@
 import './O-Level-page.css';
 import OrdinaryLevelBox from './O-level-Box/O-Level-Box.component';
-import OLevelMainLocalSubjects from './O-Level-Local-Main-Subjects/O-Level-Local-MainSubjects';
-import OLevelBasketLocal from './O-Level-Basket-Local/O-Level-Bakset-Local';
+import OLevelLondStream from './O-Level-Lond-Stream-Box/O-Level-Lond-Stream-Box';
+import OLevelSubj from './O-Level-Subject/O-Level-Subj';
 import Image from '../Image/Image.components';
 import { ProgressContext } from '../../context/progress.context';
 import { useEffect,useContext } from 'react';
-
-import { useState} from 'react';
+import { OLevelContext } from '../../context/OLevel.context';
 
 const OrdinaryLevelPage= ()=>{  
 
-    const {visitedPages,setVisitedPages} = useContext(ProgressContext)
+    const {setVisitedPages} = useContext(ProgressContext);
+    const {showOLevelBox,showOLevelLondStream,showOLevelSubj} = useContext(OLevelContext);
 
    useEffect(()=>{
 
-      setVisitedPages((prev)=>({
-          ...prev,
-          OLevelPage:true,
-          extraCurricular:true,
-          option:true,
-          home:true,
-          assessment:true
-          
+      setVisitedPages(()=>({
+        home: true,
+        assessment: true,
+        option:true,
+        extraCurricular:true,
+        OLevelPage:true,
+        ALevelPage:false,
+        CalculatingPage:false,
+        IntelligencePage:false,
+        CareerFieldPage:false,
+        CareersPage:false    
 
       }))
   },[])
-
-    const [showOLevelBox,setshowOLevelBox] = useState(true);
-    const [showOLevelSubjectsLocal,setshowOLevelSubjectsLocal] = useState(false);
-    const [showBasketSubjects,setshowBasketSubjects] = useState(false);
     
     const renderOLevelBox=()=>{
         if(showOLevelBox){
-           return <OrdinaryLevelBox setshowOLevelBox={setshowOLevelBox} setshowOLevelSubjectsLocal={setshowOLevelSubjectsLocal} />
-        }else if(showOLevelSubjectsLocal){
-            return <OLevelMainLocalSubjects setshowOLevelSubjectsLocal={setshowOLevelSubjectsLocal} setshowBasketSubjects={setshowBasketSubjects}/>
-        }else if(showBasketSubjects){
-           return <OLevelBasketLocal/>
+           return <OrdinaryLevelBox/>
+        }else if(showOLevelSubj){
+           return <OLevelSubj/>;
+        }else if(showOLevelLondStream){
+            return <OLevelLondStream/>
         }
     }
     return(

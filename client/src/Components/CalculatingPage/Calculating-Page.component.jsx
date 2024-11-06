@@ -10,17 +10,17 @@ const CalculatingPage = () =>{
 
     useEffect(()=>{
  
-       setVisitedPages((prev)=>({
-           ...prev,
-           
-           CalculatingPage:true,
-           ALevelPage:true,
-           OLevelPage:true,
-           extraCurricular:true,
-           option:true,
-           home:true,
-           assessment:true
-           
+       setVisitedPages(()=>({
+        home: true,
+        assessment: true,
+        option:true,
+        extraCurricular:true,
+        OLevelPage:true,
+        ALevelPage:true,
+        CalculatingPage:true,
+        IntelligencePage:false,
+        CareerFieldPage:false,
+        CareersPage:false   
  
        }))
    },[])
@@ -41,7 +41,7 @@ const CalculatingPage = () =>{
         <div className='calculationPage-container'>
             <Image/>
             <div className='Calculating-box-container'>
-                <h1>Calculating Multiple Intelligence Sscore</h1>
+                <h1 className='calculating-title'>Calculating Multiple Intelligence score</h1>
             </div>
         </div>
     )

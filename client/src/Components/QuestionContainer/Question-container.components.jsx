@@ -62,7 +62,7 @@ const QuestionContainer = () =>{
         setIndexOfQuestionShown(IndexOfQuestionShown+1)
         }   
        
-
+ 
     const BackBtnHandler = ()=>{
             if(IndexOfQuestionShown>0){
             setIndexOfQuestionShown(IndexOfQuestionShown-1);
@@ -73,15 +73,18 @@ const QuestionContainer = () =>{
 
      const answerSubmitHandler=async()=>{
         console.log("Thenuka",value)
-        const response = await fetch("http://localhost:4000",{
+        const response = await fetch("http://localhost:3000/IntelligencePage",{
             method:"post",
             headers:{
                 "Content-Type":'application/json'
             },
 
-            body:JSON.stringify({questionAndAnswers})
+            body:JSON.stringify({questionAndAnswers:questionAndAnswers})
         })
+        const data = await response.json()
+        console.log(data)
      }
+     console.log(questionAndAnswers)
 
     return(
        <div> 
@@ -95,8 +98,8 @@ const QuestionContainer = () =>{
                     <button onClick={BackBtnHandler}className='backbtn'>Back</button>
                     
                     {IndexOfQuestionShown<questionsDividedIntoFive.length-1?
-                    <button onClick={NextBtnHandler} className='nextbtn'>Next</button>:
-                    <button onClick={()=>{answerSubmitHandler();NextBtnHandler()}} className='nextbtn'>Submit</button>
+                        <button onClick={NextBtnHandler} className='nextbtn'>Next</button>:
+                        <button onClick={()=>{answerSubmitHandler();NextBtnHandler()}} className='nextbtn'>Submit</button>
                     }  
                </div>
              

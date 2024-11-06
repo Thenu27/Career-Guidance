@@ -2,6 +2,7 @@ import './QuestionBox.styles.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Question } from '../../Question-Data';
+
 const QuestionBox =({setquestionAndAnswers,value,setValue,questionsDividedIntoFive,IndexOfQuestionShown,shufulledQuestions})=>{
     const navigate = useNavigate();
     

@@ -1,23 +1,23 @@
 import './A-Level-StreamBox.css'
+import { ALevelContext } from '../../../context/ALevel.context';
+import { useContext } from 'react';
 
+const ALevelStreamBox=()=>{
 
-const ALevelStreamBox=({setshowALevelLocalCommonSubject,setshowALevelStreamBox})=>{
-
-    const goToCommonSubjects = ()=>{
-        setshowALevelLocalCommonSubject(true);
-        setshowALevelStreamBox(false);
-    }
+   const {goToALevelCategory} = useContext(ALevelContext);
     return(
-            <div className='A-Level-Stream-Box'>
-                <h2>A Level Stream</h2>
+            <>
+                <h2 className='A-Level-Stream-title'>A Level Stream</h2>
                 <div className='A-Level-Stream-btn-container'>
-                    <button onClick={goToCommonSubjects} className='A-Level-Stream-btn'>Maths</button>
+                    <button  className='A-Level-Stream-btn'>Maths</button>
                     <button className='A-Level-Stream-btn'>Science</button>
                     <button className='A-Level-Stream-btn'>Commerce</button>
-                </div>    
-                <button className='backbtn'>Back</button>
-            </div>
+                </div>   
         
+                <button onClick={goToALevelCategory} className='backbtn A-Level-Stream-backbtn'>Back</button>
+     
+            
+            </>
     )
 }
 

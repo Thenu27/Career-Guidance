@@ -13,3 +13,10 @@
     flex-direction: row;
     gap:500px
 }
+
+.calculating-title{
+    text-align: center;
+    font-size: 30px;
+    width: 300px;
+    margin-left: 20%;
+}

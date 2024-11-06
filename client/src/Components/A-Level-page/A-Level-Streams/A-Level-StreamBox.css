@@ -1,12 +1,3 @@
-.A-Level-Stream-Box{
-    margin-top: 5%;
-    width: 400px;
-    height: 450px;
-    border: 1px solid black;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-}
 
 .A-Level-Stream-btn-container{
     width: 300px;
@@ -26,4 +17,12 @@
     height: 100px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.A-Level-Stream-title{
+    text-align: center;
+}
+
+.A-Level-Stream-backbtn{
+    margin-left: 35%;
 }

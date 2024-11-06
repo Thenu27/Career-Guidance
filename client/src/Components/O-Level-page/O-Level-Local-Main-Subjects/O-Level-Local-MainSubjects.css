@@ -4,17 +4,20 @@
     border: 5px solid black;
     border-radius: 10PX;
     margin-left: -5%;
+    display: flex;
+    flex-direction: column;
+    gap:1px;
 }
 
 .O-level-subject-title{
     text-align: center;
 }
 
-.O-level-subject-component{
+/* .O-level-subject-component{
     display: flex;
     flex-direction: column;
     gap:1px;
-}
+} */
 
 .O-level-subject-btn-container{
     display: flex;

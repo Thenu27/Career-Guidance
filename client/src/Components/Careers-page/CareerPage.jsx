@@ -1,8 +1,28 @@
 import './CareerPage.css';
 import Image from '../Image/Image.components';
 import { useNavigate } from 'react-router-dom';
+import { useEffect,useContext} from 'react';
+import { ProgressContext } from '../../context/progress.context';
 
 const CareerPage=()=>{
+
+    const {setVisitedPages} = useContext(ProgressContext) 
+
+    useEffect(()=>{
+        setVisitedPages(()=>({
+            home: true,
+            assessment: true,
+            option:true,
+            extraCurricular:true,
+            OLevelPage:true,
+            ALevelPage:true,
+            CalculatingPage:true,
+            IntelligencePage:true,
+            CareerFieldPage:true,
+            CareersPage:true   
+        }));
+        })
+    
 
     const navigate = useNavigate();
 

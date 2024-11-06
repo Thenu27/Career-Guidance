@@ -4,12 +4,6 @@ export const ProgressContext= createContext({
     hidden:"",
     sethidden:()=>null,
 
-    // page:"",
-    // setPage:()=>null,
-
-    // isVisited:false,
-    // setisVisited:()=>{}
-
     vistedPages:{
         home:false,
         assessment:false,
@@ -32,7 +26,9 @@ export const ProgressProvider = ({children}) =>{
         OLevelPage:false,
         ALevelPage:false,
         CalculatingPage:false,
-        IntelligencePage:false
+        IntelligencePage:false,
+        CareerFieldPage:false,
+        CareersPage:false
       });
 
     const value = {hidden,sethidden,visitedPages,setVisitedPages};

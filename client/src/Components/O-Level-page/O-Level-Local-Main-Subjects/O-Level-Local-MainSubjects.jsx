@@ -1,4 +1,6 @@
 import './O-Level-Local-MainSubjects.css';
+import { OLevelContext } from '../../../context/OLevel.context';
+import { useContext,useEffect } from 'react';
 
 const OLevelCommonSubjects =[
 
@@ -18,13 +20,19 @@ const OLevelCommonSubjects =[
     "Subject",
 
 ]
-const OLevelMainLocalSubjects = ({setshowBasketSubjects,setshowOLevelSubjectsLocal})=>{
+const OLevelMainLocalSubjects = ()=>{
 
-    const commonLocalSubjectsNextbtn = ()=>{
-        setshowBasketSubjects(true);
-        setshowOLevelSubjectsLocal(false);
 
-    }
+    const {setshowOLevelBox,setshowOLevelLocalSubj,goToLocalBasket,setshowOLevelBasketSubjects,goToOLevelBox}   = useContext(OLevelContext);
+
+
+
+    useEffect(()=>{
+        setshowOLevelBox(false);
+        setshowOLevelBasketSubjects(false);
+        setshowOLevelLocalSubj(true);
+        
+    })
     return(
         <div className='O-level-subject-component'>
             <h2 className='O-level-subject-box-title'>Select Subjects you have Done</h2>
@@ -41,8 +49,8 @@ const OLevelMainLocalSubjects = ({setshowBasketSubjects,setshowOLevelSubjectsLoc
 
                 </div>
                 <div className='O-level-common-subjects-back-next-btn'>
-                    <button  className='backbtn '>Back</button>
-                    <button onClick={commonLocalSubjectsNextbtn} className='nextbtn '>Next</button>
+                    <button onClick={goToOLevelBox} className='backbtn '>Back</button>
+                    <button onClick={goToLocalBasket} className='nextbtn '>Next</button>
                 </div>
             </div>
         </div>

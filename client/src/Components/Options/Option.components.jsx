@@ -9,10 +9,18 @@ const Option = () =>{
 
     useEffect(()=>{
         
-        setVisitedPages((prev)=>({
-            ...prev,
+        setVisitedPages(()=>({
+            home: true,
+            assessment: true,
             option:true,
-            extraCurricular:false
+            extraCurricular:false,
+            OLevelPage:false,
+            ALevelPage:false,
+            CalculatingPage:false,
+            IntelligencePage:false,
+            CareerFieldPage:false,
+            CareersPage:false
+            
         }))        
     },[])
 

@@ -6,41 +6,49 @@ import ALevelBasketSubjects from './A-Level-Basket/A-Level-Basket';
 import Image from '../Image/Image.components';
 import { useState,useEffect,useContext } from 'react';
 import { ProgressContext } from '../../context/progress.context';
+import { ALevelContext } from '../../context/ALevel.context';
 
 
 const AdvanceLevelPage=()=>{
 
-    const {visitedPages,setVisitedPages} = useContext(ProgressContext)
+    const {visitedPages,setVisitedPages} = useContext(ProgressContext);
+    const {showALevelBox,
+        showALevelStreamBox,
+        showALevelLocalCommonSubject,
+        showALevelBasketSubject
+    } = useContext(ALevelContext);
 
     useEffect(()=>{
  
-       setVisitedPages((prev)=>({
-           ...prev,
-           ALevelPage:true,
-           OLevelPage:true,
-           extraCurricular:true,
-           option:true,
-           home:true,
-           assessment:true
+       setVisitedPages(()=>({
+        home: true,
+        assessment: true,
+        option:true,
+        extraCurricular:true,
+        OLevelPage:true,
+        ALevelPage:true,
+        CalculatingPage:false,
+        IntelligencePage:false,
+        CareerFieldPage:false,
+        CareersPage:false    
            
  
        }))
    },[])
 
-    const [showALevelBox,setALevelBox] = useState(true);
-    const [showALevelStreamBox,setshowALevelStreamBox] = useState(false);
-    const [showALevelLocalCommonSubject,setshowALevelLocalCommonSubject] = useState(false);
-    const [showALevelBasketSubject,setshowALevelBasketSubject] = useState(false)
-
     const renderAlevelBox = () =>{
+        // if(showALevelBox){
+        //     return <AdvanceLevelBox/>
+        // }else if(showALevelStreamBox){
+        //     return <ALevelStreamBox/>
+        // }else if(showALevelLocalCommonSubject){
+        //     return  <ALevelMainLocalSubjects/>
+        // }else if(showALevelBasketSubject){
+        //     return <ALevelBasketSubjects/>
+        // }
+
         if(showALevelBox){
-            return <AdvanceLevelBox setALevelBox={setALevelBox} setshowALevelStreamBox={setshowALevelStreamBox} />
-        }else if(showALevelStreamBox){
-            return <ALevelStreamBox setshowALevelStreamBox={setshowALevelStreamBox} setshowALevelLocalCommonSubject={setshowALevelLocalCommonSubject} />
-        }else if(showALevelLocalCommonSubject){
-            return  <ALevelMainLocalSubjects setshowALevelBasketSubject={setshowALevelBasketSubject} setshowALevelLocalCommonSubject={setshowALevelLocalCommonSubject}/>
-        }else if(showALevelBasketSubject){
-            return <ALevelBasketSubjects/>
+            return <AdvanceLevelBox/>
         }
     }
     return(

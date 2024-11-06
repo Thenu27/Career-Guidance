@@ -1,32 +1,34 @@
 import './A-Level-box.styles.css';
 import { useNavigate } from 'react-router-dom';
+import ALevelCategory from '../A-Level-Category/A-Level-Category';
+import ALevelStreamBox from '../A-Level-Streams/A-Level-StreamBox';
+import ALevelLondonCategory from '../A-Level-London-Category/A-Level-London-Category';
+import { useContext, useEffect } from 'react';
+import { ALevelContext } from '../../../context/ALevel.context';
 
-const AdvanceLevelBox=({setshowALevelStreamBox,setALevelBox})=>{
+const AdvanceLevelBox=()=>{
+
+   const {showALevelCategory,setshowALevelCategory,showALevelStreamBox,showLondonALevelCategory} = useContext(ALevelContext)
 
     const navigate = useNavigate();
 
-    const alevelBackbtnHandler=()=>{
-        navigate("/CalculatePage")
+    
+
+    const renderALevelBox = ()=>{
+        if(showALevelCategory){
+            return <ALevelCategory/>
+        }else if(showALevelStreamBox){
+            return <ALevelStreamBox/>
+        }else if(showLondonALevelCategory){
+            return <ALevelLondonCategory/>
+        }
+                
     }
 
-    const goToStreams = ()=>{
-        setALevelBox(false);
-        setshowALevelStreamBox(true);
-    }
+
     return(
-        <div className='Advance-level-box'>
-
-            <h2>Select Advanced Level Category</h2>
-
-            <div className='Advance-level-btn-container'>
-
-                <button onClick={goToStreams}className='A-level-btn'>Local</button>
-                <button className='A-level-btn'>London</button>
-                <button  onClick={alevelBackbtnHandler} className='A-level-btn'>Havent Done</button>
-                <button className='backbtn'>Back</button>
-
-            </div>
-            
+        <div className='Advance-level-box'>            
+            {renderALevelBox()}
         </div>
     )
 }

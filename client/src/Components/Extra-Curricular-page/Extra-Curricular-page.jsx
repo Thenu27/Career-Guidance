@@ -11,13 +11,17 @@ import { ProgressContext } from '../../context/progress.context';
 
    useEffect(()=>{
 
-      setVisitedPages((prev)=>({
-          ...prev,
-          extraCurricular:true,
-          option:true,
-          home:true,
-          assessment:true
-          
+      setVisitedPages(()=>({
+        home: true,
+        assessment: true,
+        option:true,
+        extraCurricular:true,
+        OLevelPage:false,
+        ALevelPage:false,
+        CalculatingPage:false,
+        IntelligencePage:false,
+        CareerFieldPage:false,
+        CareersPage:false
 
       }))
   },[])

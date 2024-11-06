@@ -1,58 +1,70 @@
+import { useState } from 'react';
 import './user-infor.styles.css';
 
+const districtList =[
+    "Gampaha",
+    "kalutara",
+    "Galle"
+]
+
+const EducationList =[
+    "School",
+    "Ordinary-Level",
+    "Advanced-Level",
+    "University"
+]
+
 const UserInformation = ()=>{
+
+    const [District,setDistrict]=useState("District");
+    const [Education,setEducation]=useState("Education Level")
+
+    const DistrictHandler = (value)=>{
+        setDistrict(value);
+    }
+
+    const EducationHandler=(value)=>{
+        setEducation(value)
+    }
     return(
         <div className='dropdown-container'> 
-            <label class="dropdown">
+            <label className="dropdown">
 
-                <div class="dd-button">
-                         Dropdown
+                <div className="dd-button">
+                         {District}
                 </div>
 
-                <input type="checkbox" class="dd-input" id="test"/>
+                <input type="checkbox" className="dd-input" id="test"/>
 
-                <ul class="dd-menu">
-                    <li>Action</li>
-                    <li>Another action</li>
-                    <li>Something else here</li>
-                
+                <ul className="dd-menu">
+
+                    {districtList.map((district,index)=>{
+                       return  <li key={index} onClick={()=>DistrictHandler(`${district}`)}>{district}</li>
+                    })}
+               
                 </ul>
 
-             </label>      
+             </label>       
+                    <input className='age-input' type="number" min="0" max="120" placeholder="Enter age" /> 
+                 
 
-             <label class="dropdown">
+              <label className="dropdown">
 
-                        <div class="dd-button">
-                                Age   
+                        <div className="dd-button">
+                                { Education } 
                         </div>
 
                         <input type="checkbox" class="dd-input" id="test"/>
 
-                        <ul class="dd-menu">
-                            <li>Action</li>
-                            <li>Another action</li>
-                            <li>Something else here</li>
-                        
+                        <ul className="dd-menu">
+                                {EducationList.map((education,index)=>{
+                                    return  <li key={index} onClick={()=>EducationHandler(education)}>{education}</li>
+                    })}
                         </ul>
 
-              </label>     
+              </label>      
 
-              <label class="dropdown">
-
-                        <div class="dd-button">
-                                Current Education  
-                        </div>
-
-                        <input type="checkbox" class="dd-input" id="test"/>
-
-                        <ul class="dd-menu">
-                            <li>Action</li>
-                            <li>Another action</li>
-                            <li>Something else here</li>
-                        
-                        </ul>
-
-              </label>                       
+                              
 
         </div>
     )
