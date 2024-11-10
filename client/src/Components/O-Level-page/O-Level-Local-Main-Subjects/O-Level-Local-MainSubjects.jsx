@@ -1,30 +1,38 @@
 import './O-Level-Local-MainSubjects.css';
 import { OLevelContext } from '../../../context/OLevel.context';
-import { useContext,useEffect } from 'react';
+import { useContext,useEffect,useState } from 'react';
 
-const OLevelCommonSubjects =[
+const OLevelCommonSubjects = [
+    "Mathematics",
+    "English Language",
+    "Biology",
+    "Chemistry",
+    "Physics",
+    "History",
+    "Geography",
+    "Business Studies",
+    "Economics",
+    "Accounting",
+    "Information and Communication Technology",
+    "Literature in English",
+    "Islamic Studies",
+    "French"
+];
 
-    "Subject",
-    "Subject",
-    "Subject",
-    "Subject",
-    "Subject",
-    "Subject",
-    "Subject",
-    "Subject",
-    "Subject",
-    "Subject",
-    "Subject",
-    "Subject",
-    "Subject",
-    "Subject",
-
-]
 const OLevelMainLocalSubjects = ()=>{
 
 
     const {setshowOLevelBox,setshowOLevelLocalSubj,goToLocalBasket,setshowOLevelBasketSubjects,goToOLevelBox}   = useContext(OLevelContext);
 
+    const [selectedButtons,setselectedButtons] = useState([])
+ 
+    const btnSelectHandler = (subject)=>{
+        if(selectedButtons.includes(subject)){
+            setselectedButtons(selectedButtons.filter(subj=>subj!==subject))
+        }else{
+           setselectedButtons([...selectedButtons,subject])
+        }
+    }
 
 
     useEffect(()=>{
@@ -43,7 +51,7 @@ const OLevelMainLocalSubjects = ()=>{
                 <div className='O-level-subject-btn-container'>
 
                     {OLevelCommonSubjects.map((subject,index)=>{
-                       return <button key={index} className='O-subject-level-btn'>{subject}</button>
+                       return <button onClick={()=>btnSelectHandler(subject)} key={index} className={`O-subject-level-btn ${selectedButtons.includes(subject)? "extra-curricular-btn-selected":""}`}>{subject}</button>
                     })}
 
 

@@ -1,26 +1,38 @@
 import './O-Level-Basket-Local.css';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext,useState } from 'react';
 import { OLevelContext } from '../../../context/OLevel.context';
 
 const OLevelLocalBasketSubjects = [
-
-    "Basket Subject",
-    "Basket Subject",
-    "Basket Subject",
-    "Basket Subject",
-    "Basket Subject",
-    "Basket Subject",
-    "Basket Subject",
-    "Basket Subject",
-    "Basket Subject",
-    "Basket Subject",
-    "Basket Subject",
-    "Basket Subject",
-    "Basket Subject",
+    "Art and Design",
+    "Business Studies",
+    "Computer Science",
+    "Environmental Management",
+    "Food and Nutrition",
+    "Accounting",
+    "Economics",
+    "Physical Education",
+    "French",
+    "Spanish",
+    "Geography",
+    "History",
+    "Religious Studies",
+    "Travel and Tourism",
+    "Psychology"
 ]
 
 const OLevelBasketLocal =()=>{
+
+    
+    const [selectedButtons,setselectedButtons] = useState([])
+ 
+    const btnSelectHandler = (subject)=>{
+        if(selectedButtons.includes(subject)){
+            setselectedButtons(selectedButtons.filter(subj=>subj!==subject))
+        }else{
+           setselectedButtons([...selectedButtons,subject])
+        }
+    }
 
     const {goToLocalCommonSubjects} = useContext(OLevelContext);
     const navigate = useNavigate();
@@ -39,7 +51,7 @@ const OLevelBasketLocal =()=>{
                 <div className='O-levelLocal-Basketsubject-btn-container'>
 
                     {OLevelLocalBasketSubjects.map((subject,index)=>{
-                    return <button key={index} className='O-levellocal-Basket-btn'>{subject}</button>
+                    return <button onClick={()=>btnSelectHandler(subject)} key={index} className={`O-subject-level-btn ${selectedButtons.includes(subject)? "extra-curricular-btn-selected":""}`}>{subject}</button>
                     })}
 
                 </div>

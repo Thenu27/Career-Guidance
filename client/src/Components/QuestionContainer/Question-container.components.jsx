@@ -13,7 +13,10 @@ const QuestionContainer = () =>{
     const[questionsDividedIntoFive,setquestionsDividedIntoFive]=useState([]);
     const[value,setValue]=useState([]);
     const[questionAndAnswers,setquestionAndAnswers]=useState({});
+ 
+   
 
+    // Shuffles the Questions and return a new array
     const shufulledArray =(Question)=>{
         const newArray = Object.keys(Question);
         for( let i= newArray.length-1; i>0 ; i--){
@@ -22,16 +25,13 @@ const QuestionContainer = () =>{
             [newArray[i],newArray[j]] = [newArray[j],newArray[i]];
         }
         return newArray;
-        }
-
-      
-
+        }        
+    
     useEffect(()=>{
         
         const shuffled = shufulledArray(Question);
         setShuffledQuestions(shuffled);
-        
-        
+                
     },[]) 
 
     const dividingQuestionIntoFive=(ArrayToBeDivided)=>{
@@ -52,44 +52,56 @@ const QuestionContainer = () =>{
         
         const questionsDivided = dividingQuestionIntoFive(shufulledQuestions);
         setquestionsDividedIntoFive(questionsDivided);
-        console.log(questionsDivided)
-        
-        
+              
     },[shufulledQuestions]) 
     
-
     const NextBtnHandler = ()=>{
         setIndexOfQuestionShown(IndexOfQuestionShown+1)
         }   
-       
- 
+        
     const BackBtnHandler = ()=>{
             if(IndexOfQuestionShown>0){
             setIndexOfQuestionShown(IndexOfQuestionShown-1);
         } 
      }
 
-     
-
+     const addingMissingProperties = (questions) => {
+        
+          const updatedAnswers = { questionAndAnswers };
+      
+          // Loop through each question key in Question
+          Object.keys(questions).forEach((key) => {
+            if (!updatedAnswers.hasOwnProperty(key)) {
+              updatedAnswers[key] = {
+                question: questions[key],
+                answer: 1, // Default answer value
+              };
+            }
+          });
+          
+          return updatedAnswers; // Return the updated object to set state
+                
+      };
+      
      const answerSubmitHandler=async()=>{
-        console.log("Thenuka",value)
+        const completedQuestionAndAnswers=addingMissingProperties(Question);
+        // console.log("Completes Array",questionAndAnswers)
         const response = await fetch("http://localhost:3000/IntelligencePage",{
             method:"post",
             headers:{
                 "Content-Type":'application/json'
             },
 
-            body:JSON.stringify({questionAndAnswers:questionAndAnswers})
+            body:JSON.stringify({questionAndAnswers:completedQuestionAndAnswers})
         })
         const data = await response.json()
         console.log(data)
      }
-     console.log(questionAndAnswers)
 
     return(
        <div> 
-        
-         <h2 className='title'>Answer the following questions to Determine your Mip score</h2>
+       
+            <h2 className='title'>Answer the following questions to Determine your Mip score</h2>
             <div className='Question-Container'>
 
                <QuestionBox setquestionAndAnswers={setquestionAndAnswers} questionAndAnswers={questionAndAnswers} value={value} setValue={setValue} shufulledQuestions={shufulledQuestions} IndexOfQuestionShown={IndexOfQuestionShown}  questionsDividedIntoFive={questionsDividedIntoFive}/>

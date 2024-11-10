@@ -4,12 +4,9 @@ import { useEffect, useState } from 'react';
 import { Question } from '../../Question-Data';
 
 const QuestionBox =({setquestionAndAnswers,value,setValue,questionsDividedIntoFive,IndexOfQuestionShown,shufulledQuestions})=>{
+
     const navigate = useNavigate();
     
-
-    // const[value,setValue]=useState(Array(shufulledQuestions.length).fill(1));
-    
-
     useEffect(() => {
         if (shufulledQuestions.length > 0) {
           setValue(Array(shufulledQuestions.length).fill(1));

@@ -6,9 +6,10 @@ import ALevelLondonCategory from '../A-Level-London-Category/A-Level-London-Cate
 import { useContext, useEffect } from 'react';
 import { ALevelContext } from '../../../context/ALevel.context';
 
+
 const AdvanceLevelBox=()=>{
 
-   const {showALevelCategory,setshowALevelCategory,showALevelStreamBox,showLondonALevelCategory} = useContext(ALevelContext)
+   const {showALevelMathsLocal,showALevelCategory,setshowALevelCategory,showALevelStreamBox,showLondonALevelCategory} = useContext(ALevelContext)
 
     const navigate = useNavigate();
 

@@ -1,22 +1,15 @@
 import './A-Level-page.styles.css';
 import AdvanceLevelBox from './A-Level-Box/A-Level-box.component';
-import ALevelStreamBox from './A-Level-Streams/A-Level-StreamBox';
-import ALevelMainLocalSubjects from './A-Level-Subjects/A-Level-Subjects';
-import ALevelBasketSubjects from './A-Level-Basket/A-Level-Basket';
 import Image from '../Image/Image.components';
 import { useState,useEffect,useContext } from 'react';
 import { ProgressContext } from '../../context/progress.context';
 import { ALevelContext } from '../../context/ALevel.context';
-
+import ALevelSubject from './A-Level-Subject/A-Level-Subject';
 
 const AdvanceLevelPage=()=>{
 
     const {visitedPages,setVisitedPages} = useContext(ProgressContext);
-    const {showALevelBox,
-        showALevelStreamBox,
-        showALevelLocalCommonSubject,
-        showALevelBasketSubject
-    } = useContext(ALevelContext);
+    const {showALevelSubject,showALevelBox} = useContext(ALevelContext);
 
     useEffect(()=>{
  
@@ -37,18 +30,10 @@ const AdvanceLevelPage=()=>{
    },[])
 
     const renderAlevelBox = () =>{
-        // if(showALevelBox){
-        //     return <AdvanceLevelBox/>
-        // }else if(showALevelStreamBox){
-        //     return <ALevelStreamBox/>
-        // }else if(showALevelLocalCommonSubject){
-        //     return  <ALevelMainLocalSubjects/>
-        // }else if(showALevelBasketSubject){
-        //     return <ALevelBasketSubjects/>
-        // }
-
         if(showALevelBox){
             return <AdvanceLevelBox/>
+        }else if(showALevelSubject){
+            return <ALevelSubject/>
         }
     }
     return(
