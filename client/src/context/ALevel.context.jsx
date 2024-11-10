@@ -55,6 +55,7 @@ export const ALevelProvider=({children})=>{
         setshowALevelStreamBox(true);
         setshowALevelCategory(false);
         setshowALevelMathsLocal(false);
+        setshowALevelLocalScience(false)
         setALevelBox(true);
     }
 

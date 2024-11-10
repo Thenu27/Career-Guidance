@@ -15,18 +15,25 @@ export const OLevelContext = createContext({
     goToLocalBasket:()=>{},
     goToLocalCommonSubjects:()=>{},
     goToLondonStreamBox:()=>{},
-    goToOLevelBox:()=>{}
+    goToOLevelBox:()=>{},
+    showOLevelResults:null,
+    setshowOLevelResults:()=>{},
+    goToOLevelResults:()=>{},
+    OLevelResultsArray:null,
+    setOLevelResultsArray:()=>{}
 
 
 })
 
 export const OLevelProvider = ({children})=>{
 
+    const [OLevelResultsArray,setOLevelResultsArray] = useState([]);
     const [showOLevelBox,setshowOLevelBox] = useState(true);
     const [showOLevelLondStream,setshowOLevelLondStream]=useState(false);
     const [showOLevelLocalSubj,setshowOLevelLocalSubj]=useState(false);
     const [showOLevelBasketSubjects,setshowOLevelBasketSubjects] = useState(false);
-    const [showOLevelSubj,setshowOLevelSubj]=useState(false)
+    const [showOLevelSubj,setshowOLevelSubj]=useState(false);
+    const [showOLevelResults,setshowOLevelResults]=useState(false);
 
     const goToLocalBasket = ()=>{
         setshowOLevelBasketSubjects(true);
@@ -53,6 +60,13 @@ export const OLevelProvider = ({children})=>{
         
     }
 
+    const goToOLevelResults=()=>{
+        setshowOLevelBox(false);
+        setshowOLevelSubj(false);
+        setshowOLevelLondStream(false);
+        setshowOLevelResults(true);
+    }
+
     const value={
         showOLevelBox,
         setshowOLevelBox,
@@ -68,7 +82,12 @@ export const OLevelProvider = ({children})=>{
         showOLevelLocalSubj,
         setshowOLevelLocalSubj,
         goToLondonStreamBox,
-        goToOLevelBox
+        goToOLevelBox,
+        goToOLevelResults,
+        showOLevelResults,
+        setshowOLevelResults,
+        OLevelResultsArray,
+        setOLevelResultsArray
     
     }
 

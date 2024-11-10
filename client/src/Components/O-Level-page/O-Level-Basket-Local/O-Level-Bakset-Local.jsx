@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useContext,useState } from 'react';
 import { OLevelContext } from '../../../context/OLevel.context';
 
+
 const OLevelLocalBasketSubjects = [
     "Art and Design",
     "Business Studies",
@@ -25,16 +26,21 @@ const OLevelBasketLocal =()=>{
 
     
     const [selectedButtons,setselectedButtons] = useState([])
+
+    const {OLevelResultsArray,setOLevelResultsArray} = useContext(OLevelContext);
  
     const btnSelectHandler = (subject)=>{
         if(selectedButtons.includes(subject)){
-            setselectedButtons(selectedButtons.filter(subj=>subj!==subject))
+            setselectedButtons(selectedButtons.filter(subj=>subj!==subject));
+            setOLevelResultsArray(OLevelResultsArray.filter(subj=>subj!==subject))
         }else{
-           setselectedButtons([...selectedButtons,subject])
+           setselectedButtons([...selectedButtons,subject]);
+           setOLevelResultsArray([...OLevelResultsArray,subject]);
+
         }
     }
 
-    const {goToLocalCommonSubjects} = useContext(OLevelContext);
+    const {goToLocalCommonSubjects, goToOLevelResults} = useContext(OLevelContext);
     const navigate = useNavigate();
 
     const goToALevelPage = ()=>{
@@ -57,7 +63,7 @@ const OLevelBasketLocal =()=>{
                 </div>
                 <div className='O-levelLocal-Basket-subjects-back-next-btn'>
                     <button onClick={goToLocalCommonSubjects}  className='backbtn '>Back</button>
-                    <button onClick={goToALevelPage} className='nextbtn '>Next</button>
+                    <button onClick={ goToOLevelResults} className='nextbtn '>Next</button>
                 </div>
             </div>
         </>

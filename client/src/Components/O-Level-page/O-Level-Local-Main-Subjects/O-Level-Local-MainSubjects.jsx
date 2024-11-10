@@ -22,17 +22,25 @@ const OLevelCommonSubjects = [
 const OLevelMainLocalSubjects = ()=>{
 
 
-    const {setshowOLevelBox,setshowOLevelLocalSubj,goToLocalBasket,setshowOLevelBasketSubjects,goToOLevelBox}   = useContext(OLevelContext);
+    const {setshowOLevelBox,setshowOLevelLocalSubj,goToLocalBasket,setshowOLevelBasketSubjects,goToOLevelBox,OLevelResultsArray,setOLevelResultsArray}   = useContext(OLevelContext);
 
     const [selectedButtons,setselectedButtons] = useState([])
  
     const btnSelectHandler = (subject)=>{
         if(selectedButtons.includes(subject)){
             setselectedButtons(selectedButtons.filter(subj=>subj!==subject))
+            setOLevelResultsArray(OLevelResultsArray.filter(subj=>subj!==subject))
         }else{
-           setselectedButtons([...selectedButtons,subject])
+           setselectedButtons([...selectedButtons,subject]);
+           setOLevelResultsArray([...OLevelResultsArray,subject]);
         }
+
+        
     }
+
+    useEffect(() => {
+        console.log(OLevelResultsArray);
+    }, [OLevelResultsArray]);
 
 
     useEffect(()=>{
@@ -40,7 +48,12 @@ const OLevelMainLocalSubjects = ()=>{
         setshowOLevelBasketSubjects(false);
         setshowOLevelLocalSubj(true);
         
-    })
+    },[])
+
+    useEffect(()=>{
+        setOLevelResultsArray([])
+      },[])
+      
     return(
         <div className='O-level-subject-component'>
             <h2 className='O-level-subject-box-title'>Select Subjects you have Done</h2>
@@ -51,8 +64,15 @@ const OLevelMainLocalSubjects = ()=>{
                 <div className='O-level-subject-btn-container'>
 
                     {OLevelCommonSubjects.map((subject,index)=>{
-                       return <button onClick={()=>btnSelectHandler(subject)} key={index} className={`O-subject-level-btn ${selectedButtons.includes(subject)? "extra-curricular-btn-selected":""}`}>{subject}</button>
-                    })}
+                       return <button
+                       onClick={() => {
+                        btnSelectHandler(subject);}}
+                                 key={index}   
+                                 className={`O-subject-level-btn ${selectedButtons.includes(subject)? "extra-curricular-btn-selected":""}`}>
+                                {subject}
+                                
+                              </button>
+                    })} 
 
 
                 </div>

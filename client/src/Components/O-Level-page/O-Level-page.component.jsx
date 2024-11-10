@@ -6,11 +6,12 @@ import Image from '../Image/Image.components';
 import { ProgressContext } from '../../context/progress.context';
 import { useEffect,useContext } from 'react';
 import { OLevelContext } from '../../context/OLevel.context';
+import OLevelResults from './O-Level-Results/O-Level-Results';
 
 const OrdinaryLevelPage= ()=>{  
 
     const {setVisitedPages} = useContext(ProgressContext);
-    const {showOLevelBox,showOLevelLondStream,showOLevelSubj} = useContext(OLevelContext);
+    const {showOLevelBox,showOLevelLondStream,showOLevelSubj,showOLevelResults,OLevelResultsArray,setOLevelResultsArray}   = useContext(OLevelContext);
 
    useEffect(()=>{
 
@@ -28,6 +29,8 @@ const OrdinaryLevelPage= ()=>{
 
       }))
   },[])
+
+
     
     const renderOLevelBox=()=>{
         if(showOLevelBox){
@@ -36,6 +39,8 @@ const OrdinaryLevelPage= ()=>{
            return <OLevelSubj/>;
         }else if(showOLevelLondStream){
             return <OLevelLondStream/>
+        }else if(showOLevelResults){
+            return <OLevelResults/>
         }
     }
     return(
