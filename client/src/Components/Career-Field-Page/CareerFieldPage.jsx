@@ -5,17 +5,17 @@ import CareerDropdownContainer from './Career-Dropdown-Container/CareerDropdown'
 import { useEffect, useState,useContext } from 'react';
 import ProfileMatchBox from '../Profile-Match/ProfileMatchBox';
 import { ProgressContext } from '../../context/progress.context';
+import { CareerContext } from '../../context/Career.context';
 
 const CareerFieldPage=()=>{
     
-    const [showCareerFieldBox,setshowCareerFieldBox] = useState(true);
-    const [showCareerDropdown,setShowCareerDropdown]= useState(false);
-    const [showMatchedProfileMsg,setshowMatchedProfileMsg] =useState(false);
+    const {showCareerFieldBox,showCareerDropdown,showMatchedProfileMsg} = useContext(CareerContext);
 
     const {setVisitedPages} = useContext(ProgressContext)
 
     useEffect(() => {
         setVisitedPages(() => ({
+
             home: true,
             assessment: true,
             option:true,
@@ -28,13 +28,14 @@ const CareerFieldPage=()=>{
             CareersPage:false   
         }));
     }, []); 
+
     
 
     const BoxRender=() =>{
         if(showCareerFieldBox){
-            return  <CareerFieldBox setshowCareerFieldBox={setshowCareerFieldBox} setShowCareerDropdown={setShowCareerDropdown}  setshowMatchedProfileMsg={setshowMatchedProfileMsg}/>
+            return  <CareerFieldBox/>
         }else if(showCareerDropdown){
-           return <CareerDropdownContainer setShowCareerDropdown={setShowCareerDropdown} setshowMatchedProfileMsg={setshowMatchedProfileMsg}/>
+           return <CareerDropdownContainer/>
         }else if(showMatchedProfileMsg){
             return <ProfileMatchBox/>
         }

@@ -67,7 +67,13 @@ const IntelligencePage = () =>{
                  <div className='intelligence-btns-container'>
                 {intelligenceList.map((intelligence)=>{
                     
-                    return <button className='intelligence-btn'>{intelligence}{<p>{MipScore}</p>}</button>
+                    return(
+                        
+                        <div className='intelligence-btn tooltip'>
+                             {intelligence}{<p>{MipScore}</p>}
+                             <span class="tooltiptext">Information about Intelligence</span>
+                        </div>                        
+                    ) 
                     
                 })}
                 </div>

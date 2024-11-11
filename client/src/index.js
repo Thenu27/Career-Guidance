@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { ProgressProvider } from './context/progress.context';
 import { OLevelProvider } from './context/OLevel.context';
 import { ALevelProvider } from './context/ALevel.context';
+import { CareerProvider } from './context/Career.context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,7 +14,9 @@ root.render(
     <ProgressProvider>
       <OLevelProvider>
         <ALevelProvider>
-          <App />
+          <CareerProvider>
+            <App />
+          </CareerProvider>
         </ALevelProvider>
       </OLevelProvider>
     </ProgressProvider>

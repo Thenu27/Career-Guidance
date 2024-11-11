@@ -1,6 +1,7 @@
 import './CareerFieldBox.css';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import CareerDropdownContainer from '../Career-Dropdown-Container/CareerDropdown';
+import { CareerContext } from '../../../context/Career.context';
 
 const CareerFieldsBtnList = [
     "Engineering",
@@ -14,9 +15,11 @@ const CareerFieldsBtnList = [
 ];
 
 
-const CareerFieldBox = ({setShowCareerDropdown,setshowCareerFieldBox,setshowMatchedProfileMsg}) =>{
+const CareerFieldBox = () =>{
 
-    const[selectedBtn,setselectedbtn] = useState([])
+    const[selectedBtn,setselectedbtn] = useState([]);
+
+    const {setshowCareerFieldBox,setShowCareerDropdown,setshowMatchedProfileMsg,SelectedCareerField,setSelectedCareerField} = useContext(CareerContext)
    
   const CareerFieldSubmitBtnHandler=()=>{
     setShowCareerDropdown(true);
@@ -24,13 +27,21 @@ const CareerFieldBox = ({setShowCareerDropdown,setshowCareerFieldBox,setshowMatc
     setshowMatchedProfileMsg(false);
   }
 
+
+
   const btnHandler=(career)=>{
     if(selectedBtn.includes(career)){
-        setselectedbtn(selectedBtn.filter((careerbtn)=>careerbtn!==career))
+        setselectedbtn(selectedBtn.filter((careerbtn)=>careerbtn!==career));
+        setSelectedCareerField(SelectedCareerField.filter((careerItem)=>careerItem!==career));
     }else{
         setselectedbtn([...selectedBtn,career]);
+        setSelectedCareerField([...SelectedCareerField,career])
     }
   }
+
+  useEffect(()=>{
+    setSelectedCareerField([])
+},[])
   
     return(
         <div>
@@ -38,8 +49,16 @@ const CareerFieldBox = ({setShowCareerDropdown,setshowCareerFieldBox,setshowMatc
             <div className='career-field-box-container'>
                 <div className='career-btn-container'>
                     {CareerFieldsBtnList.map(career=>{
-                        return <button disabled={!selectedBtn.includes(career) && selectedBtn.length>=3} onClick={()=>{btnHandler(career)}} className={`career-btn ${selectedBtn.includes(career)?"extra-curricular-btn-selected":""}`}>{career}</button>
+                        return <button
+
+                         disabled={!selectedBtn.includes(career) && selectedBtn.length>=3} 
+                         onClick={()=>{btnHandler(career)}} 
+                         className={`career-btn ${selectedBtn.includes(career)?"extra-curricular-btn-selected":""}`}>
+                            {career}
+
+                            </button>
                     })}
+
                 </div>
                 <div className='careerFieldBtn'>
                     <button className='backbtn '>Back</button>

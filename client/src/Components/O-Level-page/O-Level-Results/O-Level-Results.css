@@ -1,10 +1,10 @@
 .O-Level-result-container{
     margin-top:2% ;
-    height:38vw;
-    width:50vw;
+    height:34vw;
+    width:45vw;
     border:3px solid black;
     border-radius: 10px;
-    margin-left: -10%;
+    margin-left: -20%;
     
 }
 
@@ -13,11 +13,12 @@
     margin-top: 1%;
     margin-left: 5%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-evenly;
     gap:10px;
     flex-wrap: wrap;
     height: 470px;
-    width:800px;
+    width:700px;
 }
 
 .O-Level-result-NextAndBackbtn-container{
@@ -25,7 +26,7 @@
     display: flex;
     flex-direction: row;
     gap:100px;
-    margin-top: 0;
+    margin-top: 3%;
     padding-left: 5%;
 }
 
@@ -37,22 +38,37 @@
     height: 100px;
     width:300px;
     border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+}
+
+.O-level-result-btn h4{
+  padding-left: 5%;
+  padding-top: 2%;
+  font-size: 130%;
+  width:40%;
+  margin-top: auto;
+  margin-bottom: auto;
+  
+
 }
 
 .dropbtn {
     background-color: #ffffff;
     color: rgb(0, 0, 0);
-    padding: 8px;
+    padding: 10px;
     font-size: 16px;
     border: none;
     cursor: pointer;
-    border:1px solid black
+    border:1px solid black;
+
   }
   
   .dropdown {
-    position: relative;
-    display: inline-block;
-    
+    margin-top: auto;
+    margin-bottom: auto;
   }
   
   .dropdown-content {
@@ -69,9 +85,12 @@
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+    cursor: pointer;
   }
   
-  .dropdown-content a:hover {background-color: #f1f1f1}
+  .dropdown-content a:hover {
+    background-color: #f1f1f1
+  }
   
   .dropdown:hover .dropdown-content {
     display: block;

@@ -13,7 +13,7 @@ const OLevelCommonSubjects = [
     "Business Studies",
     "Economics",
     "Accounting",
-    "Information and Communication Technology",
+    "Information Technology",
     "Literature in English",
     "Islamic Studies",
     "French"

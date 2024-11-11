@@ -20,7 +20,8 @@ export const OLevelContext = createContext({
     setshowOLevelResults:()=>{},
     goToOLevelResults:()=>{},
     OLevelResultsArray:null,
-    setOLevelResultsArray:()=>{}
+    setOLevelResultsArray:()=>{},
+    goToBasketPage:()=>{}
 
 
 })
@@ -67,6 +68,12 @@ export const OLevelProvider = ({children})=>{
         setshowOLevelResults(true);
     }
 
+    const goToBasketPage = ()=>{
+        setshowOLevelBasketSubjects(true);
+        setshowOLevelResults(false);
+        setshowOLevelSubj(true);
+    }
+
     const value={
         showOLevelBox,
         setshowOLevelBox,
@@ -74,7 +81,6 @@ export const OLevelProvider = ({children})=>{
         setshowOLevelLondStream,
         showOLevelSubj,
         setshowOLevelSubj,
-        showOLevelBox,
         showOLevelBasketSubjects,
         setshowOLevelBasketSubjects,
         goToLocalBasket,
@@ -87,7 +93,8 @@ export const OLevelProvider = ({children})=>{
         showOLevelResults,
         setshowOLevelResults,
         OLevelResultsArray,
-        setOLevelResultsArray
+        setOLevelResultsArray,
+        goToBasketPage
     
     }
 
