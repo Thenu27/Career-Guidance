@@ -6,12 +6,20 @@ footer {
   border-top: 1px solid #ffffff; /* Optional border for separation */
   margin-left: 20%; /* Adjust as needed */
   margin-right: 20%; /* Add right margin to center the footer */
+  overflow-x: hidden;
+
+}
+
+.footer-container{
+  /* margin-top: -2%; */
+  margin: auto;
+
 }
 
 ul {
   margin: 0;
   padding: 0;
-  list-style-type: none; /* Remove default list styles */
+  list-style-type: none; 
   font-size: 18px;
 }
 
@@ -32,9 +40,7 @@ a:hover {
   text-decoration: underline; /* Underline on hover */
 }
 
-.footer-container{
-    margin-top: 5%;
-}
+
 
 @media (max-width:500px) {
 

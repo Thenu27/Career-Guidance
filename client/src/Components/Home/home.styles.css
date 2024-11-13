@@ -1,41 +1,63 @@
+body{
+  overflow-x: hidden;
+}
+
 .home-container {
   display: flex;
-  align-items: flex-start; /* Align image and content to the top */
-  justify-content: flex-start; /* Keep the content aligned to the left */
-  padding: 20px;
+  flex-direction: row;
+  width:100vw;
+  height: 100vh;
 }
 
 .home-content {
-  flex: 1; /* Allow the content to take the remaining space */
-  margin-left: 15%;
-  align-items: center;
+  margin-left: -1%;
+  margin-right: auto;
+  /* border: 1px solid black; */
+  /* overflow-x: hidden; */
+  height: 80vh;
+  width:77vw;
+
 }
 
 img {
-   /* Set a max width to keep the image responsive */
-  margin-left: 10%; /* Add space between the image and the text */
+  /* margin-left: 5%;  */
   margin-top: 20%;
 }
 
 h1 {
   font-size: 35px;
   text-align: center;
-  margin-left: -25%;
+  /* margin-left: -25%; */
 }
 
-.step-1{
-  padding-bottom: 5px;
-}
+/* .step-1{
+} */
 .allp {
+  margin-top: -1%;
   font-size: 20px;
-  text-align: justify;
+  line-height: 2rem;
+  width:95%;
+  height: 60%;
+  /* border: 1px solid black; */
+  text-align: center;
 }
 
 .steps {
-  line-height: 40px;
+  /* border: 1px solid black; */
+  width:90%;
+  height: 60%;
+  margin-left: auto;
+  margin-top:0%;
+  text-align: left;
 }
 
-.btn_TakeQuiz {
+.btn_TakeQuiz{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.btn_TakeQuiz button {
   margin-top: 20px;
   background-color: #000000;
   border: none;
@@ -45,31 +67,36 @@ h1 {
   transition-duration: 0.4s;
   cursor: pointer;
   border-radius: 10px;
-  margin-left: 15%;
+
 }
 
-.btn_TakeQuiz:hover {
+.btn_TakeQuiz button:hover {
   background-color: #ffffff;
   color: #000000;
-  border: 1px solid #000000;
+  border: 1px solid black;
 }
+/* .home-page-title{
+  width:200vw;
+  height: 20vh;
+  border: 1px solid black;
+} */
 
-@media(max-width:500px){
+@media(max-width:480px){
   
   .home-container {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    max-width: 300px;
-    margin-top: -5%;
-    
-    
+    height: 150vh;  
   }
     
   
   .home-content {
-    width:100%;
+    width:90vw;
+    height: 100vh;
     align-items: center;
+    border: 1px solid black;
+    margin-right: auto;
+    position: relative; 
   } 
   
   img {
@@ -77,6 +104,7 @@ h1 {
     max-width: 300px; /* Set a max width to keep the image responsive */
     margin-left: 0%; /* Add space between the image and the text */
     margin-top: 10%;
+    border:1px solid black
   }
   
   h1 {
@@ -88,10 +116,11 @@ h1 {
   
   .allp {
     font-size: 15px;
-    margin-top: 13%;
-    margin-right: 150px;
+    position: absolute;
+    right:150px;
+    border: 1px solid black;
+    width:60vw;
    
-    width: 280px;
     
    
   }

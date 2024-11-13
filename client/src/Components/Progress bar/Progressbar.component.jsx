@@ -22,11 +22,11 @@ const ProgressBar =() =>{
             </div> 
 
             <div className={`progress-item  ${visitedPages["extraCurricular"]===true?"active":""}`}>
-              <label>ExtraCurrucluar page</label>
+              <label>Extra-Currucluar</label>
             </div> 
 
             <div className={`progress-item  ${visitedPages["OLevelPage"]===true?"active":""}`}>
-              <label>Ordinary Level page</label>
+              <label>Ordinary Level</label>
             </div> 
 
             <div className={`progress-item  ${visitedPages["ALevelPage"]===true?"active":""}`}>
