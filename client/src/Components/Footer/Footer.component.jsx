@@ -3,7 +3,6 @@ import './Footer.styles.css';
 const Footer = () =>{
     return(
         <div className='footer-container'>
-            <hr/>
              <footer>
                
                 <ul>

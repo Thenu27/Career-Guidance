@@ -6,7 +6,11 @@ body{
   display: flex;
   flex-direction: row;
   width:100vw;
-  height: 100vh;
+  height: 85vh;
+    /* border: 1px solid black; */
+    background: linear-gradient(180deg, #FFFCFF 63%, #E1BEE7 100%);
+
+
 }
 
 .home-content {
@@ -87,11 +91,12 @@ h1 {
     display: flex;
     flex-direction: row;
     height: 150vh;  
+    width: 100vw;
   }
     
   
   .home-content {
-    width:90vw;
+    width:70vw;
     height: 100vh;
     align-items: center;
     border: 1px solid black;
@@ -116,13 +121,13 @@ h1 {
   
   .allp {
     font-size: 15px;
-    position: absolute;
-    right:150px;
+
     border: 1px solid black;
-    width:60vw;
+    width:90vw;
+    margin-left: -40%;
+    margin-top: 15%;
    
-    
-   
+
   }
   
   .steps {

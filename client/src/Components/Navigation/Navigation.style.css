@@ -5,6 +5,10 @@
   justify-content: space-between;
   padding: 2vh 3vw;
   gap: 5vw;
+  border-bottom: 1px solid black;
+  background: linear-gradient(0deg, rgba(240, 231, 189, 0) 13%, rgba(165, 214, 167, 1) 100%);
+  padding-bottom: 1.5%;
+ 
 }
 
 /* Logo section using Flexbox and flexible units */
@@ -12,6 +16,8 @@
   display: flex;
   gap: 2vw;
   font-size: clamp(1.2rem, 1vw, 2.5rem);
+  /* margin-top: auto;
+  margin-bottom: auto; */
 }
 
 .logos a {
@@ -24,12 +30,16 @@
   display: flex;
   gap: 4vw;
   margin-left: auto;
+  /* margin-top: auto;
+  margin-bottom: auto; */
 }
 
 .nav-links a {
   text-decoration: none;
   color: inherit;
   font-size: clamp(0.7rem, 1vw, 1.5rem);
+  /* margin-top: auto;
+  margin-bottom: auto; */
 }
 
 @media (max-width: 500px) {

@@ -6,13 +6,16 @@ footer {
   border-top: 1px solid #ffffff; /* Optional border for separation */
   margin-left: 20%; /* Adjust as needed */
   margin-right: 20%; /* Add right margin to center the footer */
-  overflow-x: hidden;
+  background: transparent;
+
 
 }
 
 .footer-container{
-  /* margin-top: -2%; */
   margin: auto;
+  border-top: 1px solid black;
+  background: linear-gradient(180deg, #E1BEE7 20%, rgba(196, 243, 198, 1) 100%);
+
 
 }
 
