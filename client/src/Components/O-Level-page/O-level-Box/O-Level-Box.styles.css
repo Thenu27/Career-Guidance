@@ -34,5 +34,14 @@
     text-align: center;
 }
 
+.O-level-box-back-btn{
+    width:30%;
+    margin-top: 1%;
+}
+.O-level-box-back-btn button{
+    width:100%;
+    height: 100%;
+}
+
 
 

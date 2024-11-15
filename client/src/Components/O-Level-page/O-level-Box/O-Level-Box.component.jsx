@@ -30,7 +30,9 @@ const OrdinaryLevelBox = () =>{
                 <button onClick={goToLocalCommonSubjects} className='O-level-btn'>Local</button>
                 <button onClick={goToLondonStreamBox} className='O-level-btn'>London</button>
                 <button onClick={HaventDoneBtnHandler} className='O-level-btn'>Havent Done</button>
-                <button  className='backbtn'>Back</button>
+                <div className='O-level-box-back-btn'>
+                <button  className='nextbtn'>Back</button>
+                </div>
 
             </div>
         </div>

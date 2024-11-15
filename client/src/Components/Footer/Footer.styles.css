@@ -12,7 +12,7 @@ footer {
 }
 
 .footer-container{
-  margin: auto;
+  /* margin-top: 5%; */
   border-top: 1px solid black;
   background: linear-gradient(180deg, #E1BEE7 20%, rgba(196, 243, 198, 1) 100%);
 

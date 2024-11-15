@@ -20,6 +20,9 @@
     display: flex;
     flex-direction: row;
     gap: 20px;
+    height: 83vh;
+    background: linear-gradient(180deg, #FFFCFF 63%, #E1BEE7 100%);
+
 }
 
 .career-page-frog-comment{

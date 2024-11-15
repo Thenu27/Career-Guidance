@@ -45,16 +45,18 @@ const OrdinaryLevelPage= ()=>{
     }
     return(
         <div className='O-level-page-container'>
-            <div className='frog-img-comment-container'>
-                <Image/>
+                 <div className='O-Level-frog'>
+                    <Image/>
+                </div>
                 
                     <div className='frog-comment'>
-                        <p>Please select your A-Level status:</p>
-                        <p>London O-LevelsWe'll refine career options based on your London O-Level results.
-                        Local O-LevelsWe'll adjust suggestions according to your local O-Level results.
-                        I Haven’t Done O-LevelsWe'll rely on your MIP score and other information. </p>
+                       <div className='frog-comment-content'>
+                            <p>Please select your A-Level status:</p>
+                            <p>London O-LevelsWe'll refine career options based on your London O-Level results.
+                            Local O-LevelsWe'll adjust suggestions according to your local O-Level results.
+                            I Haven’t Done O-LevelsWe'll rely on your MIP score and other information. </p>
+                       </div> 
                     </div>
-            </div>
             {renderOLevelBox()}
 
         </div>

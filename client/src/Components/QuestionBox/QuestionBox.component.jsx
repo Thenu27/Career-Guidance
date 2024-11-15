@@ -50,8 +50,9 @@ const QuestionBox =({setquestionAndAnswers,value,setValue,questionsDividedIntoFi
                     return <div key={index} className='question-box-side-box-container'>
                                 <div  className='Question-box'>
                                         <p className='question'>{Question[quesId]}</p><br/>
-                                        <input className='answer' onChange={(event)=>valueHandler(globalIndex,event,quesId)} type="range" value={value[globalIndex]}  name="vol" min="1" max="10"/>
-                                       
+                                        <div className='answer'>
+                                          <input  onChange={(event)=>valueHandler(globalIndex,event,quesId)} type="range" value={value[globalIndex]}  name="vol" min="1" max="10"/>
+                                       </div>
                                 </div>
                                 <div className='side-box'>
                                    <p className='answer-value'>{value[globalIndex]}</p> 

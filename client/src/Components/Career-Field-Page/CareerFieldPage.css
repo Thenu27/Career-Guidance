@@ -1,8 +1,6 @@
 .frog-comment-career-field-page{
-    width: auto;
-    max-width: 300px;
-    height: auto;
-    
+    width:20vw;
+    height: 40vh;
     border: 1px solid black;
     border-radius: 10px;
     margin-top: 3%;
@@ -14,5 +12,8 @@
 .Career-Field-Page{
     display: flex;
     flex-direction: row;
-    gap:60px
+    gap:60px;
+    height: 85vh;
+    background: linear-gradient(180deg, #FFFCFF 63%, #E1BEE7 100%);
+
 }

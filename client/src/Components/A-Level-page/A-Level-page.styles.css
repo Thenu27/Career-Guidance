@@ -1,14 +1,19 @@
+.Advance-level-page{
+    display: flex;
+    flex-direction: row;
+    gap:90px;
+    background: linear-gradient(180deg, #FFFCFF 63%, #E1BEE7 100%);
+    height: 83vh;
+
+}
+
+
 .Advance-level-description{
     width:300px;
     height: 300px;
     line-height: 30px;
 }
 
-.Advance-level-page{
-    display: flex;
-    flex-direction: row;
-    gap:90px
-}
 
 .frog-comment-A-level-page{
     width:200px;

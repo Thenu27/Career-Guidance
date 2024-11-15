@@ -11,7 +11,10 @@
 .calculationPage-container{
     display: flex;
     flex-direction: row;
-    gap:500px
+    gap:500px;
+    height: 85vh;
+    background: linear-gradient(180deg, #FFFCFF 63%, #E1BEE7 100%);
+
 }
 
 .calculating-title{

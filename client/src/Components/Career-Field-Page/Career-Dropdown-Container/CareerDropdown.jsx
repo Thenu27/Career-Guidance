@@ -55,7 +55,9 @@ const CareerDropdownContainer = () =>{
                         </div>
                     })}
                 </div>
-                <button onClick={submitBtnHandler}  className='nextbtn career-field-dropdown-submit-btn'>Submit</button>
+                <div className='career-field-dropdown-submit-btn'>
+                    <button onClick={submitBtnHandler}  className='nextbtn '>Submit</button>
+                </div>
             </div>
         </div>
     )

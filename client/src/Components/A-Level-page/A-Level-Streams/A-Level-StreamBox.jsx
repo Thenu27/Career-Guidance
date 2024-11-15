@@ -13,8 +13,9 @@ const ALevelStreamBox=()=>{
                     <button onClick={goToALevelScience} className='A-Level-Stream-btn'>Science</button>
                     <button onClick={goToALevelLocalCommerce} className='A-Level-Stream-btn'>Commerce</button>
                 </div>   
-        
+                <div className='A-level-category-back-btn'>
                 <button onClick={goToALevelCategory} className='backbtn A-Level-Stream-backbtn'>Back</button>
+                </div>
      
             
             </>

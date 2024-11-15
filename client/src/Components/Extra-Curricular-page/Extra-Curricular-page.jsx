@@ -30,17 +30,19 @@ import { ProgressContext } from '../../context/progress.context';
        navigate("/Ordinarylevelpage");
     }
     return(
-        <>
-        <div className='extra-curricular-image'>
-            <ExtraCurricularBox/>
-            <Image/>
-            
-            </div>   
-            <div className='extra-curricular-back-next-btn'>
-                <button className='backbtn'>Back</button>
-                <button onClick={skipbtnHandler} className='nextbtn'>Skip</button>
-            </div>
-         </>
+        <div className='extra-curricular-page'>
+
+          <div className='extra-curricular-image'>
+              <ExtraCurricularBox/>
+              <Image/>
+              
+              </div>   
+              <div className='extra-curricular-back-next-btn'>
+                  <button className='backbtn'>Back</button>
+                  <button onClick={skipbtnHandler} className='nextbtn'>Skip</button>
+              </div>
+              
+         </div>
         
     )
  }

@@ -25,7 +25,9 @@ const ALevelCategory=()=>{
                 <button onClick={goToStreams} className='A-level-btn'>Local</button>
                 <button onClick={goToALevelLondonCategory} className='A-level-btn'>London</button>
                 <button onClick={goToCalculatingPage} className='A-level-btn'>Havent Done</button>
-                <button onClick={goToOLevelPage} className='backbtn'>Back</button>
+                <div className='A-level-category-back-btn'>
+                    <button onClick={goToOLevelPage} className='backbtn'>Back</button>
+                </div>
 
             </div>
         </div>

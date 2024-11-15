@@ -2,14 +2,51 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    background: linear-gradient(180deg, #FFFCFF 63%, #E1BEE7 100%);
+
 
 }
 .option-container{
-    width: 600px;
-    height: 500px;
+    
+    margin-top: 3%;
+    margin-bottom: 5%;
+    width: 40vw;
+    height: 70vh;
     border:3px solid black;
     border-radius: 10px;
-    margin-left: 10%;
-    margin-top: 2%;
+    display: flex;
+    flex-direction: column;
+    gap:60%
 }
 
+.option-container-content{
+    
+    width:90%;
+    height:95%;
+    /* border: 1px solid black; */
+    margin: auto;
+}
+
+.option-container-content h2{
+    font-size: 200%;
+    text-align: center;
+}
+
+.option-btn-container{
+    /* border: 1px solid black; */
+    width:80%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    gap:20%;
+    margin:auto
+}
+
+.option-btn-container button{
+    width: 30%;
+    margin: auto;
+}
+
+.option-container-content p{
+    font-size: 120%;
+}
