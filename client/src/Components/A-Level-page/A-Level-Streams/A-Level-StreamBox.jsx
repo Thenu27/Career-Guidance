@@ -7,14 +7,18 @@ const ALevelStreamBox=()=>{
    const {goToALevelCategory,goToALevelLocalMaths,goToALevelScience,goToALevelLocalCommerce} = useContext(ALevelContext);
     return(
             <>
-                <h2 className='A-Level-Stream-title'>A Level Stream</h2>
-                <div className='A-Level-Stream-btn-container'>
-                    <button onClick={goToALevelLocalMaths} className='A-Level-Stream-btn'>Maths</button>
-                    <button onClick={goToALevelScience} className='A-Level-Stream-btn'>Science</button>
-                    <button onClick={goToALevelLocalCommerce} className='A-Level-Stream-btn'>Commerce</button>
+                <div className='O-level-box-title-container'>
+                         <h2 className='O-level-box-title'>Select Advanced Level Stream from the foloowing</h2>
+                 </div>
+                 <div className='O-level-box'>
+                <div className='O-level-btn-container'>
+                    <button onClick={goToALevelLocalMaths} className='O-level-btn'>Maths</button>
+                    <button onClick={goToALevelScience} className='O-level-btn'>Science</button>
+                    <button onClick={goToALevelLocalCommerce} className='O-level-btn'>Commerce</button>
                 </div>   
-                <div className='A-level-category-back-btn'>
-                <button onClick={goToALevelCategory} className='backbtn A-Level-Stream-backbtn'>Back</button>
+                <div className='O-level-box-back-btn'>
+                <button onClick={goToALevelCategory} className='nextbtn'>Back</button>
+                </div>
                 </div>
      
             

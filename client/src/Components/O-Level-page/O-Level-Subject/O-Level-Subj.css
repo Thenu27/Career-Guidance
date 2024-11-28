@@ -1,0 +1,14 @@
+.O-level-subject-component {
+  grid-column: 1/9;
+  grid-row: 2/8;
+  gap: 1%;
+}
+@media (min-width: 1400px) and (max-width: 1600px) {
+  .O-level-subject-component {
+    grid-column: 8/15;
+    grid-row: 3/16;
+    padding-bottom: 7%;
+    padding-top: 2%;
+    border: 1px solid black;
+  }
+}

@@ -1,95 +1,161 @@
-.intelligence-box{
-    display: flex;
-    flex-direction: column;
-    width: 400px;
-    height: 580px;
-    border: 1px solid black;
-    border-radius: 10px;
-    margin-top: 0%;
+.intelligence-page-container {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  height: 110vh;
+}
+.intelligence-title-container {
+  grid-column: 4/9;
+  padding-top: 7%;
 }
 
-.intelligence-page-container{
-    display: flex;
-    flex-direction: row;
-    gap:200px;
-    height: 85vh;
-    background: linear-gradient(180deg, #FFFCFF 63%, #E1BEE7 100%);
-
+.intelligence-box-container {
+  padding-left: 2%;
+  display: flex;
+  flex-direction: column;
+  /* width: 100vw; */
+  /* margin-left: auto;
+  margin-right: auto; */
+  grid-column: 1/9;
+  grid-row: 2/8;
 }
 
-.intelligence-page-description{
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    line-height: 30px;
+.intelligence-btns-container {
+  width: 98%;
+  height: 99%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5%;
+  border: 5px solid black;
+  padding: 2%;
+  border-radius: 10px;
 }
 
-.career-selection-btn{
-    background-color: black;
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
+.intelligence-btn {
+  background-color: black;
+  color: white;
+  width: 70%;
+  height: 25%;
+  text-align: center;
+  align-content: center;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 100%;
 }
 
-.intelligence-btn{
-    background-color: black;
-    color: white;
-    padding: 15px;
-    width:300px;
-    border-radius: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    height: 23px;
-    font-size: 100%;
-    text-align: left;
-    padding-left: 5%;
+.intelligence-page-navigation {
+  grid-template-rows: 8/9;
+  grid-column: 1/9;
+  display: flex;
+  flex-direction: row;
 }
 
-.intelligence-btns-container{
-    display: flex;
-    flex-direction: column;
-    gap:5px;
-    margin-top: -2%;
+.intelligence-page-navigation .nextbtn {
+  width: 37%;
+  height: 55%;
+  padding: 2%;
+  text-align: center;
+  align-content: center;
 }
-.intelligence-box-container-title{
-    text-align: center;
-    margin-top: 2%;
+
+.intelligence-page-description {
+  display: none;
+  /* display: flex;
+  flex-direction: column;
+  width: 300px;
+  line-height: 30px; */
+}
+
+.career-selection-btn {
+  background-color: black;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  display: none;
+}
+
+.intelligence-box-container-title {
+  text-align: center;
+  /* margin-top: 2%; */
+  display: none;
 }
 
 .tooltip {
-    position: relative;
-    display: inline-block;
+  position: relative;
+}
 
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: rgb(255, 255, 255);
+  color: #000000;
+  text-align: center;
+  border-radius: 6px;
+  border: 1px solid black;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 105%;
+}
+
+.tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  left: 100%; /* To the right of the tooltip */
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent black;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+@media (min-width: 1200px) and (max-width: 1600px) {
+  .intelligence-page-container {
+    height: 90vh;
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    grid-template-rows: repeat(16, 1fr);
   }
-  
-  .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: rgb(255, 255, 255);
-    color: #000000;
-    text-align: center;
-    border-radius: 6px;
+  .O-Level-frog {
+    grid-column: 1/5;
+    grid-row: 2/11;
+  }
+  .intelligence-box-container {
+    grid-column: 7/12;
+    grid-row: 1/14;
+  }
+  .intelligence-page-navigation {
+    grid-column: 7/12;
+    grid-row: 14/16;
+    padding-bottom: 7%;
+  }
+  .intelligence-title-container {
+    display: none;
+    grid-column: 4/11;
+    grid-row: 1/2;
+    font-size: 100%;
     border: 1px solid black;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    top: -5px;
-    right: 105%;
-    
+    padding: 0%;
+    align-content: center;
+    text-align: center;
   }
-
-  .tooltip .tooltiptext::after {
-    content: " ";
-    position: absolute;
-    top: 50%;
-    left: 100%; /* To the right of the tooltip */
-    margin-top: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent transparent black;
+  .intelligence-page-title {
+    font-weight: 900;
+    font-size: 180%;
   }
-  
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
+  .intelligence-page-description {
+    display: block;
+    grid-column: 12/16;
+    grid-row: 2/12;
+    font-size: 140%;
   }
+  .intelligence-page-navigation .nextbtn {
+    height: 100%;
+  }
+}

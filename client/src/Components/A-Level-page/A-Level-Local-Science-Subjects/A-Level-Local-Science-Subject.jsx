@@ -36,9 +36,13 @@ const ALevelLocalScienceSubject = ()=>{
     }
 
     return(
-        <div>
+        
              <>
-            <h2 className='O-level-subject-box-title'>Select A Level Science Subjects you have Done</h2>
+               <div className='O-level-box-title-container'>
+                   <h2 className='O-level-subject-box-title'>Select A Level Science Subjects you have Done</h2>
+               </div>
+               <div className='O-level-subject-component'>
+
             <div className='O-level-subject-box'>
 
             <h2 className='O-level-subject-title'>Science Subjects</h2>
@@ -52,12 +56,12 @@ const ALevelLocalScienceSubject = ()=>{
 
                 </div>
                 <div className='O-level-common-subjects-back-next-btn'>
-                    <button onClick={goToStreams} className='backbtn '>Back</button>
+                    <button onClick={goToStreams} className='nextbtn '>Back</button>
                     <button  className='nextbtn '>Next</button>
                 </div>
             </div>
+            </div>
         </>
-        </div>
     )
 }
 

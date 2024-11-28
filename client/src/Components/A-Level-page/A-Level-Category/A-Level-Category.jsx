@@ -17,20 +17,26 @@ const ALevelCategory=()=>{
     const {goToStreams,goToALevelLondonCategory} = useContext(ALevelContext);
 
     return(
-        <div>
-            <h2>Select Advanced Level Category</h2>
-
-            <div className='Advance-level-btn-container'>
-
-                <button onClick={goToStreams} className='A-level-btn'>Local</button>
-                <button onClick={goToALevelLondonCategory} className='A-level-btn'>London</button>
-                <button onClick={goToCalculatingPage} className='A-level-btn'>Havent Done</button>
-                <div className='A-level-category-back-btn'>
-                    <button onClick={goToOLevelPage} className='backbtn'>Back</button>
-                </div>
-
-            </div>
+        <>  
+        <div className='O-level-box-title-container'>
+            <h2 className='O-level-box-title'>Select Advanced Level Category ftom the foloowing</h2>
         </div>
+        <div className='O-level-box'>
+           <div className='O-level-btn-container'>
+
+                <button onClick={goToStreams} className='O-level-btn'>Local</button>
+                <button onClick={goToALevelLondonCategory} className='O-level-btn'>London</button>
+                <button onClick={goToCalculatingPage} className='O-level-btn'>Havent Done</button>
+            </div>
+            <div className='O-level-box-back-btn'>
+                    <button onClick={goToOLevelPage} className='nextbtn'>Back</button>
+            </div>
+
+        </div>
+        
+
+
+        </>
     )
 }
 

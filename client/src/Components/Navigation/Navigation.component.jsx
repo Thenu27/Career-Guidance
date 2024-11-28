@@ -17,7 +17,6 @@ const Navigation = ()=>{
                         </div>   
 
                    </div>
-                    {/* <hr/> */}
                     <ProgressBar/>
                    
                 </>                  

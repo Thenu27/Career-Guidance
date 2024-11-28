@@ -6,6 +6,8 @@ import { Question } from '../../Question-Data';
 const QuestionBox =({setquestionAndAnswers,value,setValue,questionsDividedIntoFive,IndexOfQuestionShown,shufulledQuestions})=>{
 
     const navigate = useNavigate();
+
+
     
     useEffect(() => {
         if (shufulledQuestions.length > 0) {
@@ -14,18 +16,27 @@ const QuestionBox =({setquestionAndAnswers,value,setValue,questionsDividedIntoFi
         }
       }, [shufulledQuestions]);
 
+
+
+
+
+
     useEffect(() => {
         if (questionsDividedIntoFive.length > 0 &&  IndexOfQuestionShown >= questionsDividedIntoFive.length) {
           navigate('/Option');
         }
       }, [IndexOfQuestionShown, navigate, questionsDividedIntoFive.length]);
+
+
+
+
+
     
     const valueHandler=(globalIndex,event,quesId)=>{
         const newValues=[...value];
         newValues[globalIndex]=event.target.value;
         setValue(newValues);
-
-      setquestionAndAnswers((prev)=>({
+    setquestionAndAnswers((prev)=>({
         ...prev,
         [quesId]:{
           question:Question[quesId],
@@ -34,38 +45,49 @@ const QuestionBox =({setquestionAndAnswers,value,setValue,questionsDividedIntoFi
       }))
 
     }
+
+
+
+
+
     
     if(!questionsDividedIntoFive.length ){
         return null
     }    
 
+
+
+
+
     if(IndexOfQuestionShown<questionsDividedIntoFive.length){
     
     return(
        
-        <div className='Question-box-container'>
+        <div className='question-box-container'>
              {questionsDividedIntoFive[IndexOfQuestionShown].map((quesId,index)=>{
                 const globalIndex = (IndexOfQuestionShown*5)+index;
 
-                    return <div key={index} className='question-box-side-box-container'>
-                                <div  className='Question-box'>
-                                        <p className='question'>{Question[quesId]}</p><br/>
-                                        <div className='answer'>
-                                          <input  onChange={(event)=>valueHandler(globalIndex,event,quesId)} type="range" value={value[globalIndex]}  name="vol" min="1" max="10"/>
-                                       </div>
+                     
+                return   <div key={index} className='question-box-side-box-container'>
+                              
+                               <div  className='question-box'>   
+                                     <p className='question'>{Question[quesId]}</p><br/>                                       
+                                      <div className='answer'>
+                                            <input  onChange={(event)=>valueHandler(globalIndex,event,quesId)} type="range" value={value[globalIndex]}  name="vol" min="1" max="10"/>
+                                      </div>
                                 </div>
-                                <div className='side-box'>
-                                   <p className='answer-value'>{value[globalIndex]}</p> 
+                                  <div className='side-box'>
+                                    <p className='answer-value'>{value[globalIndex]}</p> 
                                 </div>
-                           </div>
+                               
+                          </div>
                
-                })}
+                })} 
             
         </div>
         
         )
      }
     }
-// }
 
 export default QuestionBox;

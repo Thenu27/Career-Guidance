@@ -33,6 +33,7 @@ const OrdinaryLevelPage= ()=>{
 
     
     const renderOLevelBox=()=>{
+        
         if(showOLevelBox){
            return <OrdinaryLevelBox/>
         }else if(showOLevelSubj){
@@ -43,6 +44,7 @@ const OrdinaryLevelPage= ()=>{
             return <OLevelResults/>
         }
     }
+    
     return(
         <div className='O-level-page-container'>
                  <div className='O-Level-frog'>
@@ -54,9 +56,10 @@ const OrdinaryLevelPage= ()=>{
                             <p>Please select your A-Level status:</p>
                             <p>London O-LevelsWe'll refine career options based on your London O-Level results.
                             Local O-LevelsWe'll adjust suggestions according to your local O-Level results.
-                            I Haven’t Done O-LevelsWe'll rely on your MIP score and other information. </p>
+                            I Haven’t Done O-Levels We'll rely on your MIP score and other information. </p>
                        </div> 
                     </div>
+                    
             {renderOLevelBox()}
 
         </div>

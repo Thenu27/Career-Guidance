@@ -1,5 +1,9 @@
-
-img{
+/* img{
     width:400px;
     height:400px;
+} */
+
+
+img {
+  @apply w-full h-full;
 }

@@ -1,45 +1,49 @@
-.career-box{
-    height: 150px;
-    width:500px;
-    border: 1px solid black;
-    border-radius: 10px;
+.career-field-page {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
 }
 
-.career-box-container{
-    display:flex;
-    flex-direction: column;
-    gap:10px;
+.career-box {
+  height: 150px;
+  width: 500px;
+  border: 1px solid black;
+  border-radius: 10px;
 }
 
-.career-side-description{
-    width: 400px;
+.career-box-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.Carrer-page{
-    
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    height: 83vh;
-    background: linear-gradient(180deg, #FFFCFF 63%, #E1BEE7 100%);
-
+.career-side-description {
+  width: 400px;
 }
 
-.career-page-frog-comment{
-    height: 100px;
-    width:200px;
-    border: 1px solid black;
-    border-radius: 10px;
+.Carrer-page {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  height: 83vh;
+  background: linear-gradient(180deg, #fffcff 63%, #e1bee7 100%);
 }
 
-.career-page-frog{
-    display: flex;
-    flex-direction: row;
-    gap:5px;
+.career-page-frog-comment {
+  height: 100px;
+  width: 200px;
+  border: 1px solid black;
+  border-radius: 10px;
 }
 
-.career-page-back-next-btn{
-    display: flex;
-    flex-direction: row;
-    gap:10px;
+.career-page-frog {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.career-page-back-next-btn {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }

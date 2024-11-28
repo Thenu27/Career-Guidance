@@ -3,8 +3,8 @@ import './Footer.styles.css';
 const Footer = () =>{
     return(
         <div className='footer-container'>
-             <footer>
-               
+             
+              <div className='m-auto flex flex-row gap-2 h-full w-[95%] text-sm'>
                 <ul>
                     <li><strong>Contact Us</strong></li>
                     <li><a href="mailto:email@gmail.com">email@gmail.com</a></li>
@@ -20,7 +20,8 @@ const Footer = () =>{
                     <li><strong>Information</strong></li>
                     <li>Lorem ipsum dolor sit amet,<br /> consectetur adipiscing elit.</li>
                 </ul>
-            </footer>
+                </div> 
+            
         </div>
     )
 }

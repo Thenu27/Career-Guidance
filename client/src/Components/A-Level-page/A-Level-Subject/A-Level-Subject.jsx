@@ -19,12 +19,10 @@ const ALevelSubject =()=>{
         }
     }
     return(
-        <div>
-            <div className='O-level-subject-component'>
-                {renderComponents()}
+        <>
+          {renderComponents()}
+        </>
 
-            </div>
-        </div>
     )
 }
 

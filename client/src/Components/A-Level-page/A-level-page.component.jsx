@@ -37,8 +37,10 @@ const AdvanceLevelPage=()=>{
         }
     }
     return(
-        <div className='Advance-level-page'>
-            <Image/>
+        <div className='O-level-page-container'>
+            <div className='O-Level-frog'>
+                 <Image/>
+            </div>
             <div className='frog-comment-A-level-page'>
                 <p>Select Option to Chose</p>
             </div>

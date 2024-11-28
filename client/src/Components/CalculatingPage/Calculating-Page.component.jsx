@@ -38,10 +38,12 @@ const CalculatingPage = () =>{
    },[navigate])
 
     return(
-        <div className='calculationPage-container'>
-            <Image/>
-            <div className='Calculating-box-container'>
-                <h1 className='calculating-title'>Calculating Multiple Intelligence score</h1>
+        <div className='calculating-page-container'>
+            <div className='calculating-frog'>
+                <Image/>
+            </div>
+            <div className='calculating-title-container'>
+                <h1 className='calculating-title'>Calculating Multiple Intelligence Score</h1>
             </div>
         </div>
     )

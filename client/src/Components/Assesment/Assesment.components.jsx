@@ -29,9 +29,13 @@ import { ProgressContext } from '../../context/progress.context';
 
     return(
         <div className="question-user-container">
-            <Image/>
+            <div className='question-page-frog'>
+                <Image/>
+            </div>
             <QuestionContainer/>
+            <div className='user-info-container'>
             <UserInformation/>
+            </div>
             
 
         </div>

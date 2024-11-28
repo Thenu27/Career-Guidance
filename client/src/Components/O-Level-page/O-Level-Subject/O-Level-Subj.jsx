@@ -11,16 +11,17 @@ const OLevelSubj = ()=>{
 
     const renderSubject=()=>{
         if(showOLevelLocalSubj){
-            return <OLevelMainLocalSubjects  />
+
+           return <OLevelMainLocalSubjects  />
         }else if(showOLevelBasketSubjects){
             return <OLevelBasketLocal />
         }
     }
 
     return(
-        <div className='O-level-subject-component'>
+        <>
             {renderSubject()}
-        </div>
+        </>
     )
 }
 

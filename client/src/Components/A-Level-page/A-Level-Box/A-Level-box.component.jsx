@@ -28,9 +28,9 @@ const AdvanceLevelBox=()=>{
 
 
     return(
-        <div className='Advance-level-box'>            
+        <>
             {renderALevelBox()}
-        </div>
+        </>
     )
 }
 

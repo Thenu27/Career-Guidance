@@ -1,58 +1,52 @@
-body{
+/* body {
   overflow-x: hidden;
 }
 
 .home-container {
   display: flex;
   flex-direction: row;
-  width:100vw;
+  width: 100vw;
   height: 85vh;
-    /* border: 1px solid black; */
-    background: linear-gradient(180deg, #FFFCFF 63%, #E1BEE7 100%);
-
-
+  background: linear-gradient(180deg, #fffcff 63%, #e1bee7 100%);
 }
 
 .home-content {
   margin-left: -1%;
   margin-right: auto;
-  /* border: 1px solid black; */
-  /* overflow-x: hidden; */
-  height: 80vh;
-  width:77vw;
-
+  border: 1px solid black;
+  height: 95%;
+  width: 77%;
 }
 
 img {
-  /* margin-left: 5%;  */
   margin-top: 20%;
 }
 
 h1 {
   font-size: 35px;
   text-align: center;
-  /* margin-left: -25%; */
 }
 
-/* .step-1{
-} */
+
 .allp {
   margin-top: -1%;
   font-size: 20px;
-  line-height: 2rem;
-  width:95%;
+  width: 95%;
   height: 60%;
-  /* border: 1px solid black; */
   text-align: center;
 }
 
 .steps {
-  /* border: 1px solid black; */
-  width:90%;
+  width: 90%;
   height: 60%;
   margin-left: auto;
-  margin-top:0%;
+  margin-top: 0%;
   text-align: left;
+}
+
+.take-quiz-btn {
+  @apply bg-black  text-white 
+ w-40;
 }
 
 .btn_TakeQuiz{
@@ -62,7 +56,6 @@ h1 {
 }
 
 .btn_TakeQuiz button {
-  margin-top: 20px;
   background-color: #000000;
   border: none;
   color: white;
@@ -78,85 +71,332 @@ h1 {
   background-color: #ffffff;
   color: #000000;
   border: 1px solid black;
-}
-/* .home-page-title{
-  width:200vw;
-  height: 20vh;
-  border: 1px solid black;
 } */
 
-@media(max-width:480px){
-  
+/* @media (max-width: 500px) {
   .home-container {
     display: flex;
     flex-direction: row;
-    height: 150vh;  
+    height: 67vh;
     width: 100vw;
   }
-    
-  
+
   .home-content {
-    width:70vw;
-    height: 100vh;
+    width: 70vw;
+    height: 70vh;
     align-items: center;
-    border: 1px solid black;
     margin-right: auto;
-    position: relative; 
-  } 
-  
-  img {
-    width: 100px; /* Adjust the size of the image */
-    max-width: 300px; /* Set a max width to keep the image responsive */
-    margin-left: 0%; /* Add space between the image and the text */
-    margin-top: 10%;
-    border:1px solid black
   }
-  
-  h1 {
-    
+
+  img {
+    width: 120%; 
+    height: 25%;
+    margin-top: 8%;
+  }
+
+  .home-container h1 {
     font-size: 25px;
     text-align: center;
-   
+    margin-top: 10%;
   }
-  
+
   .allp {
     font-size: 15px;
 
-    border: 1px solid black;
-    width:90vw;
-    margin-left: -40%;
+    width: 150%;
+    height: 60%;
+    margin-left: -55%;
     margin-top: 15%;
-   
-
+    display: flex;
+    flex-direction: column;
   }
-  
+
   .steps {
     margin-top: -2%;
-    line-height: 20px;
+    line-height: 135%;
   }
-  
-  .btn_TakeQuiz {
-    margin-top: 10px;
-    width:200px;
-    background-color: #000000;
-    border: none;
-    color: white;
-    padding: 8px 16px;
-    font-size: 20px;
-    transition-duration: 0.4s;
-    cursor: pointer;
-    border-radius: 10px;
-    margin-left: 5%;
-  }
-  
+
   .btn_TakeQuiz:hover {
     background-color: #ffffff;
     color: #000000;
-    border: 1px solid #000000;
   }
 
-.last-p{
-  margin-top: 0%;
+  .btn_TakeQuiz {
+    width: 60%;
+    height: 17%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 13%;
+  }
+
+  .btn_TakeQuiz button {
+    width: 100%;
+    height: 100%;
+    font-size: 150%;
+  }
+
+  .last-p {
+    margin-top: -20%;
+    margin: auto;
+    line-height: 130%;
+  }
+
+  .intro-text {
+    display: none;
+  }
+} */
+/* .App {
+  @apply h-[115vh] w-full ipxr:h-[120vh];
 }
 
+.home-container {
+  @apply bg-[linear-gradient(180deg,#fffcff_63%,#e1bee7_100%)]  flex  flex-row  flex-wrap gap-2  text-base  w-full min-h-[85vh] se:min-h-[95vh] ip12:min-h-[75vh] ipxr:min-h-[70vh];
+}
+/* border border-solid border-black */
+/* 
+.welcome-title {
+  @apply border border-solid border-black w-[65%] ipadAir:w-[65%] text-center h-[40%] mt-3 ipadAir:mt-[1%] ipadAir:ml-[3%]  font-bold text-2xl ipadAir:text-3xl ipadAir:leading-[140%];
+}
+
+.home-page-frog {
+  @apply w-32 ipadAir:w-[22%] ipadAir:h-[13vh] ipadAir:-mt-[0%] border border-solid border-black h-32 mt-2;
+}
+
+.allp {
+  @apply text-base ipadAir:text-[110%] ipxr:min-h-[40%] min-h-[45%] s8:-mt-[16%] ipadAir:-mt-[52%] se:min-h-[73%] w-[90%] -mt-[37%] ipxr:-mt-[45%] se:-mt-[18%] ml-auto mr-auto text-center flex flex-col gap-5;
+}
+
+.steps {
+  @apply flex flex-col gap-3 ipxr:mt-[27%] se:mt-[1%] ip12:mt-[20%];
+}
+
+.intro-text {
+  @apply hidden;
+}
+
+.take-quiz-btn {
+  @apply w-[60%] min-h-[13%] imini:min-h-[10%] ipadAir:min-h-[7vh]  bg-black text-white text-center mt-1  se:-mt-[1%] ml-auto mr-auto rounded-xl  
+   hover:bg-white hover:text-black hover:border border-solid border-black text-[120%];
+}
+
+.take-quiz-btn button {
+  @apply w-full h-full;
+} */
+
+/* @media screen and (min-width: 456px) and (max-width: 770px) {
+  .home-container {
+    display: grid;
+    background-color: #2196f3;
+
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(15, 2%);
+    /* grid-template-areas:
+      "image  welcome-title"
+      "home-content  home-content";
+    row-gap: 10%; */
+.App {
+  background: linear-gradient(
+    90deg,
+    rgba(225, 190, 231, 1) 0%,
+    rgba(255, 252, 255, 1) 23%,
+    rgba(255, 252, 255, 1) 77%,
+    rgba(225, 190, 231, 1) 100%
+  );
+}
+.home-container {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+}
+.home-page-frog {
+  grid-column: 1/4;
+  grid-row: 1/3;
+  padding-top: 10%;
+}
+.welcome-title {
+  grid-column: 4/9;
+  grid-row: 1/3;
+  font-size: 150%;
+  font-weight: 1000;
+  padding-top: 5%;
+}
+.allp {
+  grid-column: 1/9;
+  grid-row: 3/8;
+  font-size: 102%;
+  padding: 5%;
+  /* padding-bottom: 55%; */
+}
+.step-container {
+  padding-top: 3%;
+}
+.step-container > div {
+  padding-top: 2%;
+}
+.intro-text {
+  display: none;
+}
+.take-quiz-btn {
+  grid-column: 3/6;
+  grid-row: 8/9;
+  border-radius: 10px;
+  padding-top: 10%;
+}
+.take-quiz-btn :hover {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.take-quiz-btn button {
+  background-color: black;
+  margin-bottom: auto;
+  color: white;
+  width: 100%;
+  height: 85%;
+  border-radius: 10px;
+  font-size: 95%;
+}
+
+/* iphone12 pro */
+@media (max-width: 415px) and (min-width: 390px) {
+  .home-container {
+    border: 1px solid rgb(102, 0, 255);
+    height: 79vh;
+  }
+  .allp {
+    grid-row: 7/15;
+  }
+}
+
+/* iphoneXR pixel7 S20Ultra */
+@media (max-width: 415px) and (min-width: 400px) {
+  .home-container {
+    border: 1px solid red;
+    height: 78vh;
+  }
+  .home-page-frog {
+    grid-row: 1/5;
+    margin-top: 10%;
+  }
+  .allp {
+    grid-row: 7/15;
+    padding-top: 0%;
+    margin-top: -5%;
+  }
+  .step-container > div {
+    padding-top: 5%;
+  }
+  .welcome-title {
+    grid-row: 1/3;
+  }
+  .take-quiz-btn {
+    grid-row: 22/24;
+  }
+}
+
+/* iphone 14 pro */
+@media (max-width: 460px) and (min-width: 415px) {
+  .home-container {
+    height: 98vh;
+  }
+  .home-page-frog {
+    grid-row: 1/4;
+    margin-top: 10%;
+  }
+  .allp {
+    grid-row: 5/15;
+  }
+  .step-container > div {
+    padding-top: 5%;
+  }
+  .take-quiz-btn {
+    grid-row: 16/18;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 600px) {
+  .home-container {
+    height: 80vh;
+  }
+  .welcome-title {
+    grid-column: 4/12;
+    font-size: 200%;
+    text-align: center;
+    padding-top: 2%;
+    line-height: 140%;
+  }
+  .home-page-frog {
+    grid-row: 1/6;
+    grid-column: 1/4;
+  }
+  .allp {
+    margin-top: 2%;
+    grid-row: 5/14;
+    grid-column: 2/13;
+    font-size: 110%;
+  }
+  .take-quiz-btn {
+    grid-column: 5/9;
+    grid-row: 15/17;
+  }
+}
+
+/* large laptops */
+@media (min-width: 1400px) and (max-width: 1600px) {
+  .home-container {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    grid-template-rows: repeat(16, 1fr);
+    height: 87vh;
+  }
+  .intro-text {
+    display: block;
+    text-align: center;
+  }
+  .home-page-frog {
+    padding: 0;
+    grid-column: 1/5;
+    grid-row: 4/13;
+    /* border: 1px solid black; */
+  }
+  .welcome-title {
+    font-size: 270%;
+    text-align: center;
+    line-height: 120%;
+    grid-column: 5/17;
+    grid-row: 1/4;
+    /* border: 1px solid black; */
+    padding: 0%;
+  }
+  .allp {
+    font-size: 130%;
+    grid-column: 5/17;
+    grid-row: 4/13;
+    /* border: 1px solid black; */
+    padding: 0%;
+    padding-left: 1%;
+  }
+
+  .step-container {
+    padding-top: 0%;
+  }
+
+  .step-container > div {
+    padding-top: 1%;
+    padding-left: 5%;
+  }
+  .take-quiz-btn {
+    grid-column: 9/13;
+    grid-row: 12/15;
+    font-size: 150%;
+  }
+  .take-quiz-btn button {
+    height: 100%;
+  }
+  .ending-text {
+    padding-top: 1%;
+  }
 }

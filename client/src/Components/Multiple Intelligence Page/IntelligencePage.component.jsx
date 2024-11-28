@@ -6,7 +6,7 @@ import { useEffect,useContext,useState } from 'react';
 import axios from 'axios';
 
 const intelligenceList = [
-    "Intelligence 1",
+    "Existential Intelligence",
     "Intelligence 2",
     "Intelligence 3",
     "Intelligence 4",
@@ -14,13 +14,20 @@ const intelligenceList = [
     "Intelligence 6",
     "Intelligence 7",
     "Intelligence 8",
-    "Intelligence 9",
+    "Naturalistic Intelligence",
 
 ]
 
 const IntelligencePage = () =>{
+
+
+
     const [MipScore,setMipScore]=useState(null);
     const {setVisitedPages} = useContext(ProgressContext);
+    const [IsLoading,setisLoading] = useState(true)
+
+
+
 
     useEffect(()=>{
 
@@ -37,40 +44,65 @@ const IntelligencePage = () =>{
   
         }));
 
-        getMipScore();
+       getMipScore();
     },[])
+
+
+
+    useEffect(()=>{
+        if(MipScore===null){
+            console.log("MipScore is ",MipScore )
+        }
+    },[MipScore])
+
+
+
+
   
 
     const navigate = useNavigate();
-     const careerSelectionBtnHandler=()=>{
+    const careerSelectionBtnHandler=()=>{
         navigate("/CareerFields")
      }
+
+
+
+
+
     
     const getMipScore = async()=>{
         try{
-            const response = await axios.get("http://localhost:3000/IntelligencePage");
+            const response = await axios.get("http://localhost:3000/api/IntelligencePage");
             setMipScore(response.data.MIP);
+            setisLoading(false)
             console.log("MIP SCORE:",MipScore)
-            return MipScore;
         }catch(error){
             console.log("Fetching error ",error)
         }
     } 
+
+
     
 
 
     return(
         <div className='intelligence-page-container'>
-            <Image/>
-            <div className='intelligence-box'>
-                <h2 className='intelligence-box-container-title'>Your Multiple Intelligence Score</h2>
+            <div className='O-Level-frog'>
+                <Image/>
+           </div>
+
+           <div className='intelligence-title-container'>
+            <h2 className='intelligence-page-title'>Here is Your MIP Score generated from your answers</h2>
+             </div>
+
+            <div className='intelligence-box-container'>
                  <div className='intelligence-btns-container'>
                 {intelligenceList.map((intelligence)=>{
                     
                     return(
                         
                         <div className='intelligence-btn tooltip'>
-                             {intelligence}{<p>{MipScore}</p>}
+                            <p className='intelligence'> {`${intelligence} is ${MipScore}%`} </p>
                              <span class="tooltiptext">Information about Intelligence</span>
                         </div>                        
                     ) 
@@ -85,6 +117,10 @@ const IntelligencePage = () =>{
                   allowing us to provide career recommendations that align with your talents.</p>
                   <button onClick={careerSelectionBtnHandler} className='career-selection-btn'>Career Selection</button>
                   <h2>Click the above button to answer questions so we can give career guidance</h2>
+            </div>
+            <div className='intelligence-page-navigation'>
+                <button className='nextbtn'>Back</button>
+                <button className='nextbtn' onClick={careerSelectionBtnHandler}>Carreer Selection</button>
             </div>
             
         </div>

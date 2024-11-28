@@ -26,6 +26,8 @@ const OLevelMainLocalSubjects = ()=>{
 
     const [selectedButtons,setselectedButtons] = useState([])
  
+
+
     const btnSelectHandler = (subject)=>{
         if(selectedButtons.includes(subject)){
             setselectedButtons(selectedButtons.filter(subj=>subj!==subject))
@@ -34,13 +36,19 @@ const OLevelMainLocalSubjects = ()=>{
            setselectedButtons([...selectedButtons,subject]);
            setOLevelResultsArray([...OLevelResultsArray,subject]);
         }
-
         
     }
+
+
+
 
     useEffect(() => {
         console.log(OLevelResultsArray);
     }, [OLevelResultsArray]);
+
+
+
+
 
 
     useEffect(()=>{
@@ -50,13 +58,26 @@ const OLevelMainLocalSubjects = ()=>{
         
     },[])
 
+
+
+
+
+
     useEffect(()=>{
         setOLevelResultsArray([])
       },[])
+
+
+
+      
       
     return(
+        <>
+        <div className='O-level-box-title-container'>
+           <h2 className='O-level-box-title'>Select the Common Subjects you have Done from the following</h2>
+        </div>
+
         <div className='O-level-subject-component'>
-            <h2 className='O-level-subject-box-title'>Select Subjects you have Done</h2>
             <div className='O-level-subject-box'>
 
             <h2 className='O-level-subject-title'>Common Subjects</h2>
@@ -68,7 +89,7 @@ const OLevelMainLocalSubjects = ()=>{
                        onClick={() => {
                         btnSelectHandler(subject);}}
                                  key={index}   
-                                 className={`O-subject-level-btn ${selectedButtons.includes(subject)? "extra-curricular-btn-selected":""}`}>
+                                 className={`O-subject-level-btn ${selectedButtons.includes(subject)? "OL-subject-btn-selected":""}`}>
                                 {subject}
                                 
                               </button>
@@ -77,11 +98,12 @@ const OLevelMainLocalSubjects = ()=>{
 
                 </div>
                 <div className='O-level-common-subjects-back-next-btn'>
-                    <button onClick={goToOLevelBox} className='backbtn '>Back</button>
+                    <button onClick={goToOLevelBox} className='nextbtn'>Back</button>
                     <button onClick={goToLocalBasket} className='nextbtn '>Next</button>
                 </div>
             </div>
-        </div>
+            </div>
+            </>
     )
 }
 

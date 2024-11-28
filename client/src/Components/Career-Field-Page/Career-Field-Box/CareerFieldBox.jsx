@@ -44,8 +44,10 @@ const CareerFieldBox = () =>{
 },[])
   
     return(
-        <div>
-            <h2 className='career-field-box-title'>Select 3 Career Field That You Like</h2>
+        <>
+           <div className='career-field-box-title-container'>
+                <h2 className='career-field-box-title'>Select 3 Career Field That You Like</h2>
+           </div> 
             <div className='career-field-box-container'>
                 <div className='career-btn-container'>
                     {CareerFieldsBtnList.map(career=>{
@@ -53,19 +55,20 @@ const CareerFieldBox = () =>{
 
                          disabled={!selectedBtn.includes(career) && selectedBtn.length>=3} 
                          onClick={()=>{btnHandler(career)}} 
-                         className={`career-btn ${selectedBtn.includes(career)?"extra-curricular-btn-selected":""}`}>
+                         className={`career-btn ${selectedBtn.includes(career)?"selected-field":""}`}>
                             {career}
 
                             </button>
                     })}
 
                 </div>
-                <div className='careerFieldBtn'>
-                    <button className='backbtn '>Back</button>
+
+            </div>
+            <div className='career-fieldBox-navigation'>
+                    <button className='nextbtn '>Back</button>
                     <button onClick={CareerFieldSubmitBtnHandler} className='nextbtn '>Next</button>
                 </div>
-            </div>
-        </div>
+            </>
     )
 }
 

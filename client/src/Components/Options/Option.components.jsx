@@ -30,21 +30,26 @@ const Option = () =>{
     }
     return(
        <div className='option-page'>
+                    <div className='option-page-image'>
+                <Image/>
+        </div>
+        <div className='option-page-title'>
+        <h2>Enhance Your MIP Score</h2>
+        </div>
             <div className='option-container'>
-                <div className='option-container-content'>
-                    <h2>Enhance Your MIP Score</h2>
-                    <p>You’ve completed the initial set of questions! Your current MIP score is ready,
-                        but you have the option to improve your result by answering a few additional questions.</p>
-                    <p>Improve Your Score: By answering a few more questions, you can get a more refined result and better career recommendations.
-                    Skip for Now: You can also choose to proceed without answering more questions.
+                <div className='option-content'>
+                    <h4>You’ve completed the initial set of questions! Your current MIP score is ready,
+                        but you have the option to improve your result by answering a few additional questions.</h4>
+                    <p><b>Improve Your Score</b>: By answering a few more questions, you can get a more refined result and better career recommendations.<p/><br/>
+                    <b>Skip:</b> You can also choose to proceed without answering more questions.
                         Your current MIP score will be used to suggest suitable careers.</p>     
                     <div className='option-btn-container'>   
                         <button className='backbtn'>Skip</button>
                         <button  onClick={ImprovebtnHandler} className='backbtn'>Improve</button>
                     </div> 
-                </div>
             </div>
-            <Image/>
+
+            </div>
         </div>  
     )
 }

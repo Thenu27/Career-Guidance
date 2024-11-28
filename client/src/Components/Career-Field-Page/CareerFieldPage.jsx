@@ -41,15 +41,16 @@ const CareerFieldPage=()=>{
         }
     }
     return(
-        <div className='Career-Field-Page'>
-            <Image/>
+        <div className='career-Field-Page'>
+            <div className='career-page-frog'>
+                <Image/>
+
+            </div>
             <div className='frog-comment-career-field-page'>
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quia sit quidem maxime corrupti officia eaque tempore nihil quam? Ipsum tenetur, sunt doloremque labore itaque ducimus dolor. Reprehenderit, temporibus cupiditate!</p>                
                 
             </div>
-            <div>
             {BoxRender()}
-            </div>
 
 
         </div>

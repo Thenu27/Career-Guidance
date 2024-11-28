@@ -21,21 +21,27 @@ const OrdinaryLevelBox = () =>{
     })
    
     return(
-        <div className='O-level-box'>
+        <>
+         <div className='O-level-box-title-container'>
+            <h2 className='O-level-box-title'>Select Ordinary Level Category from the following</h2>
+          </div>   
 
-            <h2 className='O-level-box-title'>Select Ordinary Level Category</h2>
+        <div className='O-level-box'>
 
             <div className='O-level-btn-container'>
 
                 <button onClick={goToLocalCommonSubjects} className='O-level-btn'>Local</button>
                 <button onClick={goToLondonStreamBox} className='O-level-btn'>London</button>
                 <button onClick={HaventDoneBtnHandler} className='O-level-btn'>Havent Done</button>
-                <div className='O-level-box-back-btn'>
-                <button  className='nextbtn'>Back</button>
-                </div>
+                
 
             </div>
+            
+            <div className='O-level-box-back-btn'>
+                <button  className='nextbtn'>Back</button>
+            </div>
         </div>
+        </>
     )
 }
 

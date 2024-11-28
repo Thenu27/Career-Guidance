@@ -1,42 +1,68 @@
-.O-level-subject-box{
-    width: 700px;
-    height: 500px;
-    border: 5px solid black;
-    border-radius: 10PX;
-    margin-left: -5%;
-    display: flex;
-    flex-direction: column;
-    gap:1px;
+.O-level-subject-box {
+  border: 4px solid black;
+  border-radius: 10px;
+  width: 95%;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  /* gap: 10%; */
 }
 
-.O-level-subject-title{
-    text-align: center;
+.O-level-subject-btn-container {
+  width: 95%;
+  height: 76%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2%;
+  overflow: auto;
+  margin: auto;
 }
 
-/* .O-level-subject-component{
-    display: flex;
-    flex-direction: column;
-    gap:1px;
-} */
-
-.O-level-subject-btn-container{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 5px;
-    margin-left: 5%;
-    
-    
+.O-subject-level-btn {
+  height: 20%;
+  width: 40%;
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: rgb(221, 221, 221);
+  font-size: 100%;
+  margin: auto;
+}
+.O-level-subject-title {
+  text-align: center;
+  font-weight: 500;
+  font-size: 110%;
+}
+.O-level-common-subjects-back-next-btn {
+  height: 11%;
+  padding-bottom: 2%;
+  display: flex;
+  flex-direction: row;
 }
 
-.O-subject-level-btn{
-    width:150px;
-    height: 80px;
+.O-level-common-subjects-back-next-btn .nextbtn {
+  width: 30%;
+  height: 95%;
+}
+.OL-subject-btn-selected {
+  background-color: black;
+  color: white;
 }
 
-.O-level-common-subjects-back-next-btn{
-   display: flex;
-   flex-direction: row;
-   gap: 10px;
-   margin-left: 10%;
+@media (min-width: 1400px) and (max-width: 1600px) {
+ 
+  .O-level-common-subjects-back-next-btn {
+    /* border: 1px solid black; */
+    padding: 0%;
+  }
+  .O-level-common-subjects-back-next-btn .nextbtn {
+    height: 90%;
+    width: 20%;
+  }
+  .O-subject-level-btn {
+    height: 25%;
+    width: 30%;
+    gap: 3%;
+  }
 }

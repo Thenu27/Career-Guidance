@@ -48,23 +48,28 @@ const OLevelBasketLocal =()=>{
     }
 
     return(
-        <>
-            <h2 className='O-levelLocal-Basketsubject-box-title'>Select BasketSubjects you have Done</h2>
-            <div className='O-levelLocal-Basketsubject-box'>
+        <>  
+        <div className='O-level-box-title-container'>
+            <h2 className='O-level-box-title'>Select Basket Subjects you have Done from the following</h2>
+        </div>
+        <div className='O-level-subject-component'>
 
-            <h2 className='O-levelLocal-Basketsubject-title'>Basket Subjects</h2>
+            <div className='O-level-subject-box'>
 
-                <div className='O-levelLocal-Basketsubject-btn-container'>
+            <h2 className='O-level-subject-title'>Basket Subjects</h2>
+
+                <div className='O-level-subject-btn-container'>
 
                     {OLevelLocalBasketSubjects.map((subject,index)=>{
-                    return <button onClick={()=>btnSelectHandler(subject)} key={index} className={`O-subject-level-btn ${selectedButtons.includes(subject)? "extra-curricular-btn-selected":""}`}>{subject}</button>
+                    return <button onClick={()=>btnSelectHandler(subject)} key={index} className={`O-subject-level-btn ${selectedButtons.includes(subject)? "OL-subject-btn-selected":""}`}>{subject}</button>
                     })}
 
                 </div>
-                <div className='O-levelLocal-Basket-subjects-back-next-btn'>
-                    <button onClick={goToLocalCommonSubjects}  className='backbtn '>Back</button>
+                <div className='O-level-common-subjects-back-next-btn'>
+                    <button onClick={goToLocalCommonSubjects}  className='nextbtn '>Back</button>
                     <button onClick={ goToOLevelResults} className='nextbtn '>Next</button>
                 </div>
+            </div>
             </div>
         </>
     )

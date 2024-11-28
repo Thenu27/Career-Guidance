@@ -12,18 +12,24 @@ const OLevelLondStream = ()=>{
     })
 
     return(
+        <>
+        <div className='O-level-London-Category-title-container'>     
+                <h2 className='O-level-box-title'>Select London Stream Category from the following</h2>
+         </div> 
         <div className='O-level-box'>
-
-            <h2 className='O-level-box-title'>Select London Stream Category</h2>
-
+  
             <div className='O-level-btn-container'>
+            <h2 className='O-level-sub-title'>London Stream Category</h2>
 
                 <button  className='O-level-btn'>Cambridge</button>
                 <button  className='O-level-btn'>Pearson</button>
-                <button  onClick={goToOLevelBox} className='backbtn'>Back</button>
-
             </div>
+            <div className='O-level-box-back-btn'>
+                <button onClick={goToOLevelBox} className='nextbtn'>Back</button>
+            </div>
+            
         </div>
+        </>
     )
 }
 
