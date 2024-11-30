@@ -46,7 +46,7 @@ const CareerFieldBox = () =>{
     return(
         <>
            <div className='career-field-box-title-container'>
-                <h2 className='career-field-box-title'>Select 3 Career Field That You Like</h2>
+                <h2 className='career-field-box-title'>Select 3 Career Field That You Like from the dropdown</h2>
            </div> 
             <div className='career-field-box-container'>
                 <div className='career-btn-container'>

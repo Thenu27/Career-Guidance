@@ -6,7 +6,7 @@ import { CareerContext } from '../../../context/Career.context';
 
 const CareerDropdownContainer = () =>{
 
-    const {setShowCareerDropdown,setshowMatchedProfileMsg,SelectedCareerField} = useContext(CareerContext);
+    const {setShowCareerDropdown,setshowMatchedProfileMsg,SelectedCareerField,setshowCareerFieldBox} = useContext(CareerContext);
 
     const submitBtnHandler=()=>{
         setShowCareerDropdown(false);
@@ -14,12 +14,19 @@ const CareerDropdownContainer = () =>{
         
     }
 
+    const goToCareerFieldBox =()=>{
+        setshowCareerFieldBox(true);
+        setShowCareerDropdown(false);
+
+    }
+
     return(
-    
-        <div>
-            <h2 className='career-field-dropdown-container-title'>Select 3 Career Fields from the dropdown</h2>
-            <div className='career-field-dropdown-container'>
-                <div className='career-field-dropdown-btn-container'>
+    <>
+           <div className='career-field-box-title-container'>
+                <h2 className='career-field-box-title'>Select 3 Career  That You Like</h2>
+           </div> 
+            <div className='career-field-box-container'>
+                <div className='career-btn-container '>
                     {SelectedCareerField.map((career,index)=>{
                         return <div className='career-field-dropdown-btn-set'>
                                     <button className='career-field-dropdown-btn'>{career}</button>
@@ -55,11 +62,13 @@ const CareerDropdownContainer = () =>{
                         </div>
                     })}
                 </div>
-                <div className='career-field-dropdown-submit-btn'>
-                    <button onClick={submitBtnHandler}  className='nextbtn '>Submit</button>
-                </div>
+
             </div>
-        </div>
+            <div className='career-fieldBox-navigation'>
+                    <button onClick={goToCareerFieldBox}  className='nextbtn '>Back</button>
+                    <button onClick={submitBtnHandler}  className='nextbtn '>Submit</button>
+            </div>
+        </>
     )
 } 
 

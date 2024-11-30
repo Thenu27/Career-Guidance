@@ -3,6 +3,8 @@
   grid-row: 1/2;
   text-align: center;
   align-content: center;
+  font-weight: 900;
+  font-size: 120%;
 }
 
 .career-field-box-container {
@@ -53,4 +55,17 @@
 }
 
 @media (min-width: 1400px) and (max-width: 1600px) {
+  .career-field-box-title-container {
+    grid-column: 7/16;
+    grid-row: 1/2;
+    font-size: 200%;
+  }
+  .career-field-box-container {
+    grid-column: 8/16;
+    grid-row: 2/12;
+  }
+  .career-fieldBox-navigation {
+    grid-row: 11/14;
+    grid-column: 9/15;
+  }
 }
