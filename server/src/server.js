@@ -3,10 +3,25 @@ const cors = require("cors");
 const path = require("path");
 const app = express();
 const PORT = 3000;
+const knex = require('knex')
+
+const db=knex({
+    client: 'pg',
+    connection: {
+      host: '127.0.0.1',
+      user: 'postgres',
+      password: 'determination@123',
+      database: 'COMP',
+    },
+  });
+
+db.raw('SELECT 1')
+  .then(() => console.log('Database connected successfully!'))
+  .catch(err => console.error('Error connecting to the database:', err));
 
 app.use(cors());
 
-let storedData = {};
+let storedData = {}; 
 
 
 app.use(express.json());
