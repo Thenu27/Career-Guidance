@@ -1,9 +1,8 @@
 import './QuestionBox.styles.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Question } from '../../Question-Data';
 
-const QuestionBox =({setquestionAndAnswers,value,setValue,questionsDividedIntoFive,IndexOfQuestionShown,shufulledQuestions})=>{
+const QuestionBox =({questions,setquestionAndAnswers,value,setValue,questionsDividedIntoFive,IndexOfQuestionShown,shufulledQuestions})=>{
 
     const navigate = useNavigate();
 
@@ -28,7 +27,7 @@ const QuestionBox =({setquestionAndAnswers,value,setValue,questionsDividedIntoFi
       }, [IndexOfQuestionShown, navigate, questionsDividedIntoFive.length]);
 
 
-
+ 
 
 
     
@@ -39,7 +38,7 @@ const QuestionBox =({setquestionAndAnswers,value,setValue,questionsDividedIntoFi
     setquestionAndAnswers((prev)=>({
         ...prev,
         [quesId]:{
-          question:Question[quesId],
+          question:questions[quesId],
           answer:event.target.value
         }
       }))
@@ -71,7 +70,7 @@ const QuestionBox =({setquestionAndAnswers,value,setValue,questionsDividedIntoFi
                 return   <div key={index} className='question-box-side-box-container'>
                               
                                <div  className='question-box'>   
-                                     <p className='question'>{Question[quesId]}</p><br/>                                       
+                                     <p className='question'>{questions[quesId]}</p><br/>                                       
                                       <div className='answer'>
                                             <input  onChange={(event)=>valueHandler(globalIndex,event,quesId)} type="range" value={value[globalIndex]}  name="vol" min="1" max="10"/>
                                       </div>

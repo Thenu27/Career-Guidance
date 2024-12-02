@@ -1,9 +1,8 @@
 import './Question-container.styles.css'
-import { Question } from '../../Question-Data';
 import { useEffect,useState } from 'react';
+import axios from 'axios';
 
 import QuestionBox from '../QuestionBox/QuestionBox.component';
-
 
 
 const QuestionContainer = () =>{
@@ -13,12 +12,22 @@ const QuestionContainer = () =>{
     const[questionsDividedIntoFive,setquestionsDividedIntoFive]=useState([]);
     const[value,setValue]=useState([]);
     const[questionAndAnswers,setquestionAndAnswers]=useState({});
- 
+    const [questions, setquestions] = useState({});
+
+    useEffect(() => {
+        const fetchQuestions = async () => {
+            const response = await axios.get('http://localhost:3000/api/Assesment');
+            console.log("Questions received from the backend", response.data);
+            setquestions(response.data);
+        };
+    
+        fetchQuestions();
+    }, []); 
    
 
     // Shuffles the Questions and return a new array
-    const shufulledArray =(Question)=>{
-        const newArray = Object.keys(Question);
+    const shufulledArray =(questions)=>{
+        const newArray = Object.keys(questions);
         for( let i= newArray.length-1; i>0 ; i--){
             
             const j = Math.floor(Math.random()*(i+1));
@@ -31,30 +40,28 @@ const QuestionContainer = () =>{
 
     
     useEffect(()=>{
-        
-        const shuffled = shufulledArray(Question);
+        const shuffled = shufulledArray(questions);
         setShuffledQuestions(shuffled);
                 
-    },[]) 
+    },[questions]) 
 
 
 
-    useEffect(()=>{
-        const updatedAnswers = { ...questionAndAnswers };
+    // useEffect(()=>{
+    //     const updatedAnswers = { ...questionAndAnswers };
 
-        Object.keys(Question).forEach((key) => {
-            if (!updatedAnswers.hasOwnProperty(key)) {
-              updatedAnswers[key] = {
-                question: Question[key],
-                answer: 1, // Default answer value
-              };
-            }
-          });
+    //     Object.keys(questions).forEach((key) => {
+    //         if (!updatedAnswers.hasOwnProperty(key)) {
+    //           updatedAnswers[key] = {
+    //             question: questions[key],
+    //             answer: 1, // Default answer value
+    //           };
+    //         }
+    //       });
           
-           // Return the updated object to set state
-          setquestionAndAnswers(updatedAnswers)
-    },[questionAndAnswers])
-
+    //        // Return the updated object to set state
+    //       setquestionAndAnswers(updatedAnswers)
+    // },[questionAndAnswers])
 
 
 
@@ -110,12 +117,8 @@ const QuestionContainer = () =>{
 
 
 
-
-
-
       
      const answerSubmitHandler=async()=>{
-        console.log("Completes Array",questionAndAnswers)
         const response = await fetch("http://localhost:3000/api/Assesment",{
             method:"post",
             headers:{
@@ -125,8 +128,13 @@ const QuestionContainer = () =>{
             body:JSON.stringify({questionAndAnswers})
         })
         const data = await response.json()
-        console.log(data)
+        // console.log(data)
      }
+
+
+
+
+
 
     return(
        <>
@@ -134,7 +142,7 @@ const QuestionContainer = () =>{
             <h2 className='question-container-title'>Answer the following questions to Determine your Mip score</h2>
             <div className='question-container'>
 
-               <QuestionBox setquestionAndAnswers={setquestionAndAnswers} questionAndAnswers={questionAndAnswers} value={value} setValue={setValue} shufulledQuestions={shufulledQuestions} IndexOfQuestionShown={IndexOfQuestionShown}  questionsDividedIntoFive={questionsDividedIntoFive}/>
+               <QuestionBox questions={questions} setquestionAndAnswers={setquestionAndAnswers} questionAndAnswers={questionAndAnswers} value={value} setValue={setValue} shufulledQuestions={shufulledQuestions} IndexOfQuestionShown={IndexOfQuestionShown}  questionsDividedIntoFive={questionsDividedIntoFive}/>
             <div className='questions-navigation-container'>
                
                <button onClick={BackBtnHandler}className='nextbtn'>Back</button>
