@@ -47,21 +47,21 @@ const QuestionContainer = () =>{
 
 
 
-    // useEffect(()=>{
-    //     const updatedAnswers = { ...questionAndAnswers };
+    useEffect(()=>{
+        const updatedAnswers = { ...questionAndAnswers };
 
-    //     Object.keys(questions).forEach((key) => {
-    //         if (!updatedAnswers.hasOwnProperty(key)) {
-    //           updatedAnswers[key] = {
-    //             question: questions[key],
-    //             answer: 1, // Default answer value
-    //           };
-    //         }
-    //       });
+        Object.keys(questions).forEach((key) => {
+            if (!updatedAnswers.hasOwnProperty(key)) {
+              updatedAnswers[key] = {
+                question: questions[key],
+                answer: 1, // Default answer value
+              };
+            }
+          });
           
-    //        // Return the updated object to set state
-    //       setquestionAndAnswers(updatedAnswers)
-    // },[questionAndAnswers])
+           // Return the updated object to set state
+          setquestionAndAnswers(updatedAnswers)
+    },[questionAndAnswers])
 
 
 

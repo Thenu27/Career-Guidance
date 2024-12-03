@@ -5,28 +5,26 @@ import { ProgressContext } from '../../context/progress.context';
 import { useEffect,useContext,useState } from 'react';
 import axios from 'axios';
 
-const intelligenceList = [
-    "Existential Intelligence",
-    "Intelligence 2",
-    "Intelligence 3",
-    "Intelligence 4",
-    "Intelligence 5",
-    "Intelligence 6",
-    "Intelligence 7",
-    "Intelligence 8",
-    "Naturalistic Intelligence",
-
-]
 
 const IntelligencePage = () =>{
+ 
 
+    // const [MipScore,setMipScore]=useState(null);
+    const {setVisitedPages,intelligenceScore} = useContext(ProgressContext);
+    // const [IsLoading,setisLoading] = useState(true)
 
+    // const intelligenceList=[]
+   
+       
 
-    const [MipScore,setMipScore]=useState(null);
-    const {setVisitedPages} = useContext(ProgressContext);
-    const [IsLoading,setisLoading] = useState(true)
+    
+// useEffect(()=>{
+//     const fetchData = async()=>{
+//         await getIntelligenceScores();
+//     }
 
-
+//     fetchData();
+//    },[]);
 
 
     useEffect(()=>{
@@ -41,19 +39,20 @@ const IntelligencePage = () =>{
             CalculatingPage:true,
             IntelligencePage:true,
             
-  
         }));
+        console.log('Newly updated',intelligenceScore)
 
-       getMipScore();
     },[])
 
+useEffect(()=>{
 
+})
 
-    useEffect(()=>{
-        if(MipScore===null){
-            console.log("MipScore is ",MipScore )
-        }
-    },[MipScore])
+    // useEffect(()=>{
+    //     if(MipScore===null){
+    //         console.log("MipScore is ",MipScore )
+    //     }
+    // },[MipScore])
 
 
 
@@ -70,16 +69,16 @@ const IntelligencePage = () =>{
 
 
     
-    const getMipScore = async()=>{
-        try{
-            const response = await axios.get("http://localhost:3000/api/IntelligencePage");
-            setMipScore(response.data.MIP);
-            setisLoading(false)
-            console.log("MIP SCORE:",MipScore)
-        }catch(error){
-            console.log("Fetching error ",error)
-        }
-    } 
+    // const getMipScore = async()=>{
+    //     try{
+    //         const response = await axios.get("http://localhost:3000/api/IntelligencePage");
+    //         setMipScore(response.data.MIP);
+    //         setisLoading(false)
+    //         console.log("MIP SCORE:",MipScore)
+    //     }catch(error){
+    //         console.log("Fetching error ",error)
+    //     }
+    // } 
 
 
     
@@ -97,12 +96,12 @@ const IntelligencePage = () =>{
 
             <div className='intelligence-box-container'>
                  <div className='intelligence-btns-container'>
-                {intelligenceList.map((intelligence)=>{
+                {Object.keys(intelligenceScore).map((intelligence)=>{
                     
                     return(
                         
                         <div className='intelligence-btn tooltip'>
-                            <p className='intelligence'> {`${intelligence} is ${MipScore}%`} </p>
+                            <p className='intelligence'> {`${intelligence} is ${intelligenceScore}%`} </p>
                              <span class="tooltiptext">Information about Intelligence</span>
                         </div>                        
                     ) 
@@ -120,7 +119,10 @@ const IntelligencePage = () =>{
             </div>
             <div className='intelligence-page-navigation'>
                 <button className='nextbtn'>Back</button>
-                <button className='nextbtn' onClick={careerSelectionBtnHandler}>Carreer Selection</button>
+                <button className='nextbtn'   onClick={() => {
+                                          careerSelectionBtnHandler();
+                            
+  }}>Carreer Selection</button>
             </div>
             
         </div>

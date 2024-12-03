@@ -3,6 +3,9 @@ const cors = require("cors");
 const path = require("path");
 const app = express();
 const PORT = 3000;
+
+const session =require('express-session')
+
 const knex = require('knex');
 require('dotenv').config();
 
@@ -10,9 +13,7 @@ const intelligenceArray = ['Linguistic Intelligence','Logical-Mathematical Intel
     'Spatial Intelligence','Bodily-kinesthetic Intelligence','Musical Intelligence',
     'Interpersonal Intelligence','Intrapersonal Intelligence','Spiritual Intelligence','Naturalistic Intelligence']
 
-    const intelligenceObj={};
-    const quesidWithIntelligenceAndquestions = {};
-    const totalAnswer=0;
+    // const quesidWithIntelligenceAndquestions = {};
 
 
 
@@ -35,21 +36,85 @@ const db=knex({
 
  app.use(cors());
 
+ app.use(
+    session({
+        secret: 'your-secret-key',
+        resave: false,             
+        saveUninitialized: true,   
+        cookie: {
+            maxAge: 600000, 
+            secure: false,  
+            httpOnly: true, 
+            sameSite: 'lax' 
+        }
+        
+    })
+ )
 
- const functionName=async()=>{
-    return  questionIdGrouped = await db.select('question_id').from('questions').where('multiple_intelligence','Bodily-kinesthetic Intelligence');
+ // Initialize session data if not set
+app.use((req, res, next) => {
+    if (!req.session.quesidWithIntelligenceAndquestions) {
+        req.session.quesidWithIntelligenceAndquestions = {};
+    }
+
+    if(!req.session.questionAndAnswers){
+        req.session.questionAndAnswers={}
+    }
+
+    if(!req.session.detailsForCalculation){
+       req.session.detailsForCalculation={}
+    }
+    
+    next();
+});
+
+
+//  const functionName=async()=>{
+//    questionIdGrouped = await db.select('question_id').from('questions').where('multiple_intelligence','Bodily-kinesthetic Intelligence');
+//    console.log(questionIdGrouped)
+// }
+
+// // functionName();
+
+
+
+
+const accesingAnswers=async(req,intelli)=>{
+    const questionIdGrouped = await db.select('question_id').from('questions').where('multiple_intelligence',intelli);
+    let totalAnswer=0;
+    for(let i=0;i<questionIdGrouped.length;i++){
+
+        const questionId =questionIdGrouped[i].question_id;
+        const TestAns= parseFloat(req.session.quesidWithIntelligenceAndquestions[questionId].answer);
+        totalAnswer=TestAns+totalAnswer;
+
+
+
+        }
+
+    
+   const avg = totalAnswer/questionIdGrouped.length
+//    console.log("Total Answer for",intelli,"",totalAnswer ) 
+//    console.log("Average",avg);
+//    console.log(`Percentage ${avg*10}%`);
+
+
+   req.session.detailsForCalculation[intelli]={
+    Total:totalAnswer,
+    Avg:avg,
+    Percentage:avg*10
+  }
+
 }
 
-functionName();
 
 
- const createObjWithIntelligenceNames=()=>{
- intelligenceArray.map(intelligence=>{
-        intelligenceObj[intelligence]=undefined;
- }) 
- return intelligenceObj;  
+const calculatingTotalScoreForAll=async(req)=>{
+    for(let i=0;i<intelligenceArray.length;i++){
+       await accesingAnswers(req,intelligenceArray[i]);
+    }
+    // console.log("Details",req.session.detailsForCalculation)
 }
-
 
 
 
@@ -70,6 +135,59 @@ const getttingQuestionFromDB=async()=>{
 
 
 
+// const getIntelligenceType=async()=>{
+//     if (!req.session.questionAndAnswers) {
+//         console.log("No answers found in session");
+//         return;
+//     }
+//     for(const questionId of Object.keys(req.session.questionAndAnswers)){
+//         const result = await db.select('multiple_intelligence','question').from('questions').where('question_id',questionId).first();
+//         if (result){
+//            req.session.quesidWithIntelligenceAndquestions[questionId]={
+//                 question:result.question,
+//                 answer:req.session.questionAndAnswers[questionId].answer,
+//                 intelligence:result.multiple_intelligence
+//             }
+//         }
+
+//     }
+//     console.log("Questions With Details", req.session.quesidWithIntelligenceAndquestions);
+
+// }
+
+
+const getIntelligenceType = async (req) => {
+    try {
+        if (!req.session.questionAndAnswers || Object.keys(req.session.questionAndAnswers).length === 0) {
+            console.log("No answers found in session");
+            return;
+        }
+
+        for (const questionId of Object.keys(req.session.questionAndAnswers)) {
+            const result = await db.select('multiple_intelligence', 'question')
+                .from('questions')
+                .where('question_id', questionId)
+                .first();
+
+            if (result) {
+                req.session.quesidWithIntelligenceAndquestions[questionId] = {
+                    question: result.question,
+                    answer: req.session.questionAndAnswers[questionId].answer,
+                    intelligence: result.multiple_intelligence
+                };
+            }
+        }
+        
+        // console.log("Questions With Details", req.session.quesidWithIntelligenceAndquestions);
+    } catch (error) {
+        console.error("Error in getIntelligenceType:", error);
+    }
+};
+
+
+
+
+
   app.get('/api/Assesment', async (req, res) => {
     try {
         res.send(await getttingQuestionFromDB())
@@ -81,32 +199,13 @@ const getttingQuestionFromDB=async()=>{
 
 
 
-
-
-
-
-
-
-
 // let storedData = {}; 
-
-
-
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "..", "public")));
 
 
 
-// Calculation logic for MIP score
-// const calculation = (questionAndAnswers) => {
-//     const question = questionAndAnswers["2"].answer;
-//     const question2 = questionAndAnswers["1"].answer;
-
-//     const total = parseInt(question, 10) + parseInt(question2, 10);
-
-//     return total;
-// };
 
 
 
@@ -143,23 +242,6 @@ app.post('/api/ExtraCurricular',(req,res)=>{
 
 
 
-const getIntelligenceType=async(questionAndAnswers)=>{
-
-    for(const questionId of Object.keys(questionAndAnswers)){
-        const result = await db.select('multiple_intelligence','question').from('questions').where('question_id',questionId).first();
-
-        if (result){
-            quesidWithIntelligenceAndquestions[questionId]={
-                question:result.question,
-                answer:questionAndAnswers[questionId].answer,
-                intelligence:result.multiple_intelligence
-            }
-        }
-
-    }
-    console.log("Questions With Details", quesidWithIntelligenceAndquestions);
-
-}
 
 
 
@@ -172,15 +254,13 @@ const getIntelligenceType=async(questionAndAnswers)=>{
 
 app.post('/api/Assesment',async(req, res) => {
     try {
+
         const { questionAndAnswers } = req.body;
-        // console.log("Received answers:", questionAndAnswers);
-        console.log(createObjWithIntelligenceNames());
-        await getIntelligenceType(questionAndAnswers);
-        console.log(quesidWithIntelligenceAndquestions[await functionName()[1].question_id].answer)
+        req.session.questionAndAnswers = questionAndAnswers
+        // console.log("Received answers:", req.session.questionAndAnswers);
 
-        // console.log("Questions Object"); 
 
-        
+
         res.json({
             Message: "received",
         });
@@ -191,42 +271,21 @@ app.post('/api/Assesment',async(req, res) => {
     }
 });
 
+ 
 
+app.get('/api/calculation', async (req, res) => {
+   await getIntelligenceType(req);
+    await calculatingTotalScoreForAll(req);
 
-
-
-
-
-
-
-// Handle /IntelligencePage route before index.html
-app.get('/api/IntelligencePage', (req, res) => {
-    try {
-        if (storedData.MIP !== undefined) {
-            res.json({
-                MIP: storedData.MIP
-            });
-        } else {
-            res.status(404).json({
-                Error: "MIP score not calculated yet"
-            });
-        }
-    } catch (error) {
-        console.log(error);
-        res.status(500).send({
-            Error: "Error in sending MIP score"
-        });
-    }
+    res.json(req.session.detailsForCalculation)
 });
 
 
 
 
 
+ 
 
-
-
-// Serve index.html for non-API routes (frontend routing handled by React)
 app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
@@ -234,4 +293,4 @@ app.get("/*", (req, res) => {
 app.listen(PORT,'0.0.0.0', () => {
     console.log(`Server is running on Port ${PORT}`);
 });
-  
+   

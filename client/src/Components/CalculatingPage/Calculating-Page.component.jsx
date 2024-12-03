@@ -3,10 +3,29 @@ import Image from '../Image/Image.components';
 import { useEffect,useState,useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProgressContext } from '../../context/progress.context';
+import axios from 'axios';
 
 const CalculatingPage = () =>{
 
-    const {visitedPages,setVisitedPages} = useContext(ProgressContext)
+    const {setVisitedPages,setintelligenceScore} = useContext(ProgressContext);
+
+
+        
+        const getIntelligenceScores = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/api/calculation'); // Backend endpoint
+                // console.log('Frontend received:', response.data); // Log the data
+                setintelligenceScore(response.data);
+            } catch (err) {
+                console.error('Error fetching intelligence scores:', err);
+            }
+        };
+    
+        // useEffect to call the function when the component loads
+        useEffect(() => {
+            getIntelligenceScores();
+        }, []); 
+    
 
     useEffect(()=>{
  
@@ -22,8 +41,13 @@ const CalculatingPage = () =>{
         CareerFieldPage:false,
         CareersPage:false   
  
-       }))
+       }));
+
+       
    },[])
+
+
+
 
     const navigate = useNavigate();
 
@@ -35,7 +59,12 @@ const CalculatingPage = () =>{
     return ()=>{
         clearTimeout(timer);
     }
-   },[navigate])
+   },[navigate]);
+
+
+
+
+
 
     return(
         <div className='calculating-page-container'>

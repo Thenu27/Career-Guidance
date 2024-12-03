@@ -1,6 +1,10 @@
 const { createContext, useState } = require("react");
 
 export const ProgressContext= createContext({
+
+    intelligenceScore:null,
+    setintelligenceScore:()=>null,
+
     hidden:"",
     sethidden:()=>null,
 
@@ -17,6 +21,8 @@ export const ProgressProvider = ({children}) =>{
     const [hidden,sethidden]=useState("");
     // const [page,setPage]=useState("");
     // const [isVisited,setisVisited] = useState();
+
+    const [intelligenceScore,setintelligenceScore]=useState([]);
     
     const [visitedPages, setVisitedPages] = useState({
         home: false,
@@ -31,7 +37,7 @@ export const ProgressProvider = ({children}) =>{
         CareersPage:false
       });
 
-    const value = {hidden,sethidden,visitedPages,setVisitedPages};
+    const value = {hidden,sethidden,visitedPages,setVisitedPages,intelligenceScore,setintelligenceScore};
 
     return(
         <ProgressContext.Provider value={value}>
