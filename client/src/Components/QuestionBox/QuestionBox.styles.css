@@ -1,87 +1,44 @@
-/* .Question-box{
-    border: 2px solid black;
-    border-radius: 10px;
-    width:40vw;
-    margin-left: 3%;
-    height: 11vh;
-    
-}
-
-.question{
-    text-align: center;
-    margin-top: 1%;
-}
-
-.Question-box-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    margin-top: 2%;
-    height: 88%;
-    
-} */
-/* 
-.answer{
-    width:90%;
-    margin-top:-2%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.answer input{
-    width: 100%;
-    
-}
-
-.question-box-side-box-container{
-    display: flex;
-    flex-direction: row;
-}
-.side-box{
-    margin-top: 5%;
-    width: 30px;
-    height: 30px;
-    border: 1px solid black;
-    border-radius: 5px;
-    margin-left: 3%;
-}
-
-.answer-value{
-    text-align: center;
-    margin-top: auto;
-    margin-bottom: auto;
-
-} */
-
 .question-box-container {
   display: flex;
   flex-direction: column;
-  padding-top: 0%;
-  height: 93%;
   justify-content: space-evenly;
-  border: 1px solid black;
-  /* margin-top: -2%; */
+  padding-top: 2%;
+  height: 100%;
+  gap: 1%;
+
 }
 
 .question-box-side-box-container {
-  margin-left: 2%;
+  margin-left: 1%;
   display: flex;
   flex-direction: row;
+  width: 100%;
+  /* height: 25%; */
+  height: auto;
 }
 
 .question-box {
   border: 3px solid black;
   border-radius: 10px;
-  height: 110%;
-  width: 86%;
+  /* height: 100%; */
+  height: auto;
+  width: 85%;
+  /* text-align: center; */
 }
 .question {
   text-align: center;
+  align-content: center; 
+  padding: 1%;
+  font-size: 4.5vw;
+
+  font-weight: 500;
 }
 
 .answer {
   width: 95%;
+  margin: auto;
   margin-left: 2%;
+
 }
 
 .answer input {
@@ -91,8 +48,8 @@
 .side-box {
   border: 3px solid black;
   border-radius: 5px;
-  width: 10%;
-  height: 50%;
+  width: 11%;
+  height: 35%;
   margin: auto;
   align-content: center;
   text-align: center;
@@ -100,14 +57,14 @@
 
 @media (min-width: 1400px) and (max-width: 1600px) {
   .question-box-container {
-    height: 94%;
+    height: 98%;
     width: 97%;
     margin-left: auto;
     margin-right: auto;
   }
 
   .questions-navigation-container {
-    height: 8%;
+    height: 90%;
     padding-bottom: 0.5%;
   }
   .side-box {
@@ -115,5 +72,10 @@
     height: 50%;
     text-align: center;
     align-content: center;
+  }
+  .question{
+    
+    font-size: 113%;
+    font-weight: 500;
   }
 }

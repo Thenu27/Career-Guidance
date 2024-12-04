@@ -6,10 +6,6 @@
   margin-top: 5%;
 } */
 
-.career-field-dropdown-container-title {
-  text-align: center;
-}
-
 .career-field-dropdown-btn {
   width: 100%;
   height: 50%;
@@ -57,9 +53,9 @@
   font-size: 100%;
 }
 
-@media (min-width:1400px) and (max-width:1600px){
-  .career-field-dropdown-btn-set{
-    width:70%;
+@media (min-width: 1400px) and (max-width: 1600px) {
+  /* .career-field-dropdown-btn-set {
+    width: 70%;
     height: 30%;
-    }
+  } */
 }

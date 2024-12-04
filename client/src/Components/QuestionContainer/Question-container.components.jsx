@@ -73,9 +73,9 @@ const QuestionContainer = () =>{
         let index = 0;
 
        while(index<ArrayToBeDivided.length){
-            const part = ArrayToBeDivided.slice(index,index+5);
+            const part = ArrayToBeDivided.slice(index,index+4);
             dividedQuestionArray.push(part);
-            index = index+5;
+            index = index+4;
          }
 
         return dividedQuestionArray;
@@ -143,6 +143,9 @@ const QuestionContainer = () =>{
             <div className='question-container'>
 
                <QuestionBox questions={questions} setquestionAndAnswers={setquestionAndAnswers} questionAndAnswers={questionAndAnswers} value={value} setValue={setValue} shufulledQuestions={shufulledQuestions} IndexOfQuestionShown={IndexOfQuestionShown}  questionsDividedIntoFive={questionsDividedIntoFive}/>
+
+             
+            </div>
             <div className='questions-navigation-container'>
                
                <button onClick={BackBtnHandler}className='nextbtn'>Back</button>
@@ -152,8 +155,6 @@ const QuestionContainer = () =>{
                    <button onClick={()=>{answerSubmitHandler();NextBtnHandler()}} className='nextbtn'>Submit</button>
                }  
           </div>
-             
-            </div>
 
             </>
     )

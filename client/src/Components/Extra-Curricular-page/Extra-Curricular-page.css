@@ -2,7 +2,9 @@
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(8, 1fr);
-  height: 120vh;
+  grid-template-rows: auto;
+
+  height: auto;
 }
 .extra-curricular-image {
   grid-column: 1/4;
@@ -13,19 +15,20 @@
   grid-column: 4/9;
   text-align: center;
   align-content: center;
-  font-size: 115%;
+  font-size: 6vw;
   font-weight: 800;
   padding-right: 5%;
 }
 
 .extra-curricular-back-next-btn {
+  height: 7vh;
   grid-row: 8/9;
   grid-column: 2/8;
   display: flex;
   flex-direction: row;
 }
 .extra-curricular-back-next-btn button {
-  height: 50%;
+  height: 80%;
   width: 40%;
 }
 
@@ -55,7 +58,7 @@
 
   .extra-curricular-back-next-btn button {
     width: 30%;
-    height: 70%;
+    height: 100%;
   }
   .extra-curricular-page {
     height: 90vh;

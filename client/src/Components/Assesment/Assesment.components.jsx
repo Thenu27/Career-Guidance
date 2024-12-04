@@ -31,7 +31,7 @@ const Assesment = () => {
             <div className='question-page-frog'>
                 <Image />
             </div>
-            <QuestionContainer q/>
+            <QuestionContainer/>
                         <div className='user-info-container'>
                 <UserInformation />
             </div>

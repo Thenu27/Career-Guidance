@@ -95,19 +95,20 @@ useEffect(()=>{
              </div>
 
             <div className='intelligence-box-container'>
-                 <div className='intelligence-btns-container'>
-                {Object.keys(intelligenceScore).map((intelligence)=>{
-                    
-                    return(
-                        
-                        <div className='intelligence-btn tooltip'>
-                            <p className='intelligence'> {`${intelligence} is ${intelligenceScore}%`} </p>
-                             <span class="tooltiptext">Information about Intelligence</span>
-                        </div>                        
-                    ) 
-                    
+              <div className='intelligence-btns-container'>
+                {Object.keys(intelligenceScore)
+                .sort((a, b) => intelligenceScore[b].Percentage - intelligenceScore[a].Percentage) // Sort keys in descending order
+                .map((intelligence) => {
+                    return (
+                    <div className='intelligence-btn tooltip' key={intelligence}>
+                        <p className='intelligence'>
+                        {`${intelligence} is ${intelligenceScore[intelligence].Percentage.toFixed()}%`}
+                        </p>
+                        <span className='tooltiptext'>Information about Intelligence</span>
+                    </div>
+                    );
                 })}
-                </div>
+            </div>
             </div>
             <div className='intelligence-page-description'>
                 <p>Here is your Multiple Intelligence Profile (MIP) Score, 

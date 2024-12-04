@@ -31,19 +31,20 @@ const QuestionBox =({questions,setquestionAndAnswers,value,setValue,questionsDiv
 
 
     
-    const valueHandler=(globalIndex,event,quesId)=>{
-        const newValues=[...value];
-        newValues[globalIndex]=event.target.value;
+      const valueHandler = (globalIndex, event, quesId) => {
+        const newValues = [...value];
+        newValues[globalIndex] = event.target.value;
         setValue(newValues);
-    setquestionAndAnswers((prev)=>({
-        ...prev,
-        [quesId]:{
-          question:questions[quesId],
-          answer:event.target.value
-        }
-      }))
-
-    }
+      
+        setquestionAndAnswers((prev) => ({
+          ...prev,
+          [quesId]: {
+            question: questions[quesId],
+            answer: event.target.value,
+          },
+        }));
+      };
+      
 
 
 
@@ -64,16 +65,17 @@ const QuestionBox =({questions,setquestionAndAnswers,value,setValue,questionsDiv
        
         <div className='question-box-container'>
              {questionsDividedIntoFive[IndexOfQuestionShown].map((quesId,index)=>{
-                const globalIndex = (IndexOfQuestionShown*5)+index;
+                const globalIndex = (IndexOfQuestionShown*4)+index;
 
                      
                 return   <div key={index} className='question-box-side-box-container'>
                               
                                <div  className='question-box'>   
-                                     <p className='question'>{questions[quesId]}</p><br/>                                       
-                                      <div className='answer'>
-                                            <input  onChange={(event)=>valueHandler(globalIndex,event,quesId)} type="range" value={value[globalIndex]}  name="vol" min="1" max="10"/>
-                                      </div>
+                                  <p className='question'>{questions[quesId]}</p><br/>                                       
+                                        <div className='answer'>
+                                              <input  onChange={(event)=>valueHandler(globalIndex,event,quesId)} type="range" value={value[globalIndex]}  name="vol" min="1" max="10"/>
+                                   </div>
+
                                 </div>
                                   <div className='side-box'>
                                     <p className='answer-value'>{value[globalIndex]}</p> 

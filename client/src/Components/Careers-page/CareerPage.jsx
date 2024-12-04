@@ -26,7 +26,7 @@ const CareerPage=()=>{
 
     const navigate = useNavigate();
 
-    const sendResultsHandler=()=>{
+    const goToSendResultPage=()=>{
         navigate("/SendResults")
     }
 
@@ -35,48 +35,52 @@ const CareerPage=()=>{
     }
 
     return(
-        <div className='Carrer-page'>
-
-            <div className='career-side-description'>
-                    <p>Congratulations! Based on your Multiple Intelligence Profile (MIP) Score,</p> we have curated a list of careers that best align with your strengths and abilities. 
-                    <p>   These careers offer you the opportunity to pursue a path where you can thrive and grow.</p>
-
-                    <button onClick={sendResultsHandler}>Send Results to Email</button>
+        <div className='career-page'>
+            <div className='career-field-box-title-container career-page-title'>
+                  <h2 className='career-field-box-title'>Congratulations! Based on your MIP Score,we’ve curated careers that align with your strengths.</h2> 
             </div>
+
             <div className='career-box-container'>
 
                 <div className='career-box'>
-                    <h2>Top Career</h2>
-                    <button onClick={careerOpenBtnHandler}>Career 1</button>
-                    <button>Career 2</button>
-                    <button>Career 3</button>
+                    <h2 className='career-type'>Top Career</h2>
+                    <div className='chosen-career-box'>
+                        <button onClick={careerOpenBtnHandler}>Career 1</button>
+                        <button>Career 2</button>
+                        <button>Career 3</button>
+                    </div>
                 </div>
                 <div className='career-box'>
-                    <h2>Moderate Career</h2>
-                    <button>Career 1</button>
-                    <button>Career 2</button>
-                    <button>Career 3</button>
+                <div className='chosen-career-box'>
+                        <button>Career 1</button>
+                        <button>Career 2</button>
+                        <button>Career 3</button>
+                    </div>
+                    <h2 className='career-type'>Moderate Career</h2>
+ 
                 </div>
                 <div className='career-box'>
-                    <h2>Satisfactory Career</h2>
-                    <button>Career 1</button>
-                    <button>Career 2</button>
-                    <button>Career 3</button>
+                    <h2 className='career-type'>Satisfactory Career</h2>
+                    <div className='chosen-career-box'>
+                        <button>Career 1</button>
+                        <button>Career 2</button>
+                        <button>Career 3</button>
+                    </div>
                 </div>
-                <div className='career-page-back-next-btn'>
-                <button className='backbtn'>Back</button>
-                <button className='nextbtn'>Home</button>
-                </div>
-                               
-            </div>
-            <div className='career-page-frog'>
-                <div className='career-page-frog-comment'>
-                    <p>This is the forgs comment</p>
-                </div>
-                <Image/>
+
             </div>
 
-        </div>
+            <div className='career-fieldBox-navigation career-page-navigation'>
+                    <button className='nextbtn '>Back</button>
+                    <button onClick={ goToSendResultPage} className='nextbtn '>Send Results</button>
+                </div>
+                               
+
+                <div className='career-page-frog'>
+                 <Image/>
+                </div>
+            </div>
+
     )
 }
 
