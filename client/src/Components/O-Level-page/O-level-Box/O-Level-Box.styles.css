@@ -1,7 +1,7 @@
 .O-level-box {
   grid-column: 2/8;
   grid-row: 2/8;
-  padding-top: 5%;
+  padding-top: 1%;
   border: 5px solid black;
   border-radius: 10px;
 }
@@ -12,24 +12,24 @@
   align-content: center;
 }
 .O-level-box-title {
-  font-size: 120%;
-  padding: 0%;
+  font-size: 5.7vw;
+  padding-right: 4%;
   margin: 0%;
   font-weight: 900;
 }
 .O-level-btn-container {
   width: 90%;
-  height: 85%;
+  height: 80%;
   margin: auto;
   display: flex;
   flex-direction: column;
   padding-top: 5%;
-  gap: 0%;
+  gap: 3%;
 }
 
 .O-level-btn {
   border: 3px solid black;
-  height: 25%;
+  height: 80%;
   width: 70%;
   border-radius: 10px;
   margin: auto;
@@ -40,8 +40,10 @@
 }
 
 .O-level-box-back-btn {
+  padding-top: 5%;
+
   width: 40%;
-  height: 10%;
+  height: 15%;
   margin: auto;
 }
 .O-level-box-back-btn button {

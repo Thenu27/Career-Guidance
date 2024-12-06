@@ -51,9 +51,14 @@
     transform: scaleX(-1);
   }
   .extra-curricular-back-next-btn {
-    grid-row: 13/16;
+    grid-row: 13/17;
     grid-column: 3/10;
-    padding-bottom: 5%;
+    padding: 0%;
+    margin: 0;
+    /* padding-bottom: 5%; */
+    /* border: 1px solid black; */
+    padding-top: 3%;
+    height: 10vh;
   }
 
   .extra-curricular-back-next-btn button {

@@ -1,199 +1,60 @@
-/* body {
-  overflow-x: hidden;
-}
-
-.home-container {
-  display: flex;
-  flex-direction: row;
-  width: 100vw;
-  height: 85vh;
-  background: linear-gradient(180deg, #fffcff 63%, #e1bee7 100%);
-}
-
-.home-content {
-  margin-left: -1%;
-  margin-right: auto;
-  border: 1px solid black;
-  height: 95%;
-  width: 77%;
-}
-
-img {
-  margin-top: 20%;
-}
-
-h1 {
-  font-size: 35px;
-  text-align: center;
-}
-
-
-.allp {
-  margin-top: -1%;
-  font-size: 20px;
-  width: 95%;
-  height: 60%;
-  text-align: center;
-}
-
-.steps {
-  width: 90%;
-  height: 60%;
-  margin-left: auto;
-  margin-top: 0%;
-  text-align: left;
-}
-
-.take-quiz-btn {
-  @apply bg-black  text-white 
- w-40;
-}
-
-.btn_TakeQuiz{
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
-
-.btn_TakeQuiz button {
-  background-color: #000000;
-  border: none;
-  color: white;
-  padding: 16px 32px;
-  font-size: 35px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  border-radius: 10px;
-
-}
-
-.btn_TakeQuiz button:hover {
-  background-color: #ffffff;
-  color: #000000;
-  border: 1px solid black;
-} */
-
-/* @media (max-width: 500px) {
+@media (max-width: 480px) {
   .home-container {
-    display: flex;
-    flex-direction: row;
-    height: 67vh;
-    width: 100vw;
+    display: grid;
+    height: auto;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: auto 1fr auto;
   }
-
-  .home-content {
-    width: 70vw;
-    height: 70vh;
-    align-items: center;
-    margin-right: auto;
+  .home-page-frog {
+    grid-column: 1/4;
+    grid-row: 1/3;
+    padding-top: 10%;
   }
-
-  img {
-    width: 120%; 
-    height: 25%;
-    margin-top: 8%;
+  .welcome-title {
+    grid-column: 4/9;
+    grid-row: 1/3;
+    font-size: 7.5vw;
+    font-weight: 1000;
+    padding-top: 5%;
   }
-
-  .home-container h1 {
-    font-size: 25px;
-    text-align: center;
-    margin-top: 10%;
-  }
-
   .allp {
-    font-size: 15px;
-
-    width: 150%;
-    height: 60%;
-    margin-left: -55%;
-    margin-top: 15%;
-    display: flex;
-    flex-direction: column;
+    grid-column: 1/9;
+    grid-row: 3/8;
+    font-size: 5vw;
+    padding: 5%;
   }
-
-  .steps {
-    margin-top: -2%;
-    line-height: 135%;
+  .step-container {
+    padding-top: 3%;
   }
-
-  .btn_TakeQuiz:hover {
-    background-color: #ffffff;
-    color: #000000;
+  .step-container > div {
+    padding-top: 2%;
   }
-
-  .btn_TakeQuiz {
-    width: 60%;
-    height: 17%;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 13%;
-  }
-
-  .btn_TakeQuiz button {
-    width: 100%;
-    height: 100%;
-    font-size: 150%;
-  }
-
-  .last-p {
-    margin-top: -20%;
-    margin: auto;
-    line-height: 130%;
-  }
-
   .intro-text {
     display: none;
   }
-} */
-/* .App {
-  @apply h-[115vh] w-full ipxr:h-[120vh];
+  .take-quiz-btn {
+    grid-column: 3/7;
+    height: 6em;
+    width: 100%;
+    border-radius: 10px;
+  }
+  .take-quiz-btn :hover {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    border-radius: 10px;
+  }
+
+  .take-quiz-btn button {
+    background-color: black;
+    margin-bottom: auto;
+    color: white;
+    width: 100%;
+    height: 80%;
+    border-radius: 10px;
+    font-size: 5vw;
+  }
 }
-
-.home-container {
-  @apply bg-[linear-gradient(180deg,#fffcff_63%,#e1bee7_100%)]  flex  flex-row  flex-wrap gap-2  text-base  w-full min-h-[85vh] se:min-h-[95vh] ip12:min-h-[75vh] ipxr:min-h-[70vh];
-}
-/* border border-solid border-black */
-/* 
-.welcome-title {
-  @apply border border-solid border-black w-[65%] ipadAir:w-[65%] text-center h-[40%] mt-3 ipadAir:mt-[1%] ipadAir:ml-[3%]  font-bold text-2xl ipadAir:text-3xl ipadAir:leading-[140%];
-}
-
-.home-page-frog {
-  @apply w-32 ipadAir:w-[22%] ipadAir:h-[13vh] ipadAir:-mt-[0%] border border-solid border-black h-32 mt-2;
-}
-
-.allp {
-  @apply text-base ipadAir:text-[110%] ipxr:min-h-[40%] min-h-[45%] s8:-mt-[16%] ipadAir:-mt-[52%] se:min-h-[73%] w-[90%] -mt-[37%] ipxr:-mt-[45%] se:-mt-[18%] ml-auto mr-auto text-center flex flex-col gap-5;
-}
-
-.steps {
-  @apply flex flex-col gap-3 ipxr:mt-[27%] se:mt-[1%] ip12:mt-[20%];
-}
-
-.intro-text {
-  @apply hidden;
-}
-
-.take-quiz-btn {
-  @apply w-[60%] min-h-[13%] imini:min-h-[10%] ipadAir:min-h-[7vh]  bg-black text-white text-center mt-1  se:-mt-[1%] ml-auto mr-auto rounded-xl  
-   hover:bg-white hover:text-black hover:border border-solid border-black text-[120%];
-}
-
-.take-quiz-btn button {
-  @apply w-full h-full;
-} */
-
-/* @media screen and (min-width: 456px) and (max-width: 770px) {
-  .home-container {
-    display: grid;
-    background-color: #2196f3;
-
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(15, 2%);
-    /* grid-template-areas:
-      "image  welcome-title"
-      "home-content  home-content";
-    row-gap: 10%; */
 .App {
   background: linear-gradient(
     90deg,
@@ -202,61 +63,6 @@ h1 {
     rgba(255, 252, 255, 1) 77%,
     rgba(225, 190, 231, 1) 100%
   );
-}
-.home-container {
-  display: grid;
-  height: auto;
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: auto 1fr auto;
-}
-.home-page-frog {
-  grid-column: 1/4;
-  grid-row: 1/3;
-  padding-top: 10%;
-}
-.welcome-title {
-  grid-column: 4/9;
-  grid-row: 1/3;
-  font-size: 7.5vw;
-  font-weight: 1000;
-  padding-top: 5%;
-}
-.allp {
-  grid-column: 1/9;
-  grid-row: 3/8;
-  font-size: 5vw;
-  padding: 5%;
-}
-.step-container {
-  padding-top: 3%;
-}
-.step-container > div {
-  padding-top: 2%;
-}
-.intro-text {
-  display: none;
-}
-.take-quiz-btn {
-  grid-column: 3/7;
-  height: 6em;
-  width: 100%;
-  border-radius: 10px;
-}
-.take-quiz-btn :hover {
-  background-color: white;
-  color: black;
-  border: 1px solid black;
-  border-radius: 10px;
-}
-
-.take-quiz-btn button {
-  background-color: black;
-  margin-bottom: auto;
-  color: white;
-  width: 100%;
-  height: 80%;
-  border-radius: 10px;
-  font-size: 5vw;
 }
 
 /* large laptops */
@@ -278,7 +84,7 @@ h1 {
     /* border: 1px solid black; */
   }
   .welcome-title {
-    font-size: 270%;
+    font-size: 3vw;
     text-align: center;
     line-height: 120%;
     grid-column: 5/17;
@@ -305,11 +111,14 @@ h1 {
   }
   .take-quiz-btn {
     grid-column: 9/13;
-    grid-row: 12/15;
-    font-size: 150%;
+    grid-row: 13/15;
+    height: 13vh;
+    border: 1px solid black;
   }
   .take-quiz-btn button {
     height: 100%;
+    width: 100%;
+    font-size: 2.5vw;
   }
   .ending-text {
     padding-top: 1%;

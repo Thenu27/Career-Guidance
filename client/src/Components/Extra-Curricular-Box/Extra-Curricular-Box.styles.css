@@ -43,9 +43,11 @@
     grid-row: 3/13;
     grid-column: 2/12;
     margin: 0;
+    padding-bottom: 2%;
   }
   .extra-curricular-btn-container {
     gap: 3%;
+    height: 100%;
   }
   .extra-curricular-btn {
     min-width: 30%;
