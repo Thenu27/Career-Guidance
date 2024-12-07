@@ -1,28 +1,13 @@
 import './O-Level-Local-MainSubjects.css';
 import { OLevelContext } from '../../../context/OLevel.context';
 import { useContext,useEffect,useState } from 'react';
-
-const OLevelCommonSubjects = [
-    "Mathematics",
-    "English Language",
-    "Biology",
-    "Chemistry",
-    "Physics",
-    "History",
-    "Geography",
-    "Business Studies",
-    "Economics",
-    "Accounting",
-    "Information Technology",
-    "Literature in English",
-    "Islamic Studies",
-    "French"
-];
-
-const OLevelMainLocalSubjects = ()=>{
+import OLevelResults from '../O-Level-Results/O-Level-Results';
 
 
-    const {setshowOLevelBox,setshowOLevelLocalSubj,goToLocalBasket,setshowOLevelBasketSubjects,goToOLevelBox,OLevelResultsArray,setOLevelResultsArray}   = useContext(OLevelContext);
+const OLevelMainLocalSubjects = ({OLevelLocalCoreSubj})=>{
+
+
+    const {setshowOLevelBox,setshowOLevelLocalSubj,goToLocalBasket,setshowOLevelBasketSubjects,goToOLevelBox,setOLevelResultsArray,OLevelResultsArray}   = useContext(OLevelContext);
 
     const [selectedButtons,setselectedButtons] = useState([])
  
@@ -43,8 +28,8 @@ const OLevelMainLocalSubjects = ()=>{
 
 
     useEffect(() => {
-        console.log(OLevelResultsArray);
-    }, [OLevelResultsArray]);
+        console.log(OLevelLocalCoreSubj);
+    }, [OLevelLocalCoreSubj]);
 
 
 
@@ -63,12 +48,6 @@ const OLevelMainLocalSubjects = ()=>{
 
 
 
-    useEffect(()=>{
-        setOLevelResultsArray([])
-      },[])
-
-
-
       
       
     return(
@@ -84,13 +63,13 @@ const OLevelMainLocalSubjects = ()=>{
 
                 <div className='O-level-subject-btn-container'>
 
-                    {OLevelCommonSubjects.map((subject,index)=>{
+                    {OLevelLocalCoreSubj.map((subject,index)=>{
                        return <button
                        onClick={() => {
-                        btnSelectHandler(subject);}}
+                        btnSelectHandler(subject.subjects);}}
                                  key={index}   
-                                 className={`O-subject-level-btn ${selectedButtons.includes(subject)? "OL-subject-btn-selected":""}`}>
-                                {subject}
+                                 className={`O-subject-level-btn ${selectedButtons.includes(subject.subjects)? "OL-subject-btn-selected":""}`}>
+                                {subject.subjects}
                                 
                               </button>
                     })} 

@@ -46,7 +46,6 @@ app.use(
 );
 
 // Array to hold intelligence data fetched from the database
-let intelligenceArray = [];
 
 
 
@@ -68,8 +67,108 @@ app.use((req, res, next) => {
     if (!req.session.detailsForCalculation) {
         req.session.detailsForCalculation = {};
     }
-    next();
+
+    if(!req.session.OLevelLocalCoreSubjectsArray){
+        req.session.OLevelLocalCoreSubjectsArray=[]
+    }
+
+    if(!req.session.OLevelLocalBasketSubjectsArray){
+        req.session.OLevelLocalBasketSubjectsArray=[]
+    }
+    
+    if(!req.session.intelligenceArray){
+        req.session.intelligenceArray = [];
+    } 
+
+    if(!req.session.OLevelUserMiArray){
+        req.session.OLevelUserMiArray={};
+    }
+    if(!req.session.percentageObject){
+        req.session.percentageObject={}
+    }
+
+   next();
 });
+
+
+
+
+
+
+const calculateOLevelPercentage = async (req, subject, grade) => {
+    try {
+        // Fetch MI IDs for the subject
+        const MiIdforSubject = await db
+            .select("mi_1", "mi_2", "mi_3")
+            .from("olevel_local_subjects")
+            .where("subjects", subject);
+
+        // Fetch MI Percentages for the subject
+        const getMiPercentage = await db
+            .select("mi_percentage1", "mi_percentage2", "mi_percentage3")
+            .from("olevel_local_subjects")
+            .where("subjects", subject);
+
+        // Fetch Intelligence Types based on MI IDs
+        const getIntelligenceFromMiId = await db
+            .select("intelligence_type")
+            .from("mi_table")
+            .whereIn("intelligence_id", [
+                MiIdforSubject[0].mi_1,
+                MiIdforSubject[0].mi_2,
+                MiIdforSubject[0].mi_3,
+            ]);
+
+        // Convert percentages to numeric values
+        const OLevelPercentagesValues = Object.values(getMiPercentage[0]).map(parseFloat);
+
+        // Grade multipliers
+        const gradeMultipliers = {
+            A: 1,
+            B: 0.75,
+            C: 0.65,
+            S: 0.55,
+            F: 0.35,
+        };
+
+        // Get the multiplier for the grade or default to 0
+        const multiplier = gradeMultipliers[grade] || 0;
+
+        // Apply the multiplier to all percentages
+        const OLevelPercentages = OLevelPercentagesValues.map(
+            (percentage) => percentage * multiplier
+        );
+
+        // Ensure session objects are initialized
+        req.session.percentageObject = req.session.percentageObject || {};
+
+        // Loop through intelligence types and accumulate percentages
+        for (let i = 0; i < getIntelligenceFromMiId.length; i++) {
+            const intelligenceType = getIntelligenceFromMiId[i].intelligence_type;
+            const PercentageValue = OLevelPercentages[i];
+
+            // Initialize intelligence type if not already present
+            if (!req.session.percentageObject[intelligenceType]) {
+                req.session.percentageObject[intelligenceType] = {
+                    totalPercentage: 0,
+                    AvgPercentage: 0,
+                };
+            }
+
+            // Add the percentage value to the existing total
+            req.session.percentageObject[intelligenceType].totalPercentage += PercentageValue;
+
+            // Recalculate the average percentage
+            req.session.percentageObject[intelligenceType].AvgPercentage =
+                Math.round((req.session.percentageObject[intelligenceType].totalPercentage / 6) * 10) / 10; // Adjust divisor if needed
+        }
+
+        console.log(req.session.percentageObject);
+    } catch (error) {
+        console.error("Error calculating O-Level percentage:", error.message);
+    }
+};
+
 
 
 
@@ -80,13 +179,13 @@ app.use((req, res, next) => {
 
 
 // Function to fetch intelligence types from the database and store them in intelligenceArray
-const fetchIntelligenceFromDB = async () => {
+const fetchIntelligenceFromDB = async (req) => {
     const response = await db.select('*').from("mi_table");
-    console.log(response)
+    // console.log(response)
     for (let i = 0; i < response.length; i++) {
-        intelligenceArray.push(response[i])
+        req.session.intelligenceArray.push(response[i])
     }
-    // console.log("Hello", intelligenceArray)
+    console.log("Hello", req.session.intelligenceArray)
 }
 
 
@@ -95,9 +194,15 @@ const fetchIntelligenceFromDB = async () => {
 
 
 
+const fetchOLevelSubjectFromDB = async (pathline, sessionArray) => {
+    if (sessionArray.length === 0) { // Fetch only if the array is empty
+        const data = await db.select('subjects').from('olevel_local_subjects').where('pathline', pathline);
+        sessionArray.push(...data); // Add data to the original array
+        // console.log(`Fetched ${pathline} subjects:`, data);
+    }
+};
 
-// Call the function to populate intelligenceArray on server start
-fetchIntelligenceFromDB();
+
 
 
 
@@ -126,11 +231,11 @@ const accesingAnswers = async (req, intelligence_id) => {
 
     // Calculate the average score for this intelligence type
     const avg = totalAnswer / questionIdGrouped.length
-    console.log("Total Answer", totalAnswer)
+    // console.log("Total Answer", totalAnswer)
 
     // Get the intelligence_type name from the database for labeling
     const getIntelligence = await db.select("intelligence_type").from("mi_table").where("intelligence_id", intelligence_id).first();
-    console.log("Intelligence latest", getIntelligence)
+    // console.log("Intelligence latest", getIntelligence)
 
     // Store the calculated results (Total, Avg, Percentage) in the session
     req.session.detailsForCalculation[getIntelligence.intelligence_type] = {
@@ -148,12 +253,6 @@ const accesingAnswers = async (req, intelligence_id) => {
 
 
 
-const fetchOLevelSubjectFromDB=async()=>{
-    const OLevelSubjectsCommon = await db.select('subjects').from('olevel_local_subjects').where('subject_id',53)
-    console.log(OLevelSubjectsCommon)
-}
-
-fetchOLevelSubjectFromDB();
 
 
 
@@ -166,11 +265,11 @@ fetchOLevelSubjectFromDB();
 // Function to calculate the total score for all intelligence types
 const calculatingTotalScoreForAll = async (req) => {
     // Loop through all fetched intelligence types and calculate their scores
-    for (let i = 0; i < intelligenceArray.length; i++) {
-        console.log(intelligenceArray[i].intelligence_id)
-        await accesingAnswers(req, intelligenceArray[i].intelligence_id);
+    for (let i = 0; i < req.session.intelligenceArray.length; i++) {
+        // console.log(intelligenceArray[i].intelligence_id)
+        await accesingAnswers(req, req.session.intelligenceArray[i].intelligence_id);
     }
-    // console.log("Details", req.session.detailsForCalculation)
+    console.log("Details", req.session.detailsForCalculation)
 }
 
 
@@ -255,8 +354,11 @@ const getIntelligenceType = async (req) => {
 // Endpoint to get all questions for the assessment
 app.get('/api/Assesment', async (req, res) => {
     try {
+        await fetchIntelligenceFromDB(req);
         const allQuestions = await getttingQuestionFromDB();
         res.send(allQuestions);
+        
+
     } catch (error) {
         console.error('Error fetching data:', error.message);
         res.status(500).json({ error: 'Failed to fetch questions' });
@@ -284,6 +386,42 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 
 
 
+app.get('/api/Ordinarylevelpage/local-Core',async(req,res)=>{
+    try{
+        await fetchOLevelSubjectFromDB('Core',req.session.OLevelLocalCoreSubjectsArray);
+        // await fetchOLevelSubjectFromDB('Basket',req.session.OLevelLocalBasketSubjectsArray);
+        res.json( req.session.OLevelLocalCoreSubjectsArray);
+    }catch(error){
+        console.error('Error fetching core subjects:', error.message);
+        res.status(500).send("Failed To Fetch Subjects");
+    }
+
+})
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+app.get('/api/Ordinarylevelpage/local-Basket',async(req,res)=>{
+    try{
+        await fetchOLevelSubjectFromDB('Basket',req.session.OLevelLocalBasketSubjectsArray);
+        res.json( req.session.OLevelLocalBasketSubjectsArray);
+    }catch(error){
+        console.error("Error Fetching Basket Subjects",error.message);
+        res.status(500).send("Failed to Fetch Subjects")
+    }
+})
+
+
 
 
 
@@ -292,13 +430,21 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 
 
 // Endpoint for receiving O-Level results and grades data from the client
-app.post('/api/Ordinarylevelpage', (req, res) => {
+app.post('/api/Ordinarylevelpage', async(req, res) => {
     try {
         const { OLevelResultsAndGrades } = req.body;
-        console.log(OLevelResultsAndGrades)
+        req.session.OLevelResultsAndGrades=OLevelResultsAndGrades
+        console.log(req.session.OLevelResultsAndGrades)
+        const OLSubjectDone = Object.keys(req.session.OLevelResultsAndGrades);
+        const OLSubjectResults =Object.values(req.session.OLevelResultsAndGrades)
+        for(let i=0;i<OLSubjectDone.length;i++){
+           await calculateOLevelPercentage(req,OLSubjectDone[i],OLSubjectResults[i]);
+        }
+        // console.log(req.session.percentageObject)
+
         // Process data as needed...
     } catch (error) {
-        console.log("Failed to fetch OLevelResults");
+        console.log("Failed to fetch OLevelResults",error);
     }
 });
 
@@ -348,7 +494,7 @@ app.post('/api/Assesment', async (req, res) => {
         const { questionAndAnswers } = req.body;
         // Store the user's answers in the session
         req.session.questionAndAnswers = questionAndAnswers
-        console.log("Received answers:", req.session.questionAndAnswers);
+        // console.log("Received answers:", req.session.questionAndAnswers);
         res.json({ Message: "received" });
     } catch (error) {
         res.status(500).json({ Message: "Error in Receiving Data" });

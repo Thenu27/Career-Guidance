@@ -4,25 +4,25 @@ import { useContext,useState } from 'react';
 import { OLevelContext } from '../../../context/OLevel.context';
 
 
-const OLevelLocalBasketSubjects = [
-    "Art and Design",
-    "Business Studies",
-    "Computer Science",
-    "Environmental Management",
-    "Food and Nutrition",
-    "Accounting",
-    "Economics",
-    "Physical Education",
-    "French",
-    "Spanish",
-    "Geography",
-    "History",
-    "Religious Studies",
-    "Travel and Tourism",
-    "Psychology"
-]
+// const OLevelLocalBasketSubjects = [
+//     "Art and Design",
+//     "Business Studies",
+//     "Computer Science",
+//     "Environmental Management",
+//     "Food and Nutrition",
+//     "Accounting",
+//     "Economics",
+//     "Physical Education",
+//     "French",
+//     "Spanish",
+//     "Geography",
+//     "History",
+//     "Religious Studies",
+//     "Travel and Tourism",
+//     "Psychology"
+// ]
 
-const OLevelBasketLocal =()=>{
+const OLevelBasketLocal =({OLevelBasketSubj})=>{
 
     
     const [selectedButtons,setselectedButtons] = useState([])
@@ -60,8 +60,8 @@ const OLevelBasketLocal =()=>{
 
                 <div className='O-level-subject-btn-container'>
 
-                    {OLevelLocalBasketSubjects.map((subject,index)=>{
-                    return <button onClick={()=>btnSelectHandler(subject)} key={index} className={`O-subject-level-btn ${selectedButtons.includes(subject)? "OL-subject-btn-selected":""}`}>{subject}</button>
+                    {OLevelBasketSubj.map((subject,index)=>{
+                    return <button onClick={()=>btnSelectHandler(subject.subjects)} key={index} className={`O-subject-level-btn ${selectedButtons.includes(subject.subjects)? "OL-subject-btn-selected":""}`}>{subject.subjects}</button>
                     })}
 
                 </div>
