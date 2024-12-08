@@ -32,18 +32,19 @@ app.use(cors());
 // Set up session middleware to manage user sessions.
 // This stores user data on the server between HTTP requests.
 app.use(
-    session({
-        secret: 'your-secret-key', // Secret key for encrypting session data
-        resave: false,             // Do not save session if unmodified
-        saveUninitialized: true,   // Save uninitialized sessions
-        cookie: {
-            maxAge: 600000,        // Session cookie max age in milliseconds
-            secure: false,         // In production, set to true if HTTPS is used
-            httpOnly: true,        // Cookie not accessible via client-side JS
-            sameSite: 'lax'        // SameSite policy for the cookie
-        }
-    })
+  session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 600000, // Session cookie max age in milliseconds
+      secure: false,  // Set to true if using HTTPS in production
+      httpOnly: true, // Cookie not accessible via JavaScript
+      sameSite: 'lax', // SameSite policy for the cookie
+    },
+  })
 );
+
 
 // Array to hold intelligence data fetched from the database
 
@@ -102,24 +103,38 @@ const calculateOLevelPercentage = async (req, subject, grade) => {
             .select("mi_1", "mi_2", "mi_3")
             .from("olevel_local_subjects")
             .where("subjects", subject);
-
+        console.log("Mi_id",MiIdforSubject)
         // Fetch MI Percentages for the subject
         const getMiPercentage = await db
             .select("mi_percentage1", "mi_percentage2", "mi_percentage3")
             .from("olevel_local_subjects")
             .where("subjects", subject);
+        
+            console.log("Mi_percentage",getMiPercentage)
 
         // Fetch Intelligence Types based on MI IDs
         const getIntelligenceFromMiId = await db
-            .select("intelligence_type")
-            .from("mi_table")
-            .whereIn("intelligence_id", [
-                MiIdforSubject[0].mi_1,
-                MiIdforSubject[0].mi_2,
-                MiIdforSubject[0].mi_3,
-            ]);
-
-        // Convert percentages to numeric values
+        .select("intelligence_type")
+        .from("mi_table")
+        .whereIn("intelligence_id", [
+          MiIdforSubject[0].mi_1,
+          MiIdforSubject[0].mi_2,
+          MiIdforSubject[0].mi_3,
+        ])
+        .orderByRaw(`
+          CASE 
+            WHEN intelligence_id = ? THEN 1
+            WHEN intelligence_id = ? THEN 2
+            WHEN intelligence_id = ? THEN 3
+          END
+        `, [
+          MiIdforSubject[0].mi_1,
+          MiIdforSubject[0].mi_2,
+          MiIdforSubject[0].mi_3,
+        ]);
+            console.log("mi_intelligence",getIntelligenceFromMiId)
+      
+            // Convert percentages to numeric values
         const OLevelPercentagesValues = Object.values(getMiPercentage[0]).map(parseFloat);
 
         // Grade multipliers
@@ -140,7 +155,7 @@ const calculateOLevelPercentage = async (req, subject, grade) => {
         );
 
         // Ensure session objects are initialized
-        req.session.percentageObject = req.session.percentageObject || {};
+        // req.session.percentageObject = req.session.percentageObject || {};
 
         // Loop through intelligence types and accumulate percentages
         for (let i = 0; i < getIntelligenceFromMiId.length; i++) {
@@ -162,8 +177,8 @@ const calculateOLevelPercentage = async (req, subject, grade) => {
             req.session.percentageObject[intelligenceType].AvgPercentage =
                 Math.round((req.session.percentageObject[intelligenceType].totalPercentage / 6) * 10) / 10; // Adjust divisor if needed
         }
-
-        console.log(req.session.percentageObject);
+        return req.session.percentageObject
+        // console.log("Before",req.session);
     } catch (error) {
         console.error("Error calculating O-Level percentage:", error.message);
     }
@@ -185,7 +200,7 @@ const fetchIntelligenceFromDB = async (req) => {
     for (let i = 0; i < response.length; i++) {
         req.session.intelligenceArray.push(response[i])
     }
-    console.log("Hello", req.session.intelligenceArray)
+    // console.log("Hello", req.session.intelligenceArray)
 }
 
 
@@ -269,7 +284,7 @@ const calculatingTotalScoreForAll = async (req) => {
         // console.log(intelligenceArray[i].intelligence_id)
         await accesingAnswers(req, req.session.intelligenceArray[i].intelligence_id);
     }
-    console.log("Details", req.session.detailsForCalculation)
+    // console.log("Details", req.session.detailsForCalculation)
 }
 
 
@@ -429,23 +444,58 @@ app.get('/api/Ordinarylevelpage/local-Basket',async(req,res)=>{
 
 
 
+
+
+
 // Endpoint for receiving O-Level results and grades data from the client
 app.post('/api/Ordinarylevelpage', async(req, res) => {
     try {
         const { OLevelResultsAndGrades } = req.body;
         req.session.OLevelResultsAndGrades=OLevelResultsAndGrades
-        console.log(req.session.OLevelResultsAndGrades)
-        const OLSubjectDone = Object.keys(req.session.OLevelResultsAndGrades);
-        const OLSubjectResults =Object.values(req.session.OLevelResultsAndGrades)
-        for(let i=0;i<OLSubjectDone.length;i++){
-           await calculateOLevelPercentage(req,OLSubjectDone[i],OLSubjectResults[i]);
-        }
-        // console.log(req.session.percentageObject)
+        // console.log(req.session.OLevelResultsAndGrades)
+ 
+        console.log("Before calcu",req.sessionID)
 
-        // Process data as needed...
+        req.session.OLSubjectDone = Object.keys(req.session.OLevelResultsAndGrades);
+        req.session.OLSubjectResults =Object.values(req.session.OLevelResultsAndGrades)
+        for(let i=0;i<req.session.OLSubjectDone.length;i++){
+            await calculateOLevelPercentage(req,req.session.OLSubjectDone[i],req.session.OLSubjectResults[i]);
+         }
+         if(!req.session.OlevelFinalMipValues){
+            req.session.OlevelFinalMipValues={}
+         }
+         req.session.OlevelFinalMipValues=req.session.percentageObject
+         console.log("After calc",req.session);
+         res.status(500).send("Data received")
     } catch (error) {
         console.log("Failed to fetch OLevelResults",error);
     }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.get('/api/Ordinarylevel', async(req, res) => {
+    try{
+        console.log("when called",req.sessionID)
+res.json(req.session.OlevelFinalMipValues);
+console.log(req.session)
+    }catch(error){
+        console.log(error)
+    }
+
 });
 
 

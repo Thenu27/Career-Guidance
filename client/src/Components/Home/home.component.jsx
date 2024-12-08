@@ -4,11 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { ProgressContext } from '../../context/progress.context';
 import { useEffect } from 'react';
-import Assesment from '../Assesment/Assesment.components';
 
 const Home = () =>{
 
-    const {visitedPages,setVisitedPages} = useContext(ProgressContext)
+    const {setVisitedPages} = useContext(ProgressContext)
     const navigate = useNavigate();
 
     useEffect(()=>{

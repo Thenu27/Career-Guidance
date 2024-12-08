@@ -51,6 +51,7 @@ const sendToBackend =async()=>{
   const response = await axios.post("http://localhost:3000/api/Ordinarylevelpage",{
     OLevelResultsAndGrades
   });
+  console.log("New",response.data)
   if(response.status===200){
     console.log("OLevelResultsArray Sent to back end")
   }else{

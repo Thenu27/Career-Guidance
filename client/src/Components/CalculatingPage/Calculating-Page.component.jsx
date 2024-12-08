@@ -8,6 +8,7 @@ import axios from 'axios';
 const CalculatingPage = () =>{
 
     const {setVisitedPages,setintelligenceScore} = useContext(ProgressContext);
+    const [OlMip,setOlMip]=useState([]);
 
 
         
@@ -26,6 +27,11 @@ const CalculatingPage = () =>{
             getIntelligenceScores();
         }, []); 
     
+        const getOlevelMip =async()=>{
+            const response= await axios.get('http://localhost:3000/api/Ordinarylevel');
+            setOlMip(response.data);
+        }
+
 
     useEffect(()=>{
  
@@ -46,7 +52,14 @@ const CalculatingPage = () =>{
        
    },[])
 
+useEffect(()=>{
+   const fetchDate=async()=>{
+       await getOlevelMip()
+    }
 
+    fetchDate()
+    console.log("Menna baduuu",OlMip)
+},[])
 
 
     const navigate = useNavigate();
