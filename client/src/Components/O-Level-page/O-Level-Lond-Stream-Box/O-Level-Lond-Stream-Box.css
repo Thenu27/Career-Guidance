@@ -4,7 +4,7 @@
   align-content: center;
 }
 
-@media (min-width: 1400px) and (max-width: 1600px) {
+@media (min-width: 1000px) and (max-width: 1600px) {
   .O-level-London-Category-title-container {
     grid-column: 6/13;
   }

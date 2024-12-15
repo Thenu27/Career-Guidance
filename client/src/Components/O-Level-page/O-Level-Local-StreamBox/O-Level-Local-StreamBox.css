@@ -1,7 +1,7 @@
 .O-level-stream-box{
     width: 400px;
     height: 500px;
-    border: 5px solid black;
-    border-radius: 10PX;
+    border: 1px solid black;
+    border-radius: 10px;
     margin-top: 3%;
 }

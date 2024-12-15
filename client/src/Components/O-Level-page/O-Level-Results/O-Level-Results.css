@@ -75,7 +75,7 @@
   background-color: #969393;
 }
 
-@media (min-width: 1400px) and (max-width: 1600px) {
+@media (min-width: 1200px) and (max-width: 1600px) {
   .O-level-result-btn {
     width: 20vw;
     height: 16vh;

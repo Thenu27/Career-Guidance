@@ -3,10 +3,10 @@
   flex-direction: column;
   justify-content: space-evenly;
   margin: auto;
-  height: 98%;
-  /* gap: 1vh; */
-  /* padding: 1%; */
-  border: 1px solid black;
+  height: auto;
+  gap: 1vh;
+  padding-top: 2%;
+  padding-bottom: 2%;
 }
 
 .question-box-side-box-container {
@@ -55,18 +55,17 @@
   text-align: center;
 }
 
-@media (min-width: 1400px) and (max-width: 1600px) {
+@media (min-width: 1000px) {
   .question-box-container {
-    height: 98%;
+    height: 100%;
     width: 97%;
     margin-left: auto;
     margin-right: auto;
   }
-
-  .questions-navigation-container {
-    height: 90%;
-    padding-bottom: 0.5%;
+  .question-box {
+    width: 90%;
   }
+
   .side-box {
     width: 6%;
     height: 50%;
@@ -74,7 +73,7 @@
     align-content: center;
   }
   .question {
-    font-size: 113%;
+    font-size: 1.3vw;
     font-weight: 500;
   }
 }

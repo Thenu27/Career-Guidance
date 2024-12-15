@@ -5,11 +5,11 @@ import ALevelStreamBox from '../A-Level-Streams/A-Level-StreamBox';
 import ALevelLondonCategory from '../A-Level-London-Category/A-Level-London-Category';
 import { useContext, useEffect } from 'react';
 import { ALevelContext } from '../../../context/ALevel.context';
-
+import ALevelResults from '../A-Level-Results/A-Level-Results';
 
 const AdvanceLevelBox=()=>{
 
-   const {showALevelMathsLocal,showALevelCategory,setshowALevelCategory,showALevelStreamBox,showLondonALevelCategory} = useContext(ALevelContext)
+   const {showALevelMathsLocal,showALevelCategory,setshowALevelCategory,showALevelStreamBox,showLondonALevelCategory,showALResults} = useContext(ALevelContext)
 
     const navigate = useNavigate();
 
@@ -22,6 +22,8 @@ const AdvanceLevelBox=()=>{
             return <ALevelStreamBox/>
         }else if(showLondonALevelCategory){
             return <ALevelLondonCategory/>
+        }else if(showALResults){
+            return <ALevelResults/>
         }
                 
     }

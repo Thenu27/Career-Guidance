@@ -1,18 +1,21 @@
 import './Extra-Curricular-page.css';
-import ExtraCurricularBox from '../Extra-Curricular-Box/Extra-Curricular-Box.components';
+import ExtraCurricularBox from './Extra-Curricular-Box/Extra-Curricular-Box.components';
 import Image from '../Image/Image.components';
 import { useNavigate } from 'react-router-dom';
 import { useContext,useEffect,useState } from 'react';
 import { ProgressContext } from '../../context/progress.context';
 import axios from 'axios';
+import ExtraCurricularResults from './Extra-Curricular-results/Extra-Curricular-Results';
 
 
  const ExtraCurricularPage = () =>{
 
    const {setVisitedPages} = useContext(ProgressContext);
    const[SelectedExtraActivities,setSelectedExtraActivities] = useState([]);
+   const [showExtraLevelsPage,setshowExtraLevelsPage] = useState(false)
 
 
+ 
    useEffect(()=>{
 
       setVisitedPages(()=>({
@@ -31,13 +34,17 @@ import axios from 'axios';
   },[])
     const navigate =useNavigate();
 
+    const goToECListPage=()=>{
+      setshowExtraLevelsPage(false);
+  }
 
-
-    const skipbtnHandler=()=>{
+    const goToOLPage=()=>{
        navigate("/Ordinarylevelpage");
     }
 
-
+    const goToExtraLevelsPage = ()=>{
+      setshowExtraLevelsPage(true);
+    }
 
     const sendToBackend=async()=>{
       try{
@@ -57,6 +64,15 @@ import axios from 'axios';
       
   }
 
+  const renderBox=()=>{
+    if(showExtraLevelsPage===false){
+      return <ExtraCurricularBox  setshowExtraLevelsPage={setshowExtraLevelsPage} showExtraLevelsPage={showExtraLevelsPage} SelectedExtraActivities={SelectedExtraActivities} setSelectedExtraActivities={setSelectedExtraActivities} />
+
+    }
+    else if(showExtraLevelsPage===true){
+      return <ExtraCurricularResults SelectedExtraActivities={SelectedExtraActivities}/>
+    }
+  }
 
 
 
@@ -67,15 +83,16 @@ import axios from 'axios';
                <Image/>           
               </div>   
 
-            <div className='extra-curricular-title-container'>
-                <h2 className='extra-curricular-title'>Select the Extra Curricular Activities you have done from the following</h2>
-            </div>
-              <ExtraCurricularBox SelectedExtraActivities={SelectedExtraActivities} setSelectedExtraActivities={setSelectedExtraActivities} />
+              {renderBox()};
               
 
               <div className='extra-curricular-back-next-btn'>
-                  <button className='nextbtn'>Back</button>
-                  <button onClick={()=>{sendToBackend();skipbtnHandler()}} className='nextbtn'>Skip</button>
+                  <button onClick={()=>{goToECListPage()}} className='nextbtn'>Back</button>
+                  {SelectedExtraActivities.length>0?
+                  <button onClick={()=>{sendToBackend();{showExtraLevelsPage?goToOLPage():goToExtraLevelsPage()}}} className='nextbtn'>Next</button>
+                  :<button onClick={()=>{sendToBackend();goToOLPage()}} className='nextbtn'>Skip</button>
+                  }
+ 
               </div>
               
          </div>

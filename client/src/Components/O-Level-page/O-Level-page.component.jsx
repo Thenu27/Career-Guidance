@@ -11,7 +11,7 @@ import OLevelResults from './O-Level-Results/O-Level-Results';
 const OrdinaryLevelPage= ()=>{  
 
     const {setVisitedPages} = useContext(ProgressContext);
-    const {showOLevelBox,showOLevelLondStream,showOLevelSubj,showOLevelResults,OLevelResultsArray,setOLevelResultsArray}   = useContext(OLevelContext);
+    const {showOLevelBox,showOLevelLondStream,showOLevelSubj,showOLevelResults}   = useContext(OLevelContext);
 
    useEffect(()=>{
 

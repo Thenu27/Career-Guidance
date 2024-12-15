@@ -1,9 +1,21 @@
 import './A-Level-Category.css';
-import { useContext } from 'react';
+import { useContext,useEffect } from 'react';
 import { ALevelContext } from '../../../context/ALevel.context';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 
 const ALevelCategory=()=>{
+    const {setALSubjectsFromDB,ALSubjectsFromDB} = useContext(ALevelContext);
+
+    
+ 
+    
+
+    useEffect(()=>{
+        console.log(ALSubjectsFromDB)
+    },[ALSubjectsFromDB])
+    
     const navigate = useNavigate();
 
     const goToOLevelPage = ()=>{

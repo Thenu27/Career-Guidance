@@ -10,9 +10,6 @@ export const OLevelContext = createContext({
     setshowOLevelLocalSubj:()=>{},
     showOLevelSubj:null,
     setshowOLevelSubj:()=>{},
-    showOLevelBasketSubjects:null,
-    setshowOLevelBasketSubjects:()=>{},
-    goToLocalBasket:()=>{},
     goToLocalCommonSubjects:()=>{},
     goToLondonStreamBox:()=>{},
     goToOLevelBox:()=>{},
@@ -21,7 +18,6 @@ export const OLevelContext = createContext({
     goToOLevelResults:()=>{},
     OLevelResultsArray:null,
     setOLevelResultsArray:()=>{},
-    goToBasketPage:()=>{}
 
 
 })
@@ -32,15 +28,9 @@ export const OLevelProvider = ({children})=>{
     const [showOLevelBox,setshowOLevelBox] = useState(true);
     const [showOLevelLondStream,setshowOLevelLondStream]=useState(false);
     const [showOLevelLocalSubj,setshowOLevelLocalSubj]=useState(false);
-    const [showOLevelBasketSubjects,setshowOLevelBasketSubjects] = useState(false);
     const [showOLevelSubj,setshowOLevelSubj]=useState(false);
     const [showOLevelResults,setshowOLevelResults]=useState(false);
 
-    const goToLocalBasket = ()=>{
-        setshowOLevelBasketSubjects(true);
-        setshowOLevelLocalSubj(false);     
-           
-    }
 
     const goToOLevelBox=()=>{
         setshowOLevelBox(true);
@@ -68,11 +58,7 @@ export const OLevelProvider = ({children})=>{
         setshowOLevelResults(true);
     }
 
-    const goToBasketPage = ()=>{
-        setshowOLevelBasketSubjects(true);
-        setshowOLevelResults(false);
-        setshowOLevelSubj(true);
-    }
+
 
     const value={
         showOLevelBox,
@@ -81,9 +67,6 @@ export const OLevelProvider = ({children})=>{
         setshowOLevelLondStream,
         showOLevelSubj,
         setshowOLevelSubj,
-        showOLevelBasketSubjects,
-        setshowOLevelBasketSubjects,
-        goToLocalBasket,
         goToLocalCommonSubjects,
         showOLevelLocalSubj,
         setshowOLevelLocalSubj,
@@ -94,7 +77,6 @@ export const OLevelProvider = ({children})=>{
         setshowOLevelResults,
         OLevelResultsArray,
         setOLevelResultsArray,
-        goToBasketPage
     
     }
 

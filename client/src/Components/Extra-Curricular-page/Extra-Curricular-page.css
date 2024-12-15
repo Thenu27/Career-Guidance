@@ -1,7 +1,7 @@
 .extra-curricular-page {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(8,auto);
+  grid-template-rows: repeat(8, auto);
 
   height: auto;
 }
@@ -46,7 +46,7 @@
   }
   .extra-curricular-image {
     grid-column: 12/16;
-    grid-row: 3/13;
+    grid-row: 3/7;
     padding: 0%;
     transform: scaleX(-1);
   }
@@ -55,7 +55,6 @@
     grid-column: 3/10;
     padding: 0%;
     margin: 0;
-    /* padding-bottom: 5%; */
     /* border: 1px solid black; */
     padding-top: 3%;
     height: 10vh;

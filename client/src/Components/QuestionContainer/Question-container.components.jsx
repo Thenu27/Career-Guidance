@@ -61,7 +61,7 @@ const QuestionContainer = () =>{
           
            // Return the updated object to set state
           setquestionAndAnswers(updatedAnswers)
-    },[questionAndAnswers])
+    },[questions])
 
 
 

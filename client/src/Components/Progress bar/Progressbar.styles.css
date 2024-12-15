@@ -1,4 +1,4 @@
-@media (min-width: 1200px) and (max-width: 1600px) {
+@media (min-width: 1000px) and (max-width: 1600px) {
   .progress-bar {
     /* display: block; */
     width: 91vw;
@@ -45,7 +45,7 @@
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1000px) {
   .progress-bar {
     display: none;
   }

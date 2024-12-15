@@ -1,8 +1,7 @@
-
 .question-user-container {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(12, 1fr);
+  grid-template-rows: repeat(12, auto);
   /* height: 150vh; */
   height: auto;
   width: 100vw;
@@ -18,17 +17,16 @@
   display: none;
 }
 
-@media (min-width: 1400px) and (max-width: 1600px) {
+@media (min-width: 1000px) and (max-width: 1600px) {
   .question-user-container {
     display: grid;
     grid-template-columns: repeat(16, 1fr);
-    grid-template-rows: repeat(16, 1fr);
-    height: 110vh;
-
+    grid-template-rows: repeat(16, auto);
+    min-height: 85vh;
   }
   .question-page-frog {
     grid-column: 1/5;
-    grid-row: 3/11;
+    grid-row: 4/9;
   }
   .user-info-container {
     display: block;

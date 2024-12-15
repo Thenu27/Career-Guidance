@@ -54,45 +54,28 @@ app.use(
 
 
 
-// Middleware to ensure certain session objects are initialized
 app.use((req, res, next) => {
-    // Initialize session properties if they don't exist yet
-    if (!req.session.quesidWithIntelligenceAndquestions) {
-        req.session.quesidWithIntelligenceAndquestions = {};
+    try {
+        req.session.quesidWithIntelligenceAndquestions ||= {};
+        req.session.questionAndAnswers ||= {};
+        req.session.detailsForCalculation ||= {};
+        req.session.OLevelLocalCoreSubjectsArray ||= [];
+        req.session.OLevelLocalBasketSubjectsArray ||= [];
+        req.session.intelligenceArray ||= [];
+        req.session.OLevelUserMiArray ||= {};
+        req.session.percentageObject ||= {};
+        req.session.ALSubjects ||= [];
+        next();
+    } catch (error) {
+        console.error("Error initializing session:", error.message);
+        res.status(500).json({ error: "Failed to initialize session." });
     }
-
-    if (!req.session.questionAndAnswers) {
-        req.session.questionAndAnswers = {};
-    }
-
-    if (!req.session.detailsForCalculation) {
-        req.session.detailsForCalculation = {};
-    }
-
-    if(!req.session.OLevelLocalCoreSubjectsArray){
-        req.session.OLevelLocalCoreSubjectsArray=[]
-    }
-
-    if(!req.session.OLevelLocalBasketSubjectsArray){
-        req.session.OLevelLocalBasketSubjectsArray=[]
-    }
-    
-    if(!req.session.intelligenceArray){
-        req.session.intelligenceArray = [];
-    } 
-
-    if(!req.session.OLevelUserMiArray){
-        req.session.OLevelUserMiArray={};
-    }
-    if(!req.session.percentageObject){
-        req.session.percentageObject={}
-    }
-
-   next();
 });
 
 
 
+
+app.use(express.json());
 
 
 
@@ -135,7 +118,17 @@ const calculateOLevelPercentage = async (req, subject, grade) => {
             console.log("mi_intelligence",getIntelligenceFromMiId)
       
             // Convert percentages to numeric values
-        const OLevelPercentagesValues = Object.values(getMiPercentage[0]).map(parseFloat);
+        // const OLevelPercentagesValues = Object.values(getMiPercentage[0]).map(parseFloat);
+
+        const OLevelPercentagesValues = [
+            parseFloat(getMiPercentage[0]. mi_percentage1*3),
+            parseFloat(getMiPercentage[0]. mi_percentage2*2),
+            parseFloat(getMiPercentage[0]. mi_percentage3*1),
+
+
+        ]
+
+        console.log("Thenuka",OLevelPercentagesValues)
 
         // Grade multipliers
         const gradeMultipliers = {
@@ -175,7 +168,7 @@ const calculateOLevelPercentage = async (req, subject, grade) => {
 
             // Recalculate the average percentage
             req.session.percentageObject[intelligenceType].AvgPercentage =
-                Math.round((req.session.percentageObject[intelligenceType].totalPercentage / 6) * 10) / 10; // Adjust divisor if needed
+            Math.round((req.session.percentageObject[intelligenceType].totalPercentage / 6) * 10) / 10; // Adjust divisor if needed
         }
         return req.session.percentageObject
         // console.log("Before",req.session);
@@ -186,6 +179,102 @@ const calculateOLevelPercentage = async (req, subject, grade) => {
 
 
 
+
+
+
+const calculateALevelPercentage = async (req, subject, grade) => {
+    try {
+        // Fetch MI IDs for the subject
+        const MiIdforSubject = await db
+            .select("mi_1", "mi_2", "mi_3")
+            .from("alevel_local_subjects")
+            .where("subject", subject);
+        console.log("Mi_id",MiIdforSubject)
+        // Fetch MI Percentages for the subject
+        const getMiPercentage = await db
+            .select("mi_percentage1", "mi_percentage2", "mi_percentage3")
+            .from("alevel_local_subjects")
+            .where("subject", subject);
+        
+            console.log("Mi_percentage",getMiPercentage)
+
+        // Fetch Intelligence Types based on MI IDs
+        const getIntelligenceFromMiId = await db
+        .select("intelligence_type")
+        .from("mi_table")
+        .whereIn("intelligence_id", [
+          MiIdforSubject[0].mi_1,
+          MiIdforSubject[0].mi_2,
+          MiIdforSubject[0].mi_3,
+        ])
+        .orderByRaw(`
+          CASE 
+            WHEN intelligence_id = ? THEN 1
+            WHEN intelligence_id = ? THEN 2
+            WHEN intelligence_id = ? THEN 3
+          END
+        `, [
+          MiIdforSubject[0].mi_1,
+          MiIdforSubject[0].mi_2,
+          MiIdforSubject[0].mi_3,
+        ]);
+            console.log("mi_intelligence",getIntelligenceFromMiId)
+      
+            // Convert percentages to numeric values
+        const ALevelPercentagesValues = [
+            parseFloat(getMiPercentage[0]. mi_percentage1*3),
+            parseFloat(getMiPercentage[0]. mi_percentage2*2),
+            parseFloat(getMiPercentage[0]. mi_percentage3*1),
+
+        ]
+
+
+        // Grade multipliers
+        const gradeMultipliers = {
+            A: 1,
+            B: 0.75,
+            C: 0.65,
+            S: 0.55,
+            F: 0.35,
+        };
+
+        // Get the multiplier for the grade or default to 0
+        const multiplier = gradeMultipliers[grade] || 0;
+
+        // Apply the multiplier to all percentages
+        const ALevelPercentages = ALevelPercentagesValues.map(
+            (percentage) => percentage * multiplier
+        );
+
+        // Ensure session objects are initialized
+        // req.session.percentageObject = req.session.percentageObject || {};
+
+        // Loop through intelligence types and accumulate percentages
+        for (let i = 0; i < getIntelligenceFromMiId.length; i++) {
+            const intelligenceType = getIntelligenceFromMiId[i].intelligence_type;
+            const PercentageValue = ALevelPercentages[i];
+
+            // Initialize intelligence type if not already present
+            if (!req.session.percentageObject[intelligenceType]) {
+                req.session.percentageObject[intelligenceType] = {
+                    totalPercentage: 0,
+                    AvgPercentage: 0,
+                };
+            }
+
+            // Add the percentage value to the existing total
+            req.session.percentageObject[intelligenceType].totalPercentage += PercentageValue;
+
+            // Recalculate the average percentage
+            req.session.percentageObject[intelligenceType].AvgPercentage =
+                Math.round((req.session.percentageObject[intelligenceType].totalPercentage / 6) * 10) / 10; // Adjust divisor if needed
+        }
+        return req.session.percentageObject
+        // console.log("Before",req.session);
+    } catch (error) {
+        console.error("Error calculating O-Level percentage:", error.message);
+    }
+};
 
 
 
@@ -272,11 +361,6 @@ const accesingAnswers = async (req, intelligence_id) => {
 
 
 
-
-
-
-
-
 // Function to calculate the total score for all intelligence types
 const calculatingTotalScoreForAll = async (req) => {
     // Loop through all fetched intelligence types and calculate their scores
@@ -291,6 +375,17 @@ const calculatingTotalScoreForAll = async (req) => {
 
 
 
+
+
+
+
+
+const getAlLocalsubjectFromDB=async(req)=>{
+
+    const response =await  db.select('subject','stream').from('alevel_local_subjects')
+    req.session.ALSubjects=response;
+    console.log(req.session.ALSubjects)
+}
 
 
 
@@ -356,6 +451,30 @@ const getIntelligenceType = async (req) => {
 
 
 
+app.post('/api/AdvanceLevelPage',async(req,res)=>{
+    try {
+        const { ALevelResultsAndGrades } = req.body;
+        req.session.ALevelResultsAndGrades=ALevelResultsAndGrades
+        // console.log(req.session.OLevelResultsAndGrades)
+ 
+        req.session.ALSubjectDone = Object.keys(req.session.ALevelResultsAndGrades);
+        req.session.ALSubjectResults =Object.values(req.session.ALevelResultsAndGrades)
+        for(let i=0;i<req.session.ALSubjectDone.length;i++){
+            await calculateALevelPercentage(req,req.session.ALSubjectDone[i],req.session.ALSubjectResults[i]);
+         }
+         if(!req.session.AlevelFinalMipValues){
+            req.session.AlevelFinalMipValues={}
+         }
+         req.session.AlevelFinalMipValues=req.session.percentageObject
+         console.log("After calc",req.session);
+         res.status(500).send("Data received")
+    } catch (error) {
+        console.log("Failed to fetch OLevelResults",error);
+        res.status(500).json({ error: "Failed to process A-Level results." });
+
+    }
+
+})
 
 
 
@@ -381,7 +500,6 @@ app.get('/api/Assesment', async (req, res) => {
 });
 
 // Middleware for parsing JSON request bodies
-app.use(express.json());
 
 
 
@@ -399,26 +517,31 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 
 
 
-
-
-app.get('/api/Ordinarylevelpage/local-Core',async(req,res)=>{
-    try{
-        await fetchOLevelSubjectFromDB('Core',req.session.OLevelLocalCoreSubjectsArray);
-        // await fetchOLevelSubjectFromDB('Basket',req.session.OLevelLocalBasketSubjectsArray);
-        res.json( req.session.OLevelLocalCoreSubjectsArray);
-    }catch(error){
+app.get('/api/Ordinarylevelpage/local-Core', async (req, res) => {
+    try {
+        if (!req.session.OLevelLocalCoreSubjectsArray.length) {
+            await fetchOLevelSubjectFromDB('Core', req.session.OLevelLocalCoreSubjectsArray);
+        }
+        res.status(200).json(req.session.OLevelLocalCoreSubjectsArray);
+    } catch (error) {
         console.error('Error fetching core subjects:', error.message);
-        res.status(500).send("Failed To Fetch Subjects");
+        res.status(500).json({ error: "Failed to fetch core subjects." });
     }
-
-})
-
+});
 
 
 
 
 
-
+app.get('/api/Advancelevelpage', async (req, res) => {
+    try {
+        await getAlLocalsubjectFromDB(req);
+        res.json(req.session.ALSubjects);
+    } catch (error) {
+        console.error('Error fetching A-Level subjects:', error.message);
+        res.status(500).send('Failed to fetch A-Level subjects.');
+    }
+});
 
 
 
@@ -489,18 +612,16 @@ app.post('/api/Ordinarylevelpage', async(req, res) => {
 
 app.get('/api/Ordinarylevel', async(req, res) => {
     try{
-        console.log("when called",req.sessionID)
-res.json(req.session.OlevelFinalMipValues);
-console.log(req.session)
+        res.json(req.session.OlevelFinalMipValues);
+        console.log(req.session)
     }catch(error){
         console.log(error)
+        res.status(500).json({
+            error:"Error sending Ordinary level MIP calculations"
+        })
     }
 
 });
-
-
-
-
 
 
 
@@ -594,7 +715,12 @@ app.get('/api/calculation', async (req, res) => {
 
 // Catch-all route to serve frontend on any other path
 app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+    try {
+        res.sendFile(path.join(__dirname, "..", "public", "index.html"));
+    } catch (error) {
+        console.error("Error serving frontend:", error.message);
+        res.status(500).json({ error: "Failed to serve frontend." });
+    }
 });
 
 

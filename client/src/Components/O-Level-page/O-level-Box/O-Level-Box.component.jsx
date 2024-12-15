@@ -5,7 +5,7 @@ import { useContext, useEffect } from 'react';
 
 const OrdinaryLevelBox = () =>{
 
-    const {goToLocalCommonSubjects,goToLondonStreamBox,setshowOLevelBox,setshowOLevelBasketSubjects,setshowOLevelLondStream,setshowOLevelSubj} = useContext(OLevelContext);
+    const {goToLocalCommonSubjects,goToLondonStreamBox,setshowOLevelBox,setshowOLevelLondStream,setshowOLevelSubj} = useContext(OLevelContext);
 
     const navigate = useNavigate();
 
@@ -15,7 +15,6 @@ const OrdinaryLevelBox = () =>{
 
     useEffect(()=>{
         setshowOLevelBox(true);
-        setshowOLevelBasketSubjects(false);
         setshowOLevelLondStream(false);
         setshowOLevelSubj(false)
     })
@@ -23,7 +22,7 @@ const OrdinaryLevelBox = () =>{
     return(
         <>
          <div className='O-level-box-title-container'>
-            <h2 className='O-level-box-title'>Select Ordinary Level Category from the following</h2>
+            <h2 className='O-level-box-title'>Select Ordinary Level Category You did from the following</h2>
           </div>   
 
         <div className='O-level-box'>

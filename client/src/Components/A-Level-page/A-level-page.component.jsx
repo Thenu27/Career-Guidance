@@ -5,11 +5,12 @@ import { useState,useEffect,useContext } from 'react';
 import { ProgressContext } from '../../context/progress.context';
 import { ALevelContext } from '../../context/ALevel.context';
 import ALevelSubject from './A-Level-Subject/A-Level-Subject';
+import ALevelResults from './A-Level-Results/A-Level-Results';
 
 const AdvanceLevelPage=()=>{
 
     const {visitedPages,setVisitedPages} = useContext(ProgressContext);
-    const {showALevelSubject,showALevelBox} = useContext(ALevelContext);
+    const {showALevelSubject,showALevelBox,showALResults} = useContext(ALevelContext);
 
     useEffect(()=>{
  
@@ -29,6 +30,14 @@ const AdvanceLevelPage=()=>{
        }))
    },[])
 
+
+
+
+
+
+
+
+
     const renderAlevelBox = () =>{
         if(showALevelBox){
             return <AdvanceLevelBox/>
@@ -36,6 +45,7 @@ const AdvanceLevelPage=()=>{
             return <ALevelSubject/>
         }
     }
+
     return(
         <div className='O-level-page-container'>
             <div className='O-Level-frog'>

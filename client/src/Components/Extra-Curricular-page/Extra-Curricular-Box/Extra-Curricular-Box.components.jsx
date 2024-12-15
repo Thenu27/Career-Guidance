@@ -1,11 +1,14 @@
 import './Extra-Curricular-Box.styles.css';
-import { ExtraCurricularList } from '../../Extra-Curricular-List';
-import { useState } from 'react';
+import { ExtraCurricularList } from '../../../Extra-Curricular-List';
+import { useEffect, useState } from 'react';
 
 const ExtraCurricularBox=({setSelectedExtraActivities,SelectedExtraActivities})=>{
 
     const[selectedButtons,setselectedButtons] = useState([]);
     
+    useEffect(()=>{
+        setselectedButtons(SelectedExtraActivities)
+    },[SelectedExtraActivities])
    const btnSelectedHandler = (activity)=>{ 
 
         if(selectedButtons.includes(activity)){
@@ -20,13 +23,16 @@ const ExtraCurricularBox=({setSelectedExtraActivities,SelectedExtraActivities})=
 }
 
 
-
-
     return(
+    <>
+    
+        <div className='extra-curricular-title-container'>
+        <h2 className='extra-curricular-title'>Select the Extra Curricular Activities you have done from the following</h2>
+    </div>
             <div className='extra-curricular-container'>
                 <div className='extra-curricular-btn-container'>
 
-                    {ExtraCurricularList.map((activity,index)=>{
+                    {(ExtraCurricularList).map((activity,index)=>{
                         return <button 
                                     key={index} 
                                     onClick={()=>btnSelectedHandler(activity)}
@@ -37,6 +43,7 @@ const ExtraCurricularBox=({setSelectedExtraActivities,SelectedExtraActivities})=
 
                 </div>
             </div>
+            </>
     )
 }
 

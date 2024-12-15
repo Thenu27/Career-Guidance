@@ -1,5 +1,4 @@
 import './O-Level-Subj.css';
-import OLevelBasketLocal from '../O-Level-Basket-Local/O-Level-Bakset-Local';
 import OLevelMainLocalSubjects from '../O-Level-Local-Main-Subjects/O-Level-Local-MainSubjects';
 import { useState,createContext, useContext, useEffect } from 'react';
 import { OLevelContext } from '../../../context/OLevel.context';
@@ -8,7 +7,7 @@ import axios from 'axios';
 
 const OLevelSubj = ()=>{
 
-    const {showOLevelLocalSubj,showOLevelBasketSubjects} = useContext(OLevelContext);
+    const {showOLevelLocalSubj} = useContext(OLevelContext);
     const [OLevelLocalCoreSubj,setOLevelLocalCoreSubjt] = useState([]);
     const [OLevelBasketSubj,setOLevelBasketSubj] = useState([]);
 
@@ -50,12 +49,9 @@ const OLevelSubj = ()=>{
     },[OLevelBasketSubj])
 
     const renderSubject=()=>{
-        if(showOLevelLocalSubj){
 
-           return <OLevelMainLocalSubjects OLevelLocalCoreSubj={OLevelLocalCoreSubj} />
-        }else if(showOLevelBasketSubjects){
-            return <OLevelBasketLocal OLevelBasketSubj={OLevelBasketSubj} />
-        }
+           return <OLevelMainLocalSubjects OLevelBasketSubj={OLevelBasketSubj} OLevelLocalCoreSubj={OLevelLocalCoreSubj} />
+        
     }
 
     return(

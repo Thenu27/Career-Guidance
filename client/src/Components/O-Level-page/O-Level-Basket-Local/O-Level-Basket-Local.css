@@ -1,8 +1,0 @@
-.O-levelLocal-Basketsubject-title {
-  text-align: center;
-}
-@media (min-width: 1200px) and (max-width: 1600px) {
-  .O-levelLocal-Basketsubject-title {
-    grid-column: 6/13;
-  }
-}

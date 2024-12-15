@@ -19,13 +19,13 @@ export const ALevelContext = createContext({
     goToALevelLocalMaths:()=>{},
     showALevelSubject:null,
     setshowALevelSubject:()=>{},
-    showALevelLocalScience:null,
-    setshowALevelLocalScience:()=>{},
-    goToALevelScience:()=>{},
-    showALevelLocalCommerce:null,
-    setALevelLocalCommerce:()=>{},
-    goToALevelLocalCommerce:()=>{}
-
+    ALSubjectsFromDB:null,
+    setALSubjectsFromDB:()=>{},
+    ALResultsArray:null,
+    setALResultsArray:()=>{},
+    goToResults:()=>{},
+    showALResults:null,
+    setshowALResults:()=>{}
 })
 
 export const ALevelProvider=({children})=>{
@@ -37,8 +37,10 @@ export const ALevelProvider=({children})=>{
     const [showLondonALevelCategory,setshowLondonALevelCategory] = useState(false);
     const [showALevelMathsLocal,setshowALevelMathsLocal] = useState(false);
     const [showALevelSubject,setshowALevelSubject] = useState(false);
-    const [showALevelLocalScience,setshowALevelLocalScience] = useState(false);
-    const [showALevelLocalCommerce,setALevelLocalCommerce]=useState(false);
+    const [showALResults,setshowALResults] = useState(false)
+    const [ALSubjectsFromDB,setALSubjectsFromDB] = useState();
+    const [ALResultsArray,setALResultsArray] = useState([]);
+
 
     const goToALevelCategory=()=>{
         setshowALevelCategory(true);
@@ -55,7 +57,6 @@ export const ALevelProvider=({children})=>{
         setshowALevelStreamBox(true);
         setshowALevelCategory(false);
         setshowALevelMathsLocal(false);
-        setshowALevelLocalScience(false)
         setALevelBox(true);
     }
 
@@ -65,18 +66,17 @@ export const ALevelProvider=({children})=>{
         setALevelBox(false);
     }
 
-    const goToALevelScience=()=>{
-        setshowALevelSubject(true);
-        setshowALevelLocalScience(true);
-        setALevelBox(false);
+    const goToResults=()=>{
+        setshowALevelCategory(false);
+        setshowALevelStreamBox(false);
+        setshowALevelMathsLocal(false);
+        setshowALResults(true);
+        setALevelBox(true);
 
     }
 
-    const  goToALevelLocalCommerce=()=>{
-        setshowALevelSubject(true);
-        setALevelLocalCommerce(true);
-        setALevelBox(false);
-    }
+
+
 
     
    const value={
@@ -99,11 +99,12 @@ export const ALevelProvider=({children})=>{
         goToALevelLocalMaths,
         showALevelSubject,
         setshowALevelSubject,
-        showALevelLocalScience,
-        setshowALevelLocalScience,
-        goToALevelScience,
-        goToALevelLocalCommerce,
-        showALevelLocalCommerce
+        ALSubjectsFromDB,
+        setALSubjectsFromDB,
+        ALResultsArray,
+        setALResultsArray,
+        goToResults,
+        showALResults,setshowALResults
 
     }
 
