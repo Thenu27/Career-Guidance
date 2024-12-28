@@ -63,13 +63,13 @@
 }
 
 .App {
-  background: linear-gradient(
+  /* background: linear-gradient(
     90deg,
     rgba(225, 190, 231, 1) 0%,
     rgba(255, 252, 255, 1) 23%,
     rgba(255, 252, 255, 1) 77%,
     rgba(225, 190, 231, 1) 100%
-  );
+  ); */
   height: auto;
 }
 

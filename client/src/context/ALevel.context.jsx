@@ -25,7 +25,9 @@ export const ALevelContext = createContext({
     setALResultsArray:()=>{},
     goToResults:()=>{},
     showALResults:null,
-    setshowALResults:()=>{}
+    setshowALResults:()=>{},
+
+
 })
 
 export const ALevelProvider=({children})=>{
@@ -40,7 +42,6 @@ export const ALevelProvider=({children})=>{
     const [showALResults,setshowALResults] = useState(false)
     const [ALSubjectsFromDB,setALSubjectsFromDB] = useState();
     const [ALResultsArray,setALResultsArray] = useState([]);
-
 
     const goToALevelCategory=()=>{
         setshowALevelCategory(true);
@@ -104,7 +105,9 @@ export const ALevelProvider=({children})=>{
         ALResultsArray,
         setALResultsArray,
         goToResults,
-        showALResults,setshowALResults
+        showALResults,
+        setshowALResults,
+
 
     }
 

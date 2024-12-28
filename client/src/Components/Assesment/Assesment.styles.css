@@ -16,6 +16,14 @@
 .user-info-container {
   display: none;
 }
+@media (min-width: 786px) and (max-width: 1000px) {
+  .question-container-title {
+    font-size: 4.5vw;
+  }
+  .question-page-frog {
+    height: 35vh;
+  }
+}
 
 @media (min-width: 1000px) and (max-width: 1600px) {
   .question-user-container {
@@ -23,6 +31,7 @@
     grid-template-columns: repeat(16, 1fr);
     grid-template-rows: repeat(16, auto);
     min-height: 85vh;
+    margin-bottom: 3%;
   }
   .question-page-frog {
     grid-column: 1/5;
@@ -31,9 +40,10 @@
   .user-info-container {
     display: block;
     grid-column: 14/17;
-    grid-row: 4/9;
-    padding-left: 15%;
-    border: 1px solid black;
-    width: 100%;
+    grid-row: 5/8;
+    height: 40vh;
+    padding-left: 10%;
+    width: 17vw;
+    align-items: center;
   }
 }

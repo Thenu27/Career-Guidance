@@ -1,73 +1,81 @@
 import { useState } from 'react';
 import './user-infor.styles.css';
 
-const districtList =[
+const districtList = [
     "Gampaha",
-    "kalutara",
+    "Kalutara",
     "Galle"
-]
+];
 
-const EducationList =[
+const educationList = [
     "School",
     "Ordinary-Level",
     "Advanced-Level",
     "University"
-]
+];
 
-const UserInformation = ()=>{
+const UserInformation = () => {
+    const [district, setDistrict] = useState("Select District");
+    const [education, setEducation] = useState("Select Education Level");
 
-    const [District,setDistrict]=useState("District");
-    const [Education,setEducation]=useState("Education Level")
+    const [isDistrictDropdownOpen, setDistrictDropdownOpen] = useState(false);
+    const [isEducationDropdownOpen, setEducationDropdownOpen] = useState(false);
 
-    const DistrictHandler = (value)=>{
+    const handleDistrictChange = (value) => {
         setDistrict(value);
-    }
+        setDistrictDropdownOpen(false); // Collapse dropdown
+    };
 
-    const EducationHandler=(value)=>{
-        setEducation(value)
-    }
-    return(
-        <div className='dropdown-container'> 
-            <label className="dropdown">
+    const handleEducationChange = (value) => {
+        setEducation(value);
+        setEducationDropdownOpen(false); // Collapse dropdown
+    };
 
-                <div className="dd-button">
-                         {District}
+    return (
+        <div className="dropdown-wrapper">
+            <div className='inner-wrapper'>
+            {/* District Dropdown */}
+            <div className="custom-dropdown">
+                <div 
+                    className="dropdown-toggle" 
+                    onClick={() => setDistrictDropdownOpen(!isDistrictDropdownOpen)}
+                >
+                    {district}
                 </div>
+                {isDistrictDropdownOpen && (
+                    <ul className="dropdown-list">
+                        {districtList.map((dist, index) => (
+                            <li key={index} onClick={() => handleDistrictChange(dist)}>
+                                {dist}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
 
-                <input type="checkbox" className="dd-input" id="test"/>
+            {/* Education Dropdown */}
+            <div className="custom-dropdown">
+                <div 
+                    className="dropdown-toggle" 
+                    onClick={() => setEducationDropdownOpen(!isEducationDropdownOpen)}
+                >
+                    {education}
+                </div>
+                {isEducationDropdownOpen && (
+                    <ul className="dropdown-list">
+                        {educationList.map((level, index) => (
+                            <li key={index} onClick={() => handleEducationChange(level)}>
+                                {level}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
 
-                <ul className="dd-menu">
-
-                    {districtList.map((district,index)=>{
-                       return  <li key={index} onClick={()=>DistrictHandler(`${district}`)}>{district}</li>
-                    })}
-               
-                </ul>
-
-             </label>       
-                    <input className='age-input' type="number" min="0" max="120" placeholder="Enter age" /> 
-                 
-
-              <label className="dropdown">
-
-                        <div className="dd-button">
-                                { Education } 
-                        </div>
-
-                        <input type="checkbox" class="dd-input" id="test"/>
-
-                        <ul className="dd-menu">
-                                {EducationList.map((education,index)=>{
-                                    return  <li key={index} onClick={()=>EducationHandler(education)}>{education}</li>
-                    })}
-                        </ul>
-
-              </label>      
-
-                              
-
+            <input className='age-field' type="number" placeholder='Enter Age'/>
+            </div>
         </div>
-    )
-}
+    );
+};
 
 export default UserInformation;

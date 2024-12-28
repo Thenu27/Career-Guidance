@@ -1,14 +1,41 @@
 import './Extra-Curricular-Box.styles.css';
-import { ExtraCurricularList } from '../../../Extra-Curricular-List';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useContext } from 'react';
+import { ActivitiesContext } from '../../../context/Activities.context';
 
-const ExtraCurricularBox=({setSelectedExtraActivities,SelectedExtraActivities})=>{
+const ExtraCurricularBox=()=>{
 
-    const[selectedButtons,setselectedButtons] = useState([]);
+    const {SelectedExtraActivities,
+        setSelectedExtraActivities,
+        ActivitiesObj,
+        ActivitiesWithSub,
+    showSubActivities,
+    SubActivities,
+setSubActivities,
+goToExtraLevelsPage,
+setshowSubActivities,
+currentSubjectIndex,
+setCurrentSubjectIndex,
+ShowActivitiesSub,
+setShowActivitiesSub,
+selectedButtons,
+setselectedButtons
+} =useContext(ActivitiesContext);
+
+
+    const [MainActivities, setMainActivities] = useState([]); // Track MainActivities with useState
+      // State to track the current subject index and completed status
+
+
+
     
     useEffect(()=>{
         setselectedButtons(SelectedExtraActivities)
     },[SelectedExtraActivities])
+
+
+    
    const btnSelectedHandler = (activity)=>{ 
 
         if(selectedButtons.includes(activity)){
@@ -23,6 +50,63 @@ const ExtraCurricularBox=({setSelectedExtraActivities,SelectedExtraActivities})=
 }
 
 
+
+
+const fetchMainActivities = async () => {
+    try {
+        const response = await axios.get("http://localhost:3000/api/Activities");
+        const activities = response.data.map(activity => activity.main_activity);
+        setMainActivities(activities);
+    } catch (error) {
+        console.error("Error fetching main activities:", error.message);
+    }
+};
+
+
+
+// useEffect(()=>{
+//     SubjectTobeShown();
+// },[SubActivities])
+
+
+
+
+useEffect(()=>{
+   const fetchData=async()=>{
+        await fetchMainActivities();
+    }
+    fetchData();
+
+},[])
+
+
+useEffect(()=>{
+    console.log(ShowActivitiesSub)
+},[ShowActivitiesSub])
+
+
+
+useEffect(()=>{
+    console.log(selectedButtons)
+
+},[selectedButtons])
+
+
+
+
+
+
+
+useEffect(()=>{
+    console.log("SubActivities",SubActivities)
+},[SubActivities])
+
+
+
+
+
+
+
     return(
     <>
     
@@ -31,8 +115,8 @@ const ExtraCurricularBox=({setSelectedExtraActivities,SelectedExtraActivities})=
     </div>
             <div className='extra-curricular-container'>
                 <div className='extra-curricular-btn-container'>
-
-                    {(ExtraCurricularList).map((activity,index)=>{
+                
+                    {MainActivities.map((activity,index)=>{
                         return <button 
                                     key={index} 
                                     onClick={()=>btnSelectedHandler(activity)}
@@ -43,6 +127,8 @@ const ExtraCurricularBox=({setSelectedExtraActivities,SelectedExtraActivities})=
 
                 </div>
             </div>
+
+            
             </>
     )
 }

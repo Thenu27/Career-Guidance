@@ -48,6 +48,7 @@ const ALevelResults = ()=>{
     const response = await axios.post("http://localhost:3000/api/AdvanceLevelPage",{
       ALevelResultsAndGrades
     });
+    ALevelResultsAndGrades={};
     console.log("New",response.data)
     if(response.status===200){
       console.log("ALevelResultsArray Sent to back end")

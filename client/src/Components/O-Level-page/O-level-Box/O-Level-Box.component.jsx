@@ -13,6 +13,11 @@ const OrdinaryLevelBox = () =>{
         navigate("/Advancelevelpage")
     }
 
+    const goToActivities=()=>{
+        navigate("/ExtraCurricular");
+        
+    }
+
     useEffect(()=>{
         setshowOLevelBox(true);
         setshowOLevelLondStream(false);
@@ -37,7 +42,7 @@ const OrdinaryLevelBox = () =>{
             </div>
             
             <div className='O-level-box-back-btn'>
-                <button  className='nextbtn'>Back</button>
+                <button onClick={()=>{goToActivities()}} className='nextbtn'>Back</button>
             </div>
         </div>
         </>

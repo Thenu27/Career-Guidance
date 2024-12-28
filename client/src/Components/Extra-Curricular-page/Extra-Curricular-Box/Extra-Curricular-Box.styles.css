@@ -40,26 +40,54 @@
   color: white;
 }
 
-@media (min-width: 1200px) and (max-width: 1600px) {
+@media (min-width: 1000px) and (max-width: 1200px) {
   .extra-curricular-container {
     /* min-height: 60vh; */
-    grid-row: 3/7;
-    height: 60vh;
-    grid-column: 2/12;
+    grid-row: 2/13;
+    height: 66vh;
+    grid-column: 2/13;
     margin: 0;
     /* padding-bottom: 2%; */
   }
   .extra-curricular-btn-container {
-    gap: 3%;
+    gap: 2%;
     height: 100%;
   }
   .extra-curricular-btn {
-    width: 15vw;
-    height: 13vh;
+    width: 17.5vw;
+    min-height: 13vh;
     margin: 0%;
-    font-size: 100%;
+    font-size: 1.1rem;
   }
-  .extra-curricular-back-next-btn {
-    grid-row: 7/9;
+}
+
+@media (min-width: 1200px) and (max-width: 1600px) {
+  .extra-curricular-container {
+    /* min-height: 60vh; */
+    grid-row: 2/13;
+    height: 62vh;
+    grid-column: 2/13;
+    margin: 0;
+    padding: 0%;
+    /* padding-bottom: 2%; */
+  }
+  .extra-curricular-btn-container {
+    gap: 2%;
+    height: 100%;
+  }
+  .extra-curricular-btn {
+    width: 17vw;
+    min-height: 13vh;
+    margin: auto;
+    font-size: 1.1rem;
+  }
+  .ecb {
+    height: 17vh;
+    width: 25vw;
+  }
+  .ecb-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
   }
 }

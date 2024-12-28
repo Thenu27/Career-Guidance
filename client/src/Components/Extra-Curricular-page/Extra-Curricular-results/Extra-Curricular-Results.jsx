@@ -1,46 +1,94 @@
 import './Extra-Curricular-results.css';
+import { useContext, useEffect, useState } from 'react';
+import { ActivitiesContext } from '../../../context/Activities.context';
 
-const ExtraCurricularResults=({SelectedExtraActivities})=>{
-    return(
-             <>
-                
-                    <div className='extra-curricular-title-container'>
-                    <h2 className='extra-curricular-title'>Select the Level you have done from the following</h2>
+const ExtraCurricularResults = () => {
+    const {
+        SelectedExtraActivities,
+        SelectedMainActivities,
+        ActivitiesWithoutSub,
+        FinalActivitiesList,
+        setFinalActivitiesList,
+        ActivitiesToSendBE,
+        setActivitiesToSendBE,
+    } = useContext(ActivitiesContext);
+
+    const [Level, setLevel] = useState(() => {
+        const initialLength = SelectedMainActivities.concat(ActivitiesWithoutSub).length;
+        return Array(initialLength).fill("Level");
+    });
+
+    useEffect(() => {
+        setFinalActivitiesList(SelectedMainActivities.concat(ActivitiesWithoutSub));
+        console.log("FinalActivitiesList", FinalActivitiesList);
+    }, [SelectedMainActivities, ActivitiesWithoutSub]);
+
+    useEffect(() => {
+        setLevel(Array(FinalActivitiesList.length).fill("Level"));
+    }, [FinalActivitiesList]);
+
+    const AddinglevelsAndActivities = (activity, level, index) => {
+        setActivitiesToSendBE((prev) => {
+            const updated = { ...prev };
+            updated[activity] = level;
+            return updated;
+        });
+    };
+
+    useEffect(() => {
+        console.log("ActivitiesToSendBE", ActivitiesToSendBE);
+    }, [ActivitiesToSendBE]);
+
+    const UpdateLevel = (activity, level, index) => {
+        setLevel((prev) => {
+            const newLevels = [...prev];
+            newLevels[index] = level;
+            return newLevels;
+        });
+
+        AddinglevelsAndActivities(activity, level, index);
+    };
+
+    return (
+        <>
+            <div className='extra-curricular-title-container'>
+                <h2 className='extra-curricular-title'>
+                    Select the Level you have done from the Activities you have selected
+                </h2>
+            </div>
+            <div className='extra-curricular-container'>
+                <div className='extra-curricular-btn-container ecb-container'>
+                    {FinalActivitiesList.map((activity, index) => {
+                        return (
+                            <button 
+                                key={index} 
+                                className={`extra-curricular-btn ecb`}
+                            >
+                                <p>{activity}</p>
+                                <label className="custom-dropdown-wrapper">
+                                    <div className="custom-dropdown-button">
+                                        {Level[index]}
+                                    </div>
+                                    <input 
+                                        type="checkbox" 
+                                        className="custom-dropdown-input" 
+                                        id="custom-dropdown-toggle" 
+                                    />
+                                    <ul className="custom-dropdown-menu">
+                                        <li onClick={() => UpdateLevel(activity, "Just Participated", index)}>Just Participated</li>
+                                        <li onClick={() => UpdateLevel(activity, "Zonal/Interschool", index)}>Zonal/Interschool</li>
+                                        <li onClick={() => UpdateLevel(activity, "School", index)}>School</li>
+                                        <li onClick={() => UpdateLevel(activity, "National", index)}>National</li>
+                                        <li onClick={() => UpdateLevel(activity, "International", index)}>International</li>
+                                    </ul>
+                                </label>
+                            </button>
+                        );
+                    })}
                 </div>
-                        <div className='extra-curricular-container'>
-                            <div className='extra-curricular-btn-container ecb-container'>
-            
-                                {SelectedExtraActivities.map((activity,index)=>{
-                                    return <button 
-                                                key={index} 
-                                                
-                                                className={`extra-curricular-btn ecb `}>
-                                                <p>{activity}</p>
-                                                <label class="dropdown-wrapper">
-
-                                                    <div class="dropdown-button">
-                                                        Level
-                                                    </div>
-
-                                                    <input type="checkbox" class="dropdown-input" id="test"/>
-
-                                                    <ul class="dropdown-menu">
-                                                        <li>School</li>
-                                                        <li>National</li>
-                                                        <li>Club</li>
-                                                        <li>International</li>
-                                                    </ul>
-
-                                                    </label>
-
-
-                                              </button>
-                                          })}
-            
-                            </div>
-                        </div>
-                        </>
-    )
-}
+            </div>
+        </>
+    );
+};
 
 export default ExtraCurricularResults;

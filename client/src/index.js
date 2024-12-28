@@ -8,6 +8,7 @@ import { ProgressProvider } from './context/progress.context';
 import { OLevelProvider } from './context/OLevel.context';
 import { ALevelProvider } from './context/ALevel.context';
 import { CareerProvider } from './context/Career.context';
+import { ActivitiesProvider } from './context/Activities.context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,7 +17,9 @@ root.render(
       <OLevelProvider>
         <ALevelProvider>
           <CareerProvider>
+            <ActivitiesProvider>
             <App />
+            </ActivitiesProvider>
           </CareerProvider>
         </ALevelProvider>
       </OLevelProvider>

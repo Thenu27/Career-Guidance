@@ -4,17 +4,17 @@ import { useContext, useEffect, useState } from 'react';
 
 const OLevelMainLocalSubjects = ({ OLevelLocalCoreSubj,OLevelBasketSubj}) => {
 
-    const [showOLLocalBakset,setshowOLLocalBakset] = useState(false)
 
-    const goToBasketLocal=()=>{
-        setshowOLLocalBakset(true);
-    }
+
     const {
         setshowOLevelBox,
         setshowOLevelLocalSubj,
         goToOLevelBox,
         setOLevelResultsArray,
         OLevelResultsArray,
+        goToOLevelResults,
+        goToBasketLocal,
+        showOLLocalBakset,goToCommonLocal
     } = useContext(OLevelContext);
 
     const [selectedButtons, setselectedButtons] = useState([]);
@@ -72,10 +72,10 @@ const OLevelMainLocalSubjects = ({ OLevelLocalCoreSubj,OLevelBasketSubj}) => {
                         ))}
                     </div>
                     <div className="O-level-common-subjects-back-next-btn">
-                        <button onClick={goToOLevelBox} className="nextbtn">
+                        <button onClick={goToCommonLocal} className="nextbtn">
                             Back
                         </button>
-                        <button onClick={goToBasketLocal} className="nextbtn">
+                        <button onClick={showOLLocalBakset?goToOLevelResults:goToBasketLocal} className="nextbtn">
                             Next
                         </button>
                     </div>

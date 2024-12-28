@@ -9,7 +9,7 @@ const OLevelResults = () => {
 
 
 
-  const { OLevelResultsArray} = useContext(OLevelContext);
+  const { OLevelResultsArray,goToBasketLocal} = useContext(OLevelContext);
   const navigate = useNavigate();
 
 
@@ -77,7 +77,7 @@ const sendToBackend =async()=>{
     <h2 className='O-level-subject-title'>Your results</h2>
 
 
-        <div className='O-level-subject-btn-container'>
+        <div className='O-level-subject-btn-container OL-result-container'>
           {OLevelResultsArray.map((result, index) => (
 
             <div key={index} className='O-level-result-btn'>
@@ -105,7 +105,7 @@ const sendToBackend =async()=>{
 
 
         <div className='O-level-common-subjects-back-next-btn'>
-          <button className='nextbtn'>Back</button>
+          <button onClick={goToBasketLocal} className='nextbtn'>Back</button>
           <button onClick={() => { goToALevelPage(); sendToBackend(); }} className='nextbtn'>Submit</button>
           </div>
 

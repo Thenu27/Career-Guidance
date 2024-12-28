@@ -1,15 +1,12 @@
-@media (min-width: 1000px) and (max-width: 1600px) {
-  .progress-bar {
-    /* display: block; */
+@media (min-width: 1000px) {
+  .custom-progress-bar {
     width: 91vw;
     height: 1vh;
     background-color: #9d9d9d;
     display: flex;
     justify-content: space-between;
     border: 1px solid #9d9d9d;
-    /* padding-top: 15px; */
     padding-top: 0%;
-    /* margin-top: 55px; */
     margin-top: 3.1%;
     margin-left: auto;
     margin-right: auto;
@@ -17,11 +14,11 @@
     margin-bottom: 1%;
   }
 
-  .active {
+  .custom-active {
     background-color: #000000 !important;
   }
 
-  .progress-item {
+  .custom-progress-item {
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
@@ -37,7 +34,7 @@
     z-index: 99;
   }
 
-  .progress-item label {
+  .custom-progress-title {
     color: black;
     width: 9vw;
     padding-bottom: 4vh;
@@ -46,7 +43,7 @@
 }
 
 @media (max-width: 1000px) {
-  .progress-bar {
+  .custom-progress-bar {
     display: none;
   }
 }
