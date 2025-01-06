@@ -24,8 +24,8 @@ export const ActivitiesContext= createContext({
     navigateSubjects:()=>null,
     ActivitiesWithoutSub:null,
     setActivitiesWithoutSub:()=>{},
-    SelectedMainActivities:null,
-    setSelectedMainActivities:()=>{},
+    SelectedSubActivities:null,
+    setSelectedSubActivities:()=>{},
     selectedButtons:null,
     setselectedButtons:()=>{},
     FinalActivitiesList:null,
@@ -47,7 +47,7 @@ export const ActivitiesProvider = ({children}) =>{
     const [SubActivities,setSubActivities] = useState([])
     const [currentSubjectIndex, setCurrentSubjectIndex] = useState(0);
     const [ActivitiesWithoutSub,setActivitiesWithoutSub] =useState([]);
-    const [SelectedMainActivities,setSelectedMainActivities] = useState([]);
+    const [SelectedSubActivities,setSelectedSubActivities] = useState([]);
     const[selectedButtons,setselectedButtons] = useState([]);
     const [FinalActivitiesList,setFinalActivitiesList] = useState([]);
     const [ActivitiesToSendBE,setActivitiesToSendBE] = useState({});
@@ -109,8 +109,8 @@ export const ActivitiesProvider = ({children}) =>{
         navigateSubjects,
         setActivitiesWithoutSub,
         ActivitiesWithoutSub,
-        SelectedMainActivities,
-        setSelectedMainActivities,
+        SelectedSubActivities,
+        setSelectedSubActivities,
         selectedButtons,
         setselectedButtons,
         FinalActivitiesList,setFinalActivitiesList,

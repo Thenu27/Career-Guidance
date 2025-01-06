@@ -9,23 +9,10 @@ import axios from 'axios';
 const IntelligencePage = () =>{
  
 
-    // const [MipScore,setMipScore]=useState(null);
     const {setVisitedPages,intelligenceScore} = useContext(ProgressContext);
-    // const [IsLoading,setisLoading] = useState(true)
 
-    // const intelligenceList=[]
    
        
-
-    
-// useEffect(()=>{
-//     const fetchData = async()=>{
-//         await getIntelligenceScores();
-//     }
-
-//     fetchData();
-//    },[]);
-
 
     useEffect(()=>{
 

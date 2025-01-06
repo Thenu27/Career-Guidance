@@ -13,15 +13,23 @@ const SubActivitiesPage = () => {
     setActivitiesWithoutSub,
     setselectedButtons,
     selectedButtons,
-    setSelectedMainActivities,
-    SelectedMainActivities
+    setSelectedSubActivities,
+    SelectedSubActivities
     
   } = useContext(ActivitiesContext);
+
+
+
+
 
 
   useEffect(()=>{
     console.log("ActivitiesWithoutSub",ActivitiesWithoutSub)
   },[ActivitiesWithoutSub])
+
+
+
+
 
 
 
@@ -33,6 +41,7 @@ const SubActivitiesPage = () => {
         .map(([key, value]) => key);
       
         setActivitiesWithoutSub(ActivititesWithUndefinedSubActivity);
+        
       const filteredActivityWithSub = Object.fromEntries(
         Object.entries(ActivitiesObj).filter(
           ([key, value]) => value && Array.isArray(value.subActivity) && value.subActivity.length > 0
@@ -45,9 +54,14 @@ const SubActivitiesPage = () => {
 
       setSubActivities(result); // Set the sub-activities
     };
-
     handleActivity(); // Call the function to set sub-activities
   }, [ActivitiesObj, setSubActivities]);
+
+
+
+
+
+
 
   // Render the sub-activities based on the current subject index
   const renderSubActivities = () => {
@@ -59,34 +73,41 @@ const SubActivitiesPage = () => {
   };
 
 
-// const btnSelectedHandler = (activity) => {
-//   setselectedButtons(prevSelected => {
-//     if (prevSelected.includes(activity)) {
-//       return prevSelected.filter(item => item !== activity);
-//     }
-//     return [...prevSelected, activity];
-//   });
-// };
+
+
+
+
 
 
 const btnSelectedHandler = (activity)=>{ 
 
     if(selectedButtons.includes(activity)){
         setselectedButtons(selectedButtons.filter(item=>item!==activity));
-        // setSelectedExtraActivities(selectedButtons.filter(item=>item!==activity));
-        setSelectedMainActivities(SelectedMainActivities.filter(item=>item!==activity));
+        setSelectedSubActivities(SelectedSubActivities.filter(item=>item!==activity));
     }else{
         setselectedButtons([...selectedButtons,activity])
-        // setSelectedExtraActivities([...selectedButtons,activity]);
-        setSelectedMainActivities([...SelectedMainActivities,activity])
+        setSelectedSubActivities([...SelectedSubActivities,activity])
 
     }
 
 }
 
+
+
+
+
+
+
+
 useEffect(()=>{
-    console.log("SelectedMainActivities",SelectedMainActivities)
-},[SelectedMainActivities])
+    console.log("SelectedMainActivities",SelectedSubActivities)
+},[SelectedSubActivities])
+
+
+
+
+
+
 
 
   return (

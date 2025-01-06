@@ -69,6 +69,7 @@ app.use((req, res, next) => {
         req.session.ALSubjects ||= [];
         req.session.MainActivities ||=[];
         req.session.ActivitiesObj ||={};
+        req.session.FinalQuestionPercentages||={};
         
         next();
     } catch (error) {
@@ -784,11 +785,11 @@ const calculateActivitiesPercentage = async (req, Activity,level,tableType,Activ
 
 
         const ActivityMultipliers = {
-            "Just Participated": 0.25,
+            "Just Participated": 0.40,
+            "School": 0.50,
             "Zonal/Interschool": 0.60,
-            "School": 0.40,
             "National": 0.70,
-            "International": 0.85,
+            "International": 1,
         };
 
         const multiplier = ActivityMultipliers[level] || 0;
@@ -828,31 +829,33 @@ const calculateActivitiesPercentage = async (req, Activity,level,tableType,Activ
 
 
 app.post("/api/Activities/results",async(req,res)=>{
-    const {ActivitiesToSendBE,SelectedMainActivities,ActivitiesWithoutSub} = req.body;
-    console.log("SelectedSubActivities",SelectedMainActivities);
+    const {ActivitiesToSendBE,SelectedSubActivities,ActivitiesWithoutSub} = req.body;
+    console.log("SelectedSubActivities",SelectedSubActivities);
     console.log("ActivitiesWithoutSub",ActivitiesWithoutSub);
     console.log("Activities From User",ActivitiesToSendBE);
 
-    for(let i=0;i<SelectedMainActivities.length;i++){
-        const level = ActivitiesToSendBE[SelectedMainActivities[i]];
-        await calculateActivitiesPercentage(req,SelectedMainActivities[i],level,"sub_activities","sub_activity")
+    for(let i=0;i<SelectedSubActivities.length;i++){
+        const level = ActivitiesToSendBE[SelectedSubActivities[i]];
+        await calculateActivitiesPercentage(req,SelectedSubActivities[i],level,"sub_activities","sub_activity")
     }
 
     for(let i=0;i<ActivitiesWithoutSub.length;i++){
         const level = ActivitiesToSendBE[ActivitiesWithoutSub[i]];
         await calculateActivitiesPercentage(req,ActivitiesWithoutSub[i],level,"main_activities","main_activity")
     }
+
+    if(!req.session.ActivitiesFinalMipValues){
+        req.session.ActivitiesFinalMipValues={}
+     }
+
+     req.session.ActivitiesFinalMipValues=req.session.ActivitypercentageObject
+     req.session.ActivitypercentageObject={};
+
     res.send("Activities received")
     console.log(req.session)
 
 
 })
-
-
-
-
-
-
 
 
 
@@ -868,7 +871,7 @@ app.post('/api/Assesment', async (req, res) => {
         const { questionAndAnswers } = req.body;
         // Store the user's answers in the session
         req.session.questionAndAnswers = questionAndAnswers
-        // console.log("Received answers:", req.session.questionAndAnswers);
+        console.log("Received answers:", req.session.questionAndAnswers);
         res.json({ Message: "received" });
     } catch (error) {
         res.status(500).json({ Message: "Error in Receiving Data" });
@@ -881,7 +884,54 @@ app.post('/api/Assesment', async (req, res) => {
 
 
 
+const mapCareer = async(req) =>{
+    const firstThreePercentagesAndIntelligences = Object.fromEntries(
+        Object.entries(req.session.FinalQuestionPercentages).slice(0, 3)
+      );  
 
+    console.log("firstThreePercentagesAndIntelligences",firstThreePercentagesAndIntelligences)
+  
+    
+    const intelligences = Object.keys(firstThreePercentagesAndIntelligences);
+
+    console.log("intelligences",intelligences);
+
+    const intelligenceIds = await db
+    .select("intelligence_id")
+    .from("mi_table")
+    .whereIn("intelligence_type", intelligences)
+    .orderByRaw(`
+        CASE
+            ${intelligences
+                .map((type, index) => `WHEN intelligence_type = '${type}' THEN ${index + 1}`)
+                .join(' ')}
+        END
+    `);
+      
+      console.log("Intelligence IDs:", intelligenceIds);
+           
+    
+    const intelligenceIdArray = intelligenceIds.map(value=>value.intelligence_id);
+
+    console.log(intelligenceIdArray);
+    const percentages = Object.values(firstThreePercentagesAndIntelligences).map(value=>value.Percentage);
+
+    console.log("threePercentages",percentages);
+
+  const careerlist = (await db.select("career")
+                              .from("career_table")
+                              .where("mi_1",intelligenceIdArray[0])
+                              .where("mi_2",intelligenceIdArray[1])
+                              .where("mi_3",intelligenceIdArray[2])
+                              .where("mi_percentage1","<=",percentages[0])
+                              .where("mi_percentage2","<=",percentages[1])
+                              .where("mi_percentage3","<=",percentages[2])
+
+    ).map(careerlist=>careerlist.career);
+  
+  console.log("careerlist",careerlist)                              
+                                          
+}
 
 
 
@@ -900,12 +950,24 @@ app.get('/api/calculation', async (req, res) => {
     await calculatingTotalScoreForAll(req);
 
     // Return the calculated details
-    res.json(req.session.detailsForCalculation)
+    res.json(req.session.detailsForCalculation);
+
+    req.session.FinalQuestionPercentages = Object.entries(req.session.detailsForCalculation)
+  .sort(([, a], [, b]) => b.Percentage - a.Percentage) // Sort by percentage descending
+  .reduce((acc, [key, value]) => {
+    acc[key] = value; // Reconstruct the object
+    return acc;
+  }, {});
+
+  console.log("FinalQuestionPercentages",req.session.FinalQuestionPercentages)
+  mapCareer(req);
 });
 
 
 
+app.post('/api/CareerMapping',(req,res)=>{
 
+})
 
 
 
@@ -943,6 +1005,6 @@ app.get("/*", (req, res) => {
 
 
 // Start the server and listen on the specified port
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, () => {
     console.log(`Server is running on Port ${PORT}`);
 });

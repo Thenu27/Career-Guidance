@@ -118,18 +118,33 @@ const QuestionContainer = () =>{
 
 
       
-     const answerSubmitHandler=async()=>{
-        const response = await fetch("http://localhost:3000/api/Assesment",{
-            method:"post",
-            headers:{
-                "Content-Type":'application/json'
-            },
+    //  const answerSubmitHandler=async()=>{
+    //     const response = await fetch("http://localhost:3000/api/Assesment",{
+    //         method:"post",
+    //         headers:{
+    //             "Content-Type":'application/json'
+    //         },
 
-            body:JSON.stringify({questionAndAnswers})
-        })
-        const data = await response.json()
-        // console.log(data)
-     }
+    //         body:JSON.stringify({questionAndAnswers})
+    //     })
+    //     const data = await response.json()
+    //     // console.log(data)
+    //  }
+
+
+    const answerSubmitHandler=async()=>{
+        try{
+            const response = await axios.post("http://localhost:3000/api/Assesment",{
+                questionAndAnswers
+            })
+            console.log(response.data);
+        }catch(error){
+            console.log(error)
+        }
+
+        
+
+    }
 
 
 

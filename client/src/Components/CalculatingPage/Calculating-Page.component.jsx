@@ -20,17 +20,14 @@ const CalculatingPage = () =>{
             } catch (err) {
                 console.error('Error fetching intelligence scores:', err);
             }
-        };
-    
+        };    
         // useEffect to call the function when the component loads
         useEffect(() => {
             getIntelligenceScores();
         }, []); 
     
-        const getOlevelMip =async()=>{
-            const response= await axios.get('http://localhost:3000/api/Ordinarylevel');
-            setOlMip(response.data);
-        }
+
+
 
 
     useEffect(()=>{
@@ -52,14 +49,14 @@ const CalculatingPage = () =>{
        
    },[])
 
-useEffect(()=>{
-   const fetchDate=async()=>{
-       await getOlevelMip()
-    }
+// useEffect(()=>{
+//    const fetchDate=async()=>{
+//        await getOlevelMip()
+//     }
 
-    fetchDate()
-    console.log("Menna baduuu",OlMip)
-},[])
+//     fetchDate()
+//     console.log("Menna baduuu",OlMip)
+// },[])
 
 
     const navigate = useNavigate();

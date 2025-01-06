@@ -5,7 +5,7 @@ import { ActivitiesContext } from '../../../context/Activities.context';
 const ExtraCurricularResults = () => {
     const {
         SelectedExtraActivities,
-        SelectedMainActivities,
+        SelectedSubActivities,
         ActivitiesWithoutSub,
         FinalActivitiesList,
         setFinalActivitiesList,
@@ -14,14 +14,14 @@ const ExtraCurricularResults = () => {
     } = useContext(ActivitiesContext);
 
     const [Level, setLevel] = useState(() => {
-        const initialLength = SelectedMainActivities.concat(ActivitiesWithoutSub).length;
+        const initialLength = SelectedSubActivities.concat(ActivitiesWithoutSub).length;
         return Array(initialLength).fill("Level");
     });
 
     useEffect(() => {
-        setFinalActivitiesList(SelectedMainActivities.concat(ActivitiesWithoutSub));
+        setFinalActivitiesList(SelectedSubActivities.concat(ActivitiesWithoutSub));
         console.log("FinalActivitiesList", FinalActivitiesList);
-    }, [SelectedMainActivities, ActivitiesWithoutSub]);
+    }, [SelectedSubActivities, ActivitiesWithoutSub]);
 
     useEffect(() => {
         setLevel(Array(FinalActivitiesList.length).fill("Level"));

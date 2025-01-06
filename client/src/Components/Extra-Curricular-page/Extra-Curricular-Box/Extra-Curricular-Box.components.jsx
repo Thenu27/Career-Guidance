@@ -6,21 +6,24 @@ import { ActivitiesContext } from '../../../context/Activities.context';
 
 const ExtraCurricularBox=()=>{
 
-    const {SelectedExtraActivities,
+    const {
+        SelectedExtraActivities,
         setSelectedExtraActivities,
         ActivitiesObj,
         ActivitiesWithSub,
-    showSubActivities,
-    SubActivities,
-setSubActivities,
-goToExtraLevelsPage,
-setshowSubActivities,
-currentSubjectIndex,
-setCurrentSubjectIndex,
-ShowActivitiesSub,
-setShowActivitiesSub,
-selectedButtons,
-setselectedButtons
+        showSubActivities,
+        SubActivities,
+        setSubActivities,
+        goToExtraLevelsPage,
+        setshowSubActivities,
+        currentSubjectIndex,
+        setCurrentSubjectIndex,
+        ShowActivitiesSub,
+        setShowActivitiesSub,
+        selectedButtons,
+        setselectedButtons,
+        SelectedSubActivities,
+        setSelectedSubActivities
 } =useContext(ActivitiesContext);
 
 
@@ -28,13 +31,19 @@ setselectedButtons
       // State to track the current subject index and completed status
 
 
+    useEffect(()=>{
+        setSelectedSubActivities([]);
+        setSelectedExtraActivities([]);
 
+    },[])
     
     useEffect(()=>{
         setselectedButtons(SelectedExtraActivities)
     },[SelectedExtraActivities])
 
-
+    // useEffect(()=>{
+    //     setSelectedExtraActivities(selectedButtons)
+    // },[selectedButtons])
     
    const btnSelectedHandler = (activity)=>{ 
 
@@ -52,32 +61,7 @@ setselectedButtons
 
 
 
-const fetchMainActivities = async () => {
-    try {
-        const response = await axios.get("http://localhost:3000/api/Activities");
-        const activities = response.data.map(activity => activity.main_activity);
-        setMainActivities(activities);
-    } catch (error) {
-        console.error("Error fetching main activities:", error.message);
-    }
-};
 
-
-
-// useEffect(()=>{
-//     SubjectTobeShown();
-// },[SubActivities])
-
-
-
-
-useEffect(()=>{
-   const fetchData=async()=>{
-        await fetchMainActivities();
-    }
-    fetchData();
-
-},[])
 
 
 useEffect(()=>{

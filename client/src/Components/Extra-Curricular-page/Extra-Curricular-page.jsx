@@ -27,8 +27,9 @@ const ExtraCurricularPage = () => {
     setCurrentSubjectIndex,
     SubActivities,
     ActivitiesToSendBE,
-    SelectedMainActivities,
-    ActivitiesWithoutSub
+    SelectedSubActivities,
+    ActivitiesWithoutSub,
+    setMainActivities
   } = useContext(ActivitiesContext);
 
   useEffect(() => {
@@ -51,6 +52,29 @@ const ExtraCurricularPage = () => {
   const goToOLPage = ()=>{
     navigate("/Ordinarylevelpage")
   }
+
+
+
+  const fetchMainActivities = async () => {
+    try {
+        const response = await axios.get("http://localhost:3000/api/Activities");
+        const activities = response.data.map(activity => activity.main_activity);
+        setMainActivities(activities);
+    } catch (error) {
+        console.error("Error fetching main activities:", error.message);
+    }
+};
+
+
+
+
+useEffect(()=>{
+   const fetchData=async()=>{
+        await fetchMainActivities();
+    }
+    fetchData();
+
+},[])
 
   // Send the selected activities to the backend
   const sendToBackend = async () => {
@@ -92,6 +116,8 @@ const indexIncrement = () => {
   const indexDecrement = () => {
     if(currentSubjectIndex>0){
          setCurrentSubjectIndex((prevIndex) => prevIndex - 1);
+    }else{
+      goToECListPage()
     }
   };
 
@@ -109,7 +135,7 @@ const indexIncrement = () => {
     if (ShowActivitiesSub === true) {
       return (
         <div className="extra-curricular-back-next-btn">
-          <button onClick={() => {goToECListPage();indexDecrement()}} className="nextbtn">
+          <button onClick={() => {indexDecrement()}} className="nextbtn">
             Back
           </button>
 
@@ -149,9 +175,9 @@ const indexIncrement = () => {
               Skip
             </button>
           )}
-        </div>
+        </div> 
       )
-    }
+    } 
   };
 
 
@@ -159,7 +185,7 @@ const indexIncrement = () => {
     try{
       const results = axios.post("http://localhost:3000/api/Activities/results",{
         ActivitiesToSendBE,
-        SelectedMainActivities,
+        SelectedSubActivities,
         ActivitiesWithoutSub
       })
     }catch(error){
