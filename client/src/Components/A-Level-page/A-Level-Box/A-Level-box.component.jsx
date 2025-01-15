@@ -9,7 +9,7 @@ import ALevelResults from '../A-Level-Results/A-Level-Results';
 
 const AdvanceLevelBox=()=>{
 
-   const {showALevelMathsLocal,showALevelCategory,setshowALevelCategory,showALevelStreamBox,showLondonALevelCategory,showALResults} = useContext(ALevelContext)
+   const {showALevelCategory,showALevelStreamBox,showLondonALevelCategory,showALResults} = useContext(ALevelContext)
 
     const navigate = useNavigate();
 

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext} from 'react';
 import './CareerDropDown.css';
 import { CareerContext } from '../../../context/Career.context';
 

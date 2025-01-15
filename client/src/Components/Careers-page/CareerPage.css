@@ -34,8 +34,13 @@
   display: flex;
   flex-direction: column;
   width: 80%;
+  overflow: auto;
+  gap:3px
 }
 
+.mapped-career-btn{
+  min-height: 80px;
+}
 .chosen-career-box button {
   border: 1px solid black;
   background-color: rgb(213, 213, 213);

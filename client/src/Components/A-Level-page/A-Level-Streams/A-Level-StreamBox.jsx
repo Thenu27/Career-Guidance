@@ -9,7 +9,7 @@ const ALevelStreamBox = () => {
 
     const FetchAlSubjectFromBE=async()=>{
         try{
-            const response = await axios.get('http://localhost:3000/api/Advancelevelpage');
+            const response = await axios.get(`${process.env.REACT_APP_URL}/api/Advancelevelpage`);
             setALSubjectsFromDB(response.data);
             console.log(response.data)
 

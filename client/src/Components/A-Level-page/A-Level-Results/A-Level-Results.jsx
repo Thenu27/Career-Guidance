@@ -3,9 +3,11 @@ import './A-Level-Results.css';
 import { useContext,useEffect,useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { CsrfContext } from '../../../context/csrf.context';
 
 const ALevelResults = ()=>{
     const {ALResultsArray,goToALevelLocalMaths} = useContext(ALevelContext);
+    const {csrfToken} = useContext(CsrfContext)
   
   
      const navigate = useNavigate();
@@ -45,9 +47,12 @@ const ALevelResults = ()=>{
   
   const sendToBackend =async()=>{
     try{ 
-    const response = await axios.post("http://localhost:3000/api/AdvanceLevelPage",{
+    const response = await axios.post(`${process.env.REACT_APP_URL}/api/AdvanceLevelPage`,{
       ALevelResultsAndGrades
-    });
+    },{
+      headers: { 'X-XSRF-TOKEN': csrfToken }, // Include CSRF token
+      withCredentials: true, // Ensure cookies are sent
+  });
     ALevelResultsAndGrades={};
     console.log("New",response.data)
     if(response.status===200){

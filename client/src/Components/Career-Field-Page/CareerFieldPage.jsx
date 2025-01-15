@@ -2,7 +2,7 @@ import './CareerFieldPage.css';
 import CareerFieldBox from './Career-Field-Box/CareerFieldBox';
 import Image from '../Image/Image.components';
 import CareerDropdownContainer from './Career-Dropdown-Container/CareerDropdown';
-import { useEffect, useState,useContext } from 'react';
+import { useEffect,useContext } from 'react';
 import ProfileMatchBox from '../Profile-Match/ProfileMatchBox';
 import { ProgressContext } from '../../context/progress.context';
 import { CareerContext } from '../../context/Career.context';

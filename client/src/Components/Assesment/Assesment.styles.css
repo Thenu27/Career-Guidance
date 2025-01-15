@@ -25,7 +25,7 @@
   }
 }
 
-@media (min-width: 1000px) and (max-width: 1600px) {
+@media (min-width: 1000px) {
   .question-user-container {
     display: grid;
     grid-template-columns: repeat(16, 1fr);

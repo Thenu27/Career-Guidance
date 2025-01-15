@@ -1,6 +1,6 @@
 import './Calculating-page.styles.css';
 import Image from '../Image/Image.components';
-import { useEffect,useState,useContext } from 'react';
+import { useEffect,useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProgressContext } from '../../context/progress.context';
 import axios from 'axios';
@@ -8,13 +8,12 @@ import axios from 'axios';
 const CalculatingPage = () =>{
 
     const {setVisitedPages,setintelligenceScore} = useContext(ProgressContext);
-    const [OlMip,setOlMip]=useState([]);
 
 
         
         const getIntelligenceScores = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/api/calculation'); // Backend endpoint
+                const response = await axios.get(`${process.env.REACT_APP_URL}/api/calculation`); // Backend endpoint
                 // console.log('Frontend received:', response.data); // Log the data
                 setintelligenceScore(response.data);
             } catch (err) {
@@ -26,6 +25,7 @@ const CalculatingPage = () =>{
             getIntelligenceScores();
         }, []); 
     
+        
 
 
 
@@ -49,14 +49,7 @@ const CalculatingPage = () =>{
        
    },[])
 
-// useEffect(()=>{
-//    const fetchDate=async()=>{
-//        await getOlevelMip()
-//     }
 
-//     fetchDate()
-//     console.log("Menna baduuu",OlMip)
-// },[])
 
 
     const navigate = useNavigate();

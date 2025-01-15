@@ -5,12 +5,11 @@ import { useState,useEffect,useContext } from 'react';
 import { ProgressContext } from '../../context/progress.context';
 import { ALevelContext } from '../../context/ALevel.context';
 import ALevelSubject from './A-Level-Subject/A-Level-Subject';
-import ALevelResults from './A-Level-Results/A-Level-Results';
 
 const AdvanceLevelPage=()=>{
 
-    const {visitedPages,setVisitedPages} = useContext(ProgressContext);
-    const {showALevelSubject,showALevelBox,showALResults} = useContext(ALevelContext);
+    const {setVisitedPages} = useContext(ProgressContext);
+    const {showALevelSubject,showALevelBox} = useContext(ALevelContext);
 
     useEffect(()=>{
  

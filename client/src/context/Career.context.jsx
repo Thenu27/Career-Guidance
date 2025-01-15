@@ -9,7 +9,9 @@ export const CareerContext = createContext({
     showMatchedProfileMsg:null,
     setshowMatchedProfileMsg:()=>{},
     SelectedCareerField:null,
-    setSelectedCareerField:()=>{}
+    setSelectedCareerField:()=>{},
+    Careers:null,
+    setCareers:()=>{}
 
 })
 
@@ -19,6 +21,7 @@ export const CareerProvider=({children})=>{
     const [showCareerDropdown,setShowCareerDropdown] = useState(false);
     const [showMatchedProfileMsg,setshowMatchedProfileMsg] = useState(false);
     const [SelectedCareerField,setSelectedCareerField] = useState([]);
+    const [Careers,setCareers] = useState({})
 
     const value={
 
@@ -29,7 +32,9 @@ export const CareerProvider=({children})=>{
         showMatchedProfileMsg,
         setshowMatchedProfileMsg,
         SelectedCareerField,
-        setSelectedCareerField
+        setSelectedCareerField,
+        Careers,
+        setCareers
     }
 
     return(

@@ -1,11 +1,13 @@
 import './Question-container.styles.css'
-import { useEffect,useState } from 'react';
+import { useEffect,useState ,useContext} from 'react';
 import axios from 'axios';
+import { CsrfContext } from '../../context/csrf.context';
 
 import QuestionBox from '../QuestionBox/QuestionBox.component';
 
 
 const QuestionContainer = () =>{
+    const {csrfToken} = useContext(CsrfContext)
    
     const[IndexOfQuestionShown,setIndexOfQuestionShown] = useState(0)
     const[shufulledQuestions,setShuffledQuestions]= useState([]); 
@@ -16,7 +18,7 @@ const QuestionContainer = () =>{
 
     useEffect(() => {
         const fetchQuestions = async () => {
-            const response = await axios.get('http://localhost:3000/api/Assesment');
+            const response = await axios.get(`${process.env.REACT_APP_URL}/api/Assesment`);
             console.log("Questions received from the backend", response.data);
             setquestions(response.data);
         };
@@ -114,29 +116,16 @@ const QuestionContainer = () =>{
      }
 
 
-
-
-
-      
-    //  const answerSubmitHandler=async()=>{
-    //     const response = await fetch("http://localhost:3000/api/Assesment",{
-    //         method:"post",
-    //         headers:{
-    //             "Content-Type":'application/json'
-    //         },
-
-    //         body:JSON.stringify({questionAndAnswers})
-    //     })
-    //     const data = await response.json()
-    //     // console.log(data)
-    //  }
-
-
     const answerSubmitHandler=async()=>{
         try{
-            const response = await axios.post("http://localhost:3000/api/Assesment",{
-                questionAndAnswers
-            })
+            const response = await axios.post(`${process.env.REACT_APP_URL}/api/Assesment`,
+               {questionAndAnswers},
+               { // Configuration object
+                headers: { 'X-XSRF-TOKEN': csrfToken },
+                withCredentials: true,
+            }
+                
+            )
             console.log(response.data);
         }catch(error){
             console.log(error)

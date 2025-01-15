@@ -1,6 +1,5 @@
 import './Extra-Curricular-Box.styles.css';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
 import { useContext } from 'react';
 import { ActivitiesContext } from '../../../context/Activities.context';
 
@@ -9,25 +8,16 @@ const ExtraCurricularBox=()=>{
     const {
         SelectedExtraActivities,
         setSelectedExtraActivities,
-        ActivitiesObj,
-        ActivitiesWithSub,
-        showSubActivities,
         SubActivities,
-        setSubActivities,
-        goToExtraLevelsPage,
-        setshowSubActivities,
-        currentSubjectIndex,
-        setCurrentSubjectIndex,
         ShowActivitiesSub,
-        setShowActivitiesSub,
         selectedButtons,
         setselectedButtons,
-        SelectedSubActivities,
-        setSelectedSubActivities
+        setSelectedSubActivities,
+        MainActivities
 } =useContext(ActivitiesContext);
 
 
-    const [MainActivities, setMainActivities] = useState([]); // Track MainActivities with useState
+  // Track MainActivities with useState
       // State to track the current subject index and completed status
 
 

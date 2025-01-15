@@ -2,11 +2,10 @@ import './A-Level-Category.css';
 import { useContext,useEffect } from 'react';
 import { ALevelContext } from '../../../context/ALevel.context';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 
 const ALevelCategory=()=>{
-    const {setALSubjectsFromDB,ALSubjectsFromDB} = useContext(ALevelContext);
+    const {ALSubjectsFromDB} = useContext(ALevelContext);
 
     
  

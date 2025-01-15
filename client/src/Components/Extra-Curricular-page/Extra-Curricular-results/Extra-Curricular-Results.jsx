@@ -4,7 +4,6 @@ import { ActivitiesContext } from '../../../context/Activities.context';
 
 const ExtraCurricularResults = () => {
     const {
-        SelectedExtraActivities,
         SelectedSubActivities,
         ActivitiesWithoutSub,
         FinalActivitiesList,

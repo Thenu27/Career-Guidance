@@ -1,6 +1,5 @@
 import './CareerFieldBox.css';
 import { useContext, useEffect, useState } from 'react';
-import CareerDropdownContainer from '../Career-Dropdown-Container/CareerDropdown';
 import { CareerContext } from '../../../context/Career.context';
 
 const CareerFieldsBtnList = [

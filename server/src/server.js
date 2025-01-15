@@ -3,8 +3,30 @@ const cors = require("cors");
 const path = require("path");
 const app = express();
 const PORT = 3000;
+const helmet = require('helmet');
+const rateLimit = require("express-rate-limit");
+const xssClean = require('xss-clean');
+const csrf = require('csurf');
+const cookieParser = require('cookie-parser');
 
-const session = require('express-session')
+app.set('trust proxy', 1);
+
+const limiter = rateLimit({
+    windowMs:1*60*1000,
+    max:100,
+    message:"Too many Requests, Please try agin in a minute"
+})
+
+const session = require('express-session');
+
+app.use(cookieParser()); // Add this before csurf middleware
+const csrfProtection = csrf({ cookie: true });
+
+
+app.get('/api/get-csrf-token', csrfProtection, (req, res) => {
+    res.cookie('XSRF-TOKEN', req.csrfToken()); // Send token as a cookie
+    res.json({ message: 'CSRF token set' });
+});
 
 const knex = require('knex');
 require('dotenv').config();  // Loads environment variables from a .env file into process.env
@@ -26,6 +48,33 @@ const db = knex({
     },
 });
 
+
+app.use(helmet());
+
+
+
+app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: [
+            "'self'",                      
+            "https://cdn.jsdelivr.net",    
+            "https://cdnjs.cloudflare.com" 
+          ],          
+          styleSrc: ["'self'", "'unsafe-inline'"],
+          imgSrc: ["'self'", "data:"],
+          objectSrc: ["'none'"],
+          upgradeInsecureRequests: [],
+        },
+      },
+    })
+  );
+
+  app.use(xssClean()); // Protect against XSS attacks
+
+
 // Enable CORS to allow requests from other origins
 app.use(cors());
 
@@ -33,7 +82,7 @@ app.use(cors());
 // This stores user data on the server between HTTP requests.
 app.use(
   session({
-    secret: 'your-secret-key',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -51,7 +100,7 @@ app.use(
 
 
 
-
+app.use(limiter);
 
 
 app.use((req, res, next) => {
@@ -70,6 +119,9 @@ app.use((req, res, next) => {
         req.session.MainActivities ||=[];
         req.session.ActivitiesObj ||={};
         req.session.FinalQuestionPercentages||={};
+        req.session.careerList ||=[];
+        req.session.moderateCareerList ||=[];
+        req.session.careersObject||={};
         
         next();
     } catch (error) {
@@ -581,16 +633,6 @@ app.get('/api/Assesment', async (req, res) => {
 
 
 
-
-
-
-// Serve static files from the "public" directory, allowing frontend files to be delivered
-
-
-
-
-
-
 app.get('/api/Ordinarylevelpage/local-Core', async (req, res) => {
     try {
         if (!req.session.OLevelLocalCoreSubjectsArray.length) {
@@ -709,10 +751,15 @@ app.get('/api/Ordinarylevel', async(req, res) => {
 
 
 
-app.get('/api/Activities',(req,res)=>{
-    fetchMainActivitiesFromDB(req);
-    res.send(req.session.MainActivities)
-    console.log(req.session.MainActivities)
+app.get('/api/Activities',async(req,res)=>{
+    try{
+        await fetchMainActivitiesFromDB(req);
+        res.json(req.session.MainActivities)
+        console.log(req.session.MainActivities)
+    }catch(error){
+        console.log("Error sending Activities",error)
+    }
+
 })
 
 
@@ -918,25 +965,64 @@ const mapCareer = async(req) =>{
 
     console.log("threePercentages",percentages);
 
-  const careerlist = (await db.select("career")
-                              .from("career_table")
-                              .where("mi_1",intelligenceIdArray[0])
-                              .where("mi_2",intelligenceIdArray[1])
-                              .where("mi_3",intelligenceIdArray[2])
-                              .where("mi_percentage1","<=",percentages[0])
-                              .where("mi_percentage2","<=",percentages[1])
-                              .where("mi_percentage3","<=",percentages[2])
 
-    ).map(careerlist=>careerlist.career);
-  
-  console.log("careerlist",careerlist)                              
-                                          
+const careerList = await db('career_table')
+  .select('career')
+  .where(function () {
+    this.where('mi_1', intelligenceIdArray[0])
+      .andWhere('mi_2', intelligenceIdArray[1])
+      .andWhere('mi_3', intelligenceIdArray[2])
+      .andWhere('mi_percentage1', '<=', percentages[0])
+      .andWhere('mi_percentage2', '<=', percentages[1])
+      .andWhere('mi_percentage3', '<=', percentages[2]);
+  })
+  .orWhere(function () {
+    this.where('mi_1', intelligenceIdArray[0])
+      .andWhere('mi_2', intelligenceIdArray[2])
+      .andWhere('mi_3', intelligenceIdArray[1])
+      .andWhere('mi_percentage1', '<=', percentages[0])
+      .andWhere('mi_percentage2', '<=', percentages[2])
+      .andWhere('mi_percentage3', '<=', percentages[1]);
+  })
+  .orWhere(function () {
+    this.where('mi_1', intelligenceIdArray[0])
+      .andWhere('mi_2', intelligenceIdArray[1])
+    //   .andWhere('mi_3', intelligenceIdArray[2])
+      .andWhere('mi_percentage1', '<=', percentages[0])
+      .andWhere('mi_percentage2', '<=', percentages[1])
+    //   .andWhere('mi_percentage3', '<=', percentages[1]);
+  });
+
+// Extract the `career` values from the query result
+ req.session.careerList = careerList.map((item) => item.career);
+
+console.log("Career List", req.session.careerList);
+ 
+
+  const moderateCareer = await db.select("career")
+                                 .from("career_table")
+                                 .where('mi_1', intelligenceIdArray[0])
+                                 .andWhere('mi_2', intelligenceIdArray[1])
+                                 .andWhere('mi_3', intelligenceIdArray[2])
+                                 .andWhere('mi_percentage1', '<=', percentages[0])
+                                
+  req.session.moderateCareerList = moderateCareer.map((item) => item.career);
+
+  req.session.careersObject = {
+    topCareers: req.session.careerList.map((item) => item), // Corrected
+    moderateCareers: req.session.moderateCareerList.map((item) => item) // Corrected
+};
+
+                               
+console.log("Moderate Career List",req.session.moderateCareerList)
+console.log("req.session.careersObject",req.session.careersObject)
+
+req.session.save((err) => {
+    if (err) console.error("Error saving session:", err);
+});
+
+
 }
-
-
-
-
-
 
 
 
@@ -960,24 +1046,32 @@ app.get('/api/calculation', async (req, res) => {
   }, {});
 
   console.log("FinalQuestionPercentages",req.session.FinalQuestionPercentages)
-  mapCareer(req);
+  await mapCareer(req);
+  
+
+  
 });
 
 
 
-app.post('/api/CareerMapping',(req,res)=>{
-
-})
-
-
-
-
-
+app.get('/api/career', (req, res) => {
+    if (!req.session.careersObject) {
+        return res.status(404).json({ error: "Careers not found." });
+    }
+    res.json(req.session.careersObject);
+});
 
 
 
-app.use(express.static(path.join(__dirname, "..", "public")));
 
+
+
+
+
+app.use(express.static(path.join(__dirname, "..", "public"), {
+    extensions: ['html', 'css', 'jsx','js'],
+  }));
+  
 // Catch-all route to serve frontend on any other path
 app.get("/*", (req, res) => {
     try {
