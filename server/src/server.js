@@ -8,6 +8,7 @@ const rateLimit = require("express-rate-limit");
 const xssClean = require('xss-clean');
 const csrf = require('csurf');
 const cookieParser = require('cookie-parser');
+require('dotenv').config({ path: require('path').resolve(__dirname, '..', '.env') });
 
 app.set('trust proxy', 1);
 
@@ -29,7 +30,6 @@ app.get('/api/get-csrf-token', csrfProtection, (req, res) => {
 });
 
 const knex = require('knex');
-require('dotenv').config({ path: require('path').resolve(__dirname, '..', '.env') });
 
 // Load database credentials from environment variables
 const database_password = process.env.DATABASE_PASSWORD;
