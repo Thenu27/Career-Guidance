@@ -39,7 +39,7 @@ const database_client = process.env.DATABASE_CLIENT;
 
 // Initialize database connection using Knex
 const db = knex({
-    client: database_client,
+    client: "pg",
     connection: {
         host: '127.0.0.1',
         user: database_user,
@@ -73,6 +73,7 @@ app.use(
   );
 
   app.use(xssClean()); // Protect against XSS attacks
+  console.log(process.env.DATABASE_CLIENT);  // Should print 'pg'
 
 
 // Enable CORS to allow requests from other origins
@@ -87,7 +88,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 600000, // Session cookie max age in milliseconds
-      secure: false,  // Set to true if using HTTPS in production
+      secure: process.env.NODE_ENV === 'production',  // Set to true if using HTTPS in production
       httpOnly: true, // Cookie not accessible via JavaScript
       sameSite: 'lax', // SameSite policy for the cookie
     },
@@ -1099,7 +1100,7 @@ app.get("/*", (req, res) => {
 
 
 // Start the server and listen on the specified port
-app.listen(3000, '0.0.0.0', () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log('Server is running on port 3000');
 });
 
