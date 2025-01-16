@@ -39,8 +39,8 @@ const database_client = process.env.DATABASE_CLIENT;
 
 // Initialize database connection using Knex
 const db = knex({
-    client: "pg",
-    connection: {
+    client: process.env.DATABASE_CLIENT || 'pg',
+        connection: {
         host: '127.0.0.1',
         user: database_user,
         password: database_password,
@@ -1065,6 +1065,11 @@ app.get('/api/career', (req, res) => {
 
 
 
+console.log('DATABASE_CLIENT:', process.env.DATABASE_CLIENT);
+console.log('DB_HOST:', process.env.DB_HOST);
+console.log('DATABASE_USER:', process.env.DATABASE_USER);
+console.log('DATABASE_PASSWORD:', process.env.DATABASE_PASSWORD);
+console.log('DATABASE_NAME:', process.env.DATABASE_NAME);
 
 
 
