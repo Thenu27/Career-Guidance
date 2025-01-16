@@ -29,7 +29,7 @@ app.get('/api/get-csrf-token', csrfProtection, (req, res) => {
 });
 
 const knex = require('knex');
-require('dotenv').config();  // Loads environment variables from a .env file into process.env
+require('dotenv').config({ path: require('path').resolve(__dirname, '..', '.env') });
 
 // Load database credentials from environment variables
 const database_password = process.env.DATABASE_PASSWORD;
