@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT|| 8000
 const helmet = require('helmet');
 const rateLimit = require("express-rate-limit");
 const xssClean = require('xss-clean');
@@ -1099,6 +1099,7 @@ app.get("/*", (req, res) => {
 
 
 // Start the server and listen on the specified port
-app.listen(PORT, () => {
-    console.log(`Server is running on Port ${PORT}`);
+app.listen(3000, '0.0.0.0', () => {
+    console.log('Server is running on port 3000');
 });
+
