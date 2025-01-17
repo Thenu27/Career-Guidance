@@ -16,12 +16,19 @@ const QuestionContainer = () =>{
     const[questionAndAnswers,setquestionAndAnswers]=useState({});
     const [questions, setquestions] = useState({});
 
-    useEffect(() => {
-        const fetchQuestions = async () => {
+    const fetchQuestions = async () => {
+        try{
             const response = await axios.get(`${process.env.REACT_APP_URL}/api/Assesment`);
             console.log("Questions received from the backend", response.data);
             setquestions(response.data);
-        };
+        }catch(error){
+            console.error(error)
+        }
+
+    };
+
+    useEffect(() => {
+        
     
         fetchQuestions();
     }, []); 
