@@ -374,11 +374,17 @@ let intelligenceArrayGlobal = [];
 
 // Function to fetch intelligence types from the database and store them in intelligenceArray
 const fetchIntelligenceFromDB = async (req) => {
-    intelligenceArrayGlobal = await db.select('*').from("mi_table");
-    // console.log(response)
-    for (let i = 0; i < intelligenceArrayGlobal.length; i++) {
-        req.session.intelligenceArray.push(intelligenceArrayGlobal[i])
+    try{
+        intelligenceArrayGlobal = await db.select('*').from("mi_table");
+        // console.log(response)
+        for (let i = 0; i < intelligenceArrayGlobal.length; i++) {
+            req.session.intelligenceArray.push(intelligenceArrayGlobal[i])
+        }
+
+    }catch(error){
+        console.error(error)
     }
+
     // console.log("Hello", req.session.intelligenceArray)
 }
 
@@ -490,14 +496,18 @@ const getAlLocalsubjectFromDB=async(req)=>{
 
 // Function to retrieve all questions from the database and return them as an object
 const getttingQuestionFromDB = async () => {
-    const questions = await db.select('question', 'question_id').from('questions');
-    const questionsObject = questions.reduce((acc, curr) => {
-        acc[curr.question_id] = curr.question;
-        return acc;
-    }, {});
-    return questionsObject;
-}
-
+    try {
+        const questions = await db.select('question', 'question_id').from('questions');
+        const questionsObject = questions.reduce((acc, curr) => {
+            acc[curr.question_id] = curr.question;
+            return acc;
+        }, {});
+        return questionsObject;
+    } catch (error) {
+        console.error('Error retrieving questions from the database:', error);
+        throw new Error('Could not retrieve questions from the database. Please try again later.');
+    }
+};
 
 
 
