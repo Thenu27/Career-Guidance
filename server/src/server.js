@@ -134,14 +134,11 @@ app.use((req, res, next) => {
 
 
 db.raw('SELECT 1')
-    .then(() => {
-        console.log('Database connection established successfully!');
-        process.exit(0); // Exit the process after the test
-    })
+    .then(() => console.log('Database connection established successfully!'))
     .catch((err) => {
         console.error('Database connection failed:', err.message);
-        process.exit(1); // Exit with error code
     });
+
 
 app.use(express.json());
 
@@ -761,16 +758,15 @@ app.get('/api/Ordinarylevel', async(req, res) => {
 
 
 
-app.get('/api/Activities',async(req,res)=>{
-    try{
+app.get('/api/Activities', async (req, res) => {
+    try {
         await fetchMainActivitiesFromDB(req);
-        res.json(req.session.MainActivities)
-        console.log(req.session.MainActivities)
-    }catch(error){
-        console.log("Error sending Activities",error)
+        res.json(req.session.MainActivities);
+    } catch (error) {
+        console.error("Error fetching activities:", error.message);
+        res.status(500).json({ error: "Failed to fetch activities." });
     }
-
-})
+});
 
 
 
