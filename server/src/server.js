@@ -634,7 +634,7 @@ app.get('/api/Assesment', async (req, res) => {
     try {
         await fetchIntelligenceFromDB(req);
         const allQuestions = await getttingQuestionFromDB();
-        res.send(allQuestions);
+        res.json(allQuestions);
         
 
     } catch (error) {
