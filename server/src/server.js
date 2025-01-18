@@ -29,6 +29,12 @@ app.get('/api/get-csrf-token', csrfProtection, (req, res) => {
     res.json({ message: 'CSRF token set' });
 });
 
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+});
+
+
 const knex = require('knex');
 
 // Load database credentials from environment variables
@@ -382,7 +388,7 @@ const fetchIntelligenceFromDB = async (req) => {
         }
 
     }catch(error){
-        console.error(error)
+        console.error("Error fetching intelligence form Databse",error)
     }
 
     // console.log("Hello", req.session.intelligenceArray)

@@ -22,7 +22,7 @@ const QuestionContainer = () =>{
             console.log("Questions received from the backend", response.data);
             setquestions(response.data);
         }catch(error){
-            console.error(error)
+            console.error("Error Fetching Questions",error)
         }
 
     };
