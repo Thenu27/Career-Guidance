@@ -37,6 +37,7 @@ const QuestionContainer = () =>{
         
     
         fetchQuestions();
+        console.log("URL",process.env.REACT_APP_URL)
     }, []); 
    
 
