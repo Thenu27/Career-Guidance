@@ -14,6 +14,11 @@ const redis = require('redis');
 const cookieParser = require('cookie-parser');
 require('dotenv').config({ path: require('path').resolve(__dirname, '..', '.env') });
 
+app.use(cors({
+    origin: 'https://univerlens.com', // Allow only your frontend domain
+    methods: ['GET', 'POST'],        // Specify the HTTP methods your API supports
+    credentials: true                // Allow credentials (cookies, sessions, etc.)
+}));
 app.set('trust proxy', 1);
 
 const limiter = rateLimit({
@@ -109,7 +114,6 @@ app.use(
 
 
 // Enable CORS to allow requests from other origins
-app.use(cors());
 
 // Set up session middleware to manage user sessions.
 // This stores user data on the server between HTTP requests.
