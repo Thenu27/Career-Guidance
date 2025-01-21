@@ -7,14 +7,13 @@ import axios from 'axios';
 
 const CalculatingPage = () =>{
 
-    const {setVisitedPages,setintelligenceScore} = useContext(ProgressContext);
+    const {setVisitedPages,setintelligenceScore,intelligenceScore} = useContext(ProgressContext);
 
 
         
         const getIntelligenceScores = async () => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_URL}/api/calculation`); // Backend endpoint
-                // console.log('Frontend received:', response.data); // Log the data
                 setintelligenceScore(response.data);
             } catch (err) {
                 console.error('Error fetching intelligence scores:', err);
@@ -26,7 +25,10 @@ const CalculatingPage = () =>{
         }, []); 
     
         
+        useEffect(()=>{
+            console.log('Frontend received:', intelligenceScore); // Log the data
 
+        },[intelligenceScore])
 
 
 

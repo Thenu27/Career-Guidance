@@ -1,13 +1,12 @@
 import './Question-container.styles.css'
 import { useEffect,useState ,useContext} from 'react';
 import axios from 'axios';
-import { CsrfContext } from '../../context/csrf.context';
 
 import QuestionBox from '../QuestionBox/QuestionBox.component';
 
 
 const QuestionContainer = () =>{
-    const {csrfToken} = useContext(CsrfContext)
+    // const {csrfToken} = useContext(CsrfContext)
    
     const[IndexOfQuestionShown,setIndexOfQuestionShown] = useState(0)
     const[shufulledQuestions,setShuffledQuestions]= useState([]); 
@@ -138,16 +137,16 @@ const QuestionContainer = () =>{
         try{
             const response = await axios.post(`${process.env.REACT_APP_URL}/api/Assesment`,
                 
-               {questionAndAnswers},
-               { // Configuration object
-                headers: { 'X-XSRF-TOKEN': csrfToken },
-                withCredentials: true,
-            }
+               {questionAndAnswers},{
+                withCredentials:true
+               }
+               
+            
                 
             )
             console.log(response.data);
         }catch(error){
-            console.log(error)
+            console.log("Error sending data to BE",error)
         }
 
         
