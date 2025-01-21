@@ -6,6 +6,10 @@ const PORT = process.env.PORT|| 3000
 const helmet = require('helmet');
 const rateLimit = require("express-rate-limit");
 const xssClean = require('xss-clean');
+const session = require('express-session');
+const connectRedis = require('connect-redis');
+const RedisStore = connectRedis(session);  // The older API usage
+const redis = require('redis');            
 // const csrf = require('csurf');
 const cookieParser = require('cookie-parser');
 require('dotenv').config({ path: require('path').resolve(__dirname, '..', '.env') });
@@ -18,7 +22,26 @@ const limiter = rateLimit({
     message:"Too many Requests, Please try agin in a minute"
 })
 
-const session = require('express-session');
+const redisClient = redis.createClient({
+    host: '127.0.0.1',
+    port: 6379,
+  });
+
+// redisClient.connect().then(() => {
+//     console.log("Connected to Redis!");
+//   }).catch(console.error);
+  
+
+
+
+redisClient.on('connect', () => {
+    console.log('Connected to Redis!');
+});
+redisClient.on('error', (err) => {
+    console.error('Redis error:', err);
+});
+
+
 
 // app.use(cookieParser()); // Add this before csurf middleware
 // const csrfProtection = csrf({ cookie: true });
@@ -90,8 +113,20 @@ app.use(cors());
 
 // Set up session middleware to manage user sessions.
 // This stores user data on the server between HTTP requests.
+
+// const redisStore = new RedisStore({
+//     client: redisClient,
+//     prefix: 'sess:', // Optional: customize the Redis key prefix for sessions
+// });
+
+const store = new RedisStore({
+    client: redisClient
+  });
+
+
 app.use(
   session({
+    store, // Pass redisClient directly
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
