@@ -1101,7 +1101,6 @@ app.get('/api/calculation', async (req, res) => {
     await calculatingTotalScoreForAll(req);
 
     // Return the calculated details
-    res.json(req.session.detailsForCalculation);
 
     req.session.FinalQuestionPercentages = Object.entries(req.session.detailsForCalculation)
   .sort(([, a], [, b]) => b.Percentage - a.Percentage) // Sort by percentage descending
@@ -1112,6 +1111,8 @@ app.get('/api/calculation', async (req, res) => {
 
   console.log("FinalQuestionPercentages",req.session.FinalQuestionPercentages)
   await mapCareer(req);
+  res.json(req.session.detailsForCalculation);
+
 
     }catch(error){
         console.log("Error in calculating MIP",error)
