@@ -15,7 +15,7 @@ const cookieParser = require('cookie-parser');
 require('dotenv').config({ path: require('path').resolve(__dirname, '..', '.env') });
 
 app.use(cors({
-    origin: 'https://univerlens.com', // Allow only your frontend domain
+    origin: ['https://univerlens.com', 'https://api.univerlens.com'],
     methods: ['GET', 'POST'],        // Specify the HTTP methods your API supports
     credentials: true                // Allow credentials (cookies, sessions, etc.)
 }));
