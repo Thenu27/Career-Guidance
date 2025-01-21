@@ -1,0 +1,26 @@
+.login-container{
+
+    width:500px;
+    height: 500px;
+    border: 3px solid black;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+
+}
+
+.home-container{
+    width:100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.login-btn{
+    width:150px;
+    height: 70px;
+    margin: auto;
+}
+.welcome-title{
+    text-align: center;
+}

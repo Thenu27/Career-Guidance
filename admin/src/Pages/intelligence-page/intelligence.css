@@ -1,0 +1,24 @@
+.intelligence-container{
+
+    border: 3px solid black;
+    display:flex ;
+    flex-direction: row;
+    gap:20px;
+    flex-wrap: wrap;
+    width: 700px;
+    height: auto;
+    padding: 20px;
+    margin: auto;
+    align-content: center;
+
+}
+
+.intelligence-title{
+    margin-top: 100px;
+}
+
+.option-intelligence-btn{
+    height: 100px;
+    width: 220px;
+    font-size: 20px;
+}

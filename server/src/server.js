@@ -6,7 +6,7 @@ const PORT = process.env.PORT|| 3000
 const helmet = require('helmet');
 const rateLimit = require("express-rate-limit");
 const xssClean = require('xss-clean');
-const csrf = require('csurf');
+// const csrf = require('csurf');
 const cookieParser = require('cookie-parser');
 require('dotenv').config({ path: require('path').resolve(__dirname, '..', '.env') });
 
@@ -20,14 +20,14 @@ const limiter = rateLimit({
 
 const session = require('express-session');
 
-app.use(cookieParser()); // Add this before csurf middleware
-const csrfProtection = csrf({ cookie: true });
+// app.use(cookieParser()); // Add this before csurf middleware
+// const csrfProtection = csrf({ cookie: true });
 
 
-app.get('/api/get-csrf-token', csrfProtection, (req, res) => {
-    res.cookie('XSRF-TOKEN', req.csrfToken()); // Send token as a cookie
-    res.json({ message: 'CSRF token set' });
-});
+// app.get('/api/get-csrf-token', csrfProtection, (req, res) => {
+//     res.cookie('XSRF-TOKEN', req.csrfToken()); // Send token as a cookie
+//     res.json({ message: 'CSRF token set' });
+// });
 
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
@@ -51,6 +51,7 @@ const db = knex({
         user: database_user,
         password: database_password,
         database: database_name,
+        port: process.env.DATABASE_PORT || 5432
     },
 });
 
@@ -65,6 +66,7 @@ app.use(
       contentSecurityPolicy: {
         directives: {
           defaultSrc: ["'self'"],
+          connectSrc: ["'self'", "https://api.univerlens.com"],
           scriptSrc: [
             "'self'",                      
             "https://cdn.jsdelivr.net",    
@@ -1127,6 +1129,6 @@ app.get("/*", (req, res) => {
 
 // Start the server and listen on the specified port
 app.listen(PORT, '0.0.0.0', () => {
-    console.log('Server is running on port 3000');
+    console.log(`Server is running on port ${PORT}`);
 });
 
