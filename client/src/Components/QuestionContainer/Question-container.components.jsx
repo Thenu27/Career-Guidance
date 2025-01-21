@@ -17,16 +17,22 @@ const QuestionContainer = () =>{
     const [questions, setquestions] = useState({});
 
     const fetchQuestions = async () => {
-        try{
-            const response = await axios.get(`${process.env.REACT_APP_URL}/api/Assesment`);
+        try {
+            const response = await axios.get(
+                `${process.env.REACT_APP_URL}/api/Assesment`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json', // Ensure minimal headers
+                    },
+                }
+            );
             console.log("Questions received from the backend", response.data);
-            setquestions(response.data);
-        }catch(error){
-            console.error("Error Fetching Questions",error)
+            setquestions(response.data); // Assuming setquestions is a state setter function
+        } catch (error) {
+            console.error("Error Fetching Questions", error);
         }
-
     };
-
+    
     useEffect(() => {
         
     
@@ -129,6 +135,7 @@ const QuestionContainer = () =>{
     const answerSubmitHandler=async()=>{
         try{
             const response = await axios.post(`${process.env.REACT_APP_URL}/api/Assesment`,
+                
                {questionAndAnswers},
                { // Configuration object
                 headers: { 'X-XSRF-TOKEN': csrfToken },
