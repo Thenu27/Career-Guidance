@@ -624,8 +624,7 @@ const getIntelligenceType = async (req) => {
                 req.session.quesidWithIntelligenceAndquestions[questionId] = {
                     question: result.question,
                     answer: req.session.questionAndAnswers[questionId].answer,
-                    // NOTE: The code references 'multiple_intelligence', but the SELECT does not include it.
-                    // Make sure 'multiple_intelligence' is in the DB or adjust logic accordingly.
+
                     intelligence: result.multiple_intelligence 
                 };
             }
@@ -1093,7 +1092,10 @@ req.session.save((err) => {
 
 // Endpoint to calculate the final results and return them to the client
 app.get('/api/calculation', async (req, res) => {
-    // Get intelligence type info for answered questions
+
+    try{
+
+            // Get intelligence type info for answered questions
     await getIntelligenceType(req);
     // Calculate scores for all intelligence types
     await calculatingTotalScoreForAll(req);
@@ -1110,6 +1112,11 @@ app.get('/api/calculation', async (req, res) => {
 
   console.log("FinalQuestionPercentages",req.session.FinalQuestionPercentages)
   await mapCareer(req);
+
+    }catch(error){
+        console.log("Error in calculating MIP",error)
+    }
+
   
 
   

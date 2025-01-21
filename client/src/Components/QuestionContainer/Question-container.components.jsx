@@ -29,6 +29,8 @@ const QuestionContainer = () =>{
             console.log("Questions received from the backend", response.data);
             setquestions(response.data); // Assuming setquestions is a state setter function
         } catch (error) {
+            console.log("URL",process.env.REACT_APP_URL)
+
             console.error("Error Fetching Questions", error);
         }
     };
@@ -37,7 +39,6 @@ const QuestionContainer = () =>{
         
     
         fetchQuestions();
-        console.log("URL",process.env.REACT_APP_URL)
     }, []); 
    
 
