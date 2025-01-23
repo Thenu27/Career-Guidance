@@ -1,19 +1,31 @@
 import {createContext, React,useState }from 'react'
 
-const intelligenceContext = createContext();
+export const IntelligenceContext = createContext({
+    SelectedIntelligencAdmin:null,
+    setSelectedIntelligenceAdmin:()=>null,
+    AdminQuestions:null,
+    setAdminQuestions:()=>null
 
-export const intellienceProvider =({children})=>{
-    const [SelectedIntelligence,setSelectedIntelligence] =useState();
+
+});
+
+export const IntellienceProvider =({children})=>{
+    const [SelectedIntelligenceAdmin,setSelectedIntelligenceAdmin] =useState([]);
+    const [AdminQuestions,setAdminQuestions]=useState([])
 
     return(
-        <intelligenceContext.Provider value={{
-             SelectedIntelligence ,
-             setSelectedIntelligence
+        <IntelligenceContext.Provider value={{
+             SelectedIntelligenceAdmin ,
+             setSelectedIntelligenceAdmin,
+             setAdminQuestions,
+             AdminQuestions
+
+
              
              
              
              }}>
         {children}
-        </intelligenceContext.Provider>
+        </IntelligenceContext.Provider>
     )
 }

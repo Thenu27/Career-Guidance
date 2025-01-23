@@ -11,12 +11,10 @@ const session = require('express-session');
 const connectRedis = require('connect-redis');
 const RedisStore = connectRedis(session);  // The older API usage
 const redis = require('redis');            
-// const csrf = require('csurf');
-const cookieParser = require('cookie-parser');
 require('dotenv').config({ path: require('path').resolve(__dirname, '..', '.env') });
 
 app.use(cors({
-    origin: ['https://univerlens.com', 'https://api.univerlens.com'],
+    origin: ['https://localhost:3001', 'https://localhost:5173'],
     methods: ['GET', 'POST'],        // Specify the HTTP methods your API supports
     credentials: true                // Allow credentials (cookies, sessions, etc.)
 }));
@@ -33,10 +31,7 @@ const redisClient = redis.createClient({
     port: 6379,
   });
 
-// redisClient.connect().then(() => {
-//     console.log("Connected to Redis!");
-//   }).catch(console.error);
-  
+
 
 
 
@@ -95,7 +90,7 @@ app.use(
       contentSecurityPolicy: {
         directives: {
           defaultSrc: ["'self'"],
-          connectSrc: ["'self'", "https://api.univerlens.com"],
+          connectSrc: ["'self'", "https://api.univerlens.com",'https://localhost:5173'],
           scriptSrc: [
             "'self'",                      
             "https://cdn.jsdelivr.net",    
@@ -1135,11 +1130,35 @@ app.get('/api/career', (req, res) => {
 
 
 
-console.log('DATABASE_CLIENT:', process.env.DATABASE_CLIENT);
-console.log('DB_HOST:', process.env.DB_HOST);
-console.log('DATABASE_USER:', process.env.DATABASE_USER);
-console.log('DATABASE_PASSWORD:', process.env.DATABASE_PASSWORD);
-console.log('DATABASE_NAME:', process.env.DATABASE_NAME);
+app.get('/admin',(req,res)=>{
+    res.send("Hi i am the admin")
+})
+
+let  IntelligenceIDAdmin
+
+app.post('/api/admin/intelligence',async(req,res)=>{
+    try{
+        const {SelectedIntelligenceAdmin}=req.body;
+        IntelligenceIDAdmin = SelectedIntelligenceAdmin
+        console.log("IntelligenceIDAdmin",IntelligenceIDAdmin)
+        const adminQuestions =  await fetchAdminQuestions(IntelligenceIDAdmin);
+
+        res.json(adminQuestions)
+    }catch(error){
+        console.error("SelectedIntelligenceAdmin",error)
+    }
+
+})
+
+
+
+const fetchAdminQuestions =async(value)=>{
+         const response = await db.select('question')
+                                          .from('questions')
+                                          .where('intelligence_id',value)  
+        return response                             
+    
+}
 
 
 
