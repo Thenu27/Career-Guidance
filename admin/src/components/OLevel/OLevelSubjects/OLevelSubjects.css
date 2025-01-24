@@ -1,0 +1,52 @@
+.subject-container{
+    width:700px;
+    height: 60vh;
+    border: 1px solid black;
+    margin: auto;
+    margin-top: 20px;
+    overflow: auto;
+
+
+}
+.subject{
+    width: 200px;
+    height: 100px;
+    margin: auto;
+}
+.subject-inner-container{
+    height: 80%;
+    width: 90%;
+    overflow: auto;
+
+    display: flex;
+    flex-direction:row;
+    flex-wrap: wrap;
+    gap:15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+  
+}
+
+.navigation-btn{
+    margin-top:15px;
+    display: flex;
+    flex-direction: row;
+    gap:5px;
+    width:400px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.olevel-title{
+    padding-top:40px;
+    font-size: 30px;
+}
+
+.switch-container{
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+
+}

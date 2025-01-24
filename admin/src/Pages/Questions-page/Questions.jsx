@@ -24,12 +24,14 @@ const Questions =()=>{
                 <h1>Question currently in Database</h1>
                 <div className='questions'>
                     {AdminQuestions.map(item=>{
-                        return <button className='question-btn'>{item.question}</button>
+                        return <input type='text' className='question-btn' value={item.question}/>
                     })}
                 </div>
 
             </div>
-            <button onClick={ goToIntlligencePage}className='login-btn'>Back</button>
+            <div className='navigation-btn'>
+                <button onClick={ goToIntlligencePage}className='login-btn'>Back</button>
+            </div>
         </div>
 
     )

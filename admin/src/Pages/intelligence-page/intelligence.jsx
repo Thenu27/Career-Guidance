@@ -36,7 +36,7 @@ const IntelligencePage =()=>{
 
     const sendIntelligenceToBE=async()=>{
         try{
-            const response = await axios.post('/api/admin/intelligence',{
+            const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/admin/intelligence`,{
                 SelectedIntelligenceAdmin
             });
             console.log(response.data);;
@@ -64,8 +64,11 @@ const IntelligencePage =()=>{
             <button onClick={()=>storeSelectedValue(8)} className='login-btn option-intelligence-btn' value={8}>Naturalistic</button>
 
         </div>
-        <button className='login-btn' onClick={goToSelectOptionPage}>Back</button>
-        <button className='login-btn' onClick={()=>{goToQuestionsPage(), sendIntelligenceToBE()}} >Next</button>
+        <div className='navigation-btn'>
+            <button className='login-btn' onClick={goToSelectOptionPage}>Back</button>
+            <button className='login-btn' onClick={()=>{goToQuestionsPage(), sendIntelligenceToBE()}} >Next</button>
+        </div>
+
 
         </div>
 

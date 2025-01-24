@@ -1,0 +1,16 @@
+.update-container{
+    width: 500px;
+    height: 500px;
+    border: 1px solid black;
+    margin: auto;
+}
+.update-intlligence-container{
+    height: 50px;
+    margin-top: 15px;
+
+}
+
+.intelligence-btn{
+    height: 100%;
+    width: 50%;
+}

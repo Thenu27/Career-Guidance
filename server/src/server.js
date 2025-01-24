@@ -1160,6 +1160,50 @@ const fetchAdminQuestions =async(value)=>{
     
 }
 
+const fetchAdminOLevelLocalSubjFromDB=async()=>{
+    try{
+        const response = await db.select('subjects','pathline','mi_1','mi_2','mi_3')
+        .from('olevel_local_subjects')
+        
+        return response;
+    }catch(error){
+        console.error("Error when Fetchin subjects from database",error)
+    }
+
+}
+
+const fetchAdminActivitiesFromDB=async()=>{
+    try{
+        const response = await db.select('main_activity')
+        .from('main_activities')
+        
+        return response;
+    }catch(error){
+        console.error("Error when Fetchin subjects from database",error)
+    }
+
+}
+
+app.get('/api/admin/olevel/subjects',async(req,res)=>{
+    try{
+        const localsubj = await fetchAdminOLevelLocalSubjFromDB();
+        console.log(localsubj);
+        res.json(localsubj)
+    }catch(error){
+        console.error("Error sending oLevel local subjects to Front end", error)
+    }
+})
+
+app.get('/api/admin/activities',async(req,res)=>{
+    try{
+        const activities = await fetchAdminActivitiesFromDB();
+        console.log(activities);
+        res.json(activities);
+    }catch(error){
+        console.error('Failed to fetch Main Activities from DB');
+    }
+
+})
 
 
 
