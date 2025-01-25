@@ -1205,6 +1205,19 @@ app.get('/api/admin/activities',async(req,res)=>{
 
 })
 
+const addNewQuestionToDB = ()=>{
+
+}
+
+app.post('/api/questions/add',async(req,res)=>{
+    try{
+        const {questionToBeAdded} = req.body
+        console.log(questionToBeAdded)
+
+    }catch(error){
+
+    }
+})
 
 
 
