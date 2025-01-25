@@ -8,7 +8,12 @@ export const OLevelContext = createContext({
     setOLevelIndex:()=>{},
     OLevelIndex:null,
     OLevelCoreLocal:null,
-    setOLevelCoreLocal:()=>{}
+    setOLevelCoreLocal:()=>{},
+    ShowlocalCoreOL:null,
+    setShowlocalCoreOL:()=>{},
+    OLevelBasketLocal:null,
+    setOLevelBasketLocal:()=>{}
+    
 })
 
 export const OLevelProvider =({children})=>{
@@ -17,6 +22,10 @@ export const OLevelProvider =({children})=>{
     const [OLevelLocalSubj,setOLevelLocalSubj] =useState([]);
     const [OLevelIndex,setOLevelIndex]=useState();
     const [OLevelCoreLocal,setOLevelCoreLocal] = useState([]);
+    const [ShowlocalCoreOL,setShowlocalCoreOL] = useState(true);
+    const [OLevelBasketLocal,setOLevelBasketLocal] = useState([]);
+
+
 
 
 
@@ -27,7 +36,11 @@ export const OLevelProvider =({children})=>{
         setOLevelLocalSubj,
         setOLevelIndex,OLevelIndex,
         OLevelCoreLocal,
-        setOLevelCoreLocal
+        setOLevelCoreLocal,
+        ShowlocalCoreOL,
+        setShowlocalCoreOL,
+        OLevelBasketLocal,
+        setOLevelBasketLocal
     }}>
         {children}
     </OLevelContext.Provider>

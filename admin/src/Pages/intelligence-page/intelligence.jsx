@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import './intelligence.css'
 import { useContext, useEffect } from 'react';
 import { IntelligenceContext } from '../../Context/intelligence.context';

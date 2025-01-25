@@ -1,10 +1,10 @@
 import './OLevelEdit.css';
-import { useContext ,useEffect} from 'react';
+import { useContext,useEffect,useState} from 'react';
 import { OLevelContext } from '../../../Context/OLevel.context';
 
 const OLevelEdit =()=>{
 
-    const {OLevelIndex,OLevelCoreLocal} = useContext(OLevelContext)
+    const {OLevelIndex,OLevelCoreLocal,ShowlocalCoreOL,OLevelBasketLocal} = useContext(OLevelContext)
 
     const IdentifyIntelligence = (value) => {
         switch (value) {
@@ -38,18 +38,26 @@ const OLevelEdit =()=>{
 
                 <div className='update-intlligence-container'>
                     
-                    <button className='intelligence-btn'>{IdentifyIntelligence(OLevelCoreLocal[OLevelIndex].mi_1)}</button>
+                    <button className='intelligence-btn'>{ShowlocalCoreOL?(IdentifyIntelligence(OLevelCoreLocal[OLevelIndex].mi_1)):(IdentifyIntelligence(OLevelBasketLocal[OLevelIndex].mi_1))}</button>
+                    <button className='mi_score'>{ShowlocalCoreOL?(OLevelCoreLocal[OLevelIndex].mi_percentage1):(OLevelBasketLocal[OLevelIndex].mi_percentage1)}</button>
                 </div>
 
                 <div className='update-intlligence-container'>
-                <button className='intelligence-btn'>{ IdentifyIntelligence(OLevelCoreLocal[OLevelIndex].mi_2)}</button>
+                <button className='intelligence-btn'>{ShowlocalCoreOL?(IdentifyIntelligence(OLevelCoreLocal[OLevelIndex].mi_2)):(IdentifyIntelligence(OLevelBasketLocal[OLevelIndex].mi_2))}</button>
+                <button className='mi_score'>{ShowlocalCoreOL?(OLevelCoreLocal[OLevelIndex].mi_percentage2):(OLevelBasketLocal[OLevelIndex].mi_percentage2)}</button>
 
-                </div>
-
+                </div> 
                 <div className='update-intlligence-container'>
-                <button className='intelligence-btn'>{ IdentifyIntelligence(OLevelCoreLocal[OLevelIndex].mi_3)}</button>
+                <button className='intelligence-btn'>{ShowlocalCoreOL?(IdentifyIntelligence(OLevelCoreLocal[OLevelIndex].mi_3)):(IdentifyIntelligence(OLevelBasketLocal[OLevelIndex].mi_3))}</button>
+                <button className='mi_score'>{ShowlocalCoreOL?(OLevelCoreLocal[OLevelIndex].mi_percentage3):(OLevelBasketLocal[OLevelIndex].mi_percentage3)}</button>
 
                 </div>
+                <div className='update-intlligence-container update-category-container'>
+                   <button className='intelligence-btn'>Category</button>
+                   <button className='mi_score category'>{ShowlocalCoreOL?(OLevelCoreLocal[OLevelIndex].pathline):(OLevelBasketLocal[OLevelIndex].pathline)}</button>
+                </div>
+
+
             </div>
         </div>
     )

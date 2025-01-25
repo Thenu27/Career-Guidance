@@ -1162,7 +1162,7 @@ const fetchAdminQuestions =async(value)=>{
 
 const fetchAdminOLevelLocalSubjFromDB=async()=>{
     try{
-        const response = await db.select('subjects','pathline','mi_1','mi_2','mi_3')
+        const response = await db.select('subjects','pathline','mi_1','mi_2','mi_3','mi_percentage1','mi_percentage2','mi_percentage3','pathline')
         .from('olevel_local_subjects')
         
         return response;

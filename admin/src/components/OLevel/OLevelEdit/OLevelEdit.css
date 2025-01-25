@@ -1,5 +1,5 @@
 .update-container{
-    width: 500px;
+    width: 600px;
     height: 500px;
     border: 1px solid black;
     margin: auto;
@@ -13,4 +13,16 @@
 .intelligence-btn{
     height: 100%;
     width: 50%;
+    margin-left: 5px;
+}
+
+.mi_score{
+    height: 100%;
+    margin-left: 150px;
+}
+.update-category-container{
+    margin-top: 100px;
+}
+.category{
+    width: 100px;
 }

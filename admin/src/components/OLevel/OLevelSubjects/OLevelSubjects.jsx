@@ -7,9 +7,18 @@ import { useNavigate } from 'react-router-dom';
 
 const OLevelSubject = ()=>{
 
-    const {OLevelLocalSubj,setOLevelLocalSubj,setOLevelIndex,OLevelIndex,OLevelCoreLocal,setOLevelCoreLocal} = useContext(OLevelContext);
-    const [OLevelBasketLocal,setOLevelBasketLocal] = useState([]);
-    const [ShowlocalCoreOL,setShowlocalCoreOL] = useState(true);
+    const {OLevelLocalSubj,
+        setOLevelLocalSubj,
+        setOLevelIndex,
+        OLevelIndex,
+        OLevelCoreLocal,
+        setOLevelCoreLocal,
+        ShowlocalCoreOL,
+        setShowlocalCoreOL,
+        setOLevelBasketLocal,
+        OLevelBasketLocal
+
+    } = useContext(OLevelContext);
 
     const navigate=useNavigate();
 

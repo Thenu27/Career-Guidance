@@ -1,9 +1,9 @@
 .questions-container{
     width:500px;
-    height: 500px;
+    height: 600px;
     border: 1px solid black;
     margin: auto;
-    margin-top: 70px;
+    margin-top: 40px;
 
 }
 .questions{
@@ -18,4 +18,12 @@
     display: inline-block;
     text-align: center;
 
+}
+
+.add-question-btn{
+    margin-left: 170px;
+}
+
+.add-question-container{
+    margin-top: 30px;
 }
