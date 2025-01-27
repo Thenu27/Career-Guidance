@@ -14,7 +14,7 @@
     margin: auto;
 }
 .subject-inner-container{
-    height: 80%;
+    height: 70%;
     width: 90%;
     overflow: auto;
 
@@ -40,7 +40,7 @@
 }
 
 .olevel-title{
-    padding-top:40px;
+    padding-top:0px;
     font-size: 30px;
 }
 
@@ -49,4 +49,21 @@
     margin-left: auto;
     margin-right: auto;
 
+}
+.ol-subject-container{
+    height: 560px;
+}
+
+.ol-header{
+    display: flex;
+    flex-direction: row;
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 60px;
+}
+
+.add-ol-subject-btn{
+    margin-top: 30px;
+    margin-left: 250px;
 }

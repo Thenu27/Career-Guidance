@@ -1172,6 +1172,19 @@ const fetchAdminOLevelLocalSubjFromDB=async()=>{
 
 }
 
+
+const fetchAdminALevelLocalSubjFromDB=async()=>{
+    try{
+        const response = await db.select('subject','stream','mi_1','mi_2','mi_3','mi_percentage1','mi_percentage2','mi_percentage3')
+        .from('alevel_local_subjects')
+        
+        return response;
+    }catch(error){
+        console.error("Error when Fetchin subjects from database",error)
+    }
+
+}
+
 const fetchAdminActivitiesFromDB=async()=>{
     try{
         const response = await db.select('main_activity')
@@ -1193,6 +1206,18 @@ app.get('/api/admin/olevel/subjects',async(req,res)=>{
         console.error("Error sending oLevel local subjects to Front end", error)
     }
 })
+
+
+app.get('/api/admin/advancedlevel/subjects',async(req,res)=>{
+    try{
+        const localsubj = await fetchAdminALevelLocalSubjFromDB();
+        console.log(localsubj);
+        res.json(localsubj)
+    }catch(error){
+        console.error("Error sending oLevel local subjects to Front end", error)
+    }
+})
+
 
 app.get('/api/admin/activities',async(req,res)=>{
     try{
@@ -1218,6 +1243,44 @@ app.post('/api/questions/add',async(req,res)=>{
 
     }
 })
+
+
+app.post('/api/ordinarylevel/add', async (req, res) => {
+    try {
+        const {
+            SelectedIntlligence01,
+            SelectedIntlligence02,
+            SelectedIntlligence03,
+            score01,
+            score02,
+            score03,
+            NewSubject
+
+        } = req.body;
+
+        // Log the received data for debugging
+        console.log("Received data:", {
+            SelectedIntlligence01,
+            SelectedIntlligence02,
+            SelectedIntlligence03,
+            score01,
+            score02,
+            score03,
+            NewSubject
+
+        });
+
+        // Here you would save the data to your database
+        // Example: await database.save({ ... });
+
+        res.status(200).json({ message: 'Data added successfully!' });
+    } catch (error) {
+        console.error("Error adding data:", error);
+        res.status(500).json({ message: 'An error occurred while adding the data.' });
+    }
+});
+
+
 
 
 

@@ -1,16 +1,16 @@
-import './OLevelStream.css';
+import './ALevelStream.css';
 import { useNavigate,useLocation } from 'react-router-dom';
 
 
-const OLevelStream=()=>{
+const ALevelStream=()=>{
     const navigate = useNavigate();
 
     const location =useLocation();
 
 
     const nextNavigation = () =>{
-        if(location.pathname==='/ordinarylevel'){
-            navigate('/ordinarylevel/subjects');
+        if(location.pathname==='/advancedlevel'){
+            navigate('/advancedlevel/subjects');
         }
     }
 
@@ -27,4 +27,4 @@ const OLevelStream=()=>{
     )
 }
 
-export default OLevelStream;
+export default ALevelStream;

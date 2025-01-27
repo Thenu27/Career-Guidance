@@ -11,7 +11,11 @@ import OLevelStream from './components/OLevel/OLevelStream/OLevelStream';
 import Activities from './Pages/Activities-page/Activities';
 import OLevelEdit from './components/OLevel/OLevelEdit/OLevelEdit';
 import QuestionUpdate from './components/Questions/QuestionUpdate/QuestionUpdate';
-import CurrentQuestions from './components/Questions/CurrentQuestions/CurrentQuestions'
+import CurrentQuestions from './components/Questions/CurrentQuestions/CurrentQuestions';
+import OLevelAdd from './components/OLevel/OLevelAdd/OLevelAdd';
+import ALevelPage from './Pages/ALevelPage/ALevelPage';
+import ALevelStream from './components/ALevel/ALevelStream/ALevelStream';
+import ALevelSubjects from './components/ALevel/ALevelSubjects/ALevelSubjects'
 
 function App() {
 
@@ -32,11 +36,18 @@ function App() {
 
       <Route path='/ordinarylevel' element={<OLevelPage/>}>
          <Route index element={<OLevelStream />} />
+         <Route path="add" element={<OLevelAdd/>}/>
          <Route path="subjects" element={<OLevelSubject />} />
          <Route path="update" element={<OLevelEdit/>} />
 
       </Route>
       <Route path='/activities' element={<Activities/>}/>
+      
+      <Route path='/advancedlevel' element={<ALevelPage/>}>
+        <Route index element={<ALevelStream/>}/>
+        <Route path='subjects' element={<ALevelSubjects/>}/>
+      </Route>
+
 
     </Routes>
    </div>

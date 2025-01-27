@@ -6,13 +6,17 @@ import {BrowserRouter} from 'react-router-dom';
 import { IntelligenceProvider } from './Context/intelligence.context.jsx';
 import { OLevelProvider } from './Context/OLevel.context.jsx';
 import { QuestionProvider } from './Context/Question.context.jsx';
+import { ALevelProvider } from './Context/ALevel.context.jsx';
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <IntelligenceProvider>
         <OLevelProvider>
           <QuestionProvider>
-            <App />
+            <ALevelProvider>
+              <App />
+            </ALevelProvider>
           </QuestionProvider>
         </OLevelProvider>
       </IntelligenceProvider>

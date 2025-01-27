@@ -19,20 +19,17 @@ const OLevelPage = ()=>{
         navigate('/ordinarylevel/subjects')
        }else if(location.pathname==='/ordinarylevel/subjects'){
         navigate('/ordinarylevel')
+       }else if(location.pathname==='/ordinarylevel/add'){
+        navigate('/ordinarylevel/subjects')
        }
     }
 
-    const nextNavigation = () =>{
-        if(ShowOLStream){
-            navigate('/ordinarylevel/subjects');
-        }
-    }
+
     return(
         <div>
             <Outlet/>
             <div className='navigation-btn'>
                 <button onClick={backNavigation} className='login-btn'>Back</button>
-                <button onClick={nextNavigation} className='login-btn'>Next</button>
             </div>
 
         </div>
