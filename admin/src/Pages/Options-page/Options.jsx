@@ -26,19 +26,7 @@ const Options=()=>{
         navigate('/advancedlevel')
     }
 
-    const fetchALSubjectsLocal =async()=>{
-        try{
-            const response = await axios.get(`${import.meta.env.VITE_APP_URL}/api/admin/advancedlevel/subjects`);
-            console.log(response.data);
-            setALevelLocalSubjects(response.data);
-        }catch(error){
-            console.error("Error Fetching AL subjects",error);
-       }
-    }
 
-    useEffect(()=>{
-        fetchALSubjectsLocal();
-    },[])
 
     return(
         <div className='options-page'>

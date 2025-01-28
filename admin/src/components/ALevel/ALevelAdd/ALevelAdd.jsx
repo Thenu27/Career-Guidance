@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import './OLevelAdd.css';
+import './ALevelAdd.css';
 import axios from 'axios';
 
-const OLevelAdd = () => {
+const ALevelAdd = () => {
 
     const [NewSubject,setNewSubject] = useState()
 
@@ -28,7 +28,7 @@ const OLevelAdd = () => {
 
     const sendToDataToBE = async () => {
         try {
-            const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/admin/ordinarylevel/add`, {
+            const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/admin/advancedlevel/add`, {
                 SelectedIntlligence01,
                 SelectedIntlligence02,
                 SelectedIntlligence03,
@@ -175,4 +175,4 @@ const OLevelAdd = () => {
     );
 };
 
-export default OLevelAdd;
+export default ALevelAdd;

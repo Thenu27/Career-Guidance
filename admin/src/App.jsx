@@ -14,11 +14,13 @@ import QuestionUpdate from './components/Questions/QuestionUpdate/QuestionUpdate
 import CurrentQuestions from './components/Questions/CurrentQuestions/CurrentQuestions';
 import OLevelAdd from './components/OLevel/OLevelAdd/OLevelAdd';
 import ALevelPage from './Pages/ALevelPage/ALevelPage';
+import ALevelPath from './components/ALevel/ALevelPath/ALevelPath';
+import ALevelSubjects from './components/ALevel/ALevelSubjects/ALevelSubjects';
 import ALevelStream from './components/ALevel/ALevelStream/ALevelStream';
-import ALevelSubjects from './components/ALevel/ALevelSubjects/ALevelSubjects'
+import ALevelAdd from './components/ALevel/ALevelAdd/ALevelAdd';
+
 
 function App() {
-
 
   return (
    <div>
@@ -44,11 +46,11 @@ function App() {
       <Route path='/activities' element={<Activities/>}/>
       
       <Route path='/advancedlevel' element={<ALevelPage/>}>
-        <Route index element={<ALevelStream/>}/>
+        <Route index element={<ALevelPath/>}/>
+        <Route path='add' element={<ALevelAdd/>}/>
+        <Route path='stream' element={<ALevelStream/>}/>
         <Route path='subjects' element={<ALevelSubjects/>}/>
       </Route>
-
-
     </Routes>
    </div>
   )

@@ -1245,7 +1245,43 @@ app.post('/api/questions/add',async(req,res)=>{
 })
 
 
-app.post('/api/ordinarylevel/add', async (req, res) => {
+app.post('/api/admin/ordinarylevel/add', async (req, res) => {
+    try {
+        const {
+            SelectedIntlligence01,
+            SelectedIntlligence02,
+            SelectedIntlligence03,
+            score01,
+            score02,
+            score03,
+            NewSubject
+
+        } = req.body;
+
+        // Log the received data for debugging
+        console.log("Received data:", {
+            SelectedIntlligence01,
+            SelectedIntlligence02,
+            SelectedIntlligence03,
+            score01,
+            score02,
+            score03,
+            NewSubject
+
+        });
+
+        // Here you would save the data to your database
+        // Example: await database.save({ ... });
+
+        res.status(200).json({ message: 'Data added successfully!' });
+    } catch (error) {
+        console.error("Error adding data:", error);
+        res.status(500).json({ message: 'An error occurred while adding the data.' });
+    }
+});
+
+
+app.post('/api/admin/advancedlevel/add', async (req, res) => {
     try {
         const {
             SelectedIntlligence01,
