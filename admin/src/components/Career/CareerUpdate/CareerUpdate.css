@@ -1,0 +1,42 @@
+.career-update-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    margin: auto;
+    border: 1px solid ;
+    width:700px;
+    height: 550px;
+}
+.career-update-bnt-container{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.career-update-bnt{
+    width: 240px;
+    height: 50px;
+}
+
+.career-update-bnt2{
+    width: 140px;
+    height: 50px;
+    margin-left: 20px;
+}
+
+.career-update-label{
+    font-size: 20px;
+    text-align: center;
+    align-content: center;
+}
+.career-update-title-container{
+    width: 700px;
+    margin: auto;
+}
+.career-update-title{
+    text-align: center;
+}

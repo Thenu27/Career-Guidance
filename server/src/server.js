@@ -1317,12 +1317,123 @@ app.post('/api/admin/advancedlevel/add', async (req, res) => {
 });
 
 
+const fetchAdminCareersFieldsFromDB=async()=>{
+    try{
+        const response = await db("career_table").distinct("field").orderBy("field");
+        return response                 
+    }catch(error){
+        console.log("Error when Fetching Career fields from Database",error);
+        throw error;
+    }
+}
+
+
+app.get('/api/admin/careerfield',async(req,res)=>{
+    try{
+        const careersfields = await fetchAdminCareersFieldsFromDB();
+        res.json(careersfields);
+    }catch (error) {
+        console.error("Error getting Careers from Database", error);
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
+    }
+})
+
+const fetchAdminCareer=async(field)=>{
+    try{
+        const response = await db.select('career').from('career_table').where('field',field);
+        console.log("Admin Career",response)
+        return response
+    }catch(error){
+        console.log("Error when fetching Careers from DB",error);
+        throw error;
+    }
+}
+
+
+app.post('/api/admin/career', async (req, res) => {
+    try {
+        const {SelectedField} =req.body;
+        const career = await fetchAdminCareer(SelectedField);
+        
+        if (!career || career.length === 0) {
+            return res.status(404).json({ message: "No careers found" });
+        }
+
+        res.json(career);
+    } catch (error) {
+        console.error("Error fetching careers from the database:", error);
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
+    }
+});
+
+
+
+app.post('/api/admin/career/add', async (req, res) => {
+    try {
+        const {
+            SelectedCareerIntlligence01,
+            SelectedCareerIntlligence02,
+            SelectedCareerIntlligence03,
+            CareerScore01,
+            CareerScore02,
+            CareerScore03,
+            NewCareer
+
+        } = req.body;
+
+        // Log the received data for debugging
+        console.log("Received data:", {
+            SelectedCareerIntlligence01,
+            SelectedCareerIntlligence02,
+            SelectedCareerIntlligence03,
+            CareerScore01,
+            CareerScore02,
+            CareerScore03,
+            NewCareer
+
+        });
+
+        // Here you would save the data to your database
+        // Example: await database.save({ ... });
+
+        res.status(200).json({ message: 'Data added successfully!' });
+    } catch (error) {
+        console.error("Error adding data:", error);
+        res.status(500).json({ message: 'An error occurred while adding the data.' });
+    }
+});
+
+
+const fetchAdminCareerSpecificDetails=async(career)=>{
+    try{
+        const response = await db.select('*').from('career_table').where('career',career);
+        console.log("Admin Career",response)
+        return response
+    }catch(error){
+        console.log("Error when fetching Careers Details from DB",error);
+        throw error;
+    }
+}
+
+
+app.post('/api/admin/career/update',async(req,res)=>{
+    try{
+        const {SelectedCareer} =req.body;
+        const activities = await fetchAdminCareerSpecificDetails(SelectedCareer);
+        res.json(activities);
+    }catch(error){
+        console.error('Failed to fetch Main Activities from DB');
+    }
+
+})
+
 
 
 
 app.use(express.static(path.join(__dirname, "..", "public"), {
     extensions: ['html', 'css', 'jsx','js'],
   }));
+  
   
 // Catch-all route to serve frontend on any other path
 app.get("/*", (req, res) => {

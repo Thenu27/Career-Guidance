@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom'
 const Signin=()=>{
 
     const navigate = useNavigate();
+
     const goToSelectOptionPage =()=>{
         navigate('/option')
-    }
+    };
+    
     return(
         <div className='Singin-page'>
            <div className='Singin-container'>

@@ -1,10 +1,10 @@
-import './App.css'
-import Singin from './components/Signin/Signin'
-import Home from './Pages/Home page/Home'
-import {Route,Routes} from 'react-router-dom'
-import Options from './Pages/Options-page/Options'
+import './App.css';
+import Singin from './components/Signin/Signin';
+import Home from './Pages/Home page/Home';
+import {Route,Routes} from 'react-router-dom';
+import Options from './Pages/Options-page/Options';
 import IntelligencePage from './Pages/intelligence-page/intelligence';
-import QuestionPage from './Pages/Questions-page/QuestionPage'
+import QuestionPage from './Pages/Questions-page/QuestionPage';
 import OLevelPage from './Pages/OLevelPage/OLevelPage';
 import OLevelSubject from './components/OLevel/OLevelSubjects/OLevelSubjects';
 import OLevelStream from './components/OLevel/OLevelStream/OLevelStream';
@@ -18,12 +18,17 @@ import ALevelPath from './components/ALevel/ALevelPath/ALevelPath';
 import ALevelSubjects from './components/ALevel/ALevelSubjects/ALevelSubjects';
 import ALevelStream from './components/ALevel/ALevelStream/ALevelStream';
 import ALevelAdd from './components/ALevel/ALevelAdd/ALevelAdd';
-
+import CareerPage from './Pages/CareerPage/CareerPage';
+import CareerField from './components/Career/CareerFields/CareerField';
+import Career from './components/Career/Careers/Career';
+import CareerAdd from './components/Career/CareerAdd/CareerAdd';
+import CareerUpdate from './components/Career/CareerUpdate/CareerUpdate';
 
 function App() {
 
   return (
    <div>
+    
     <Routes>
       <Route path='/admin' element={<Home/>}/>
       <Route path='/login' element={<Singin/>}/>
@@ -51,9 +56,18 @@ function App() {
         <Route path='stream' element={<ALevelStream/>}/>
         <Route path='subjects' element={<ALevelSubjects/>}/>
       </Route>
-    </Routes>
+
+      <Route path='/admin/careerfield' element={<CareerPage/>}>
+        <Route index element={<CareerField/>}/>
+        <Route path='career' element={<Career/>}/>
+        <Route path='add' element={<CareerAdd/>}/>
+        <Route path='update' element={<CareerUpdate/>}/>
+      </Route>
+      
+     </Routes>
+
    </div>
   )
 }
 
-export default App
+export default App;
