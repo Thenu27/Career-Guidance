@@ -38,6 +38,8 @@ const ALevelPage =()=>{
             navigate('/advancedlevel/subjects');
         }else if(location.pathname==='/advancedlevel/stream'){
             navigate('/advancedlevel')
+        }else if(location.pathname==='/advancedlevel/update'){
+            navigate('/advancedlevel/stream')
         }
      }
     return(

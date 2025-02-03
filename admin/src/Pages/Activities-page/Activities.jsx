@@ -1,45 +1,29 @@
 import { useEffect, useState } from 'react';
 import './Activities.css';
 import axios from 'axios';
-// import { useContext, useState } from 'react'
-// import { useNavigate } from 'react-router-dom'
+import { Outlet } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 
 
 const Activities = ()=>{
 
-    // const navigate = useNavigate();
-    const [Activities,setActivities] = useState([])
+    const navigate=useNavigate();
+    const location =useLocation();
 
-    const fetchActivities=async()=>{
-        try{
-            const response = await axios.get(`${import.meta.env.VITE_APP_URL}/api/admin/activities`);
-            setActivities(response.data);
-        }catch(error){
-            console.log("Error Fetching Activities from Database",error)
+    const backNavigation=()=>{
+        if(location.pathname ==='/activities'){
+         navigate('/option');
         }
-
-        }
-
-    useEffect(()=>{
-        fetchActivities();
-    },[])    
-    useEffect(()=>{
-        console.log("Activties",Activities)
-    },[Activities])        
+     }
 
     return(
         <div>
-            <h1 className='welcome-title olevel-title '>Main Activites in the Database</h1>
-            <div className='subject-container'>
-                <div className='subject-inner-container'>
-
-                {Activities.map(item=>{
-                   return <button className='subject'>{item.main_activity}</button>
-                })}
-                </div>
+            <Outlet/>
+            <div className='navigation-btn'>
+                <button onClick={backNavigation} className='login-btn '>Back</button>
             </div>
         </div>
     )
 }
 
-export default Activities
+export default Activities;

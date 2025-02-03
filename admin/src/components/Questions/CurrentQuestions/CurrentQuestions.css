@@ -27,3 +27,13 @@
 .add-question-container{
     margin-top: 30px;
 }
+
+.question-inner-container{
+    display:flex ;
+    flex-direction: row-reverse;
+    padding-right: 20px;
+}
+
+.delete-icon{
+    cursor: pointer;
+}

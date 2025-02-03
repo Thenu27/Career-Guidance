@@ -12,7 +12,9 @@ export const ALevelContext = createContext({
     ShowTechnology:null,
     setShowTechnology:()=>{},
     ShowPhysicalScience:null,
-    setShowPhysicalScience:()=>{}
+    setShowPhysicalScience:()=>{},
+    SelectedSubject:null,
+    setSelectedSubject:()=>{}
 })
 
 export const ALevelProvider =({children})=>{
@@ -23,6 +25,7 @@ export const ALevelProvider =({children})=>{
    const [ShowCommerce,setShowCommerce] =useState(false);
    const [ShowArts,setShowArts] =useState(false);
    const [ShowTechnology,setShowTechnology] =useState(false);
+   const [SelectedSubject,setSelectedSubject] =useState(null);
    
 
     return <ALevelContext.Provider value={{
@@ -37,7 +40,9 @@ export const ALevelProvider =({children})=>{
         ShowArts,
         setShowArts,
         ShowTechnology,
-        setShowTechnology
+        setShowTechnology,
+        SelectedSubject,
+        setSelectedSubject
 
     }}>
         {children}

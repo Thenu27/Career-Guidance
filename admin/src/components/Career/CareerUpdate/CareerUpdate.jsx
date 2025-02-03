@@ -2,6 +2,8 @@ import './CareerUpdate.css';
 import { useContext, useEffect } from 'react';
 import { CareerContext } from '../../../Context/Career.context';
 import axios from 'axios';
+import DeleteIcon from '../../../assets/icon.svg';
+
 
 
 const CareerUpdate = () => {
@@ -56,6 +58,34 @@ const CareerUpdate = () => {
                 return 'Unknown';
         }
     };
+
+    const sendCareerToDelete = async (career,career_id) => {
+        try {
+            const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/admin/career/delete`, {
+                career,career_id
+            });
+
+            if (response.status === 200 && response.data === 'Career Deleted') {
+                alert('Career deleted successfully');
+            } else {
+                alert('Failed to delete career. Please try again.');
+            }
+
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error when deleting career', error);
+            alert('An error occurred while deleting the career. Please try again later.');
+        }
+    }
+
+    const handleDelete = async (career,career_id) => {
+        if(window.confirm('Do you want to delete this career?\n\nThis action cannot be undone.')){
+            await sendCareerToDelete(career,career_id);
+        }else{
+            return
+        }
+        
+    }
 
     return (
         <>
@@ -155,7 +185,20 @@ const CareerUpdate = () => {
                     </button>
                 </div>
 
-               
+                <div className='ol-delete-container'>
+                    <button
+                        onClick={()=>{handleDelete(SelectedCareerDetails[0].career,SelectedCareerDetails[0].career_id)}}
+                        className='login-btn ol-delete-btn'
+                    >
+                        Delete
+                    </button>
+                    <img
+                        onClick={()=>{handleDelete(SelectedCareerDetails[0].career,SelectedCareerDetails[0].career_id)}}
+                        className='ol-delete-icon'
+                        src={DeleteIcon}
+                        alt="Delete icon"
+                    />
+                </div>
             </div>
         </>
     );

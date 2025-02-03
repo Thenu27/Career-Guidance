@@ -5,6 +5,13 @@ import { useNavigate } from 'react-router-dom';
 
 const ALevelSubjects =()=>{
     const navigate = useNavigate();
+
+    const goToALUpdate=()=>{
+      navigate('/advancedlevel/update')
+    }
+
+    const {SelectedSubject,setSelectedSubject} = useContext(ALevelContext);
+
     const { ALevelLocalSubjects,
             ShowArts,
             ShowPhysicalScience,
@@ -35,6 +42,11 @@ const ALevelSubjects =()=>{
     const goToAddPage=()=>{
         navigate('/advancedlevel/add')
     }
+
+    const handleSubjectClick=(subject_id)=>{
+      setSelectedSubject(subject_id);
+    }
+
       
 
     useEffect(()=>{
@@ -54,7 +66,7 @@ const ALevelSubjects =()=>{
         <div className='subject-container ol-subject-container'>
             <div className='subject-inner-container'>
                 {ShowSubjects().map((subj,index)=>{
-                    return<button onClick={()=>{SelectedButton(index);}} className='subject' key={index}>{subj.subject}</button>
+                    return<button onClick={()=>{goToALUpdate(); handleSubjectClick(subj.subject_id)}} className='subject' key={index}>{subj.subject}</button>
                 })}
             </div>
             <div className='add-ol-subject-container'>

@@ -1,0 +1,65 @@
+.alevel-update-container{
+    min-height: 400px;
+    width: 500px;
+    border: 1px solid black;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.alevel-update-title{
+    margin: auto;
+    text-align: center;
+
+
+}
+
+.alevel-update-title-container{
+    width: 500px;
+    margin: auto;
+    margin-top: 100px;
+    margin-bottom: 20px;
+
+}
+
+.alevel-update-input-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    justify-content: space-evenly;
+    margin: auto;
+    margin-top: 40px;
+}
+
+.alevel-update-input-subject{
+    width: 200px;
+    height: 30px;
+}
+
+.alevel-update-intelligene{
+    font-size: 16px;
+    min-width: 200px;
+    min-height: 40px;
+}
+
+.alevel-update-score{
+    min-width: 100px;
+    min-height: 40px;
+}
+
+.alevel-update-btn-container{
+    width: 200px;
+    height: 40px;
+    margin: auto;
+    margin-top: 20px;
+
+}
+
+.alevel-update-btn{
+    height: 100%;
+    width: 100%;
+}
+
+.alevel-update-container{
+}

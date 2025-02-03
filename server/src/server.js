@@ -1162,7 +1162,7 @@ const fetchAdminQuestions =async(value)=>{
 
 const fetchAdminOLevelLocalSubjFromDB=async()=>{
     try{
-        const response = await db.select('subjects','pathline','mi_1','mi_2','mi_3','mi_percentage1','mi_percentage2','mi_percentage3','pathline')
+        const response = await db.select('subject_id','subjects','pathline','mi_1','mi_2','mi_3','mi_percentage1','mi_percentage2','mi_percentage3','pathline')
         .from('olevel_local_subjects')
         
         return response;
@@ -1175,7 +1175,7 @@ const fetchAdminOLevelLocalSubjFromDB=async()=>{
 
 const fetchAdminALevelLocalSubjFromDB=async()=>{
     try{
-        const response = await db.select('subject','stream','mi_1','mi_2','mi_3','mi_percentage1','mi_percentage2','mi_percentage3')
+        const response = await db.select('subject_id','subject','stream','mi_1','mi_2','mi_3','mi_percentage1','mi_percentage2','mi_percentage3')
         .from('alevel_local_subjects')
         
         return response;
@@ -1424,10 +1424,95 @@ app.post('/api/admin/career/update',async(req,res)=>{
     }catch(error){
         console.error('Failed to fetch Main Activities from DB');
     }
+})
+
+const deleteAdminQuestionFRomDB=async(question)=>{
+    try{
+        const response = await db('questions').where('question',question).del();
+        return response;
+    }catch(error){
+        console.error("Error deleting question",error)
+    }
+}
+
+app.post('/api/admin/question/delete',(req,res)=>{
+    try{
+        const {question} = req.body;
+        console.log(question);
+        // deleteAdminQuestionFRomDB(question);
+        res.send('Question Deleted')
+    }catch(error){
+        console.error("Error deleting question",error)
+    }
 
 })
 
 
+const deleteAdminOLSubjectFromDB=async(subject_id)=>{
+    try{
+        const response = await db('olevel_local_subjects').where('subject_id',subject_id).del();
+        return response;
+    }catch(error){
+        console.error("Error deleting question",error)
+    }
+}
+
+
+
+
+
+app.post('/api/admin/olevel/delete',async(req,res)=>{
+    try{
+        const {subject_id,subjects} = req.body;
+        console.log("subjects",subjects);
+        console.log("subject_id",subject_id);
+
+        // deleteAdminOLSubjectFromDB(subject_id)
+        res.send('Subject Deleted')
+    }catch(error){
+        console.error("Error deleting question",error)
+    }
+})
+
+
+app.post('/api/admin/career/delete',async(req,res)=>{
+    try{
+        const {career,career_id} = req.body;
+        console.log("career",career);
+        console.log("career",career_id);
+
+        res.send('Career Deleted')
+    }catch(error){
+        console.error("Error deleting question",error)
+    }
+})
+
+
+
+
+const deleteAdminALSubjectFromDB=async(subject_id)=>{
+    try{
+        const response = await db('alevel_local_subjects').where('subject_id',subject_id).del();
+        return response;
+    }catch(error){
+        console.error("Error deleting question",error)
+    }
+}
+
+
+
+app.post('/api/admin/alevel/delete',async(req,res)=>{
+    try{
+        const {subject_id,subject} = req.body;
+        console.log("subjects",subject);
+        console.log("subject_id",subject_id);
+
+        // deleteAdminOLSubjectFromDB(subject_id)
+        res.send('Subject Deleted')
+    }catch(error){
+        console.error("Error deleting question",error)
+    }
+})
 
 
 app.use(express.static(path.join(__dirname, "..", "public"), {

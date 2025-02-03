@@ -23,6 +23,8 @@ import CareerField from './components/Career/CareerFields/CareerField';
 import Career from './components/Career/Careers/Career';
 import CareerAdd from './components/Career/CareerAdd/CareerAdd';
 import CareerUpdate from './components/Career/CareerUpdate/CareerUpdate';
+import ALevelUpdate from './components/ALevel/ALevelUpdate/ALevelUpdate';
+import MainActivities from './components/Activities/Main-Activities/MainActivities';
 
 function App() {
 
@@ -48,13 +50,18 @@ function App() {
          <Route path="update" element={<OLevelEdit/>} />
 
       </Route>
-      <Route path='/activities' element={<Activities/>}/>
+      <Route path='/activities' element={<Activities/>}>
+        <Route index element={<MainActivities/>} />
+
+      </Route>
       
       <Route path='/advancedlevel' element={<ALevelPage/>}>
         <Route index element={<ALevelPath/>}/>
         <Route path='add' element={<ALevelAdd/>}/>
         <Route path='stream' element={<ALevelStream/>}/>
         <Route path='subjects' element={<ALevelSubjects/>}/>
+        <Route path='update' element={<ALevelUpdate/>}/>
+
       </Route>
 
       <Route path='/admin/careerfield' element={<CareerPage/>}>
