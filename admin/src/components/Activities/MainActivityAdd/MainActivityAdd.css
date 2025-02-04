@@ -1,0 +1,35 @@
+.add-main-activity-container{
+    min-height: 500px;
+    width: 600px;
+    border: 1px solid black;
+    margin: auto;
+}
+
+.add-main-activity-title-container{
+    width: 300px;
+    margin: auto;
+}
+
+.add-main-activity-title{
+    text-align: center;
+}
+
+.add-main-activity-input-label{
+    font-size: 22px;
+}
+
+.add-main-activity-input{
+    height: 40px;
+    width: 250px;
+}
+
+.add-main-activity-input-container{
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    margin-top: 20px;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly;
+}
+

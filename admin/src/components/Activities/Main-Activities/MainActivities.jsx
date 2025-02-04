@@ -1,13 +1,21 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 // import { useContext, useState } from 'react'
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
 const MainActivities = ()=>{
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [Activities,setActivities] = useState([])
+
+    const goToAddMainActivity=()=>{
+        navigate('/activities/add-main-activity')
+    }
+
+    const goToSubActivities=()=>{
+        navigate('/activities/sub-activities')
+    }
 
     const fetchActivities=async()=>{
         try{
@@ -33,12 +41,12 @@ const MainActivities = ()=>{
                 <div className='subject-inner-container'>
 
                 {Activities.map(item=>{
-                   return <button className='subject'>{item.main_activity}</button>
+                   return <button onClick={goToSubActivities} className='subject'>{item.main_activity}</button>
                 })}
                 </div>
 
                 <div className='add-activity-btn-container'>
-                    <button className='login-btn add-activity-btn'>Add Activity Field</button>
+                    <button onClick={goToAddMainActivity} className='login-btn add-activity-btn'>Add Activity Field</button>
                 </div>
 
             </div>

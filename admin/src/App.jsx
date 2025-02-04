@@ -25,6 +25,8 @@ import CareerAdd from './components/Career/CareerAdd/CareerAdd';
 import CareerUpdate from './components/Career/CareerUpdate/CareerUpdate';
 import ALevelUpdate from './components/ALevel/ALevelUpdate/ALevelUpdate';
 import MainActivities from './components/Activities/Main-Activities/MainActivities';
+import MainActivityAdd from './components/Activities/MainActivityAdd/MainActivityAdd';
+import SubActivities from './components/Activities/SubActivites/SubActivites';
 
 function App() {
 
@@ -52,6 +54,8 @@ function App() {
       </Route>
       <Route path='/activities' element={<Activities/>}>
         <Route index element={<MainActivities/>} />
+        <Route path='add-main-activity' element={<MainActivityAdd/>}/>
+        <Route path='sub-activities' element={<SubActivities/>}/>
 
       </Route>
       

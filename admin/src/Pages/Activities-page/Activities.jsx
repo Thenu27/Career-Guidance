@@ -13,6 +13,15 @@ const Activities = ()=>{
     const backNavigation=()=>{
         if(location.pathname ==='/activities'){
          navigate('/option');
+         return;
+        }
+        if(location.pathname ==='/activities/add-main-activity'){
+            navigate('/activities');
+            return;
+        }
+        if(location.pathname ==='/activities/sub-activities'){
+            navigate('/activities');
+            return;
         }
      }
 
