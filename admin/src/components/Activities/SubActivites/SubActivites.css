@@ -9,8 +9,28 @@
 }
 
 .sub-activities-container{
-    min-height: 500px;
-    width: 500px;
+    height: 500px;
+    width: 650px;
+    padding: 20px;
     border: 1px solid black;
     margin: auto;
+}
+
+
+
+.sub-activities-inner-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: auto;
+    gap: 20px;
+    height: 70%;
+    width: 90%;
+    margin: auto;
+}
+
+.sub-activity-btn{
+    height: 80px;
+    width: 250px;
+    font-size: 20px;
 }

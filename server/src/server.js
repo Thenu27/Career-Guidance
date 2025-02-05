@@ -60,6 +60,7 @@ app.use((req, res, next) => {
 
 
 const knex = require('knex');
+const e = require("express");
 
 // Load database credentials from environment variables
 const database_password = process.env.DATABASE_PASSWORD;
@@ -1514,6 +1515,87 @@ app.post('/api/admin/alevel/delete',async(req,res)=>{
     }
 })
 
+const fetchAdminSubActivities=async(selectedMainActivity)=>{
+    const response = await db.select('*').from('sub_activities').where('main_activity',selectedMainActivity);
+    return response
+}
+
+
+app.post('/api/admin/subactivities',async(req,res)=>{
+    try{
+        const {SelectedMainActivity} =req.body;
+        const subActivities= await  fetchAdminSubActivities(SelectedMainActivity);
+        res.json(subActivities);
+    }catch(err){
+        console.log('Error fetching admin subactivities',err)
+    }
+})
+
+const fetchAdminSubActivityDetails=async(selectedSubActivity)=>{
+    const response = await db.select('*').from('sub_activities').where('sub_activity',selectedSubActivity);
+    return response
+}
+
+app.post('/api/admin/subactivity/details', async (req, res) => {
+    try {
+      const { SelectedSubActivity } = req.body;
+      if (!SelectedSubActivity) {
+        return res.status(400).json({
+          error: 'SelectedSubActivity is required',
+        });
+      }
+      const data = await fetchAdminSubActivityDetails(SelectedSubActivity);
+  
+      if (!data) {
+        return res.status(404).json({
+          error: `No details found for the selected sub-activity: ${SelectedSubActivity}`,
+        });
+      }
+      res.json(data);
+    } catch (error) {
+      console.error('Error fetching sub-activity details:', error);
+      res.status(500).json({
+        error: 'An internal server error occurred while fetching sub-activity details',
+      });
+    }
+  });
+  
+  app.post('/api/admin/subactivity/add', async (req, res) => {
+    try {
+        const {
+            SelectedIntlligence01,
+            SelectedIntlligence02,
+            SelectedIntlligence03,
+            score01,
+            score02,
+            score03,
+            NewSubActivity
+
+        } = req.body;
+
+        // Log the received data for debugging
+        console.log("Received data:", {
+            SelectedIntlligence01,
+            SelectedIntlligence02,
+            SelectedIntlligence03,
+            score01,
+            score02,
+            score03,
+            NewSubActivity
+
+        });
+
+        // Here you would save the data to your database
+        // Example: await database.save({ ... });
+
+        res.status(200).json({ message: 'Data added successfully!' });
+    } catch (error) {
+        console.error("Error adding data:", error);
+        res.status(500).json({ message: 'An error occurred while adding the data.' });
+    }
+});
+
+
 
 app.use(express.static(path.join(__dirname, "..", "public"), {
     extensions: ['html', 'css', 'jsx','js'],
@@ -1529,17 +1611,6 @@ app.get("/*", (req, res) => {
         res.status(500).json({ error: "Failed to serve frontend." });
     }
 });
-
-
-
-
-
-
-
-
-
-
-
 
 
 

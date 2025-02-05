@@ -1,0 +1,43 @@
+.add-sub-activity-title-container{
+width:300px;
+margin: auto;
+
+}
+
+.add-sub-activity-title{
+    text-align: center;
+}
+
+.sub-activity-add-container{
+    height: 500px;
+    width: 600px;
+    border: 1px solid black;
+    margin: auto;
+}
+.add-sub-activity-input-container{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.add-sub-activity-label{
+    font-size: 24px;
+}
+
+.add-sub-activity-input{
+    width: 300px;
+    height: 40px;
+}
+
+.add-sub-activity-intelligence{
+    width: 300px;
+    height: 50px;
+}
+
+.add-sub-activity-score{
+    width: 100px;
+    height: 50px;
+}

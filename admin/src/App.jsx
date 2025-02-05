@@ -27,6 +27,9 @@ import ALevelUpdate from './components/ALevel/ALevelUpdate/ALevelUpdate';
 import MainActivities from './components/Activities/Main-Activities/MainActivities';
 import MainActivityAdd from './components/Activities/MainActivityAdd/MainActivityAdd';
 import SubActivities from './components/Activities/SubActivites/SubActivites';
+import SubActivityEdit from './components/Activities/SubActivityEdit/SubActivityEdit';
+import SubActivitiesAdd from './components/Activities/SubActivitiesAdd/SubActivitiesAdd';
+
 
 function App() {
 
@@ -56,6 +59,8 @@ function App() {
         <Route index element={<MainActivities/>} />
         <Route path='add-main-activity' element={<MainActivityAdd/>}/>
         <Route path='sub-activities' element={<SubActivities/>}/>
+        <Route path='sub-activity-update' element={<SubActivityEdit/>}/>
+        <Route path='sub-activity-add' element={<SubActivitiesAdd/>}/>
 
       </Route>
       

@@ -4,7 +4,6 @@ import axios from 'axios';
 import { Outlet } from 'react-router-dom';
 import { useNavigate,useLocation } from 'react-router-dom';
 
-
 const Activities = ()=>{
 
     const navigate=useNavigate();
@@ -21,6 +20,14 @@ const Activities = ()=>{
         }
         if(location.pathname ==='/activities/sub-activities'){
             navigate('/activities');
+            return;
+        }
+        if(location.pathname ==='/activities/sub-activity-update'){
+            navigate('/activities/sub-activities');
+            return;
+        }
+        if(location.pathname ==='/activities/sub-activity-add'){
+            navigate('/activities/sub-activities');
             return;
         }
      }

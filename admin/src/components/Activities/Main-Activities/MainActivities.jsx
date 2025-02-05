@@ -1,13 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-// import { useContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import {ActivitiesContext} from '../../../Context/Activities.context'
 
 
 const MainActivities = ()=>{
 
     const navigate = useNavigate();
-    const [Activities,setActivities] = useState([])
+
+    const {SelectedMainActivity,setSelectedMainActivity} = useContext( ActivitiesContext)
+
+
+    const [Activities,setActivities] = useState([]);
 
     const goToAddMainActivity=()=>{
         navigate('/activities/add-main-activity')
@@ -16,6 +20,16 @@ const MainActivities = ()=>{
     const goToSubActivities=()=>{
         navigate('/activities/sub-activities')
     }
+
+
+    const handleClick=(value)=>{
+        setSelectedMainActivity(value)
+    }
+
+    useEffect(()=>{
+        console.log("SelectedMainActivity",SelectedMainActivity)
+    },[SelectedMainActivity])
+
 
     const fetchActivities=async()=>{
         try{
@@ -41,7 +55,7 @@ const MainActivities = ()=>{
                 <div className='subject-inner-container'>
 
                 {Activities.map(item=>{
-                   return <button onClick={goToSubActivities} className='subject'>{item.main_activity}</button>
+                   return <button onClick={()=>{goToSubActivities();handleClick(item.main_activity)}}  className='subject'>{item.main_activity}</button>
                 })}
                 </div>
 
