@@ -2,6 +2,7 @@ import axios from 'axios';
 import './SubActivityEdit.css'
 import React, { useContext, useEffect, useState } from 'react';
 import { ActivitiesContext } from '../../../Context/Activities.context';
+import DeleteIcon from '../../../assets/icon.svg'
 
 const SubActivityEdit = () => {
 
@@ -46,6 +47,41 @@ const SubActivityEdit = () => {
             }
         }
     };
+
+    const sendSubjectToDelete = async (activity_id) => {
+        try {
+            // Make the POST request to delete the subject using subject_id and subject name
+            const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/admin/sub-activity/delete`, {
+                activity_id
+            });
+
+            // Check if the deletion was successful and notify the user
+            if (response.status === 200 && response.data === 'Sub Activity Deleted') {
+                alert('Subject deleted successfully');
+                console.log('Response:', response.data);
+            } else {
+                alert('Failed to delete subject. Please try again.');
+            }
+        } catch (error) {
+            // Handle errors, displaying server-provided messages if available
+            if (error.response && error.response.data) {
+                console.error('Server Error:', error.response.data);
+                alert(`Error: ${error.response.data}`);
+            } else {
+                console.error('Error when deleting subject:', error);
+                alert('An error occurred while deleting the subject. Please try again later.');
+            }
+        }
+    };
+
+    // Handle the delete confirmation and trigger the delete request
+    const handleDelete = async (activity_id) => {
+        // Ask for user confirmation before proceeding with deletion
+        if (window.confirm('Do you want to delete this subject?\n\nThis action cannot be undone.')) {
+            await sendSubjectToDelete(activity_id);
+        }
+    };
+
     
     useEffect(()=>{
         fetchSubActivityDetails();
@@ -81,6 +117,21 @@ const SubActivityEdit = () => {
                 <div className='add-sub-activity-input-container'>
                     <button className='add-sub-activity-intelligence'>{IdentifyIntelligence(SubActivityData[0]?.mi_3)}</button>
                     <button className='add-sub-activity-score'>{SubActivityData[0]?.mi_percentage3}</button>
+                </div>
+                <div className='ol-delete-container'>
+                    <button
+                        className='login-btn ol-delete-btn'
+                        onClick={()=>handleDelete(SubActivityData[0]?.sub_activity_id)}
+                    >
+                        Delete
+                    </button>
+                    <img
+                        onClick={()=>handleDelete(SubActivityData[0]?.sub_activity_id)}
+
+                        className='ol-delete-icon'
+                        src={DeleteIcon}
+                        alt="Delete icon"
+                    />
                 </div>
           </div>
         </>

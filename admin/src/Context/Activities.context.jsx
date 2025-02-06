@@ -5,7 +5,7 @@ export const ActivitiesContext = createContext({
     SelectedMainActivity:null,
     setSelectedMainActivity:()=>{},
     SubActivities:null,
-    SubActivities:()=>{},
+    setSubActivities:()=>{},
     SelectedSubActivity:null,
     setSelectedSubActivity:()=>{},
     SubActivityData:null,

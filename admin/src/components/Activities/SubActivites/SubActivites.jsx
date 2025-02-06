@@ -3,6 +3,7 @@ import './SubActivites.css';
 import { ActivitiesContext } from '../../../Context/Activities.context';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import DeleteIcon from '../../../assets/icon.svg';
 
 const SubActivities = () => {
   const { SelectedMainActivity, SubActivities, setSubActivities,SelectedSubActivity,setSelectedSubActivity } = useContext(ActivitiesContext);
@@ -50,6 +51,37 @@ const SubActivities = () => {
     navigate('/activities/sub-activity-add')
   }
 
+  
+  const sendSubjectToDelete = async (activity) => {
+    try {
+        // Make the POST request to delete the subject using subject_id and subject name
+        const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/admin/main-activity/delete`, {
+            activity
+        });
+
+        // Check if the deletion was successful and notify the user
+        if (response.status === 200 && response.data === 'Main Activity Deleted') {
+            alert('Main Activity deleted successfully');
+            console.log('Response:', response.data);
+        } else {
+            alert('Failed to delete Main Activity. Please try again.');
+        }
+    } catch (error) {
+        // Handle errors, displaying server-provided messages if available
+        if (error.response && error.response.data) {
+            console.error('Server Error:', error.response.data);
+            alert(`Error: ${error.response.data}`);
+        } else {
+            console.error('Error when deleting Main Activity:', error);
+            alert('An error occurred while deleting Main Activity. Please try again later.');
+        }
+    }
+};
+
+  const handleDelete=async(activity)=>{
+    await sendSubjectToDelete(activity);
+  }
+
   return (
     <>
       <div className='sub-acitvities-title-container'>
@@ -70,6 +102,20 @@ const SubActivities = () => {
         <div className='add-activity-btn-container'>
           <button onClick={goToSubActivityAdd} className='login-btn add-activity-btn'>Add Sub Activity</button>
         </div>
+                        <div className='ol-delete-container'>
+                            <button
+                                className='login-btn ol-delete-btn'
+                                onClick={()=>{handleDelete(SelectedMainActivity)}}
+                            >
+                                Delete
+                            </button>
+                            <img
+                                onClick={()=>{handleDelete(SelectedMainActivity)}}
+                                className='ol-delete-icon'
+                                src={DeleteIcon}
+                                alt="Delete icon"
+                            />
+                        </div>
       </div>
     </>
   );

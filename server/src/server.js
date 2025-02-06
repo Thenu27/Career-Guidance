@@ -1491,15 +1491,15 @@ app.post('/api/admin/career/delete',async(req,res)=>{
 
 
 
-const deleteAdminALSubjectFromDB=async(subject_id)=>{
+const deleteAdminDataFromDB=async(table_name,column_name,subject_id
+)=>{
     try{
-        const response = await db('alevel_local_subjects').where('subject_id',subject_id).del();
+        const response = await db(table_name).where(column_name,subject_id).del();
         return response;
     }catch(error){
         console.error("Error deleting question",error)
     }
 }
-
 
 
 app.post('/api/admin/alevel/delete',async(req,res)=>{
@@ -1508,7 +1508,7 @@ app.post('/api/admin/alevel/delete',async(req,res)=>{
         console.log("subjects",subject);
         console.log("subject_id",subject_id);
 
-        // deleteAdminOLSubjectFromDB(subject_id)
+        // deleteAdminOLSubjectFromDB('alevel_local_subjects','subject_id',subject_id)
         res.send('Subject Deleted')
     }catch(error){
         console.error("Error deleting question",error)
@@ -1596,6 +1596,44 @@ app.post('/api/admin/subactivity/details', async (req, res) => {
 });
 
 
+app.post('/api/admin/sub-activity/delete', async (req, res) => {
+    try {
+        const { activity_id } = req.body;
+        
+        if (!activity_id) {
+            return res.status(400).json({ error: 'activity_id is required' });
+        }
+
+        console.log('Sub-Activity to be deleted:',activity_id)
+
+        // await deleteAdminDataFromDB('sub_activities', 'sub_activity', activity_id);
+        res.status(200).send('Sub Activity Deleted');
+    } catch (error) {
+        console.error('Error deleting sub-activity:', error);
+        res.status(500).json({ error: 'Failed to delete sub-activity' });
+    }
+});
+
+app.post('/api/admin/main-activity/delete', async (req, res) => {
+    try {
+        const { activity } = req.body;
+        
+        if (!activity) {
+            return res.status(400).json({ error: 'activity is required' });
+        }
+
+        console.log('Main Activity to be deleted: ',activity)
+
+        // await deleteAdminDataFromDB('main_activities', 'main_activity', activity);
+        res.status(200).send('Main Activity Deleted');
+    } catch (error) {
+        console.error('Error deleting Main activity:', error);
+        res.status(500).json({ error: 'Failed to delete Main activity' });
+    }
+});
+
+
+
 
 app.use(express.static(path.join(__dirname, "..", "public"), {
     extensions: ['html', 'css', 'jsx','js'],
@@ -1611,9 +1649,6 @@ app.get("/*", (req, res) => {
         res.status(500).json({ error: "Failed to serve frontend." });
     }
 });
-
-
-
 
 
 
