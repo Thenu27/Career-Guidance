@@ -1154,7 +1154,7 @@ app.post('/api/admin/intelligence',async(req,res)=>{
 
 
 const fetchAdminQuestions =async(value)=>{
-         const response = await db.select('question')
+         const response = await db.select('*')
                                           .from('questions')
                                           .where('intelligence_id',value)  
         return response                             
@@ -1244,6 +1244,24 @@ app.post('/api/questions/add',async(req,res)=>{
 
     }
 })
+
+app.post('/api/admin/question/update', async (req, res) => {
+    try {
+
+        const { questionId, updatedQuestion } = req.body;
+        console.log('questionId:', questionId);
+        console.log('updatedQuestion:', updatedQuestion);
+        res.status(200).send('Question updated successfully');
+
+    } catch (error) {
+        console.error('Error updating question:', error);
+
+        res.status(500).json({
+            message: 'Failed to update the question',
+            error: error.message || 'Unknown error',
+        });
+    }
+});
 
 
 app.post('/api/admin/ordinarylevel/add', async (req, res) => {

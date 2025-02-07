@@ -1,5 +1,5 @@
 import './OLevelEdit.css';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { OLevelContext } from '../../../Context/OLevel.context';
 import axios from 'axios';
 import DeleteIcon from '../../../assets/icon.svg';
@@ -7,6 +7,8 @@ import DeleteIcon from '../../../assets/icon.svg';
 const OLevelEdit = () => {
     // Extracting values from the OLevelContext for use in the component
     const { OLevelIndex, OLevelCoreLocal, ShowlocalCoreOL, OLevelBasketLocal } = useContext(OLevelContext);
+
+    const [DoubledClicked,setDoubledClicked] = useState(true)
 
     // Determine which subject data to display based on the ShowlocalCoreOL flag
     const activeSubject = ShowlocalCoreOL ? OLevelCoreLocal[OLevelIndex] : OLevelBasketLocal[OLevelIndex];
@@ -73,11 +75,14 @@ const OLevelEdit = () => {
                 {/* Dynamically rendering intelligence details using map to reduce repetitive code */}
                 {[1, 2, 3].map((index) => (
                     <div className='update-intlligence-container' key={index}>
-                        {/* Button displaying the type of intelligence */}
+                        {DoubledClicked?
+                        <input type='text' value={IdentifyIntelligence(activeSubject[`mi_${index}`])}/>
+                        :
                         <button className='intelligence-btn'>
                             {IdentifyIntelligence(activeSubject[`mi_${index}`])}
                         </button>
-                        {/* Button displaying the intelligence percentage */}
+                            }
+
                         <button className='mi_score'>
                             {activeSubject[`mi_percentage${index}`]}
                         </button>

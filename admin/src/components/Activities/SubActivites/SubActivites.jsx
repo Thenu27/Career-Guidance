@@ -61,7 +61,7 @@ const SubActivities = () => {
 
         // Check if the deletion was successful and notify the user
         if (response.status === 200 && response.data === 'Main Activity Deleted') {
-            alert('Main Activity deleted successfully');
+            alert(`${activity} - Activity deleted successfully`);
             console.log('Response:', response.data);
         } else {
             alert('Failed to delete Main Activity. Please try again.');
@@ -79,7 +79,11 @@ const SubActivities = () => {
 };
 
   const handleDelete=async(activity)=>{
-    await sendSubjectToDelete(activity);
+    if(window.confirm(`Do You want to Delete - ${activity}\n This cannot be undone`)){
+      await sendSubjectToDelete(activity);
+    }else{
+      return
+    }
   }
 
   return (
