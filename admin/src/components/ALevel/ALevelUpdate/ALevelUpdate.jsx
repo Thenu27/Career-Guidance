@@ -8,25 +8,61 @@ const ALevelUpdate = () => {
 
 const {SelectedSubject,ALevelLocalSubjects} = useContext(ALevelContext);
 const [SelectedSubjectData,setSelectedSubjectData] = useState();
-       useEffect(()=>{
-            console.log("SelectedSubject",SelectedSubject);
-            getSelectedSubjectData(SelectedSubject);
+
+const IdentifyIntelligence = (value) => {
+    switch (value) {
+        case 1: return 'Logical-Mathematical';
+        case 2: return 'Linguistic';
+        case 3: return 'Spatial';
+        case 4: return 'Musical';
+        case 5: return 'Bodily-Kinesthetic';
+        case 6: return 'Interpersonal';
+        case 7: return 'Intrapersonal';
+        case 8: return 'Naturalistic';
+        case 9: return 'Existential';
+        default: return 'Unknown';
+    }
+};
+
+const [Edit,setEdit] = useState(false);
+
+const [Score1,setScore1] = useState(SelectedSubjectData?IdentifyIntelligence(SelectedSubjectData.mi_percentage1):'No Subject Selected')
+const [Score2,setScore2] = useState(SelectedSubjectData?IdentifyIntelligence(SelectedSubjectData.mi_percentage2):'No Subject Selected')
+const [Score3,setScore3] = useState(SelectedSubjectData?IdentifyIntelligence(SelectedSubjectData.mi_percentage3):'No Subject Selected')
+
+const [Intelligence1,setIntelligence1] = useState(SelectedSubjectData?IdentifyIntelligence(SelectedSubjectData.mi_1):'No Data selected')
+const [Intelligence2,setIntelligence2] = useState(SelectedSubjectData?IdentifyIntelligence(SelectedSubjectData.mi_2):'No Data selected');
+const [Intelligence3,setIntelligence3] = useState(SelectedSubjectData?IdentifyIntelligence(SelectedSubjectData.mi_3):'No Data selected');
+
+const [ALSubject,setALSubject] = useState(SelectedSubjectData?(SelectedSubjectData.subject):'No Data selected');
+
+useEffect(()=>{
+    console.log('Intelligence 01',Intelligence1)
+},[SelectedSubjectData])
+const handleEditClick = ()=>{
+    setEdit(true);
+}
+
+useEffect(()=>{
+    setIntelligence1(SelectedSubjectData?IdentifyIntelligence(SelectedSubjectData.mi_1):'No Subject Selected')
+    setIntelligence2(SelectedSubjectData?IdentifyIntelligence(SelectedSubjectData.mi_2):'No Subject Selected')
+    setIntelligence3(SelectedSubjectData?IdentifyIntelligence(SelectedSubjectData.mi_3):'No Subject Selected')
+
+    setScore1(SelectedSubjectData?(SelectedSubjectData.mi_percentage1):'No Subject Selected')
+    setScore2(SelectedSubjectData?(SelectedSubjectData.mi_percentage2):'No Subject Selected')
+    setScore3(SelectedSubjectData?(SelectedSubjectData.mi_percentage3):'No Subject Selected')
+
+    setALSubject(SelectedSubjectData?(SelectedSubjectData.subject):'No Data selected')
+
+
+},[SelectedSubjectData])
+
+useEffect(()=>{
+   console.log("SelectedSubject",SelectedSubject);
+            getSelectedSubjectData(SelectedSubject)
         },[])
 
-        const IdentifyIntelligence = (value) => {
-            switch (value) {
-                case 1: return 'Logical-Mathematical';
-                case 2: return 'Linguistic';
-                case 3: return 'Spatial';
-                case 4: return 'Musical';
-                case 5: return 'Bodily-Kinesthetic';
-                case 6: return 'Interpersonal';
-                case 7: return 'Intrapersonal';
-                case 8: return 'Naturalistic';
-                case 9: return 'Existential';
-                default: return 'Unknown';
-            }
-        };
+
           
        const getSelectedSubjectData =(selected_subject_id)=>{
               const subjectData = ALevelLocalSubjects.find(item=>item.subject_id === selected_subject_id);
@@ -73,7 +109,101 @@ const [SelectedSubjectData,setSelectedSubjectData] = useState();
             }
         };
 
-    return (
+
+        const handleOnChange=(value,scoreIndex)=>{
+            if(scoreIndex===1){
+                setScore1(value)
+                return
+            }
+            if(scoreIndex===2){
+                setScore2(value)
+                return
+            }
+            if(scoreIndex===3){
+                setScore3(value)
+                return
+            }
+            if(scoreIndex===0){
+                setALSubject(value)
+            }
+        }
+        const sendToBackEnd=async()=>{
+            try{
+                const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/admin/a-level/update`,{
+                    Intelligence1,
+                    Intelligence2,
+                    Intelligence3,
+                    Score1,
+                    Score2,
+                    Score3,
+                    ALSubject
+                });
+                if(response.data==='Subject Updated Succesfully'){
+                    alert('Subject Updated Succesfully')
+                }
+            }catch(error){
+                console.log(error)
+            }
+    
+        }
+
+        const updateSubject=async()=>{
+            if(ALSubject===''){
+                alert('Please Enter A Valid Subject Name');
+                return
+            }
+            if(Score1===''){
+                alert('Please Enter A Valid MI Score 1');
+                return
+            }
+            if(Score2===''){
+                alert('Please Enter A Valid MI Score 2');
+                return
+            }
+            if(Score3===''){
+                alert('Please Enter A Valid MI Score 3');
+                return
+            }
+            if(window.confirm('Are you sure you want to update the subject \n This Action Cannot Be Undone')){
+                await sendToBackEnd();
+                return
+            }
+            return
+        }
+
+        const dropdownData=(index)=>{
+            return(
+                <ul className="dd-menu">
+                    <li onClick={()=>handleIntelligenceChange('Logical-Mathematical Intelligence',index)}>Logical-Mathematical Intelligence</li>
+                    <li onClick={()=>handleIntelligenceChange('Linguistic Intelligence',index)}>Linguistic Intelligence</li>
+                    <li onClick={()=>handleIntelligenceChange('Spatial Intelligence',index)}>Spatial Intelligence</li>
+                    <li onClick={()=>handleIntelligenceChange('Musical Intelligence',index)}>Musical Intelligence</li>                                     
+                    <li onClick={()=>handleIntelligenceChange('Bodily-Kinesthetic Intelligence',index)}>Bodily-Kinesthetic Intelligence</li>
+                    <li onClick={()=>handleIntelligenceChange('Interpersonal Intelligence',index)}>Interpersonal Intelligence</li>
+                    <li onClick={()=>handleIntelligenceChange('Intrapersonal Intelligence',index)}>Intrapersonal Intelligence</li>
+                    <li onClick={()=>handleIntelligenceChange('Naturalistic Intelligence',index)}>Naturalistic Intelligence</li>
+                    <li onClick={()=>handleIntelligenceChange('Existential Intelligence',index)}>Existential Intelligence</li>
+    
+                </ul>
+            )
+        }
+
+const handleIntelligenceChange=(value,index)=>{
+     if(index===1){
+        setIntelligence1(value)
+        return
+     }
+     if(index===2){
+        setIntelligence2(value)
+        return
+     }
+     if(index===3){
+        setIntelligence3(value)
+        return
+     }
+}
+
+return (
         <>
         <div className='alevel-update-title-container'>
             <h1 className='alevel-update-title'>Update Subject</h1>
@@ -82,27 +212,65 @@ const [SelectedSubjectData,setSelectedSubjectData] = useState();
                 <div className='alevel-update-form'>
                     <div className='alevel-update-input-container'>
                         <label className='alevel-update-subject-label'>Subject Name</label>
-                        <input type='text'     value={SelectedSubjectData?.subject || 'Loading...'}  className='alevel-update-input-subject'/>
+                        {Edit?<input onChange={(e)=>handleOnChange(e.target.value,0)} type='text' value={ALSubject}  className='alevel-update-input-subject'/>:
+                        <button className='alevel-update-intelligene'>{ALSubject}</button>}
                     </div>
 
                     <div className='alevel-update-input-container'>
-                            <button  className='alevel-update-intelligene'>{IdentifyIntelligence(SelectedSubjectData?.mi_1) || 'Loading...'}</button>
-                            <button  className='alevel-update-score'>{SelectedSubjectData?.mi_percentage1 || 'Loading...'}</button>
-                    </div>
+                        {Edit? <label className="dropdown">
+                                <div class="dd-button intelligence-input">
+                                {Intelligence1}
+                                </div>
 
-                    <div className='alevel-update-input-container'>
-                            <button  className='alevel-update-intelligene'>{IdentifyIntelligence(SelectedSubjectData?.mi_2)||'Loading..'}</button>
-                            <button  className='alevel-update-score'>{SelectedSubjectData?.mi_percentage2 || 'Loading...'}</button>
-                    </div>
+                                <input type="checkbox" className="dd-input" id="test"/>
 
-                    
-                    <div className='alevel-update-input-container'>
-                            <button  className='alevel-update-intelligene'>{IdentifyIntelligence(SelectedSubjectData?.mi_3)||'Loading...'}</button>
-                            <button  className='alevel-update-score'>{SelectedSubjectData?.mi_percentage3 || 'Loading...'}</button>
-                    </div>
+                                {dropdownData(1)}
+
+                                </label>                   :
+                        <button  className='alevel-update-intelligene'>{Intelligence1}</button>}
+                        
+                        {Edit?<input type='number' onChange={(e)=>handleOnChange(e.target.value,1)}  className='alevel-update-score'  value={Score1}/>:
+                         <button   className='alevel-update-score'>{Score1}</button>}
+                     </div>
+
+                     <div className='alevel-update-input-container'>
+                        {Edit? <label className="dropdown">
+                                <div class="dd-button intelligence-input">
+                                {Intelligence2}
+                                </div>
+
+                                <input type="checkbox" className="dd-input" id="test"/>
+
+                                {dropdownData(2)}
+
+                                </label>                   :
+                        <button  className='alevel-update-intelligene'>{Intelligence2}</button>}
+                        
+                        {Edit?<input onChange={(e)=>handleOnChange(e.target.value,2)}  className='alevel-update-score' type='text' value={Score2}/>:
+                         <button type='number'  className='alevel-update-score'>{Score2}</button>}
+                     </div>
+
+                     <div className='alevel-update-input-container'>
+                        {Edit? <label className="dropdown">
+                                <div class="dd-button intelligence-input">
+                                {Intelligence3}
+                                </div>
+
+                                <input type="checkbox" className="dd-input" id="test"/>
+
+                                {dropdownData(3)}
+
+                                </label>                   :
+                        <button  className='alevel-update-intelligene'>{Intelligence3}</button>}
+                        
+                        {Edit?<input onChange={(e)=>handleOnChange(e.target.value,3)}  className='alevel-update-score'type='number' value={Score3}/>:
+                         <button   className='alevel-update-score'>{Score3}</button>}
+                     </div>
+
 
                     <div className='alevel-update-btn-container'>
-                        <button className='alevel-update-btn'>Update</button>
+                        {Edit?<button onClick={()=>{handleEditClick(),updateSubject()}} className='alevel-update-btn'>Update</button>:
+                        <button onClick={handleEditClick} className='alevel-update-btn'>Edit</button>}
                     </div>
 
                 <div className='ol-delete-container'>

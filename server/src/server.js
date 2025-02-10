@@ -1300,6 +1300,51 @@ app.post('/api/admin/ordinarylevel/add', async (req, res) => {
 });
 
 
+app.post('/api/admin/o-level/update',(req,res)=>{
+    const {Intelligence1,
+           Intelligence2,
+           Intelligence3,
+           Score1,
+           Score2,
+           Score3,
+           OLSubject
+    } = req.body;
+
+    console.log('Intelligence1:',Intelligence1)
+    console.log('Intelligence2:',Intelligence2)
+    console.log('Intelligence3:',Intelligence3)
+    console.log('Score1:',Score1);
+    console.log('Score2:',Score2);
+    console.log('Score3:',Score3);
+    console.log('O-level-Subject:',OLSubject)
+
+    res.status(200).send('Subject Updated Succesfully')
+
+})
+
+
+app.post('/api/admin/a-level/update',(req,res)=>{
+    const {Intelligence1,
+           Intelligence2,
+           Intelligence3,
+           Score1,
+           Score2,
+           Score3,
+           ALSubject
+    } = req.body;
+
+    console.log('Intelligence1:',Intelligence1)
+    console.log('Intelligence2:',Intelligence2)
+    console.log('Intelligence3:',Intelligence3)
+    console.log('Score1:',Score1);
+    console.log('Score2:',Score2);
+    console.log('Score3:',Score3);
+    console.log('A-level-Subject:',ALSubject)
+
+    res.status(200).send('Subject Updated Succesfully')
+
+})
+
 app.post('/api/admin/advancedlevel/add', async (req, res) => {
     try {
         const {
