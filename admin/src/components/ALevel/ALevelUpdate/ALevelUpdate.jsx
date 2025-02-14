@@ -39,6 +39,7 @@ const [ALSubject,setALSubject] = useState(SelectedSubjectData?(SelectedSubjectDa
 useEffect(()=>{
     console.log('Intelligence 01',Intelligence1)
 },[SelectedSubjectData])
+
 const handleEditClick = ()=>{
     setEdit(true);
 }

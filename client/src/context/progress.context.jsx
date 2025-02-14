@@ -1,47 +1,57 @@
 const { createContext, useState } = require("react");
 
-export const ProgressContext= createContext({
+// Creating ProgressContext with default values
+export const ProgressContext = createContext({
+    intelligenceScore: null,
+    setintelligenceScore: () => null,
 
-    intelligenceScore:null,
-    setintelligenceScore:()=>null,
+    hidden: "",
+    sethidden: () => null,
 
-    hidden:"",
-    sethidden:()=>null,
-
-    vistedPages:{
-        home:false,
-        assessment:false,
-        option:false
-        },
-        
+    visitedPages: {
+        home: false,
+        assessment: false,
+        option: false
+    },
+    
     setVisitedPages: () => null,    
 });
 
-export const ProgressProvider = ({children}) =>{
-    const [hidden,sethidden]=useState("");
-    // const [page,setPage]=useState("");
-    // const [isVisited,setisVisited] = useState();
+// ProgressProvider component to manage and provide context values
+export const ProgressProvider = ({ children }) => {
+    // State to store a hidden field value (if needed)
+    const [hidden, sethidden] = useState("");
 
-    const [intelligenceScore,setintelligenceScore]=useState([]);
-    
+    // State to track intelligence scores
+    const [intelligenceScore, setintelligenceScore] = useState([]);
+
+    // State to track the pages visited by the user
     const [visitedPages, setVisitedPages] = useState({
         home: false,
         assessment: false,
-        option:false,
-        extraCurricular:false,
-        OLevelPage:false,
-        ALevelPage:false,
-        CalculatingPage:false,
-        IntelligencePage:false,
-        CareerFieldPage:false,
-        CareersPage:false
-      });
+        option: false,
+        extraCurricular: false,
+        OLevelPage: false,
+        ALevelPage: false,
+        CalculatingPage: false,
+        IntelligencePage: false,
+        CareerFieldPage: false,
+        CareersPage: false
+    });
 
-    const value = {hidden,sethidden,visitedPages,setVisitedPages,intelligenceScore,setintelligenceScore};
+    // Defining the values to be provided by the context
+    const value = {
+        hidden,
+        sethidden,
+        visitedPages,
+        setVisitedPages,
+        intelligenceScore,
+        setintelligenceScore
+    };
 
-    return(
+    return (
         <ProgressContext.Provider value={value}>
             {children}
         </ProgressContext.Provider>
-    )
-}
+    );
+};

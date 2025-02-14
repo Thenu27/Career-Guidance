@@ -7,7 +7,7 @@
     margin: auto;
     border: 1px solid ;
     width:700px;
-    min-height: 550px;
+    min-height: 650px;
 }
 .career-update-bnt-container{
     display: flex;
@@ -39,4 +39,26 @@
 }
 .career-update-title{
     text-align: center;
+}
+
+.career-edit-btn{
+    width: 150px;
+    height: 50px;
+}
+
+.career-edit-delete-container{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    min-width: 400px;
+}
+
+.career-delete-container{
+    margin: 0%;
+}
+
+.career-name-btn{
+    width: 400px;
+   padding: 0px 10px;
+
 }

@@ -106,7 +106,7 @@ const SubActivities = () => {
         <div className='add-activity-btn-container'>
           <button onClick={goToSubActivityAdd} className='login-btn add-activity-btn'>Add Sub Activity</button>
         </div>
-                        <div className='ol-delete-container'>
+                        <div className='ol-delete-container sub-activities-delete-container'>
                             <button
                                 className='login-btn ol-delete-btn'
                                 onClick={()=>{handleDelete(SelectedMainActivity)}}

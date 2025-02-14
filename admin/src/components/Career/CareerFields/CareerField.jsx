@@ -33,8 +33,10 @@ const CareerField =()=>{
         fetchCareerField();
     },[])
 
+    
+
     useEffect(()=>{
-        console.log("SelectedField",SelectedField)
+        localStorage.setItem('SelectedField',SelectedField)
     },[SelectedField])
 
  

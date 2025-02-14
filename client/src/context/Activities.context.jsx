@@ -1,95 +1,85 @@
 const { createContext, useState } = require("react");
 
-export const ActivitiesContext= createContext({
-    goToECListPage:()=>null,
-    goToSubActivities:()=>null,
-    goToExtraLevelsPage:()=>null,
-    showExtraLevelsPage:null,
-    setshowExtraLevelsPage:()=>null,
-    // showSubActivities:null,
-    // setshowSubActivities:()=>null,
-    SelectedExtraActivities:null,
-    setSelectedExtraActivities:()=>null,
-    ActivitiesObj:null,
-    setActivitiesObj:()=>null,
-    ActivitiesWithSub:null,
-    setActivitiesWithSub:()=>null,
-    ShowActivitiesSub:null,
-    setShowActivitiesSub:()=>null,
-    SubActivities:null,
-    setSubActivities:()=>null,
-    navigateSubjects:()=>null,
-    currentSubjectIndex:null,
-    setCurrentSubjectIndex:()=>null,
-    navigateSubjects:()=>null,
-    ActivitiesWithoutSub:null,
-    setActivitiesWithoutSub:()=>{},
-    SelectedSubActivities:null,
-    setSelectedSubActivities:()=>{},
-    selectedButtons:null,
-    setselectedButtons:()=>{},
-    FinalActivitiesList:null,
-    setFinalActivitiesList:()=>{},
-    ActivitiesToSendBE:null,
-    setActivitiesToSendBE:()=>{},
-    MainActivities:null,
-    setMainActivities:()=>{}
-    
-
+// Creating ActivitiesContext with default values
+export const ActivitiesContext = createContext({
+    goToECListPage: () => null,
+    goToSubActivities: () => null,
+    goToExtraLevelsPage: () => null,
+    showExtraLevelsPage: null,
+    setshowExtraLevelsPage: () => null,
+    SelectedExtraActivities: null,
+    setSelectedExtraActivities: () => null,
+    ActivitiesObj: null,
+    setActivitiesObj: () => null,
+    ActivitiesWithSub: null,
+    setActivitiesWithSub: () => null,
+    ShowActivitiesSub: null,
+    setShowActivitiesSub: () => null,
+    SubActivities: null,
+    setSubActivities: () => null,
+    navigateSubjects: () => null,
+    currentSubjectIndex: null,
+    setCurrentSubjectIndex: () => null,
+    ActivitiesWithoutSub: null,
+    setActivitiesWithoutSub: () => {},
+    SelectedSubActivities: null,
+    setSelectedSubActivities: () => {},
+    selectedButtons: null,
+    setselectedButtons: () => {},
+    FinalActivitiesList: null,
+    setFinalActivitiesList: () => {},
+    ActivitiesToSendBE: null,
+    setActivitiesToSendBE: () => {},
+    MainActivities: null,
+    setMainActivities: () => {}
 });
 
-export const ActivitiesProvider = ({children}) =>{
-
-    const [showExtraLevelsPage,setshowExtraLevelsPage] = useState(false);
-    // const [showSubActivities,setshowSubActivities] = useState(false);
-    const [SelectedExtraActivities,setSelectedExtraActivities] = useState([]);
-    const [ActivitiesObj,setActivitiesObj] = useState({});
-    const [ActivitiesWithSub,setActivitiesWithSub] = useState({})
-    const [ShowActivitiesSub,setShowActivitiesSub] = useState(false)
-    const [SubActivities,setSubActivities] = useState([])
+// ActivitiesProvider component to manage and provide context values
+export const ActivitiesProvider = ({ children }) => {
+    // State for managing various activity-related properties
+    const [showExtraLevelsPage, setshowExtraLevelsPage] = useState(false);
+    const [SelectedExtraActivities, setSelectedExtraActivities] = useState([]);
+    const [ActivitiesObj, setActivitiesObj] = useState({});
+    const [ActivitiesWithSub, setActivitiesWithSub] = useState({});
+    const [ShowActivitiesSub, setShowActivitiesSub] = useState(false);
+    const [SubActivities, setSubActivities] = useState([]);
     const [currentSubjectIndex, setCurrentSubjectIndex] = useState(0);
-    const [ActivitiesWithoutSub,setActivitiesWithoutSub] =useState([]);
-    const [SelectedSubActivities,setSelectedSubActivities] = useState([]);
-    const[selectedButtons,setselectedButtons] = useState([]);
-    const [FinalActivitiesList,setFinalActivitiesList] = useState([]);
-    const [ActivitiesToSendBE,setActivitiesToSendBE] = useState({});
+    const [ActivitiesWithoutSub, setActivitiesWithoutSub] = useState([]);
+    const [SelectedSubActivities, setSelectedSubActivities] = useState([]);
+    const [selectedButtons, setselectedButtons] = useState([]);
+    const [FinalActivitiesList, setFinalActivitiesList] = useState([]);
+    const [ActivitiesToSendBE, setActivitiesToSendBE] = useState({});
     const [MainActivities, setMainActivities] = useState([]);
-    
 
-
-
-    
-    const goToECListPage=()=>{
+    // Function to navigate back to the Extra Curricular List page
+    const goToECListPage = () => {
         setshowExtraLevelsPage(false);
-        setShowActivitiesSub(false)
+        setShowActivitiesSub(false);
+    };
 
-    }
-
-    const goToSubActivities=()=>{
+    // Function to navigate to Sub Activities page
+    const goToSubActivities = () => {
         setshowExtraLevelsPage(false);
-        setShowActivitiesSub(true)
-        
-      }
-  
-      const goToExtraLevelsPage = ()=>{
+        setShowActivitiesSub(true);
+    };
+
+    // Function to navigate to Extra Levels page
+    const goToExtraLevelsPage = () => {
         setshowExtraLevelsPage(true);
-        setShowActivitiesSub(false)
+        setShowActivitiesSub(false);
+    };
 
-      }
-
-      const navigateSubjects=(Array)=>{
-        if(currentSubjectIndex<Array.length){
-           return Array[currentSubjectIndex];
-           
-        }else{
+    // Function to navigate between subjects based on index
+    const navigateSubjects = (Array) => {
+        if (currentSubjectIndex < Array.length) {
+            return Array[currentSubjectIndex];
+        } else {
             goToExtraLevelsPage();
         }
         setCurrentSubjectIndex((prevIndex) => prevIndex + 1);
-    
-    }
+    };
 
-
-
+    // Defining the values to be provided by the context
     const value = {
         goToExtraLevelsPage,
         goToSubActivities,
@@ -109,21 +99,23 @@ export const ActivitiesProvider = ({children}) =>{
         navigateSubjects,
         currentSubjectIndex,
         setCurrentSubjectIndex,
-        navigateSubjects,
         setActivitiesWithoutSub,
         ActivitiesWithoutSub,
         SelectedSubActivities,
         setSelectedSubActivities,
         selectedButtons,
         setselectedButtons,
-        FinalActivitiesList,setFinalActivitiesList,
-        ActivitiesToSendBE,setActivitiesToSendBE,
-        MainActivities,setMainActivities
+        FinalActivitiesList,
+        setFinalActivitiesList,
+        ActivitiesToSendBE,
+        setActivitiesToSendBE,
+        MainActivities,
+        setMainActivities
     };
 
-    return(
+    return (
         <ActivitiesContext.Provider value={value}>
             {children}
         </ActivitiesContext.Provider>
-    )
-}
+    );
+};

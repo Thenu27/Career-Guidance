@@ -9,7 +9,7 @@ const Career=()=>{
 
     const navigate=useNavigate(); 
     
-    const {SelectedField,setSelectedCareerDetails,SelectedCareer,setSelectedCareer}=useContext(CareerContext);
+    const {setSelectedField,SelectedField,setSelectedCareerDetails,SelectedCareer,setSelectedCareer}=useContext(CareerContext);
     const [CareerInField,setCareerInField] = useState([]);
 
     const fetchCareers=async()=>{
@@ -25,10 +25,13 @@ const Career=()=>{
     }
 
 
-
-
     useEffect(()=>{
         fetchCareers();
+
+    },[SelectedField])
+
+    useEffect(()=>{
+        setSelectedField(localStorage.getItem('SelectedField'))
     },[])
 
 
@@ -44,6 +47,10 @@ const Career=()=>{
     const goToAddCareerPage=()=>{
         navigate('/admin/careerfield/add')
     }
+
+    useEffect(()=>{
+        localStorage.setItem("SelectedCareer", SelectedCareer);
+    },[SelectedCareer])
 
 
     return(

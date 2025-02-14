@@ -26,6 +26,10 @@ const CareerFieldBox = () =>{
     setshowMatchedProfileMsg(false);
   }
 
+  useEffect(()=>{
+    localStorage.setItem("username", "JohnDoe");
+
+  },Se)
 
 
   const btnHandler=(career)=>{
@@ -38,9 +42,7 @@ const CareerFieldBox = () =>{
     }
   }
 
-  useEffect(()=>{
-    setSelectedCareerField([])
-},[])
+
   
     return(
         <>

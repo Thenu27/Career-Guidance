@@ -8,6 +8,16 @@ const SubActivityEdit = () => {
 
     const {SelectedSubActivity,setSelectedSubActivity,setSubActivityData,SubActivityData} = useContext(ActivitiesContext);
 
+    const [Edit,setEdit] = useState(false);
+
+    const [Score1,setScore1] = useState('Loading')
+    const [Score2,setScore2] = useState('Loading')
+    const [Score3,setScore3] = useState('Loading')
+
+    const [SubActivityName,setSubActivityName] = useState()
+
+ 
+
 
     const IdentifyIntelligence = (value) => {
         switch (value) {
@@ -23,6 +33,26 @@ const SubActivityEdit = () => {
             default: return 'Unknown';
         }
     };
+
+    const [Intelligence1,setIntelligence1] = useState('Loading')    
+    const [Intelligence2,setIntelligence2] = useState('Loading')
+    const [Intelligence3,setIntelligence3] = useState('Loading')
+
+
+    useEffect(()=>{
+        if(SubActivityData[0]){
+        setIntelligence1(IdentifyIntelligence(SubActivityData[0].mi_1))
+        setIntelligence2(IdentifyIntelligence(SubActivityData[0].mi_2))
+        setIntelligence3(IdentifyIntelligence(SubActivityData[0].mi_3))
+    
+        setScore1((SubActivityData[0].mi_percentage1))
+        setScore2((SubActivityData[0].mi_percentage2))
+        setScore3((SubActivityData[0].mi_percentage3))
+    
+        setSubActivityName(SubActivityData?(SubActivityData[0].sub_activity):'No Data selected')
+        }
+    
+    },[SubActivityData])
 
     const fetchSubActivityDetails = async () => {
         try {
@@ -93,32 +123,184 @@ const SubActivityEdit = () => {
       if (!SubActivityData || SubActivityData.length === 0) {
         return <p>Loading sub-activity data...</p>;
     }
+
+    useEffect(()=>{
+        console.log('Intelligence 01',Intelligence1)
+    },[Intelligence1])
+
+    const dropdownData=(index)=>{
+        return(
+            <ul className="dd-menu">
+                <li onClick={()=>handleIntelligenceChange('Logical-Mathematical Intelligence',index)}>Logical-Mathematical Intelligence</li>
+                <li onClick={()=>handleIntelligenceChange('Linguistic Intelligence',index)}>Linguistic Intelligence</li>
+                <li onClick={()=>handleIntelligenceChange('Spatial Intelligence',index)}>Spatial Intelligence</li>
+                <li onClick={()=>handleIntelligenceChange('Musical Intelligence',index)}>Musical Intelligence</li>                                     
+                <li onClick={()=>handleIntelligenceChange('Bodily-Kinesthetic Intelligence',index)}>Bodily-Kinesthetic Intelligence</li>
+                <li onClick={()=>handleIntelligenceChange('Interpersonal Intelligence',index)}>Interpersonal Intelligence</li>
+                <li onClick={()=>handleIntelligenceChange('Intrapersonal Intelligence',index)}>Intrapersonal Intelligence</li>
+                <li onClick={()=>handleIntelligenceChange('Naturalistic Intelligence',index)}>Naturalistic Intelligence</li>
+                <li onClick={()=>handleIntelligenceChange('Existential Intelligence',index)}>Existential Intelligence</li>
+
+            </ul>
+        )
+    }
+
+    const handleEditClick = ()=>{
+        setEdit(true);
+    }
+
+    const handleIntelligenceChange=(value,index)=>{
+        if(index===1){
+           setIntelligence1(value)
+           return
+        }
+        if(index===2){
+           setIntelligence2(value)
+           return
+        }
+        if(index===3){
+           setIntelligence3(value)
+           return
+        }
+   }
+    
+   const handleOnChange=(value,scoreIndex)=>{
+    if(scoreIndex===1){
+        setScore1(value)
+        return
+    }
+    if(scoreIndex===2){
+        setScore2(value)
+        return
+    }
+    if(scoreIndex===3){
+        setScore3(value)
+        return
+    }
+    if(scoreIndex===0){
+        setSubActivityName(value)
+    }
+}
+
+const sendToBackEnd=async()=>{
+    try{
+        const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/admin/sub-activity/update`,{
+            Intelligence1,
+            Intelligence2,
+            Intelligence3,
+            Score1,
+            Score2,
+            Score3,
+            SubActivityName
+        });
+        if(response.data==='Sub-Activity Updated Succesfully'){
+            alert('Sub-Activity Updated Succesfully')
+        }
+    }catch(error){
+        console.log(error)
+    }
+
+}
+
+const updateSubject=async()=>{
+    if(SubActivityName===''){
+        alert('Please Enter A Valid Sub-Activity Name');
+        return
+    }
+    if(Score1===''){
+        alert('Please Enter A Valid MI Score 1');
+        return
+    }
+    if(Score2===''){
+        alert('Please Enter A Valid MI Score 2');
+        return
+    }
+    if(Score3===''){
+        alert('Please Enter A Valid MI Score 3');
+        return
+    }
+    if(window.confirm('Are you sure you want to update the subject \n This Action Cannot Be Undone')){
+        await sendToBackEnd();
+        return
+    }
+    return
+}
+
     return (
         <>
+
         <div className='add-sub-activity-title-container'>
             <h1 className='add-sub-activity-title'>Update Acitvity </h1>
         </div>
           <div className='sub-activity-add-container'>
                 <div className='add-sub-activity-input-container'>
                     <label className='add-sub-activity-label'>Sub Acitvity</label>
-                    <button className='add-sub-activity-intelligence'>{SubActivityData[0]?.sub_activity}</button>
+                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,0)} type='text' value={SubActivityName}  className='alevel-update-input-subject'/>:
+                        <button className='alevel-update-intelligene'>{SubActivityName}</button>}
+                          </div>
+
+                <div className='add-sub-activity-input-container'>
+                    {Edit?<label className="dropdown">
+                                <div class="dd-button intelligence-input">
+                                {Intelligence1}
+                                </div>
+
+                                <input type="checkbox" className="dd-input" id="test"/>
+
+                                {dropdownData(1)}
+
+                                </label>: 
+                                <button className='add-sub-activity-intelligence'>{Intelligence1}</button> }
+                    
+                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,1)} type='number' value={Score1} className='alevel-update-score'/>:
+                     <button className='add-sub-activity-score'>{Score1}</button>}
+
                 </div>
 
                 <div className='add-sub-activity-input-container'>
-                    <button className='add-sub-activity-intelligence'>{IdentifyIntelligence(SubActivityData[0]?.mi_1)}</button>
-                    <button className='add-sub-activity-score'>{SubActivityData[0]?.mi_percentage1}</button>
+                    {Edit?<label className="dropdown">
+                                <div class="dd-button intelligence-input">
+                                {Intelligence2}
+                                </div>
+
+                                <input type="checkbox" className="dd-input" id="test"/>
+
+                                {dropdownData(2)}
+
+                                </label>: 
+                                <button className='add-sub-activity-intelligence'>{Intelligence2}</button> }
+                    
+                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,2)} type='number' value={Score2} className='alevel-update-score'/>:
+                     <button className='add-sub-activity-score'>{Score2}</button>}
+
                 </div>
 
                 <div className='add-sub-activity-input-container'>
-                    <button className='add-sub-activity-intelligence'>{IdentifyIntelligence(SubActivityData[0]?.mi_2)}</button>
-                    <button className='add-sub-activity-score'>{SubActivityData[0]?.mi_percentage2}</button>
+                    {Edit?<label className="dropdown">
+                                <div class="dd-button intelligence-input">
+                                {Intelligence3}
+                                </div>
+
+                                <input type="checkbox" className="dd-input" id="test"/>
+
+                                {dropdownData(3)}
+
+                                </label>: 
+                                <button className='add-sub-activity-intelligence'>{Intelligence3}</button> }
+                    
+                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,3)} type='number' value={Score3} className='alevel-update-score'/>:
+                     <button className='add-sub-activity-score'>{Score3}</button>}
+
                 </div>
 
-                <div className='add-sub-activity-input-container'>
-                    <button className='add-sub-activity-intelligence'>{IdentifyIntelligence(SubActivityData[0]?.mi_3)}</button>
-                    <button className='add-sub-activity-score'>{SubActivityData[0]?.mi_percentage3}</button>
-                </div>
-                <div className='ol-delete-container'>
+                <div className='sub-activities-btn-container'>
+
+                 <div className='sub-activities-edit-btn-container'>
+                    {Edit?<button onClick={updateSubject} className='sub-activities-edit-btn'>Update</button>:
+                    <button onClick={handleEditClick} className='sub-activities-edit-btn'>Edit</button>}
+                 </div>   
+
+                <div className='ol-delete-container sub-activities-delete-container'>
                     <button
                         className='login-btn ol-delete-btn'
                         onClick={()=>handleDelete(SubActivityData[0]?.sub_activity_id)}
@@ -133,6 +315,8 @@ const SubActivityEdit = () => {
                         alt="Delete icon"
                     />
                 </div>
+                </div>
+
           </div>
         </>
 

@@ -1,23 +1,27 @@
 import './O-Level-Local-StreamBox.css';
 
-const OLevelLocalStreamBox= ()=>{
-    return(
-    <div className='O-level-stream-box'>
+const OLevelLocalStreamBox = () => {
+    return (
+        <div className='O-level-stream-box'>
 
-        <h2 className='O-level-stream-title'>Select Ordinary Level Category</h2>
+            {/* Title Section */}
+            <h2 className='O-level-stream-title'>Select Ordinary Level Category</h2>
 
-        <div className='O-level-btn-container'>
+            {/* Button Container */}
+            <div className='O-level-btn-container'>
 
-            <button  className='O-level-btn'>Local</button>
-            <button  className='O-level-btn'>London</button>
-            <button  className='O-level-btn'>Havent Done</button>
-            <button  className='backbtn'>Back</button>
+                {/* Buttons for O-Level Category Selection */}
+                <button className='O-level-btn'>Local</button>
+                <button className='O-level-btn'>London</button>
+                <button className='O-level-btn'>Haven't Done</button>
+
+                {/* Back Button */}
+                <button className='backbtn'>Back</button>
+
+            </div>
 
         </div>
-
-    </div>
-    )
-
-}
+    );
+};
 
 export default OLevelLocalStreamBox;

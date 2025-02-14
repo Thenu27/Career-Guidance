@@ -1301,24 +1301,30 @@ app.post('/api/admin/ordinarylevel/add', async (req, res) => {
 
 
 app.post('/api/admin/o-level/update',(req,res)=>{
-    const {Intelligence1,
-           Intelligence2,
-           Intelligence3,
-           Score1,
-           Score2,
-           Score3,
-           OLSubject
-    } = req.body;
+    try{
+        const {Intelligence1,
+            Intelligence2,
+            Intelligence3,
+            Score1,
+            Score2,
+            Score3,
+            OLSubject
+     } = req.body;
+ 
+     console.log('Intelligence1:',Intelligence1)
+     console.log('Intelligence2:',Intelligence2)
+     console.log('Intelligence3:',Intelligence3)
+     console.log('Score1:',Score1);
+     console.log('Score2:',Score2);
+     console.log('Score3:',Score3);
+     console.log('O-level-Subject:',OLSubject)
+ 
+     res.status(200).send('Subject Updated Succesfully')
 
-    console.log('Intelligence1:',Intelligence1)
-    console.log('Intelligence2:',Intelligence2)
-    console.log('Intelligence3:',Intelligence3)
-    console.log('Score1:',Score1);
-    console.log('Score2:',Score2);
-    console.log('Score3:',Score3);
-    console.log('O-level-Subject:',OLSubject)
+   }catch(err){
+    res.send('Error Receiving O Level Data ',err)
+   }
 
-    res.status(200).send('Subject Updated Succesfully')
 
 })
 
@@ -1342,6 +1348,34 @@ app.post('/api/admin/a-level/update',(req,res)=>{
     console.log('A-level-Subject:',ALSubject)
 
     res.status(200).send('Subject Updated Succesfully')
+
+})
+
+
+app.post('/api/admin/sub-activity/update',(req,res)=>{
+    try{
+        const {Intelligence1,
+               Intelligence2,
+               Intelligence3,
+               Score1,
+               Score2,
+               Score3,
+               SubActivityName
+     } = req.body;
+ 
+     console.log('Intelligence1:',Intelligence1)
+     console.log('Intelligence2:',Intelligence2)
+     console.log('Intelligence3:',Intelligence3)
+     console.log('Score1:',Score1);
+     console.log('Score2:',Score2);
+     console.log('Score3:',Score3);
+     console.log('SubActivityName',SubActivityName)
+ 
+     res.status(200).send('Sub-Activity Updated Succesfully')
+
+   }catch(err){
+    res.send('Error Receiving SubActivity Update Data ',err)
+   }
 
 })
 
@@ -1480,7 +1514,7 @@ const fetchAdminCareerSpecificDetails=async(career)=>{
 }
 
 
-app.post('/api/admin/career/update',async(req,res)=>{
+app.post('/api/admin/career/details',async(req,res)=>{
     try{
         const {SelectedCareer} =req.body;
         const activities = await fetchAdminCareerSpecificDetails(SelectedCareer);
@@ -1488,6 +1522,47 @@ app.post('/api/admin/career/update',async(req,res)=>{
     }catch(error){
         console.error('Failed to fetch Main Activities from DB');
     }
+})
+
+
+
+app.post('/api/admin/career/update',(req,res)=>{
+    try{
+        const {Intelligence1,
+               Intelligence2,
+               Intelligence3,
+               Score1,
+               Score2,
+               Score3,
+               CareerName,
+               Specialization1,
+               Specialization2,
+               Specialization3,
+               Specialization4
+
+
+     } = req.body;
+ 
+     console.log('Intelligence1:',Intelligence1)
+     console.log('Intelligence2:',Intelligence2)
+     console.log('Intelligence3:',Intelligence3)
+     console.log('Score1:',Score1);
+     console.log('Score2:',Score2);
+     console.log('Score3:',Score3);
+     console.log('CareerName:',CareerName)
+     console.log('Specialization1:',Specialization1);
+     console.log('Specialization2:',Specialization2);
+     console.log('Specialization3:',Specialization3);
+     console.log('Specialization4:',Specialization4);
+
+
+ 
+     res.status(200).send('Career Updated Succesfully')
+
+   }catch(err){
+    res.send('Error Receiving SubActivity Update Data ',err)
+   }
+
 })
 
 const deleteAdminQuestionFRomDB=async(question)=>{
@@ -1554,8 +1629,7 @@ app.post('/api/admin/career/delete',async(req,res)=>{
 
 
 
-const deleteAdminDataFromDB=async(table_name,column_name,subject_id
-)=>{
+const deleteAdminDataFromDB=async(table_name,column_name,subject_id)=>{
     try{
         const response = await db(table_name).where(column_name,subject_id).del();
         return response;
@@ -1622,6 +1696,12 @@ app.post('/api/admin/subactivity/details', async (req, res) => {
       });
     }
   });
+
+
+
+
+
+
   
   app.post('/api/admin/subactivity/add', async (req, res) => {
     try {

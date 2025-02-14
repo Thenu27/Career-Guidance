@@ -1,16 +1,17 @@
 import './Assesment.styles.css';
+
+// Importing necessary components
 import QuestionContainer from '../QuestionContainer/Question-container.components';
 import UserInformation from '../user-information-box/user-infor.components';
 import Image from '../Image/Image.components';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { ProgressContext } from '../../context/progress.context';
 
 const Assesment = () => {
-
-
+    // Accessing context to update visited pages
     const { setVisitedPages } = useContext(ProgressContext);
 
-
+    // useEffect to update visited pages when the component mounts
     useEffect(() => {
         setVisitedPages(() => ({
             home: true,
@@ -28,15 +29,20 @@ const Assesment = () => {
 
     return (
         <div className="question-user-container">
+            {/* Frog Image Section */}
             <div className='question-page-frog'>
                 <Image />
             </div>
-            <QuestionContainer/>
-                        <div className='user-info-container'>
+
+            {/* Question Container */}
+            <QuestionContainer />
+
+            {/* User Information Box */}
+            <div className='user-info-container'>
                 <UserInformation />
             </div>
         </div>
     );
 };
- 
+
 export default Assesment;
