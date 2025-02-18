@@ -4,8 +4,12 @@ import './Question-container.styles.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import QuestionBox from '../QuestionBox/QuestionBox.component';
+import { useContext } from 'react';
+import { ProgressContext } from '../../context/progress.context';
 
 const QuestionContainer = () => {
+
+    const {intelligenceObject,setintelligenceObject} = useContext(ProgressContext)
     // State to track the index of the question set currently displayed
     const [IndexOfQuestionShown, setIndexOfQuestionShown] = useState(0);
 
@@ -29,11 +33,6 @@ const QuestionContainer = () => {
         try {
             const response = await axios.get(
                 `${process.env.REACT_APP_URL}/api/Assesment`,
-                {
-                    headers: {
-                        'Content-Type': 'application/json', // Ensure minimal headers
-                    },
-                }
             );
             console.log("Questions received from the backend", response.data);
             setquestions(response.data);
@@ -81,8 +80,6 @@ const QuestionContainer = () => {
         setquestionAndAnswers(updatedAnswers);
     }, [questions]);
 
-    console.log("REACT_APP_API_URL:", process.env.REACT_APP_API_URL);
-    console.log("Environment Variables:", process.env);
 
     // Function to divide shuffled questions into groups of five
     const dividingQuestionIntoFive = (ArrayToBeDivided) => {
@@ -121,16 +118,16 @@ const QuestionContainer = () => {
         try {
             const response = await axios.post(
                 `${process.env.REACT_APP_URL}/api/Assesment`,
-                { questionAndAnswers },
-                {
-                    withCredentials: true
-                }
+                { questionAndAnswers }
+                
             );
-            console.log(response.data);
+            console.log(response.data)
+            setintelligenceObject(response.data.intelligence_object);
         } catch (error) {
             console.log("Error sending data to BE", error);
         }
     };
+
 
     return (
         <>

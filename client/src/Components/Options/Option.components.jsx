@@ -4,7 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { ProgressContext } from '../../context/progress.context';
 import { useContext, useEffect } from 'react';
 
+
 const Option = () => {
+
+    const {intelligenceObject,setintelligenceObject} = useContext(ProgressContext)
+    
     // Access the ProgressContext to update visited pages
     const { setVisitedPages } = useContext(ProgressContext);
 
@@ -36,6 +40,11 @@ const Option = () => {
     const goToCalculatePage=()=>{
         navigate("/CalculatePage")
     }
+
+    useEffect(()=>{
+        console.log("intelligenceObject",intelligenceObject);
+     },[intelligenceObject])
+
 
     return (
         <div className="option-page">

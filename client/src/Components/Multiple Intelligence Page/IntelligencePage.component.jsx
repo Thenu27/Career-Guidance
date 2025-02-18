@@ -4,12 +4,13 @@ import './Intelligence.styles.css';
 import Image from '../Image/Image.components';
 import { useNavigate } from 'react-router-dom';
 import { ProgressContext } from '../../context/progress.context';
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 
 const IntelligencePage = () => {
     // Accessing context values
-    const { setVisitedPages, intelligenceScore } = useContext(ProgressContext);
+    const { setVisitedPages, intelligenceScore,intelligenceObject } = useContext(ProgressContext);
 
+    const [SortedIntelligence,setSortedIntelligence] = useState([]);
     // useEffect to update visited pages when the component mounts
     useEffect(() => {
         setVisitedPages(() => ({
@@ -25,6 +26,20 @@ const IntelligencePage = () => {
         console.log('Newly updated', intelligenceScore); // Log intelligence scores for debugging
     }, []);
 
+    const IdentifyIntelligence = (value) => {
+        switch (value) {
+            case 1: return 'Logical-Mathematical';
+            case 2: return 'Linguistic';
+            case 3: return 'Spatial';
+            case 4: return 'Musical';
+            case 5: return 'Bodily-Kinesthetic';
+            case 6: return 'Interpersonal';
+            case 7: return 'Intrapersonal';
+            case 8: return 'Naturalistic';
+            case 9: return 'Existential';
+            default: return 'Unknown';
+        }
+    };
     // Hook for navigation
     const navigate = useNavigate();
 
@@ -38,6 +53,24 @@ const IntelligencePage = () => {
         navigate("/Careers");
     };
 
+    useEffect(() => {
+        if (intelligenceObject && Object.keys(intelligenceObject).length > 0) {
+            console.log("Before Sorting:", intelligenceObject);
+    
+            const sortedEntries = Object.entries(intelligenceObject)
+                .sort(([, a], [, b]) => Number(b.intelligence_total) - Number(a.intelligence_total)) // Ensure sorting works with numbers
+                .map(([key, value]) => ({ intelligenceId: key, ...value })); // Convert to array of objects
+    
+            console.log("After Sorting:", sortedEntries); // Debug sorting order
+    
+            setSortedIntelligence(sortedEntries); // ✅ Store as an array
+        }
+    }, [intelligenceObject]);
+    
+    useEffect(() => {
+        console.log("SortedIntelligence", SortedIntelligence);
+    }, [SortedIntelligence]);
+   
     return (
         <div className='intelligence-page-container'>
             {/* Frog Image Section */}
@@ -52,20 +85,35 @@ const IntelligencePage = () => {
 
             {/* Intelligence Scores Display */}
             <div className='intelligence-box-container'>
-                <div className='intelligence-btns-container'>
-                    {Object.keys(intelligenceScore)
-                        .sort((a, b) => intelligenceScore[b].Percentage - intelligenceScore[a].Percentage) // Sort keys in descending order
+                {/* <div className='intelligence-btns-container'>
+                    {Object.keys(intelligenceObject)
+                        .sort((a, b) => intelligenceScore[b].Percentage - intelligenceScore[a].Percentage) 
                         .map((intelligence) => {
                             return (
                                 <div className='intelligence-btn tooltip' key={intelligence}>
                                     <p className='intelligence'>
                                         {`${intelligence} is ${intelligenceScore[intelligence].Percentage.toFixed()}%`}
                                     </p>
-                                    <span className='tooltiptext'>Information about Intelligence</span> {/* Tooltip info */}
+                                    <span className='tooltiptext'>Information about Intelligence</span> 
                                 </div>
                             );
                         })}
+                </div> */}
+                <div className='intelligence-btns-container'>
+                    {SortedIntelligence.map(intelligence => {
+                        return (
+                            <div className='intelligence-btn tooltip' key={intelligence}>
+                                <p className='intelligence'>
+                                    {`${IdentifyIntelligence(Number(intelligence.intelligenceId))} is ${((intelligence.intelligence_total/(intelligence.intelligence_count*10))*100).toFixed(0) || "0"}%`}
+                                </p>
+                                <span className='tooltiptext'>Information about Intelligence</span> 
+                            </div>
+                        );
+                    })}
                 </div>
+
+
+                
             </div>
 
             {/* Page Description */}

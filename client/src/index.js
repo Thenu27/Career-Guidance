@@ -19,9 +19,7 @@ root.render(
         <ALevelProvider>
           <CareerProvider>
             <ActivitiesProvider>
-              <CsrfProvider>
                 <App />
-              </CsrfProvider>
             </ActivitiesProvider>
           </CareerProvider>
         </ALevelProvider>

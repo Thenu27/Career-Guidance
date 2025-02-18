@@ -2,8 +2,8 @@ const { createContext, useState } = require("react");
 
 // Creating ProgressContext with default values
 export const ProgressContext = createContext({
-    intelligenceScore: null,
-    setintelligenceScore: () => null,
+    intelligenceObject: null,
+    setintelligenceObject: () => null,
 
     hidden: "",
     sethidden: () => null,
@@ -23,7 +23,7 @@ export const ProgressProvider = ({ children }) => {
     const [hidden, sethidden] = useState("");
 
     // State to track intelligence scores
-    const [intelligenceScore, setintelligenceScore] = useState([]);
+    const [intelligenceObject, setintelligenceObject] = useState({});
 
     // State to track the pages visited by the user
     const [visitedPages, setVisitedPages] = useState({
@@ -45,8 +45,8 @@ export const ProgressProvider = ({ children }) => {
         sethidden,
         visitedPages,
         setVisitedPages,
-        intelligenceScore,
-        setintelligenceScore
+        intelligenceObject,
+        setintelligenceObject
     };
 
     return (

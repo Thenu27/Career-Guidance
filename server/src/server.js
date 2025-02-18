@@ -14,7 +14,7 @@ const redis = require('redis');
 require('dotenv').config({ path: require('path').resolve(__dirname, '..', '.env') });
 
 app.use(cors({
-    origin: ['https://localhost:3001', 'https://localhost:5173'],
+    origin: ['http://localhost:3001', 'https://localhost:5173'],
     methods: ['GET', 'POST'],        // Specify the HTTP methods your API supports
     credentials: true                // Allow credentials (cookies, sessions, etc.)
 }));
@@ -460,37 +460,35 @@ const fetchOLevelSubjectFromDB = async (pathline, sessionArray) => {
 
 
 
-// Function to calculate the total score, average, and percentage for a given intelligence_id
-const accesingAnswers = async (req, intelligence_id) => {
-    // Get all question_ids for the given intelligence_id
-    const questionIdGrouped = await db.select('question_id').from('questions').where('intelligence_id', intelligence_id);
-    let totalAnswer = 0;
+// // Function to calculate the total score, average, and percentage for a given intelligence_id
+// const accesingAnswers = async (req, intelligence_id) => {
+//     // Get all question_ids for the given intelligence_id
+//     const questionIdGrouped = await db.select('question_id').from('questions').where('intelligence_id', intelligence_id);
+//     let totalAnswer = 0;
+//     console.log(questionIdGrouped)
+//     // Sum up the answers provided by the user for all questions related to this intelligence_id
+//     for (let i = 0; i < questionIdGrouped.length; i++) {
+//         const questionId = questionIdGrouped[i].question_id;
+//         const TestAns = parseFloat(req.session.quesidWithIntelligenceAndquestions[questionId].answer);
+//         totalAnswer = TestAns + totalAnswer;
+//     }
 
-    // Sum up the answers provided by the user for all questions related to this intelligence_id
-    for (let i = 0; i < questionIdGrouped.length; i++) {
-        const questionId = questionIdGrouped[i].question_id;
-        const TestAns = parseFloat(req.session.quesidWithIntelligenceAndquestions[questionId].answer);
-        totalAnswer = TestAns + totalAnswer;
-    }
+//     // Calculate the average score for this intelligence type
+//     const avg = totalAnswer / questionIdGrouped.length
+//     // console.log("Total Answer", totalAnswer)
 
-    // Calculate the average score for this intelligence type
-    const avg = totalAnswer / questionIdGrouped.length
-    // console.log("Total Answer", totalAnswer)
+//     // Get the intelligence_type name from the database for labeling
+//     const getIntelligence = await db.select("intelligence_type").from("mi_table").where("intelligence_id", intelligence_id).first();
+//     // console.log("Intelligence latest", getIntelligence)
 
-    // Get the intelligence_type name from the database for labeling
-    const getIntelligence = await db.select("intelligence_type").from("mi_table").where("intelligence_id", intelligence_id).first();
-    // console.log("Intelligence latest", getIntelligence)
-
-    // Store the calculated results (Total, Avg, Percentage) in the session
-    req.session.detailsForCalculation[getIntelligence.intelligence_type] = {
-        Total: totalAnswer,
-        Avg: avg,
-        Percentage: avg * 10  // Assuming percentage is average * 10
-    }
-    // console.log(req.session.detailsForCalculation)
-}
-
-
+//     // Store the calculated results (Total, Avg, Percentage) in the session
+//     req.session.detailsForCalculation[getIntelligence.intelligence_type] = {
+//         Total: totalAnswer,
+//         Avg: avg,
+//         Percentage: avg * 10  // Assuming percentage is average * 10
+//     }
+//     // console.log(req.session.detailsForCalculation)
+// }
 
 
 
@@ -501,15 +499,17 @@ const accesingAnswers = async (req, intelligence_id) => {
 
 
 
-// Function to calculate the total score for all intelligence types
-const calculatingTotalScoreForAll = async (req) => {
-    // Loop through all fetched intelligence types and calculate their scores
-    for (let i = 0; i < req.session.intelligenceArray.length; i++) {
-        // console.log(intelligenceArray[i].intelligence_id)
-        await accesingAnswers(req, req.session.intelligenceArray[i].intelligence_id);
-    }
-    // console.log("Details", req.session.detailsForCalculation)
-}
+
+
+// // Function to calculate the total score for all intelligence types
+// const calculatingTotalScoreForAll = async (req) => {
+//     // Loop through all fetched intelligence types and calculate their scores
+//     for (let i = 0; i < req.session.intelligenceArray.length; i++) {
+//         // console.log(intelligenceArray[i].intelligence_id)
+//         await accesingAnswers(req, req.session.intelligenceArray[i].intelligence_id);
+//     }
+//     // console.log("Details", req.session.detailsForCalculation)
+// }
 
 
 
@@ -966,6 +966,40 @@ app.post("/api/Activities/results",async(req,res)=>{
 
 
 
+const calculating_Mip_From_Questions = async (questionsObject) => {
+    let intelligence_object = {};
+
+    // Get total number of intelligence categories
+    const intelligenceCount = await db("mi_table").count("* as count").first();
+    const intelligencelength = Number(intelligenceCount.count);
+
+    // Fetch all questions and intelligence mappings in one query (efficient)
+    const questions_data = await db
+        .select("question_id", "intelligence_id")
+        .from("questions")
+        .whereIn("intelligence_id", Array.from({ length: intelligencelength }, (_, i) => i + 1));
+
+    // Process each question's intelligence mapping
+    questions_data.forEach(({ question_id, intelligence_id }) => {
+        const answer = Number(questionsObject[question_id]?.answer || 0); // Avoid undefined errors
+
+        // Initialize intelligence_id if not present
+        if (!intelligence_object[intelligence_id]) {
+            intelligence_object[intelligence_id] = {
+                intelligence_total: 0,
+                intelligence_count: 0
+            };
+        }
+
+        // Accumulate intelligence total and count
+        intelligence_object[intelligence_id].intelligence_total += answer;
+        intelligence_object[intelligence_id].intelligence_count += 1;
+    });
+
+    console.log(intelligence_object);
+    return intelligence_object
+    
+};
 
 
 
@@ -976,9 +1010,11 @@ app.post('/api/Assesment', async (req, res) => {
     try {
         const { questionAndAnswers } = req.body;
         // Store the user's answers in the session
-        req.session.questionAndAnswers = questionAndAnswers
-        console.log("Received answers:", req.session.questionAndAnswers);
-        res.json({ Message: "received" });
+        // req.session.questionAndAnswers = questionAndAnswers
+        // console.log("Received answers:", questionAndAnswers);
+        const intelligence_object =await calculating_Mip_From_Questions(questionAndAnswers)
+        // await calculatingTotalScoreForAll(req);
+        res.status(200).json({ intelligence_object });
     } catch (error) {
         res.status(500).json({ Message: "Error in Receiving Data" });
     }
