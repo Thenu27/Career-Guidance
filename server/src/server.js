@@ -10,7 +10,7 @@ const xssClean = require('xss-clean');
 const session = require('express-session');
 const connectRedis = require('connect-redis');
 const RedisStore = connectRedis(session);  // The older API usage
-const redis = require('redis');            
+const redis = require('redis');  
 require('dotenv').config({ path: require('path').resolve(__dirname, '..', '.env') });
 
 app.use(cors({
@@ -238,10 +238,6 @@ const calculateOLevelPercentage = async (req, subject, grade) => {
           MiIdforSubject[0].mi_2,
           MiIdforSubject[0].mi_3,
         ]);
-            // console.log("mi_intelligence",getIntelligenceFromMiId)
-      
-            // Convert percentages to numeric values
-        // const OLevelPercentagesValues = Object.values(getMiPercentage[0]).map(parseFloat);
 
         const OLevelPercentagesValues = [
             parseFloat(getMiPercentage[0]. mi_percentage1*3),
@@ -250,8 +246,6 @@ const calculateOLevelPercentage = async (req, subject, grade) => {
 
 
         ]
-
-        // console.log("Thenuka",OLevelPercentagesValues)
 
         // Grade multipliers
         const gradeMultipliers = {
@@ -269,10 +263,6 @@ const calculateOLevelPercentage = async (req, subject, grade) => {
         const OLevelPercentages = OLevelPercentagesValues.map(
             (percentage) => percentage * multiplier
         );
-        // console.log("OLevelPerventageValues")
-
-        // Ensure session objects are initialized
-        // req.session.percentageObject = req.session.percentageObject || {};
 
         // Loop through intelligence types and accumulate percentages
         for (let i = 0; i < getIntelligenceFromMiId.length; i++) {
@@ -399,14 +389,6 @@ const calculateALevelPercentage = async (req, subject, grade) => {
         console.error("Error calculating A-Level percentage:", error.message);
     }
 };
-
-
-
-
-
-
-
-
 
 
 
@@ -604,33 +586,35 @@ const checkIfSubActivityExistInMainActivity = async (req, activityNames) => {
 
 // Function to assign intelligence IDs to the user's answered questions.
 // It fetches the intelligence_id for each answered question and stores it in session.
-const getIntelligenceType = async (req) => {
-    try {
-        if (!req.session.questionAndAnswers || Object.keys(req.session.questionAndAnswers).length === 0) {
-            console.log("No answers found in session");
-            return;
-        }
 
-        for (const questionId of Object.keys(req.session.questionAndAnswers)) {
-            const result = await db.select('intelligence_id', 'question')
-                .from('questions')
-                .where('question_id', questionId)
-                .first();
 
-            if (result) {
-                req.session.quesidWithIntelligenceAndquestions[questionId] = {
-                    question: result.question,
-                    answer: req.session.questionAndAnswers[questionId].answer,
+// const getIntelligenceType = async (req) => {
+//     try {
+//         if (!req.session.questionAndAnswers || Object.keys(req.session.questionAndAnswers).length === 0) {
+//             console.log("No answers found in session");
+//             return;
+//         }
 
-                    intelligence: result.multiple_intelligence 
-                };
-            }
-        }
+//         for (const questionId of Object.keys(req.session.questionAndAnswers)) {
+//             const result = await db.select('intelligence_id', 'question')
+//                 .from('questions')
+//                 .where('question_id', questionId)
+//                 .first();
 
-    } catch (error) {
-        console.error("Error in getIntelligenceType:", error);
-    }
-};
+//             if (result) {
+//                 req.session.quesidWithIntelligenceAndquestions[questionId] = {
+//                     question: result.question,
+//                     answer: req.session.questionAndAnswers[questionId].answer,
+
+//                     intelligence: result.multiple_intelligence 
+//                 };
+//             }
+//         }
+
+//     } catch (error) {
+//         console.error("Error in getIntelligenceType:", error);
+//     }
+// };
 
 
 
@@ -987,7 +971,8 @@ const calculating_Mip_From_Questions = async (questionsObject) => {
         if (!intelligence_object[intelligence_id]) {
             intelligence_object[intelligence_id] = {
                 intelligence_total: 0,
-                intelligence_count: 0
+                intelligence_count: 0,
+                intelligence_percentage:0
             };
         }
 
@@ -995,25 +980,130 @@ const calculating_Mip_From_Questions = async (questionsObject) => {
         intelligence_object[intelligence_id].intelligence_total += answer;
         intelligence_object[intelligence_id].intelligence_count += 1;
     });
+    
+    Object.keys(intelligence_object).forEach((key) => {
+        const obj = intelligence_object[key];
+        const sum = obj.intelligence_total;
+        const totalCount = obj.intelligence_count;
 
-    console.log(intelligence_object);
-    return intelligence_object
+        console.log("sum:", sum);
+        console.log("totalCount:", totalCount);
+
+        // Avoid division by zero
+        obj.intelligence_percentage = totalCount > 0 ? (sum / (totalCount * 10)) * 100 : 0;
+    });
+    
+    const sortedEObject = Object.entries(intelligence_object)
+                .sort(([, a], [, b]) => Number(b.intelligence_percentage) - Number(a.intelligence_percentage))
+
+                console.log(sortedEObject);            
+    return sortedEObject
     
 };
 
+const mapCareer=async(iq_available,iq_percentages,non_iq_ids)=>{
+    const non_iq_ids_as_numbers = non_iq_ids.map(Number);
+    try{
+        if(iq_available){
+            const iq_careers = await db
+            .select("career")
+            .from("career_table")
+            .where("logical", "<", iq_percentages[0]) 
+            .andWhere("linguistic", "<", iq_percentages[1]) 
+            .andWhere("spatial", "<", iq_percentages[2]); 
+        
+            if(iq_careers.length>0){
+                const best_careers1 = await db.select("career").from("career_table")
+                                        .where("non_iq_intelligence1",non_iq_ids_as_numbers[0])
+                                        .andWhere("non_iq_intelligence2",non_iq_ids_as_numbers[1])  
+                                        .andWhere("non_iq_intelligence3",non_iq_ids_as_numbers[2])  
+                                        .andWhere("non_iq_intelligence4",non_iq_ids_as_numbers[3]);
+
+                const best_careers2 = await db.select("career").from("career_table")
+                                        .where("non_iq_intelligence1",non_iq_ids_as_numbers[0])
+                                        .andWhere("non_iq_intelligence2",non_iq_ids_as_numbers[1])  
+                                        .andWhere("non_iq_intelligence3",non_iq_ids_as_numbers[2])
+                                        
+                                        const best_careers3 = await db("career_table")
+                                        .select("career")
+                                        .where(function () {
+                                            this.where("non_iq_intelligence1", non_iq_ids_as_numbers[0])
+                                                .andWhere("non_iq_intelligence2", non_iq_ids_as_numbers[1]);
+                                        })
+                                        .orWhere(function () {
+                                            this.where("non_iq_intelligence3", non_iq_ids_as_numbers[2])
+                                                .andWhere("non_iq_intelligence4", non_iq_ids_as_numbers[3]);
+                                        })
+                                        .orWhere(function () {
+                                            this.where("non_iq_intelligence3", non_iq_ids_as_numbers[3]) // Swapped
+                                                .andWhere("non_iq_intelligence4", non_iq_ids_as_numbers[2]); // Swapped
+                                        });
+                                    
+
+                  console.log("best_careers1",best_careers1)    
+                  console.log("best_careers2",best_careers2)                          
+                  console.log("best_careers3",best_careers3)    
+                  
+                  const allCareers = [
+                    ...best_careers1,
+                    ...best_careers2,
+                    ...best_careers3
+                ].map(item => item.career); // Extract only career names
+                
+                // Convert to a Set to remove duplicates, then back to an array
+                const uniqueCareers = [...new Set(allCareers)];
+                
+                console.log(uniqueCareers);
+                
+
+            }else{
+                console.log("No career found")
+            }
+        
+
+        }else{
+            console.log("No career found")
+        }
 
 
+        }catch(err){
+        console.log(err)
+    }
+}
+
+const CheckAndMapCareer=async(intelligence_object)=>{
+    let count =0;
+    for(let i=0;i<3;i++){
+       const intelligenceId= Number(intelligence_object[i][0])
+        if(intelligenceId === 1 || intelligenceId ===2 || intelligenceId ==3)
+            count++
+    }
+    
+    const requiredIDs = ['1', '2', '3'];
+    const iq_percentages = intelligence_object
+    .filter(([id]) => requiredIDs.includes(id)) // Keep only the ones with IDs "1", "2", "3"
+    .map(([, value]) => value.intelligence_percentage); // Extract intelligence_percentage
+
+    const non_iq_ids = intelligence_object
+        .filter(([id]) => !requiredIDs.includes(id)) // Exclude IDs "1", "2", "3"
+        .map(([id]) => id); // Extract only intelligence_id
+
+
+    console.log("non_iq_ids ",non_iq_ids )
+      const iq_available = count===3 ? true:false
+      await mapCareer(iq_available,iq_percentages,non_iq_ids)
+
+    // console.log("iq_available",iq_available)
+}
 
 
 // Endpoint for receiving assessment answers from the client
 app.post('/api/Assesment', async (req, res) => {
     try {
         const { questionAndAnswers } = req.body;
-        // Store the user's answers in the session
-        // req.session.questionAndAnswers = questionAndAnswers
-        // console.log("Received answers:", questionAndAnswers);
-        const intelligence_object =await calculating_Mip_From_Questions(questionAndAnswers)
-        // await calculatingTotalScoreForAll(req);
+        const intelligence_object =await calculating_Mip_From_Questions(questionAndAnswers);
+        await CheckAndMapCareer(intelligence_object)
+        // console.log("intelligence_object",intelligence_object)
         res.status(200).json({ intelligence_object });
     } catch (error) {
         res.status(500).json({ Message: "Error in Receiving Data" });
@@ -1026,135 +1116,9 @@ app.post('/api/Assesment', async (req, res) => {
 
 
 
-const mapCareer = async(req) =>{
-    const firstThreePercentagesAndIntelligences = Object.fromEntries(
-        Object.entries(req.session.FinalQuestionPercentages).slice(0, 3)
-      );  
-
-    console.log("firstThreePercentagesAndIntelligences",firstThreePercentagesAndIntelligences)
-  
-    
-    const intelligences = Object.keys(firstThreePercentagesAndIntelligences);
-
-    console.log("intelligences",intelligences);
-
-    const intelligenceIds = await db
-    .select("intelligence_id")
-    .from("mi_table")
-    .whereIn("intelligence_type", intelligences)
-    .orderByRaw(`
-        CASE
-            ${intelligences
-                .map((type, index) => `WHEN intelligence_type = '${type}' THEN ${index + 1}`)
-                .join(' ')}
-        END
-    `);
-      
-      console.log("Intelligence IDs:", intelligenceIds);
-           
-    
-    const intelligenceIdArray = intelligenceIds.map(value=>value.intelligence_id);
-
-    console.log(intelligenceIdArray);
-    const percentages = Object.values(firstThreePercentagesAndIntelligences).map(value=>value.Percentage);
-
-    console.log("threePercentages",percentages);
-
-
-const careerList = await db('career_table')
-  .select('career')
-  .where(function () {
-    this.where('mi_1', intelligenceIdArray[0])
-      .andWhere('mi_2', intelligenceIdArray[1])
-      .andWhere('mi_3', intelligenceIdArray[2])
-      .andWhere('mi_percentage1', '<=', percentages[0])
-      .andWhere('mi_percentage2', '<=', percentages[1])
-      .andWhere('mi_percentage3', '<=', percentages[2]);
-  })
-  .orWhere(function () {
-    this.where('mi_1', intelligenceIdArray[0])
-      .andWhere('mi_2', intelligenceIdArray[2])
-      .andWhere('mi_3', intelligenceIdArray[1])
-      .andWhere('mi_percentage1', '<=', percentages[0])
-      .andWhere('mi_percentage2', '<=', percentages[2])
-      .andWhere('mi_percentage3', '<=', percentages[1]);
-  })
-  .orWhere(function () {
-    this.where('mi_1', intelligenceIdArray[0])
-      .andWhere('mi_2', intelligenceIdArray[1])
-    //   .andWhere('mi_3', intelligenceIdArray[2])
-      .andWhere('mi_percentage1', '<=', percentages[0])
-      .andWhere('mi_percentage2', '<=', percentages[1])
-    //   .andWhere('mi_percentage3', '<=', percentages[1]);
-  });
-
-// Extract the `career` values from the query result
- req.session.careerList = careerList.map((item) => item.career);
-
-console.log("Career List", req.session.careerList);
- 
-
-  const moderateCareer = await db.select("career")
-                                 .from("career_table")
-                                 .where('mi_1', intelligenceIdArray[0])
-                                 .andWhere('mi_2', intelligenceIdArray[1])
-                                 .andWhere('mi_3', intelligenceIdArray[2])
-                                 .andWhere('mi_percentage1', '<=', percentages[0])
-                                
-  req.session.moderateCareerList = moderateCareer.map((item) => item.career);
-
-  req.session.careersObject = {
-    topCareers: req.session.careerList.map((item) => item), // Corrected
-    moderateCareers: req.session.moderateCareerList.map((item) => item) // Corrected
-};
-
-                               
-console.log("Moderate Career List",req.session.moderateCareerList)
-console.log("req.session.careersObject",req.session.careersObject)
-
-req.session.save((err) => {
-    if (err) console.error("Error saving session:", err);
-});
-
-
-}
 
 
 
-
-
-// Endpoint to calculate the final results and return them to the client
-app.get('/api/calculation', async (req, res) => {
-
-    try{
-
-            // Get intelligence type info for answered questions
-    await getIntelligenceType(req);
-    // Calculate scores for all intelligence types
-    await calculatingTotalScoreForAll(req);
-
-    // Return the calculated details
-
-    req.session.FinalQuestionPercentages = Object.entries(req.session.detailsForCalculation)
-  .sort(([, a], [, b]) => b.Percentage - a.Percentage) // Sort by percentage descending
-  .reduce((acc, [key, value]) => {
-    acc[key] = value; // Reconstruct the object
-    return acc;
-  }, {});
-
-  console.log("FinalQuestionPercentages",req.session.FinalQuestionPercentages)
-  await mapCareer(req);
-  res.json(req.session.detailsForCalculation);
-
-
-    }catch(error){
-        console.log("Error in calculating MIP",error)
-    }
-
-  
-
-  
-});
 
 
 
