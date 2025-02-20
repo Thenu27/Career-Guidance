@@ -11,7 +11,7 @@ export const CareerContext = createContext({
     SelectedCareerField: null,
     setSelectedCareerField: () => {},
     Careers: null,
-    setCareers: () => {}
+    setCareers: () => {},
 });
 
 // CareerProvider component to manage and provide context values

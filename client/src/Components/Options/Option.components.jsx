@@ -2,12 +2,14 @@ import './Option.components.css';
 import Image from '../Image/Image.components';
 import { useNavigate } from 'react-router-dom';
 import { ProgressContext } from '../../context/progress.context';
+import { CareerContext } from '../../context/Career.context';
 import { useContext, useEffect } from 'react';
 
 
 const Option = () => {
 
-    const {intelligenceObject,setintelligenceObject} = useContext(ProgressContext)
+    const {intelligenceObject,setintelligenceObject} = useContext(ProgressContext);
+    const {Careers} = useContext(CareerContext)
     
     // Access the ProgressContext to update visited pages
     const { setVisitedPages } = useContext(ProgressContext);
@@ -41,10 +43,9 @@ const Option = () => {
         navigate("/CalculatePage")
     }
 
-    useEffect(()=>{
-        console.log("intelligenceObject",intelligenceObject);
-     },[intelligenceObject])
-
+    // useEffect(()=>{
+    //     console.log("intelligenceObject",intelligenceObject);
+    //  },[intelligenceObject])
 
     return (
         <div className="option-page">

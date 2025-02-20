@@ -6,10 +6,12 @@ import axios from 'axios';
 import QuestionBox from '../QuestionBox/QuestionBox.component';
 import { useContext } from 'react';
 import { ProgressContext } from '../../context/progress.context';
+import { CareerContext } from '../../context/Career.context';
 
 const QuestionContainer = () => {
 
-    const {intelligenceObject,setintelligenceObject} = useContext(ProgressContext)
+    const {intelligenceObject,setintelligenceObject} = useContext(ProgressContext);
+    const {Careers,setCareers} = useContext(CareerContext)
     // State to track the index of the question set currently displayed
     const [IndexOfQuestionShown, setIndexOfQuestionShown] = useState(0);
 
@@ -121,13 +123,32 @@ const QuestionContainer = () => {
                 { questionAndAnswers }
                 
             );
-            console.log(response.data)
-            setintelligenceObject(response.data.intelligence_object);
+            console.log("response",response.data)
+            //  setCareers(response.data.final_career_object);
+
+            setTimeout(() => {
+                console.log("Saving Careers to localStorage...");
+                setintelligenceObject(response.data.intelligence_object);
+                localStorage.setItem("careerData", JSON.stringify(response.data.final_career_object));
+                }, 500)
+
+
         } catch (error) {
             console.log("Error sending data to BE", error);
         }
     };
 
+    // useEffect(() => {
+    //     if (Careers && Object.keys(Careers).length > 0) {  // Ensure Careers is not empty
+    //         console.log("Careers received:", Careers);
+    //         localStorage.setItem("careerData", JSON.stringify(Careers));
+    //         console.log("Career Data Stored in Local Storage");
+    //     } else {
+    //         console.warn("Careers is empty or undefined, not storing in localStorage.");
+    //     }
+    // }, [Careers]);
+    
+    
 
     return (
         <>

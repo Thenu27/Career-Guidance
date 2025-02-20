@@ -584,43 +584,6 @@ const checkIfSubActivityExistInMainActivity = async (req, activityNames) => {
 
 
 
-// Function to assign intelligence IDs to the user's answered questions.
-// It fetches the intelligence_id for each answered question and stores it in session.
-
-
-// const getIntelligenceType = async (req) => {
-//     try {
-//         if (!req.session.questionAndAnswers || Object.keys(req.session.questionAndAnswers).length === 0) {
-//             console.log("No answers found in session");
-//             return;
-//         }
-
-//         for (const questionId of Object.keys(req.session.questionAndAnswers)) {
-//             const result = await db.select('intelligence_id', 'question')
-//                 .from('questions')
-//                 .where('question_id', questionId)
-//                 .first();
-
-//             if (result) {
-//                 req.session.quesidWithIntelligenceAndquestions[questionId] = {
-//                     question: result.question,
-//                     answer: req.session.questionAndAnswers[questionId].answer,
-
-//                     intelligence: result.multiple_intelligence 
-//                 };
-//             }
-//         }
-
-//     } catch (error) {
-//         console.error("Error in getIntelligenceType:", error);
-//     }
-// };
-
-
-
-
-
-
 app.post('/api/AdvanceLevelPage',async(req,res)=>{
     try {
         const { ALevelResultsAndGrades } = req.body;
@@ -1002,16 +965,21 @@ const calculating_Mip_From_Questions = async (questionsObject) => {
 };
 
 const mapCareer=async(iq_available,iq_percentages,non_iq_ids)=>{
-    const non_iq_ids_as_numbers = non_iq_ids.map(Number);
+    let final_career_object ={}
+    const iq_percentages_as_numbers = iq_percentages.map(Number);
+    console.log("iq_percentages_as_numbers",iq_percentages_as_numbers)
+    const non_iq_ids_as_numbers = non_iq_ids.slice(0, 4).map(Number);
+    console.log("non_iq_ids_as_numbers",non_iq_ids_as_numbers)
     try{
-        if(iq_available){
+
             const iq_careers = await db
-            .select("career")
-            .from("career_table")
-            .where("logical", "<", iq_percentages[0]) 
-            .andWhere("linguistic", "<", iq_percentages[1]) 
-            .andWhere("spatial", "<", iq_percentages[2]); 
-        
+                .select("career")
+                .from("career_table")
+                .where("logical", "<", iq_percentages_as_numbers[0]) 
+                .andWhere("linguistic", "<", iq_percentages_as_numbers[1]) 
+                .andWhere("spatial", "<", iq_percentages_as_numbers[2]); 
+            console.log("iq_careers:",iq_careers)    
+                
             if(iq_careers.length>0){
                 const best_careers1 = await db.select("career").from("career_table")
                                         .where("non_iq_intelligence1",non_iq_ids_as_numbers[0])
@@ -1024,50 +992,157 @@ const mapCareer=async(iq_available,iq_percentages,non_iq_ids)=>{
                                         .andWhere("non_iq_intelligence2",non_iq_ids_as_numbers[1])  
                                         .andWhere("non_iq_intelligence3",non_iq_ids_as_numbers[2])
                                         
-                                        const best_careers3 = await db("career_table")
-                                        .select("career")
-                                        .where(function () {
-                                            this.where("non_iq_intelligence1", non_iq_ids_as_numbers[0])
-                                                .andWhere("non_iq_intelligence2", non_iq_ids_as_numbers[1]);
-                                        })
-                                        .orWhere(function () {
-                                            this.where("non_iq_intelligence3", non_iq_ids_as_numbers[2])
-                                                .andWhere("non_iq_intelligence4", non_iq_ids_as_numbers[3]);
-                                        })
-                                        .orWhere(function () {
-                                            this.where("non_iq_intelligence3", non_iq_ids_as_numbers[3]) // Swapped
-                                                .andWhere("non_iq_intelligence4", non_iq_ids_as_numbers[2]); // Swapped
-                                        });
-                                    
+                const best_careers3 =  await db.select('career')
+                                                .from('career_table')
+                                                .where('non_iq_intelligence1', non_iq_ids_as_numbers[0]) // 4 must be in non_iq_intelligence1
+                                                .where('non_iq_intelligence2', non_iq_ids_as_numbers[1]) // 5 must be in non_iq_intelligence2
+                                                .whereIn('non_iq_intelligence3', [non_iq_ids_as_numbers[2],non_iq_ids_as_numbers[3]]) // 6 or 7 can be in non_iq_intelligence3
+                                                .whereIn('non_iq_intelligence4', [non_iq_ids_as_numbers[2],non_iq_ids_as_numbers[3]]) // 6 or 7 can be in non_iq_intelligence4
+                                                .whereNot('non_iq_intelligence3', db.ref('non_iq_intelligence4')); // Ensure 6 and 7 are different
+                
+                const best_careers4 = await db.select('career')
+                                                .from('career_table')
+                                                .where('non_iq_intelligence1', non_iq_ids_as_numbers[0]) // 4 must be in non_iq_intelligence1
+                                                .whereIn('non_iq_intelligence2', [non_iq_ids_as_numbers[1], non_iq_ids_as_numbers[2], non_iq_ids_as_numbers[3]]) // 5,6,7 in any order
+                                                .whereIn('non_iq_intelligence3', [non_iq_ids_as_numbers[1], non_iq_ids_as_numbers[2], non_iq_ids_as_numbers[3]]) // 5,6,7 in any order
+                                                .whereIn('non_iq_intelligence4', [non_iq_ids_as_numbers[1], non_iq_ids_as_numbers[2], non_iq_ids_as_numbers[3]]) // 5,6,7 in any order
+                                                .whereNot('non_iq_intelligence2', db.ref('non_iq_intelligence3')) // Ensure 5,6,7 are unique
+                                                .whereNot('non_iq_intelligence2', db.ref('non_iq_intelligence4'))
+                                                .whereNot('non_iq_intelligence3', db.ref('non_iq_intelligence4'));
+                                                                                       
+
 
                   console.log("best_careers1",best_careers1)    
                   console.log("best_careers2",best_careers2)                          
-                  console.log("best_careers3",best_careers3)    
+                  console.log("best_careers3",best_careers3)  
+                  console.log("best_careers4",best_careers4)    
+  
                   
                   const allCareers = [
                     ...best_careers1,
                     ...best_careers2,
-                    ...best_careers3
+                    ...best_careers3,
+                    ...best_careers4
                 ].map(item => item.career); // Extract only career names
                 
                 // Convert to a Set to remove duplicates, then back to an array
                 const uniqueCareers = [...new Set(allCareers)];
+                const best_careers_all = uniqueCareers.filter(careerName => 
+                    iq_careers.some(iq => iq.career === careerName)
+                );
                 
-                console.log(uniqueCareers);
+                console.log("best_careers_all",best_careers_all)
+
+                final_career_object["bestCareers"]=best_careers_all
+                                
+                 const good_careers1 = await db.select('career').from("career_table")
+                                                .whereIn('non_iq_intelligence1', non_iq_ids_as_numbers)
+                                                .whereIn('non_iq_intelligence2', non_iq_ids_as_numbers)
+                                                .whereIn('non_iq_intelligence3', non_iq_ids_as_numbers)
+                                                .whereIn('non_iq_intelligence4', non_iq_ids_as_numbers)
+                                                .whereNot('non_iq_intelligence1', db.ref('non_iq_intelligence2'))
+                                                .whereNot('non_iq_intelligence1', db.ref('non_iq_intelligence3'))
+                                                .whereNot('non_iq_intelligence1', db.ref('non_iq_intelligence4'))
+                                                .whereNot('non_iq_intelligence2', db.ref('non_iq_intelligence3'))
+                                                .whereNot('non_iq_intelligence2', db.ref('non_iq_intelligence4'))
+                                                .whereNot('non_iq_intelligence3', db.ref('non_iq_intelligence4'));
                 
+                console.log("Good_careers1",good_careers1)
+                
+                const good_careers2 = await db.select('career')
+                        .from('career_table')
+                        .whereIn('non_iq_intelligence1', [non_iq_ids_as_numbers[0],non_iq_ids_as_numbers[1],non_iq_ids_as_numbers[2]])
+                        .whereIn('non_iq_intelligence2', [non_iq_ids_as_numbers[0],non_iq_ids_as_numbers[1],non_iq_ids_as_numbers[2]])
+                        .whereIn('non_iq_intelligence3', [non_iq_ids_as_numbers[0],non_iq_ids_as_numbers[1],non_iq_ids_as_numbers[2]])
+                        .whereNot('non_iq_intelligence1', db.ref('non_iq_intelligence2'))
+                        .whereNot('non_iq_intelligence1', db.ref('non_iq_intelligence3'))
+                        .whereNot('non_iq_intelligence2', db.ref('non_iq_intelligence3'));    
+                   
+                        
+                        console.log("Good_careers2",good_careers2)
+                
+                        const good_careers_combined = [
+                            ...good_careers1,
+                            ...good_careers2,
+                        ].map(item => item.career); // Extract only career names
+                        
+                        // Convert to a Set to remove duplicates, then back to an array
+                        const good_careers = [...new Set(good_careers_combined)]; 
+
+                        const final_good_careers = good_careers.filter(item => !best_careers_all.includes(item));
+                        console.log("final_good_careers",final_good_careers)
+                        final_career_object["GoodCareers"]=final_good_careers
+
+
+                const suitable_careers1 = await db.select('career')
+                                    .from('career_table')
+                                    .whereIn('non_iq_intelligence1', [non_iq_ids_as_numbers[0],non_iq_ids_as_numbers[1]])
+                                    .whereIn('non_iq_intelligence2', [non_iq_ids_as_numbers[0],non_iq_ids_as_numbers[1]])
+                                    .whereNot('non_iq_intelligence1', db.ref('non_iq_intelligence2'));
+
+                // console.log("suitable_careers1",suitable_careers1);
+
+
+                const suitable_careers2 = await db.select('career')
+                                                    .from('career_table')
+                                                    .where('non_iq_intelligence1',non_iq_ids_as_numbers[0])
+                                                    .where('non_iq_intelligence2', non_iq_ids_as_numbers[1])
+                console.log("suitable_careers2",suitable_careers2);
+
+                const suitable_careers3 =  await db.select('career')
+                                                    .from('career_table')
+                                                    .where(builder => {
+                                                    builder.where('non_iq_intelligence1', non_iq_ids_as_numbers[0])
+                                                        .orWhere('non_iq_intelligence2', non_iq_ids_as_numbers[0])
+                                                        .orWhere('non_iq_intelligence3', non_iq_ids_as_numbers[0])
+                                                        .orWhere('non_iq_intelligence4', non_iq_ids_as_numbers[0]);
+                 });
+                
+                //  console.log("suitable_careers3",suitable_careers3);
+
+
+                 const suitable_careers4 =  await db.select('career')
+                                                    .from('career_table')
+                                                    .where(builder => {
+                                                    builder.where('non_iq_intelligence1', non_iq_ids_as_numbers[1])
+                                                        .orWhere('non_iq_intelligence2', non_iq_ids_as_numbers[1])
+                                                        .orWhere('non_iq_intelligence3', non_iq_ids_as_numbers[1])
+                                                        .orWhere('non_iq_intelligence4', non_iq_ids_as_numbers[1]);
+                                                        });
+
+                    // console.log("suitable_careers4",suitable_careers4);
+
+
+                    const suitable_careers_combined = [
+                        ...suitable_careers1,
+                        ...suitable_careers2,
+                        ...suitable_careers3,
+                        ...suitable_careers4
+                    ].map(item => item.career); // Extract only career names
+                    
+                    // Convert to a Set to remove duplicates, then back to an array
+                    const suitable_careers = [...new Set(suitable_careers_combined)]; 
+                     
+                    const final_suitable_careers = suitable_careers.filter(
+                        item => !best_careers_all.includes(item) && !final_good_careers.includes(item)
+                      );
+
+                    console.log("final_suitable_careers",final_suitable_careers);
+
+                    final_career_object["SuitableCareers"]=final_suitable_careers
+
+                    return(final_career_object);
 
             }else{
                 console.log("No career found")
             }
         
+           
 
-        }else{
-            console.log("No career found")
-        }
 
 
         }catch(err){
-        console.log(err)
+        return err
     }
 }
 
@@ -1091,8 +1166,9 @@ const CheckAndMapCareer=async(intelligence_object)=>{
 
     console.log("non_iq_ids ",non_iq_ids )
       const iq_available = count===3 ? true:false
-      await mapCareer(iq_available,iq_percentages,non_iq_ids)
+    const careers =  await mapCareer(iq_available,iq_percentages,non_iq_ids)
 
+    return careers
     // console.log("iq_available",iq_available)
 }
 
@@ -1101,10 +1177,11 @@ const CheckAndMapCareer=async(intelligence_object)=>{
 app.post('/api/Assesment', async (req, res) => {
     try {
         const { questionAndAnswers } = req.body;
+        console.log("questionAndAnswers",questionAndAnswers)
         const intelligence_object =await calculating_Mip_From_Questions(questionAndAnswers);
-        await CheckAndMapCareer(intelligence_object)
+       const careers = await CheckAndMapCareer(intelligence_object)
         // console.log("intelligence_object",intelligence_object)
-        res.status(200).json({ intelligence_object });
+        res.status(200).json({intelligence_object:intelligence_object,final_career_object:careers});
     } catch (error) {
         res.status(500).json({ Message: "Error in Receiving Data" });
     }
@@ -1115,7 +1192,10 @@ app.post('/api/Assesment', async (req, res) => {
 
 
 
-
+app.post('/api/calculation',async(req,res)=>{
+    const {intelligence_object} = req.body;
+    console.log("intelligence_object recievd from FE",req.body)
+})
 
 
 

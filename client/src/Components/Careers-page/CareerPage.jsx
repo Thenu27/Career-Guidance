@@ -13,26 +13,26 @@ const CareerPage = () => {
     const { setVisitedPages } = useContext(ProgressContext);
     const { setCareers, Careers } = useContext(CareerContext);
 
-    // Function to fetch careers from the backend (memoized to prevent unnecessary recreation)
-    const fetchCareers = useCallback(async () => {
-        try {
-            const response = await axios.get(`${process.env.REACT_APP_URL}/api/career`); // API call to fetch careers
-            setCareers(response.data); // Update careers state in context
-        } catch (error) {
-            console.error("Error receiving careers from backend", error);
+    useEffect(() => {
+        const storedCareers = localStorage.getItem("careerData");
+    
+        if (storedCareers) { // ✅ Check if data exists
+            try {
+                const parsedCareers = JSON.parse(storedCareers); // ✅ Parse safely
+                setCareers(parsedCareers);
+                console.log("Careers loaded from localStorage:", parsedCareers);
+            } catch (error) {
+                console.error("Error parsing careerData:", error);
+            }
+        } else {
+            console.warn("No careerData found in localStorage.");
+            setCareers("No Careers Found"); // ✅ Corrected this check
         }
-    }, [setCareers]); // Dependency array ensures fetchCareers is only recreated if setCareers changes
+    }, []);
 
-    // Fetch careers when the component mounts
-    useEffect(() => {
-        fetchCareers();
-    }, [fetchCareers]);
-
-    // Log fetched careers for debugging
-    useEffect(() => {
-        console.log('Careers:', Careers);
-    }, [Careers]);
-
+    useEffect(()=>{
+        console.log("Careers",Careers)
+    },[Careers])
     // Mark pages as visited when this page loads
     useEffect(() => {
         setVisitedPages(() => ({
@@ -63,8 +63,8 @@ const CareerPage = () => {
 
     // Function to render Top Careers
     const renderTopCareers = () => {
-        if (Careers && Careers.topCareers && Careers.topCareers.length > 0) {
-            return Careers.topCareers.map((career) => (
+        if (Careers && Careers.bestCareers && Careers.bestCareers.length > 0) {
+            return Careers.bestCareers.map((career) => (
                 <button className="mapped-career-btn" key={career}>
                     {career}
                 </button>
@@ -76,8 +76,8 @@ const CareerPage = () => {
 
     // Function to render Moderate Careers
     const renderModerateCareers = () => {
-        if (Careers && Careers.moderateCareers && Careers.moderateCareers.length > 0) {
-            return Careers.moderateCareers.map((career) => (
+        if (Careers && Careers.GoodCareers && Careers.GoodCareers.length > 0) {
+            return Careers.GoodCareers.map((career) => (
                 <button className="mapped-career-btn" key={career}>
                     {career}
                 </button>
@@ -86,6 +86,19 @@ const CareerPage = () => {
             return <p>No Moderate Careers Found</p>;
         }
     };
+
+        // Function to render Moderate Careers
+        const renderSuitableCareers = () => {
+            if (Careers && Careers.SuitableCareers && Careers.SuitableCareers.length > 0) {
+                return Careers.SuitableCareers.map((career) => (
+                    <button className="mapped-career-btn" key={career}>
+                        {career}
+                    </button>
+                ));
+            } else {
+                return <p>No Suitable Careers Found</p>;
+            }
+        };
 
     return (
         <div className="career-page">
@@ -114,9 +127,7 @@ const CareerPage = () => {
                 <div className="career-box">
                     <h2 className="career-type">Satisfactory Career</h2>
                     <div className="chosen-career-box">
-                        <button>Career 1</button>
-                        <button>Career 2</button>
-                        <button>Career 3</button>
+                    {renderSuitableCareers()}
                     </div>
                 </div>
             </div>
