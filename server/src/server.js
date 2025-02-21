@@ -964,7 +964,8 @@ const calculating_Mip_From_Questions = async (questionsObject) => {
     
 };
 
-const mapCareer=async(iq_available,iq_percentages,non_iq_ids)=>{
+
+const mapCareer=async(iq_percentages,non_iq_ids)=>{
     let final_career_object ={}
     const iq_percentages_as_numbers = iq_percentages.map(Number);
     console.log("iq_percentages_as_numbers",iq_percentages_as_numbers)
@@ -1148,11 +1149,11 @@ const mapCareer=async(iq_available,iq_percentages,non_iq_ids)=>{
 
 const CheckAndMapCareer=async(intelligence_object)=>{
     let count =0;
-    for(let i=0;i<3;i++){
-       const intelligenceId= Number(intelligence_object[i][0])
-        if(intelligenceId === 1 || intelligenceId ===2 || intelligenceId ==3)
-            count++
-    }
+    // for(let i=0;i<3;i++){
+    //    const intelligenceId= Number(intelligence_object[i][0])
+    //     if(intelligenceId === 1 || intelligenceId ===2 || intelligenceId ==3)
+    //         count++
+    // }
     
     const requiredIDs = ['1', '2', '3'];
     const iq_percentages = intelligence_object
@@ -1165,8 +1166,7 @@ const CheckAndMapCareer=async(intelligence_object)=>{
 
 
     console.log("non_iq_ids ",non_iq_ids )
-      const iq_available = count===3 ? true:false
-    const careers =  await mapCareer(iq_available,iq_percentages,non_iq_ids)
+    const careers =  await mapCareer(iq_percentages,non_iq_ids)
 
     return careers
     // console.log("iq_available",iq_available)
@@ -1186,16 +1186,6 @@ app.post('/api/Assesment', async (req, res) => {
         res.status(500).json({ Message: "Error in Receiving Data" });
     }
 });
-
-
-
-
-
-
-app.post('/api/calculation',async(req,res)=>{
-    const {intelligence_object} = req.body;
-    console.log("intelligence_object recievd from FE",req.body)
-})
 
 
 
