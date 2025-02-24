@@ -1050,14 +1050,17 @@ const mapCareer=async(iq_percentages,non_iq_ids)=>{
                 
                 console.log("Good_careers1",good_careers1)
                 
-                const good_careers2 = await db.select('career')
-                        .from('career_table')
-                        .whereIn('non_iq_intelligence1', [non_iq_ids_as_numbers[0],non_iq_ids_as_numbers[1],non_iq_ids_as_numbers[2]])
-                        .whereIn('non_iq_intelligence2', [non_iq_ids_as_numbers[0],non_iq_ids_as_numbers[1],non_iq_ids_as_numbers[2]])
-                        .whereIn('non_iq_intelligence3', [non_iq_ids_as_numbers[0],non_iq_ids_as_numbers[1],non_iq_ids_as_numbers[2]])
-                        .whereNot('non_iq_intelligence1', db.ref('non_iq_intelligence2'))
-                        .whereNot('non_iq_intelligence1', db.ref('non_iq_intelligence3'))
-                        .whereNot('non_iq_intelligence2', db.ref('non_iq_intelligence3'));    
+                const good_careers2 = await db('career_table')
+                .select('*')
+                .whereRaw(
+                    'ARRAY[?::INTEGER, ?::INTEGER, ?::INTEGER] <@ ARRAY[non_iq_intelligence1, non_iq_intelligence2, non_iq_intelligence3, non_iq_intelligence4]',
+                    [non_iq_ids[0], non_iq_ids[1], non_iq_ids[2]]
+                );
+            
+            
+    
+    
+
                    
                         
                         console.log("Good_careers2",good_careers2)
@@ -1074,12 +1077,18 @@ const mapCareer=async(iq_percentages,non_iq_ids)=>{
                         console.log("final_good_careers",final_good_careers)
                         final_career_object["GoodCareers"]=final_good_careers
 
-
-                const suitable_careers1 = await db.select('career')
-                                    .from('career_table')
-                                    .whereIn('non_iq_intelligence1', [non_iq_ids_as_numbers[0],non_iq_ids_as_numbers[1]])
-                                    .whereIn('non_iq_intelligence2', [non_iq_ids_as_numbers[0],non_iq_ids_as_numbers[1]])
-                                    .whereNot('non_iq_intelligence1', db.ref('non_iq_intelligence2'));
+                        const suitable_careers1 = await db
+                            .select('career')
+                            .from('career_table')
+                            .whereRaw('? IN (non_iq_intelligence1, non_iq_intelligence2, non_iq_intelligence3, non_iq_intelligence4)', [non_iq_ids_as_numbers[0]])
+                            .whereRaw('? IN (non_iq_intelligence1, non_iq_intelligence2, non_iq_intelligence3, non_iq_intelligence4)', [non_iq_ids_as_numbers[1]])
+                            .whereNot('non_iq_intelligence1', db.ref('non_iq_intelligence2'))
+                            .whereNot('non_iq_intelligence1', db.ref('non_iq_intelligence3'))
+                            .whereNot('non_iq_intelligence1', db.ref('non_iq_intelligence4'))
+                            .whereNot('non_iq_intelligence2', db.ref('non_iq_intelligence3'))
+                            .whereNot('non_iq_intelligence2', db.ref('non_iq_intelligence4'))
+                            .whereNot('non_iq_intelligence3', db.ref('non_iq_intelligence4'));
+                    
 
                 // console.log("suitable_careers1",suitable_careers1);
 
