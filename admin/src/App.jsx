@@ -29,6 +29,7 @@ import MainActivityAdd from './components/Activities/MainActivityAdd/MainActivit
 import SubActivities from './components/Activities/SubActivites/SubActivites';
 import SubActivityEdit from './components/Activities/SubActivityEdit/SubActivityEdit';
 import SubActivitiesAdd from './components/Activities/SubActivitiesAdd/SubActivitiesAdd';
+import CareerFieldAdd from './components/Career/CareerFieldAdd/CareerFieldAdd';
 
 
 function App() {
@@ -75,6 +76,7 @@ function App() {
 
       <Route path='/admin/careerfield' element={<CareerPage/>}>
         <Route index element={<CareerField/>}/>
+        <Route path='career-field-add' element={<CareerFieldAdd/>}/>
         <Route path='career' element={<Career/>}/>
         <Route path='add' element={<CareerAdd/>}/>
         <Route path='update' element={<CareerUpdate/>}/>

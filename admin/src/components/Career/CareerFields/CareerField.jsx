@@ -33,7 +33,11 @@ const CareerField =()=>{
         fetchCareerField();
     },[])
 
+    const goToAddCareerField=()=>{
+        navigate('/admin/careerfield/career-field-add')
+    }
     
+
 
     useEffect(()=>{
         localStorage.setItem('SelectedField',SelectedField)
@@ -52,6 +56,11 @@ const CareerField =()=>{
                 })}
             </div>
         </div>
+
+        <div className='career-field-add'>
+            <button onClick={goToAddCareerField} className='login-btn'>Add Career Field</button>
+        </div>        
+        
         </>
 
     )

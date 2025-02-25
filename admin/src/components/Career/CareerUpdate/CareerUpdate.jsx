@@ -18,9 +18,11 @@ const CareerUpdate = () => {
     const [Score2,setScore2] = useState('No Data Selected')
     const [Score3,setScore3] = useState('No Data Selected')
     
-    const [Intelligence1,setIntelligence1] = useState('No Data Selected')
-    const [Intelligence2,setIntelligence2] = useState('No Data Selected');
-    const [Intelligence3,setIntelligence3] = useState('No Data Selected');
+    const [Non_Iq_Intelligence1,setNon_Iq_Intelligence1] = useState('No Data Selected')
+    const [Non_Iq_Intelligence2,setNon_Iq_Intelligence2] = useState('No Data Selected');
+    const [Non_Iq_Intelligence3,setNon_Iq_Intelligence3] = useState('No Data Selected');
+    const [Non_Iq_Intelligence4,setNon_Iq_Intelligence4] = useState('No Data Selected');
+
     
     const [Specialization1,setSpecialization1] = useState('No Data Selected')
     const [Specialization2,setSpecialization2] = useState('No Data Selected');
@@ -28,26 +30,32 @@ const CareerUpdate = () => {
     const [Specialization4,setSpecialization4] = useState('No Data Selected');
 
     const [CareerName,setCareerName] = useState();
+    const [CareerLinguistic,setCareerLinguistic] = useState();
+    const [CareerLogical,setCareerLogical] = useState();
+    const [CareerSpatial,setCareerSpatial] = useState();
+
 
 
     useEffect(()=>{
-        if (SelectedCareerDetails && SelectedCareerDetails.length > 0)            {
-            setIntelligence1(IdentifyIntelligence(SelectedCareerDetails[0].mi_1))
-            setIntelligence2(IdentifyIntelligence(SelectedCareerDetails[0].mi_2))
-            setIntelligence3(IdentifyIntelligence(SelectedCareerDetails[0].mi_3))
+        if (SelectedCareerDetails && SelectedCareerDetails.length > 0){
+
+            setNon_Iq_Intelligence1(IdentifyIntelligence(SelectedCareerDetails[0].non_iq_intelligence1))
+            setNon_Iq_Intelligence2(IdentifyIntelligence(SelectedCareerDetails[0].non_iq_intelligence2))
+            setNon_Iq_Intelligence3(IdentifyIntelligence(SelectedCareerDetails[0].non_iq_intelligence3))
+            setNon_Iq_Intelligence4(IdentifyIntelligence(SelectedCareerDetails[0].non_iq_intelligence4))
+
 
             setSpecialization1(SelectedCareerDetails[0].s1)
             setSpecialization2(SelectedCareerDetails[0].s2)
             setSpecialization3(SelectedCareerDetails[0].s3)
             setSpecialization4(SelectedCareerDetails[0].s4)
 
-
-
-            setScore1(SelectedCareerDetails[0].mi_percentage1)
-            setScore2(SelectedCareerDetails[0].mi_percentage2)
-            setScore3(SelectedCareerDetails[0].mi_percentage3)
-
             setCareerName(SelectedCareerDetails[0].career)
+            
+            setCareerLinguistic(SelectedCareerDetails[0].linguistic)
+            setCareerLogical(SelectedCareerDetails[0].logical);
+            setCareerSpatial(SelectedCareerDetails[0].spatial)
+
 
 
         }
@@ -154,15 +162,19 @@ const CareerUpdate = () => {
     }
     const handleIntelligenceChange=(value,index)=>{
         if(index===1){
-           setIntelligence1(value)
+            setNon_Iq_Intelligence1(value)
            return
         }
         if(index===2){
-           setIntelligence2(value)
+            setNon_Iq_Intelligence2(value)
            return
         }
         if(index===3){
-           setIntelligence3(value)
+            setNon_Iq_Intelligence3(value)
+           return
+        }
+        if(index===4){
+            setNon_Iq_Intelligence4(value)
            return
         }
    }
@@ -174,18 +186,7 @@ const CareerUpdate = () => {
         setCareerName(value)
         return
     }
-    if(scoreIndex===1){
-        setScore1(value)
-        return
-    }
-    if(scoreIndex===2){
-        setScore2(value)
-        return
-    }
-    if(scoreIndex===3){
-        setScore3(value)
-        return
-    }
+
 
     if(scoreIndex===4){
         setSpecialization1(value)
@@ -204,18 +205,34 @@ const CareerUpdate = () => {
         return
     }
 
+    if(scoreIndex===8){
+        setCareerLinguistic(value)
+        return
+    }
+
+    if(scoreIndex===9){
+        setCareerLogical(value)
+        return
+    }
+
+    if(scoreIndex===10){
+        setCareerSpatial(value)
+        return
+    }
+
 }
 
 
 const sendToBackEnd=async()=>{
     try{
         const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/admin/career/update`,{
-            Intelligence1,
-            Intelligence2,
-            Intelligence3,
-            Score1,
-            Score2,
-            Score3,
+            CareerLinguistic,
+            CareerLogical,
+            CareerSpatial,           
+            Non_Iq_Intelligence1,
+            Non_Iq_Intelligence2,
+            Non_Iq_Intelligence3,
+            Non_Iq_Intelligence4,
             CareerName,
             Specialization1,
             Specialization2,
@@ -285,12 +302,47 @@ const updateSubject=async()=>{
                     <button className='career-update-bnt '>{CareerName}</button>
                     }
                     
+            </div>
+
+
+                <div className='career-update-bnt-container'>
+                    
+                    <button className='career-update-bnt'>
+                        Linguistic
+                    </button>
+                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,8)} className='career-update-bnt' type='number'/>:
+                    <button  className='career-update-bnt2'>{CareerLinguistic}</button>}    
+
                 </div>
 
                 <div className='career-update-bnt-container'>
+                    
+                    <button className='career-update-bnt'>
+                        Logical
+                    </button>
+                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,9)} className='career-update-bnt' type='number'/>:
+                    <button  className='career-update-bnt2'>{CareerLogical}</button>}    
+
+                </div>
+
+                <div className='career-update-bnt-container'>
+                    
+                    <button className='career-update-bnt'>
+                        Spatial
+                    </button>
+                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,10)} className='career-update-bnt' type='number'/>:
+                    <button  className='career-update-bnt2'>{CareerSpatial}</button>}    
+
+                </div>
+
+ 
+                
+
+                <div className='career-update-bnt-container'>
+                    <button>Non Iq Intelligence 01</button>
                     {Edit?<label className="dropdown">
                                 <div class="dd-button intelligence-input">
-                                {Intelligence1}
+                                {Non_Iq_Intelligence1}
                                 </div>
 
                                 <input  type="checkbox" className="dd-input" id="test"/>
@@ -298,17 +350,18 @@ const updateSubject=async()=>{
                                 {dropdownData(1)}
 
                           </label>:
-                    <button className='career-update-bnt'>{Intelligence1}</button>}
+                    <button className='career-update-bnt'>{Non_Iq_Intelligence1}</button>}
 
-                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,1)}  className='career-update-bnt2' value={Score1}/>:
-                    <button className='career-update-bnt'>{Score1}</button>}
+                    {/* {Edit?<input onChange={(e)=>handleOnChange(e.target.value,1)}  className='career-update-bnt2' value={Score1}/>:
+                    <button className='career-update-bnt'>{Score1}</button>} */}
                 </div>
 
                 {/* Intelligence 02 */}
                 <div className='career-update-bnt-container'>
+                    <button>Non Iq Intelligence 02</button>
                     {Edit?<label className="dropdown">
                                 <div class="dd-button intelligence-input">
-                                {Intelligence1}
+                                {Non_Iq_Intelligence2}
                                 </div>
 
                                 <input  type="checkbox" className="dd-input" id="test"/>
@@ -316,31 +369,49 @@ const updateSubject=async()=>{
                                 {dropdownData(2)}
 
                           </label>:
-                    <button className='career-update-bnt'>{Intelligence2}</button>}
+                    <button className='career-update-bnt'>{Non_Iq_Intelligence2}</button>}
 
-                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,2)} className='career-update-bnt2' value={Score2}/>:
-                    <button className='career-update-bnt'>{Score2}</button>}
+                    {/* {Edit?<input onChange={(e)=>handleOnChange(e.target.value,1)}  className='career-update-bnt2' value={Score1}/>:
+                    <button className='career-update-bnt'>{Score1}</button>} */}
                 </div>
 
 
                 {/* Intelligence 03 */}
                 <div className='career-update-bnt-container'>
+                    <button>Non Iq Intelligence 03</button>
                     {Edit?<label className="dropdown">
                                 <div class="dd-button intelligence-input">
-                                {Intelligence3}
+                                {Non_Iq_Intelligence3}
                                 </div>
 
-                                <input type="checkbox" className="dd-input" id="test"/>
+                                <input  type="checkbox" className="dd-input" id="test"/>
 
                                 {dropdownData(3)}
 
                           </label>:
-                    <button className='career-update-bnt'>{Intelligence3}</button>}
+                    <button className='career-update-bnt'>{Non_Iq_Intelligence3}</button>}
 
-                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,3)} className='career-update-bnt2' value={Score3}/>:
-                    <button className='career-update-bnt'>{Score3}</button>}
+                    {/* {Edit?<input onChange={(e)=>handleOnChange(e.target.value,1)}  className='career-update-bnt2' value={Score1}/>:
+                    <button className='career-update-bnt'>{Score1}</button>} */}
                 </div>
 
+                <div className='career-update-bnt-container'>
+                    <button>Non Iq Intelligence 03</button>
+                    {Edit?<label className="dropdown">
+                                <div class="dd-button intelligence-input">
+                                    {Non_Iq_Intelligence4}
+                                </div>
+
+                                <input  type="checkbox" className="dd-input" id="test"/>
+
+                                {dropdownData(4)}
+
+                          </label>:
+                    <button className='career-update-bnt'>{Non_Iq_Intelligence4}</button>}
+
+                    {/* {Edit?<input onChange={(e)=>handleOnChange(e.target.value,1)}  className='career-update-bnt2' value={Score1}/>:
+                    <button className='career-update-bnt'>{Score1}</button>} */}
+                </div>        
 
                 <div className='career-update-bnt-container'>
                     

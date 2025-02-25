@@ -23,6 +23,9 @@ const CareerPage=()=>{
         if(location.pathname==='/admin/careerfield/update'){
             navigate('/admin/careerfield/career')
         }
+        if(location.pathname==='/admin/careerfield/career-field-add'){
+            navigate('/admin/careerfield')
+        }
 
     }
     return(

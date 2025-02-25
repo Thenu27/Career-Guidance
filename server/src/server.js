@@ -14,7 +14,7 @@ const redis = require('redis');
 require('dotenv').config({ path: require('path').resolve(__dirname, '..', '.env') });
 
 app.use(cors({
-    origin: ['http://localhost:3001', 'https://localhost:5173'],
+    origin: ['https://www.univerlens.com','http://localhost:3001','https://univerlens.com','https://localhost:5173'],
     methods: ['GET', 'POST'],        // Specify the HTTP methods your API supports
     credentials: true                // Allow credentials (cookies, sessions, etc.)
 }));
@@ -44,14 +44,6 @@ redisClient.on('error', (err) => {
 
 
 
-// app.use(cookieParser()); // Add this before csurf middleware
-// const csrfProtection = csrf({ cookie: true });
-
-
-// app.get('/api/get-csrf-token', csrfProtection, (req, res) => {
-//     res.cookie('XSRF-TOKEN', req.csrfToken()); // Send token as a cookie
-//     res.json({ message: 'CSRF token set' });
-// });
 
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
@@ -109,16 +101,6 @@ app.use(
   app.use(xssClean()); // Protect against XSS attacks
   console.log(process.env.DATABASE_CLIENT);  // Should print 'pg'
 
-
-// Enable CORS to allow requests from other origins
-
-// Set up session middleware to manage user sessions.
-// This stores user data on the server between HTTP requests.
-
-// const redisStore = new RedisStore({
-//     client: redisClient,
-//     prefix: 'sess:', // Optional: customize the Redis key prefix for sessions
-// });
 
 const store = new RedisStore({
     client: redisClient
@@ -1543,30 +1525,55 @@ app.post('/api/admin/career', async (req, res) => {
     }
 });
 
-
+app.post('/api/admin/careerfield/career-field-add',(req,res)=>{
+    try{
+        const {CareerField} = req.body
+        if(!CareerField){
+            return res.status(400).send('No Data To Be Added')
+        }
+        console.log("CareerField",CareerField);
+        res.status(200).send('New Career Field Received')
+    }catch(err){
+        console.log(err)
+    }
+})
 
 app.post('/api/admin/career/add', async (req, res) => {
     try {
         const {
-            SelectedCareerIntlligence01,
-            SelectedCareerIntlligence02,
-            SelectedCareerIntlligence03,
+            SelectedNonIq01,
+            SelectedNonIq02,
+            SelectedNonIq03,
+            SpatialScore,
+            LogicalScore,
+            LinguisticScore,
             CareerScore01,
             CareerScore02,
             CareerScore03,
-            NewCareer
+            Specialization01,
+            Specialization02,
+            Specialization03,
+            NewCareer,
+            NewCareerId
 
         } = req.body;
 
         // Log the received data for debugging
         console.log("Received data:", {
-            SelectedCareerIntlligence01,
-            SelectedCareerIntlligence02,
-            SelectedCareerIntlligence03,
+            SelectedNonIq01,
+            SelectedNonIq02,
+            SelectedNonIq03,
+            SpatialScore,
+            LogicalScore,
+            LinguisticScore,
             CareerScore01,
             CareerScore02,
             CareerScore03,
-            NewCareer
+            Specialization01,
+            Specialization02,
+            Specialization03,
+            NewCareer,
+            NewCareerId
 
         });
 
@@ -1607,12 +1614,14 @@ app.post('/api/admin/career/details',async(req,res)=>{
 
 app.post('/api/admin/career/update',(req,res)=>{
     try{
-        const {Intelligence1,
-               Intelligence2,
-               Intelligence3,
-               Score1,
-               Score2,
-               Score3,
+        const {
+            CareerLinguistic,
+            CareerLogical,
+            CareerSpatial,
+               Non_Iq_Intelligence1,
+               Non_Iq_Intelligence2,
+               Non_Iq_Intelligence3,
+               Non_Iq_Intelligence4,
                CareerName,
                Specialization1,
                Specialization2,
@@ -1621,13 +1630,13 @@ app.post('/api/admin/career/update',(req,res)=>{
 
 
      } = req.body;
- 
-     console.log('Intelligence1:',Intelligence1)
-     console.log('Intelligence2:',Intelligence2)
-     console.log('Intelligence3:',Intelligence3)
-     console.log('Score1:',Score1);
-     console.log('Score2:',Score2);
-     console.log('Score3:',Score3);
+     console.log("CareerLinguistic:",CareerLinguistic)
+     console.log("CareerLogical:",CareerLogical)
+     console.log("CareerSpatial:",CareerSpatial)
+     console.log('Non_Iq_Intelligence1:',Non_Iq_Intelligence1)
+     console.log('Non_Iq_Intelligence2:',Non_Iq_Intelligence2)
+     console.log('Non_Iq_Intelligence3:',Non_Iq_Intelligence3)
+     console.log('Non_Iq_Intelligence4:',Non_Iq_Intelligence4)
      console.log('CareerName:',CareerName)
      console.log('Specialization1:',Specialization1);
      console.log('Specialization2:',Specialization2);
