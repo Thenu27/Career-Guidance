@@ -18,7 +18,7 @@ const CareerFieldAdd = ()=>{
                 CareerField
             })
             if(response.data === 'New Career Field Received'){
-                alert('Data Succesfully Received')
+                alert('New career field created')
             }else{
                 alert('Error Occured')
             }

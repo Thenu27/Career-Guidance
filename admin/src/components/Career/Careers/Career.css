@@ -1,5 +1,8 @@
 .add-career-container{
-    width:170px;
+    display: flex;
+    flex-direction: row;
+    width:370px;
+    gap:10px;
     height: 80px;
     margin: auto;
     margin-top: 15px;
@@ -13,4 +16,10 @@
 
 .career-field-inner-container-02{
     height: 370px;
+}
+
+.delete-field-btn{
+    background-color: red;
+    color: white;
+    font-size: 20px;
 }

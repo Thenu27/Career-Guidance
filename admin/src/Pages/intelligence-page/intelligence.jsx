@@ -16,6 +16,7 @@ const IntelligencePage =()=>{
 
     const storeSelectedValue=(value)=>{
         setSelectedIntelligenceAdmin(value)
+        localStorage.setItem("Selected-Intelligence-admin",value)
     }
 
     useEffect(()=>{
@@ -34,20 +35,6 @@ const IntelligencePage =()=>{
         navigate('/questions');
     }
 
-    const sendIntelligenceToBE=async()=>{
-        try{
-            const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/admin/intelligence`,{
-                SelectedIntelligenceAdmin
-            });
-            console.log(response.data);;
-           setAdminQuestions(response.data)
-        }catch(error){
-            console.error("Error sending intelligence type to backend",error)
-        }
-
-        
-
-    }
 
     return(
         <div >

@@ -1,19 +1,26 @@
 import './QuestionUpdate.css';
 import { QuestionContext } from '../../../Context/Question.context';
 import { IntelligenceContext } from '../../../Context/intelligence.context';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
 const QuestionUpdate=()=>{
     const {questionToBeAdded,setquestionToBeAdded} = useContext(QuestionContext);
-    const {SelectedIntelligenceAdmin} = useContext(IntelligenceContext)
+    const {SelectedIntelligenceAdmin} = useContext(IntelligenceContext);
+    const [SelectedIntelligence,setSelectedIntelligence] = useState()
 
+    useEffect(()=>{
+        const storedValue = localStorage.getItem("Selected-Intelligence-admin");;
+        if(storedValue){
+            setSelectedIntelligence(storedValue)
+        }
+    })
     const handleChange =(event)=>{
 
         setquestionToBeAdded((prev)=>({
             ...prev,
             question:event.target.value,
-            intelligenceId : SelectedIntelligenceAdmin
+            intelligenceId : SelectedIntelligence
         }))
     }
 
@@ -32,6 +39,9 @@ const QuestionUpdate=()=>{
                 const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/questions/add`,{
                     questionToBeAdded    
                     })
+                if(response.data==='Succesfully Created'){
+                    alert("Question Succefully Created")
+                }    
             }catch(error){
                 console.log('Error Sending New Question to the backend',error)
             }

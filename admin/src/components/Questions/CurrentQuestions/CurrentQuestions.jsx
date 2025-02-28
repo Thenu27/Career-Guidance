@@ -6,12 +6,19 @@ import { useNavigate } from 'react-router-dom';
 import DeleteIcon from '../../../assets/icon.svg';
 
 const CurrentQuestions = () => {
-    const { AdminQuestions } = useContext(IntelligenceContext);
+    const { AdminQuestions,setAdminQuestions} = useContext(IntelligenceContext);
 
     // Store updated questions dynamically using question_id as the key
     const [updatedQuestions, setUpdatedQuestions] = useState({});
 
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        const selectedIntelligenceValue = localStorage.getItem("Selected-Intelligence-admin")
+        if(selectedIntelligenceValue){
+            sendIntelligenceToBE(selectedIntelligenceValue)
+        }
+    },[])
 
     useEffect(() => {
         // Initialize updatedQuestions with current questions
@@ -26,11 +33,11 @@ const CurrentQuestions = () => {
         navigate('/questions/add');
     };
 
-    const sendQuestionToDelete = async (question) => {
+    const sendQuestionToDelete = async (question,questionId) => {
         try {
             const response = await axios.post(
                 `${import.meta.env.VITE_APP_URL}/api/admin/question/delete`,
-                { question }
+                {question,questionId }
             );
 
             if (response.status === 200 && response.data === 'Question Deleted') {
@@ -44,13 +51,13 @@ const CurrentQuestions = () => {
         }
     };
 
-    const handleDelete = async (question) => {
+    const handleDelete = async (question,questionId) => {
         if (
             window.confirm(
                 `Are you sure you want to delete this question?\n\n"${question}"\n\nThis action cannot be undone.`
             )
         ) {
-            await sendQuestionToDelete(question);
+            await sendQuestionToDelete(question,questionId);
         }
     };
     
@@ -95,6 +102,22 @@ const CurrentQuestions = () => {
 
     };
 
+    const sendIntelligenceToBE=async(value)=>{
+        try{
+            const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/admin/intelligence`,{
+                value
+            });
+            console.log(response.data);;
+           setAdminQuestions(response.data)
+        }catch(error){
+            console.error("Error sending intelligence type to backend",error)
+        }
+
+        
+
+    }
+
+
     return (
         <div>
             <div className='questions-container'>
@@ -104,7 +127,7 @@ const CurrentQuestions = () => {
                         <>
                         <div key={index} className='question-inner-container'>
                             <img
-                                onClick={() => handleDelete(item.question)}
+                                onClick={() => handleDelete(item.question,item.question_id)}
                                 src={DeleteIcon}
                                 alt='delete-icon'
                                 className='delete-icon'

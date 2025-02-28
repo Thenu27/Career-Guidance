@@ -7,16 +7,18 @@ import DeleteIcon from '../../../assets/icon.svg';
 
 
 const CareerUpdate = () => {
-    const { setSelectedCareer,SelectedCareer,SelectedCareerDetails,setSelectedCareerDetails } = useContext(CareerContext);
+    const { setSelectedCareer,SelectedCareer,SelectedCareerDetails,setSelectedCareerDetails,setSelectedField,SelectedField} = useContext(CareerContext);
 
     useEffect(()=>{
         setSelectedCareer(localStorage.getItem("SelectedCareer"));
     },[])
 
     const [Edit,setEdit] = useState(false);  
-    const [Score1,setScore1] = useState('No Data Selected')
-    const [Score2,setScore2] = useState('No Data Selected')
-    const [Score3,setScore3] = useState('No Data Selected')
+    // const [Score1,setScore1] = useState('No Data Selected')
+    // const [Score2,setScore2] = useState('No Data Selected')
+    // const [Score3,setScore3] = useState('No Data Selected')
+
+    const [CareerId,setCareerId] = useState();
     
     const [Non_Iq_Intelligence1,setNon_Iq_Intelligence1] = useState('No Data Selected')
     const [Non_Iq_Intelligence2,setNon_Iq_Intelligence2] = useState('No Data Selected');
@@ -51,6 +53,7 @@ const CareerUpdate = () => {
             setSpecialization4(SelectedCareerDetails[0].s4)
 
             setCareerName(SelectedCareerDetails[0].career)
+            setCareerId(SelectedCareerDetails[0].career_id)
             
             setCareerLinguistic(SelectedCareerDetails[0].linguistic)
             setCareerLogical(SelectedCareerDetails[0].logical);
@@ -187,6 +190,9 @@ const CareerUpdate = () => {
         return
     }
 
+    if(scoreIndex===1){
+        setCareerId(value)
+    }
 
     if(scoreIndex===4){
         setSpecialization1(value)
@@ -234,10 +240,13 @@ const sendToBackEnd=async()=>{
             Non_Iq_Intelligence3,
             Non_Iq_Intelligence4,
             CareerName,
+            CareerId,
             Specialization1,
             Specialization2,
             Specialization3,
-            Specialization4
+            Specialization4,
+            SelectedField
+            
         });
         if(response.data==='Career Updated Succesfully'){
             alert('Career Updated Succesfully')
@@ -253,16 +262,9 @@ const updateSubject=async()=>{
         alert('Please Enter A Valid Subject Name');
         return
     }
-    if(Score1===''){
-        alert('Please Enter A Valid MI Score 1');
-        return
-    }
-    if(Score2===''){
-        alert('Please Enter A Valid MI Score 2');
-        return
-    }
-    if(Score3===''){
-        alert('Please Enter A Valid MI Score 3');
+
+    if(CareerId===''){
+        alert('Please Enter A Valid Career Id');
         return
     }
 
@@ -289,6 +291,14 @@ const updateSubject=async()=>{
     return
 }
 
+    useEffect(()=>{
+        const storedValue = localStorage.getItem('SelectedField');
+        if(storedValue){
+            setSelectedField(storedValue);
+        }
+    })
+
+
     return (
         <>
             <div className='career-update-title-container'>
@@ -304,13 +314,22 @@ const updateSubject=async()=>{
                     
             </div>
 
+            <div className='career-update-bnt-container'>
+                    <label className='career-update-label'>Career Id</label>
+
+                    {Edit ?<input type='number' onChange={(e)=>handleOnChange(e.target.value,1)} value={CareerId} className='career-update-bnt2 career-name-btn'/>:
+                    <button className='career-update-bnt '>{CareerId}</button>
+                    }
+                    
+            </div>
+
 
                 <div className='career-update-bnt-container'>
                     
                     <button className='career-update-bnt'>
                         Linguistic
                     </button>
-                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,8)} className='career-update-bnt' type='number'/>:
+                    {Edit?<input value={CareerLinguistic} onChange={(e)=>handleOnChange(e.target.value,8)} className='career-update-bnt' type='number'/>:
                     <button  className='career-update-bnt2'>{CareerLinguistic}</button>}    
 
                 </div>
@@ -320,7 +339,7 @@ const updateSubject=async()=>{
                     <button className='career-update-bnt'>
                         Logical
                     </button>
-                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,9)} className='career-update-bnt' type='number'/>:
+                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,9)} value={CareerLogical} className='career-update-bnt' type='number'/>:
                     <button  className='career-update-bnt2'>{CareerLogical}</button>}    
 
                 </div>
@@ -330,7 +349,7 @@ const updateSubject=async()=>{
                     <button className='career-update-bnt'>
                         Spatial
                     </button>
-                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,10)} className='career-update-bnt' type='number'/>:
+                    {Edit?<input value={CareerSpatial} onChange={(e)=>handleOnChange(e.target.value,10)} className='career-update-bnt' type='number'/>:
                     <button  className='career-update-bnt2'>{CareerSpatial}</button>}    
 
                 </div>

@@ -1,9 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useContext } from 'react';
 import './CareerAdd.css';
 import axios from 'axios';
+import { CareerContext } from '../../../Context/Career.context';
+
 
 const CareerAdd = () => {
-
+    
+    const [HasCareer,setHasCareer] = useState()
+    const {setSelectedField,SelectedField} = useContext(CareerContext)
     const [NewCareer,setNewCareer] = useState()
     const [NewCareerId,setNewCareerId] = useState();
 
@@ -22,10 +26,12 @@ const CareerAdd = () => {
     const [Specialization03, setSpecialization03] = useState();
     const [Specialization04, setSpecialization04] = useState();
 
-
-    const [CareerScore01, setCareerScore01] = useState('');
-    const [CareerScore02, setCareerScore02] = useState('');
-    const [CareerScore03, setCareerScore03] = useState('');
+    useEffect(()=>{
+        const storedValue = localStorage.getItem("HasCareer")
+        if(storedValue){
+            setHasCareer(storedValue)
+        }
+    },[])
 
     const handleSelectedNonIq01 = (value) => {
         setSelectedNonIq01(value);
@@ -64,20 +70,21 @@ const CareerAdd = () => {
                 SpatialScore,
                 LogicalScore,
                 LinguisticScore,
-                CareerScore01,
-                CareerScore02,
-                CareerScore03,
                 Specialization01,
                 Specialization02,
                 Specialization03,
                 Specialization04,
                 NewCareer,
-                NewCareerId
+                NewCareerId,
+                SelectedField
             });
-            console.log("Response from server:", response.data);
+            alert("Data sent to the server")
+
         } catch (error) {
             console.error("Error sending data to the backend:", error);
-            alert("Failed to send data. Please try again.");
+            if(error.response.data==='Career ID already exists'){
+                alert("Career ID already exists \n Enter again with a different Id")
+            }
         }
     };
 
@@ -120,17 +127,21 @@ const CareerAdd = () => {
             Specialization02 && Specialization02.trim() !== '' &&
             Specialization03 && Specialization03.trim() !== '' &&
             Specialization04 && Specialization04.trim() !== '' 
-
+            
 
         ) {
             await sendToDataToBE();
-            alert('All fields are filled! Submission successful.');
         } else {
             alert('Please fill in all the fields.');
         }
     };
 
-
+    useEffect(()=>{
+      const storedValue=localStorage.getItem("SelectedField");
+      if(storedValue){
+        setSelectedField(storedValue)
+      }
+    })
     
 
     useEffect(()=>{
