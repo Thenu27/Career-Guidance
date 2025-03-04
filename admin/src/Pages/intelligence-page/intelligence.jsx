@@ -1,3 +1,4 @@
+
 import { Outlet, useNavigate } from 'react-router-dom';
 import './intelligence.css'
 import { useContext, useEffect } from 'react';
@@ -53,7 +54,7 @@ const IntelligencePage =()=>{
         </div>
         <div className='navigation-btn'>
             <button className='login-btn' onClick={goToSelectOptionPage}>Back</button>
-            <button className='login-btn' onClick={()=>{goToQuestionsPage(), sendIntelligenceToBE()}} >Next</button>
+            <button className='login-btn' onClick={()=>{goToQuestionsPage()}} >Next</button>
         </div>
 
 

@@ -3,6 +3,7 @@ import { useContext, useEffect,useState } from 'react';
 import { CareerContext } from '../../../Context/Career.context';
 import axios from 'axios';
 import DeleteIcon from '../../../assets/icon.svg';
+import axiosInstance from '../../AxiosInstance/axiosInstance';
 
 
 
@@ -19,6 +20,7 @@ const CareerUpdate = () => {
     // const [Score3,setScore3] = useState('No Data Selected')
 
     const [CareerId,setCareerId] = useState();
+    const [CareerDbId,setCareerDbId] = useState();
     
     const [Non_Iq_Intelligence1,setNon_Iq_Intelligence1] = useState('No Data Selected')
     const [Non_Iq_Intelligence2,setNon_Iq_Intelligence2] = useState('No Data Selected');
@@ -46,6 +48,7 @@ const CareerUpdate = () => {
             setNon_Iq_Intelligence3(IdentifyIntelligence(SelectedCareerDetails[0].non_iq_intelligence3))
             setNon_Iq_Intelligence4(IdentifyIntelligence(SelectedCareerDetails[0].non_iq_intelligence4))
 
+            setCareerDbId(SelectedCareerDetails[0].career_db_id)
 
             setSpecialization1(SelectedCareerDetails[0].s1)
             setSpecialization2(SelectedCareerDetails[0].s2)
@@ -67,7 +70,7 @@ const CareerUpdate = () => {
 
     const fetchSelectedCareerDetails = async () => {
         try {
-            const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/admin/career/details`, {
+            const response = await axiosInstance.post(`${import.meta.env.VITE_APP_URL}/api/admin/career/details`, {
                 SelectedCareer
             });
             console.log("Response from server:", response.data);
@@ -117,7 +120,7 @@ const CareerUpdate = () => {
 
     const sendCareerToDelete = async (career,career_id) => {
         try {
-            const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/admin/career/delete`, {
+            const response = await axiosInstance.post(`${import.meta.env.VITE_APP_URL}/api/admin/career/delete`, {
                 career,career_id
             });
 
@@ -245,14 +248,24 @@ const sendToBackEnd=async()=>{
             Specialization2,
             Specialization3,
             Specialization4,
+            CareerDbId,
             SelectedField
             
         });
+
+        console.log("response",response.data)
+
         if(response.data==='Career Updated Succesfully'){
             alert('Career Updated Succesfully')
         }
     }catch(error){
-        console.log(error)
+        if(error.response.data){
+            alert('Career Id Already Exist')
+
+        }else{
+            alert("Failed to Update Career")
+        }
+        
     }
 
 }

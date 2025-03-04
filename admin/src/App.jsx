@@ -30,7 +30,7 @@ import SubActivities from './components/Activities/SubActivites/SubActivites';
 import SubActivityEdit from './components/Activities/SubActivityEdit/SubActivityEdit';
 import SubActivitiesAdd from './components/Activities/SubActivitiesAdd/SubActivitiesAdd';
 import CareerFieldAdd from './components/Career/CareerFieldAdd/CareerFieldAdd';
-
+import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 
 function App() {
 
@@ -40,46 +40,50 @@ function App() {
     <Routes>
       <Route path='/admin' element={<Home/>}/>
       <Route path='/login' element={<Singin/>}/>
-      <Route path='/option' element={<Options/>}/>
-      <Route path='/intelligence' element={<IntelligencePage/>}/>
-      <Route path='/questions' element={<QuestionPage/>}>
-          <Route index element={<CurrentQuestions/>}/>
-          <Route path="add" element={<QuestionUpdate/>}/>
 
-       </Route>
+      <Route element={<ProtectedRoute/>}>
+        <Route path='/option' element={<Options/>}/>
+        <Route path='/intelligence' element={<IntelligencePage/>}/>
+        <Route path='/questions' element={<QuestionPage/>}>
+            <Route index element={<CurrentQuestions/>}/>
+            <Route path="add" element={<QuestionUpdate/>}/>
+
+        </Route>
+        
+
+        <Route path='/ordinarylevel' element={<OLevelPage/>}>
+          <Route index element={<OLevelStream />} />
+          <Route path="add" element={<OLevelAdd/>}/>
+          <Route path="subjects" element={<OLevelSubject />} />
+          <Route path="update" element={<OLevelEdit/>} />
+
+        </Route>
+        <Route path='/activities' element={<Activities/>}>
+          <Route index element={<MainActivities/>} />
+          <Route path='add-main-activity' element={<MainActivityAdd/>}/>
+          <Route path='sub-activities' element={<SubActivities/>}/>
+          <Route path='sub-activity-update' element={<SubActivityEdit/>}/>
+          <Route path='sub-activity-add' element={<SubActivitiesAdd/>}/>
+
+        </Route>
+        
+        <Route path='/advancedlevel' element={<ALevelPage/>}>
+          <Route index element={<ALevelPath/>}/>
+          <Route path='add' element={<ALevelAdd/>}/>
+          <Route path='stream' element={<ALevelStream/>}/>
+          <Route path='subjects' element={<ALevelSubjects/>}/>
+          <Route path='update' element={<ALevelUpdate/>}/>
+
+        </Route>
+
+        <Route path='/admin/careerfield' element={<CareerPage/>}>
+          <Route index element={<CareerField/>}/>
+          <Route path='career-field-add' element={<CareerFieldAdd/>}/>
+          <Route path='career' element={<Career/>}/>
+          <Route path='add' element={<CareerAdd/>}/>
+          <Route path='update' element={<CareerUpdate/>}/>
+        </Route>
       
-
-      <Route path='/ordinarylevel' element={<OLevelPage/>}>
-         <Route index element={<OLevelStream />} />
-         <Route path="add" element={<OLevelAdd/>}/>
-         <Route path="subjects" element={<OLevelSubject />} />
-         <Route path="update" element={<OLevelEdit/>} />
-
-      </Route>
-      <Route path='/activities' element={<Activities/>}>
-        <Route index element={<MainActivities/>} />
-        <Route path='add-main-activity' element={<MainActivityAdd/>}/>
-        <Route path='sub-activities' element={<SubActivities/>}/>
-        <Route path='sub-activity-update' element={<SubActivityEdit/>}/>
-        <Route path='sub-activity-add' element={<SubActivitiesAdd/>}/>
-
-      </Route>
-      
-      <Route path='/advancedlevel' element={<ALevelPage/>}>
-        <Route index element={<ALevelPath/>}/>
-        <Route path='add' element={<ALevelAdd/>}/>
-        <Route path='stream' element={<ALevelStream/>}/>
-        <Route path='subjects' element={<ALevelSubjects/>}/>
-        <Route path='update' element={<ALevelUpdate/>}/>
-
-      </Route>
-
-      <Route path='/admin/careerfield' element={<CareerPage/>}>
-        <Route index element={<CareerField/>}/>
-        <Route path='career-field-add' element={<CareerFieldAdd/>}/>
-        <Route path='career' element={<Career/>}/>
-        <Route path='add' element={<CareerAdd/>}/>
-        <Route path='update' element={<CareerUpdate/>}/>
       </Route>
       
      </Routes>

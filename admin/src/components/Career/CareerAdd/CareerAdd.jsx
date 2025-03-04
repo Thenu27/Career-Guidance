@@ -2,6 +2,7 @@ import { useEffect, useState,useContext } from 'react';
 import './CareerAdd.css';
 import axios from 'axios';
 import { CareerContext } from '../../../Context/Career.context';
+import axiosInstance from '../../AxiosInstance/axiosInstance';
 
 
 const CareerAdd = () => {
@@ -62,7 +63,7 @@ const CareerAdd = () => {
 
     const sendToDataToBE = async () => {
         try {
-            const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/admin/career/add`, {
+            const response = await axiosInstance.post(`${import.meta.env.VITE_APP_URL}/api/admin/career/add`, {
                 SelectedNonIq01,
                 SelectedNonIq02,
                 SelectedNonIq03,
@@ -79,7 +80,9 @@ const CareerAdd = () => {
                 SelectedField
             });
             alert("Data sent to the server")
-
+            if(response.data==='Data added successfully!'){
+                alert('Data Added Succesfully')
+            }
         } catch (error) {
             console.error("Error sending data to the backend:", error);
             if(error.response.data==='Career ID already exists'){

@@ -3,6 +3,7 @@ import './Career.css';
 import axios from 'axios';
 import { CareerContext } from '../../../Context/Career.context';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../AxiosInstance/axiosInstance';
 
 const Career = () => {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ const Career = () => {
     // ✅ Fetch Careers from API
     const fetchCareers = async () => {
         try {
-            const response = await axios.post('/api/admin/career', {
+            const response = await axiosInstance.post('/api/admin/career', {
                 SelectedField
             });
 
@@ -69,23 +70,21 @@ const Career = () => {
         navigate('/admin/careerfield/add');
     };
     
-    const sendQuestionToDelete = async (CareerField) => {
+    const sendCareerFieldToDelete = async (CareerField) => {
         if(!window.confirm(`Do You want to delete this "${SelectedField}" \n This action cannot be undone`)){
             return
         }
         try {
-            const response = await axios.post(
+            const response = await axiosInstance.post(
                 `${import.meta.env.VITE_APP_URL}/api/admin/careerfield/delete`,
                 {CareerField} 
             );
 
             if (response.data === 'Career field Deleted') {
                 alert('Career deleted successfully');
-            } else {
-                alert('Failed to delete career. Please try again.');
-            }
+            } 
         } catch (error) {
-            console.error('Error when deleting career', error);
+            console.log(error)
             alert('An error occurred while deleting the career. Please try again later.');
         }
     };
@@ -117,7 +116,7 @@ const Career = () => {
                     <button onClick={goToAddCareerPage} className="add-career-btn">
                         Add Career
                     </button>
-                    <button onClick={()=>sendQuestionToDelete(SelectedField)} className="add-career-btn delete-field-btn">
+                    <button onClick={()=>sendCareerFieldToDelete(SelectedField)} className="add-career-btn delete-field-btn">
                         Delete
                     </button>
                 </div>

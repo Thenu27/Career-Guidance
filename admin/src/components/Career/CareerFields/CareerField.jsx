@@ -3,6 +3,7 @@ import './CareerField.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CareerContext } from '../../../Context/Career.context';
+import axiosInstance from '../../AxiosInstance/axiosInstance';
 
 const CareerField =()=>{
 
@@ -13,7 +14,7 @@ const CareerField =()=>{
 
     const fetchCareerField=async()=>{
         try{
-            const response = await axios.get('/api/admin/careerfield');
+            const response = await axiosInstance.get('/api/admin/careerfield');
             console.log(response.data);
             setCareerField(response.data);
         }catch(error){

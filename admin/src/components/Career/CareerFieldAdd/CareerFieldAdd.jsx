@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './CareerFieldAdd.css';
 import axios from 'axios';
+import axiosInstance from '../../AxiosInstance/axiosInstance';
 
 const CareerFieldAdd = ()=>{
     const [CareerField,setCareerField] = useState();
@@ -14,7 +15,7 @@ const CareerFieldAdd = ()=>{
             return
         }
         try{    
-            const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/admin/careerfield/career-field-add`,{
+            const response = await axiosInstance.post(`${import.meta.env.VITE_APP_URL}/api/admin/careerfield/career-field-add`,{
                 CareerField
             })
             if(response.data === 'New Career Field Received'){

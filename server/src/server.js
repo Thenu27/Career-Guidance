@@ -12,6 +12,13 @@ const session = require('express-session');
 const connectRedis = require('connect-redis');
 const RedisStore = connectRedis(session);  // The older API usage
 const redis = require('redis');  
+const db = require('../src/db/connectDB');
+const {getPasswordFromDB,comparePassword,getUsernameFromDB,compareUsername} = require('../src/controllers/auth');
+const {generateJwt} = require('../src/controllers/jwtController');
+const cookieParser = require("cookie-parser");
+const jwt = require('jsonwebtoken')
+
+
 require('dotenv').config({ path: require('path').resolve(__dirname, '..', '.env') });
 
 app.use(cors({
@@ -35,7 +42,6 @@ const redisClient = redis.createClient({
 
 
 
-
 redisClient.on('connect', () => {
     console.log('Connected to Redis!');
 });
@@ -43,7 +49,7 @@ redisClient.on('error', (err) => {
     console.error('Redis error:', err);
 });
 
-
+app.use(cookieParser());
 
 
 app.use((req, res, next) => {
@@ -52,27 +58,28 @@ app.use((req, res, next) => {
 });
 
 
-const knex = require('knex');
+// const knex = require('knex');
 const e = require("express");
 const { STATUS_CODES } = require("http");
+const { error } = require("console");
 
 // Load database credentials from environment variables
-const database_password = process.env.DATABASE_PASSWORD;
-const database_name = process.env.DATABASE_NAME;
-const database_user = process.env.DATABASE_USER;
-const database_client = process.env.DATABASE_CLIENT;
+// const database_password = process.env.DATABASE_PASSWORD;
+// const database_name = process.env.DATABASE_NAME;
+// const database_user = process.env.DATABASE_USER;
+// const database_client = process.env.DATABASE_CLIENT;
 
 // Initialize database connection using Knex
-const db = knex({
-    client: process.env.DATABASE_CLIENT || 'pg',
-        connection: {
-        host: '127.0.0.1',
-        user: database_user,
-        password: database_password,
-        database: database_name,
-        port: process.env.DATABASE_PORT || 5432
-    },
-});
+// const db = knex({
+//     client: process.env.DATABASE_CLIENT || 'pg',
+//         connection: {
+//         host: '127.0.0.1',
+//         user: database_user,
+//         password: database_password,
+//         database: database_name,
+//         port: process.env.DATABASE_PORT || 5432
+//     },
+// });
 
 
 
@@ -1649,12 +1656,12 @@ app.post('/api/admin/careerfield/delete',async(req,res)=>{
         console.log(CareerField);
         const result = await deleteCareerField(CareerField);
         if(!result){
-           return res.status(StatusCodes.NOT_FOUND).send("Error occured when deleting the question")
+           throw new Error("Error Occured")
         }
         res.status(StatusCodes.OK).send('Career field Deleted')
     }catch(error){
         console.log(error)
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Internal server error' });
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Error Occured");
     }
 })
 
@@ -1864,6 +1871,7 @@ const updateCareer = async (CareerLinguistic,
        Specialization2,
        Specialization3,
        Specialization4,
+       CareerDbId,
        SelectedField) => {
 
     const non_iq_1 = IdentifyIntelligence(Non_Iq_Intelligence1);
@@ -1873,15 +1881,27 @@ const updateCareer = async (CareerLinguistic,
 
     console.log("non_iq",non_iq_1,non_iq_2,non_iq_3, non_iq_4 )
     try {
+
+        const existingCareerId = await db('career_table')
+            .select('career_id')
+            .where('career_id', CareerId)  // Check if career_id exists
+            .andWhereNot('career_db_id', CareerDbId) // Exclude the given career_db_id
+            .first();
+
+
+        if (existingCareerId) {
+            throw new Error('Career ID already exists.');
+        }
+
         const updatedCareer = await db("career_table")
-            .where('career_id', CareerId) // Match the row where field = careerField
+            .where('career_db_id', CareerDbId) // Match the row where field = careerField
             .update({linguistic:CareerLinguistic,
                 logical:CareerLogical,
                 spatial:CareerSpatial,
                 non_iq_intelligence1:non_iq_1,
                 non_iq_intelligence2:non_iq_2,
                 non_iq_intelligence3:non_iq_3,
-                non_iq_intelligence4:non_iq_4,
+                non_iq_intelligence4:non_iq_4, 
                 career:CareerName,
                 career_id:CareerId,
                 s1:Specialization1,
@@ -1909,17 +1929,18 @@ app.post('/api/admin/career/update',async(req,res)=>{
             CareerLinguistic,
             CareerLogical,
             CareerSpatial,
-               Non_Iq_Intelligence1,
-               Non_Iq_Intelligence2,
-               Non_Iq_Intelligence3,
-               Non_Iq_Intelligence4,
-               CareerName,
-               CareerId,
-               Specialization1,
-               Specialization2,
-               Specialization3,
-               Specialization4,
-               SelectedField
+            Non_Iq_Intelligence1,
+            Non_Iq_Intelligence2,
+            Non_Iq_Intelligence3,
+            Non_Iq_Intelligence4,
+            CareerName,
+            CareerId,
+            Specialization1,
+            Specialization2,
+            Specialization3,
+            Specialization4,
+            CareerDbId,
+            SelectedField
 
      } = req.body;
      console.log("CareerLinguistic:",CareerLinguistic)
@@ -1936,6 +1957,7 @@ app.post('/api/admin/career/update',async(req,res)=>{
      console.log('Specialization4:',Specialization4);
      console.log('CareerId:',CareerId);
      console.log('SelectedField:',SelectedField);
+     console.log('CareerDbId:',CareerDbId);
 
     const result = await updateCareer(CareerLinguistic,
         CareerLogical,
@@ -1950,6 +1972,7 @@ app.post('/api/admin/career/update',async(req,res)=>{
            Specialization2,
            Specialization3,
            Specialization4,
+           CareerDbId,
            SelectedField)
         
      if(!result){
@@ -1958,7 +1981,8 @@ app.post('/api/admin/career/update',async(req,res)=>{
      res.status(200).send('Career Updated Succesfully')
 
    }catch(err){
-    res.send('Error Receiving SubActivity Update Data ',err)
+    console.log("New Error",err)
+    res.status(404).send(`Career Id Already Exist`)
    }
 
 })
@@ -2171,7 +2195,58 @@ app.post('/api/admin/main-activity/delete', async (req, res) => {
 });
 
 
+app.get("/api/admin/auth/logout", (req, res) => {
+    res.clearCookie("accessToken"); // Remove token from cookies
+    return res.status(200).json({ message: "Logged out successfully" });
+});
 
+
+// Express route example
+app.get('/api/admin/auth/check', (req, res) => {
+    const token = req.cookies.accessToken;
+  
+    if (!token) {
+      return res.status(401).send("Unauthorized");
+    }
+  
+    // Validate token and check if user is authenticated
+    jwt.verify(token,process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        return res.status(401).send("Unauthorized");
+      }
+  
+      // If valid, return a success message
+      res.status(200).send("Authenticated");
+    });
+  });
+  
+
+
+app.post('/api/admin/signin',async(req,res)=>{
+    const {username,password} = req.body;
+
+    console.log("Username by User:",username);
+    console.log("Password by User:",password)
+
+    const dbPassword = await getPasswordFromDB();
+    const dbUsername = await getUsernameFromDB()
+
+    const passwordMatch = await comparePassword(password,dbPassword);
+    console.log("Password Mathc :",passwordMatch)
+    const usernameMatch = await compareUsername(username,dbUsername);
+
+    if(passwordMatch && usernameMatch){
+      const accessToken =  generateJwt();
+      res.cookie('accessToken', accessToken, {
+        httpOnly: true,  // Prevent access via JavaScript (XSS protection)
+        secure: process.env.NODE_ENV === 'production',  // Only send over HTTPS in production
+        sameSite: 'Strict',  // Mitigate CSRF attacks
+        maxAge: 1 * 60 * 60 * 1000  // Token expiration (1 hour)
+      });
+    return  res.status(StatusCodes.OK).send(accessToken)
+    }
+   return res.status(StatusCodes.UNAUTHORIZED).send("Credentials are Invalid")
+})
 
 app.use(express.static(path.join(__dirname, "..", "public"), {
     extensions: ['html', 'css', 'jsx','js'],

@@ -10,12 +10,10 @@ import { ActivitiesContext } from '../../context/Activities.context';
 import axios from 'axios';
 import ExtraCurricularResults from './Extra-Curricular-results/Extra-Curricular-Results';
 import SubActivitiesPage from './Extra-Curricula-Sub_activities/subActivities';
-import { CsrfContext } from '../../context/csrf.context';
 
 const ExtraCurricularPage = () => {
   // Accessing context values
   const { setVisitedPages } = useContext(ProgressContext);
-  const { csrfToken } = useContext(CsrfContext);
 
   const {
     showExtraLevelsPage, // Boolean to show the Extra Levels page
@@ -87,11 +85,8 @@ const ExtraCurricularPage = () => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_URL}/api/Activities`,
-        { SelectedExtraActivities },
-        {
-          headers: { 'X-XSRF-TOKEN': csrfToken }, // Include CSRF token
-          withCredentials: true, // Ensure cookies are sent
-        }
+        { SelectedExtraActivities }
+        
       );
 
       if (response.status === 200) {
@@ -178,10 +173,6 @@ const ExtraCurricularPage = () => {
           ActivitiesToSendBE,
           SelectedSubActivities,
           ActivitiesWithoutSub,
-        },
-        {
-          headers: { 'X-XSRF-TOKEN': csrfToken }, // Include CSRF token
-          withCredentials: true, // Ensure cookies are sent
         }
       );
     } catch (error) {
