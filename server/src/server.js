@@ -22,11 +22,12 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config({ path: require('path').resolve(__dirname, '..', '.env') });
 
 app.use(cors({
-    origin: ['https://www.univerlens.com','http://localhost:3001','https://univerlens.com','https://localhost:5173'],
+    origin: ['https://www.univerlens.com','http://localhost:3001','https://univerlens.com','http://localhost:5173','http://localhost:5173/admin'],
     methods: ['GET', 'POST'],        // Specify the HTTP methods your API supports
     credentials: true                // Allow credentials (cookies, sessions, etc.)
 }));
 app.set('trust proxy', 1);
+
 
 const limiter = rateLimit({
     windowMs:1*60*1000,
@@ -418,74 +419,6 @@ const fetchOLevelSubjectFromDB = async (pathline, sessionArray) => {
         // console.log(`Fetched ${pathline} subjects:`, data);
     }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // Function to calculate the total score, average, and percentage for a given intelligence_id
-// const accesingAnswers = async (req, intelligence_id) => {
-//     // Get all question_ids for the given intelligence_id
-//     const questionIdGrouped = await db.select('question_id').from('questions').where('intelligence_id', intelligence_id);
-//     let totalAnswer = 0;
-//     console.log(questionIdGrouped)
-//     // Sum up the answers provided by the user for all questions related to this intelligence_id
-//     for (let i = 0; i < questionIdGrouped.length; i++) {
-//         const questionId = questionIdGrouped[i].question_id;
-//         const TestAns = parseFloat(req.session.quesidWithIntelligenceAndquestions[questionId].answer);
-//         totalAnswer = TestAns + totalAnswer;
-//     }
-
-//     // Calculate the average score for this intelligence type
-//     const avg = totalAnswer / questionIdGrouped.length
-//     // console.log("Total Answer", totalAnswer)
-
-//     // Get the intelligence_type name from the database for labeling
-//     const getIntelligence = await db.select("intelligence_type").from("mi_table").where("intelligence_id", intelligence_id).first();
-//     // console.log("Intelligence latest", getIntelligence)
-
-//     // Store the calculated results (Total, Avg, Percentage) in the session
-//     req.session.detailsForCalculation[getIntelligence.intelligence_type] = {
-//         Total: totalAnswer,
-//         Avg: avg,
-//         Percentage: avg * 10  // Assuming percentage is average * 10
-//     }
-//     // console.log(req.session.detailsForCalculation)
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-// // Function to calculate the total score for all intelligence types
-// const calculatingTotalScoreForAll = async (req) => {
-//     // Loop through all fetched intelligence types and calculate their scores
-//     for (let i = 0; i < req.session.intelligenceArray.length; i++) {
-//         // console.log(intelligenceArray[i].intelligence_id)
-//         await accesingAnswers(req, req.session.intelligenceArray[i].intelligence_id);
-//     }
-//     // console.log("Details", req.session.detailsForCalculation)
-// }
-
-
-
 
 
 
@@ -1149,11 +1082,6 @@ const mapCareer=async(iq_percentages,non_iq_ids)=>{
 
 const CheckAndMapCareer=async(intelligence_object)=>{
     let count =0;
-    // for(let i=0;i<3;i++){
-    //    const intelligenceId= Number(intelligence_object[i][0])
-    //     if(intelligenceId === 1 || intelligenceId ===2 || intelligenceId ==3)
-    //         count++
-    // }
     
     const requiredIDs = ['1', '2', '3'];
     const iq_percentages = requiredIDs
@@ -1202,10 +1130,6 @@ app.get('/api/career', (req, res) => {
 });
 
 
-
-app.get('/admin',(req,res)=>{
-    res.send("Hi i am the admin")
-})
 
 // let  IntelligenceIDAdmin
 
@@ -2248,9 +2172,18 @@ app.post('/api/admin/signin',async(req,res)=>{
    return res.status(StatusCodes.UNAUTHORIZED).send("Credentials are Invalid")
 })
 
+app.use('/admin', express.static(path.join(__dirname, "..", "admin")));
+
 app.use(express.static(path.join(__dirname, "..", "public"), {
     extensions: ['html', 'css', 'jsx','js'],
   }));
+
+app.get('/admin/*', (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "admin", "index.html"));
+});
+
+
+
   
   
 // Catch-all route to serve frontend on any other path

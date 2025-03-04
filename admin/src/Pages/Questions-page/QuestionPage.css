@@ -1,0 +1,8 @@
+.nav-back-btn:hover{
+    width: 200px;
+    
+}
+
+.nav-back-btn{
+    transition: width 0.2s ease-in-out;
+}

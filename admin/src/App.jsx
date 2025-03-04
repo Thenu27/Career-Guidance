@@ -1,4 +1,3 @@
-import './App.css';
 import Singin from './components/Signin/Signin';
 import Home from './Pages/Home page/Home';
 import {Route,Routes} from 'react-router-dom';
@@ -32,10 +31,12 @@ import SubActivitiesAdd from './components/Activities/SubActivitiesAdd/SubActivi
 import CareerFieldAdd from './components/Career/CareerFieldAdd/CareerFieldAdd';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 
+import './App.css'
+
 function App() {
 
   return (
-   <div>
+   <div className='app'>
     
     <Routes>
       <Route path='/admin' element={<Home/>}/>

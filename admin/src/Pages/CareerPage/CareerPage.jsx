@@ -29,10 +29,10 @@ const CareerPage=()=>{
 
     }
     return(
-        <div>
+        <div className='home-container'>
             <Outlet/>
             <div className='navigation-btn'>
-                <button onClick={backNavigationCareer} className='login-btn'>Back</button>
+                <button onClick={backNavigationCareer} className='login-btn nav-btn'>Back</button>
             </div>
         </div>
     )

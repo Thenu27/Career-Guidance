@@ -66,3 +66,21 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@100..1000&display=swap');
+body{
+  margin: 0%;
+  font-family: 'Mulish',sans-serif;
+
+
+}
+
+h1{
+  font-family: 'Mulish',sans-serif;
+}
+button{
+  font-family: 'Mulish',sans-serif;
+  background-color: #39B09E;
+  color: white;
+  border: none;
+}

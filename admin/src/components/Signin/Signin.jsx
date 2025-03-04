@@ -22,11 +22,7 @@ const Signin=()=>{
         setusername(value)
     }
     
-    useEffect(()=>{
-        console.log(password)
-        console.log(username)
 
-    },[username,password])
 
     const Auth =async()=>{
         try{
@@ -65,22 +61,27 @@ const Signin=()=>{
     }
 
     return(
-        <div className='Singin-page'>
-           <div className='Singin-container'>
+        <div className='home-container'>
+            <div className='login-container login-input-container'>
+                <div>
+                    <h1 className='login-title'>Enter Your Credentials</h1>
+                </div>
             <div className='login-group'>
-                <label className='login-label'>Email</label>
-                <input onChange={(e)=>handleUsername(e.target.value)} className='login-input' type='email'></input>
-            </div>
+                <input placeholder='Username' onChange={(e)=>handleUsername(e.target.value)} className='login-input' type='text'></input>
+            
                
-            <div className='login-group'>
-                <label className='login-label'>Password</label>
-                <input onChange={(e)=>handlePassword(e.target.value)} className='login-input' type='password'></input>
+            
+                <input placeholder='Password' onChange={(e)=>handlePassword(e.target.value)} className='login-input' type='password'></input>
+            
             </div>
-
+            <div className='signin-btn-container'>
             <button onClick={()=>{sendtoBE()}} className='signin-btn'>Sign In</button>
 
             </div>
+
+            </div>
         </div>
+           
     )
 }
 

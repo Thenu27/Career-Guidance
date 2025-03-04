@@ -1,25 +1,55 @@
 .intelligence-container{
-
-    border: 3px solid black;
-    display:flex ;
-    flex-direction: row;
-    gap:20px;
-    flex-wrap: wrap;
-    width: 700px;
-    height: auto;
-    padding: 20px;
-    margin: auto;
-    align-content: center;
-
+     width: 985px;
+     height: 466px;
 }
 
 .intelligence-title{
-    margin-top: 100px;
+    text-align: center;
+    margin: 0%;
+    padding-top: 33px;
+
 }
 
 .option-intelligence-btn{
-    height: 100px;
-    width: 220px;
+    height: 77px;
+    width: 285px;
     font-size: 20px;
+    margin-top: 29px;
+    transition: background-color 0.15s ease-in-out
 }
 
+.option-intelligence-btn:hover{
+   background-color: #005447;
+}
+
+.option-intelligence-btn:active{
+    background-color: #005447;
+
+}
+
+.option-intelligence-btn:focus{
+    background-color: #005447;
+
+}
+
+.intelligence-title-container{
+    width: 100%;
+    margin: 0%;
+    padding: 0%;
+
+}
+
+.intelligence-btn-container{
+    display: flex;
+    flex-direction:row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.nav-btn{
+    transition: width 0.2s ease-in-out;
+}
+
+.nav-btn:hover{
+    width: 190px;
+}

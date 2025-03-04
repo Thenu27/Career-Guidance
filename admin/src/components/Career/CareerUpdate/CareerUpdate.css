@@ -7,7 +7,7 @@
     margin: auto;
     border: 1px solid ;
     width:700px;
-    min-height: 650px;
+    min-height: 850px;
 }
 .career-update-bnt-container{
     display: flex;
@@ -38,6 +38,7 @@
     margin: auto;
 }
 .career-update-title{
+    padding-top: 50px;
     text-align: center;
 }
 

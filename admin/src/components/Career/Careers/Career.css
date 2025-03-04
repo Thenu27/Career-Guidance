@@ -1,8 +1,9 @@
 .add-career-container{
     display: flex;
     flex-direction: row;
-    width:370px;
-    gap:10px;
+    justify-content: center;
+    align-items: center;
+    width:100%;
     height: 80px;
     margin: auto;
     margin-top: 15px;
@@ -10,8 +11,17 @@
 
 }
 .add-career-btn{
-    height: 100%;
-    width: 100%;
+    height: 60px;
+    width: 200px;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: #006657;
+    margin-right: 20px;
+    transition: width 0.15s ease-in-out;
+}
+
+.add-career-btn:hover{
+    width: 250px;
 }
 
 .career-field-inner-container-02{
@@ -23,3 +33,4 @@
     color: white;
     font-size: 20px;
 }
+

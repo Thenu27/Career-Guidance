@@ -91,11 +91,11 @@ const Career = () => {
 
     return (
         <>
-            <div className="career-field-title-container">
-                <h1 className="career-field-title">Choose a Career you want to Update</h1>
-            </div>
 
-            <div className="career-field-container">
+            <div className="login-container career-field-container">
+                <div className="career-field-title-container">
+                    <h1 className="career-field-title">Choose a Career you want to Update</h1>
+                </div>
                 <div className="career-field-inner-container career-field-inner-container-02">
                     {CareerInField.length > 0 ? ( 
                         CareerInField.map((career) => (
@@ -113,12 +113,13 @@ const Career = () => {
                 </div>
 
                 <div className="add-career-container">
-                    <button onClick={goToAddCareerPage} className="add-career-btn">
-                        Add Career
-                    </button>
-                    <button onClick={()=>sendCareerFieldToDelete(SelectedField)} className="add-career-btn delete-field-btn">
-                        Delete
-                    </button>
+                    <div className='add-career-btn-container'>
+                        <button onClick={goToAddCareerPage} className="add-career-btn">Add Career</button>
+                    </div>
+
+                    <div className='add-career-btn-container'>
+                        <button onClick={()=>sendCareerFieldToDelete(SelectedField)} className="add-career-btn delete-field-btn"> Delete</button>
+                    </div>
                 </div>
 
                 

@@ -9,6 +9,7 @@ const CareerFieldAdd = ()=>{
     const handleCareerField = (event)=>{
         setCareerField(event.target.value)
     }
+
     const sendToBE=async()=>{
         if(!CareerField){
             alert('Enter a career')
@@ -29,19 +30,23 @@ const CareerFieldAdd = ()=>{
     }
     return(
         <>
-        <div className='career-field-container'>
-            <div className='career-field-title-container'>
-                <h1 className='career-field-title'>Enter Career Field You Want To Add</h1>
+        <div className='login-container question-container'>
+            <div className='inner-question-container'>
+
+                <div className='career-field-title-container'>
+                    <h1 className='welcome-title olevel-title enter-question-title'>Enter Career Field You Want To Add</h1>
+                </div>
+
+                <div className='career-field-input-container'>
+                    <input value={CareerField} onChange={(e)=>handleCareerField(e)} className='input-question' placeholder='Add career field'/>
+                </div>
+
+                <div>
+                    <button onClick={sendToBE} className='login-btn add-question-btn add-career-field' >Add Career Field</button>
+                </div>
+
             </div>
 
-            <div className='career-field-input-container'>
-                <label className='add-career-field-label'>Add Career Field</label>
-                <input value={CareerField} onChange={(e)=>handleCareerField(e)} className='add-career-field-input' placeholder='New Career Field'/>
-            </div>
-
-            <div>
-                <button onClick={sendToBE} className='login-btn' >Add</button>
-            </div>
         </div>
 
         </>

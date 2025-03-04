@@ -15,10 +15,10 @@ const location =useLocation();
 
 
     return(
-        <div>
+        <div className='home-container'>
             <Outlet/>
             <div className='navigation-btn'>
-                <button onClick={ goToIntlligencePage}className='login-btn'>Back</button>
+                <button onClick={ goToIntlligencePage}className='login-btn nav-back-btn'>Back</button>
             </div>
         </div>
 

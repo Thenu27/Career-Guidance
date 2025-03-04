@@ -119,9 +119,9 @@ const CurrentQuestions = () => {
 
 
     return (
-        <div>
-            <div className='questions-container'>
-                <h1>Questions currently in Database</h1>
+            <div className='login-container questions-container'>
+
+                <h1 className='questions-title'>Questions currently in Database</h1>
                 <div className='questions'>
                     {AdminQuestions.map((item, index) => (
                         <>
@@ -161,7 +161,6 @@ const CurrentQuestions = () => {
                     </button>
                 </div>
             </div>
-        </div>
     );
 };
 

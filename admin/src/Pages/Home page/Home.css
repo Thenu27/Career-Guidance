@@ -1,26 +1,48 @@
 .login-container{
 
-    width:500px;
-    height: 500px;
-    border: 3px solid black;
+    width:474px;
+    height: 371px;
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0px 7px 35px rgba(0, 0, 0, 1);
     margin: auto;
-    display: flex;
-    flex-direction: column;
-    margin-top: 100px;
+    margin-top: 130px;
+
+
+
 
 }
 
 .home-container{
     width:100vw;
-    height: 100vh;
-    overflow: hidden;
+    overflow-x: hidden;
+    min-height: 100vh;
+    /* overflow: hidden; */
 }
 
 .login-btn{
-    width:150px;
-    height: 70px;
+    width:178px;
+    height: 57px;
     margin: auto;
-}
+    background-color:#39B09E ;
+    color:white;
+    border: none;
+    font-size: 22px;
+    font-weight: 600;
+    border-radius: 10px;
+}    
 .welcome-title{
     text-align: center;
+    font-family: 'Mulish',sans-serif;
+    padding-top: 84px;
+    font-weight: 700;
+    color: #1B7F6E;
+}
+
+.login-btn-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 57px;
 }

@@ -47,20 +47,23 @@ const CareerField =()=>{
  
     return(
         <>
+        <div className='login-container career-field-container'>
         <div className='career-field-title-container'>
             <h1 className='career-field-title'>Choose a Career Field</h1>
         </div>
-        <div className='career-field-container'>
             <div className='career-field-inner-container'>
                 {CareerField.map((career)=>{
                     return <button key={career.field} onClick={()=>{goToIndividualCareerPage();handleField(career.field)}} className='login-btn career-field-btn'>{career.field}</button>
                 })}
+
+      
             </div>
+            <div className='career-field-add'>
+            <button onClick={goToAddCareerField} className='login-btn add-question-btn'>Add Career Field</button>
+        </div>  
         </div>
 
-        <div className='career-field-add'>
-            <button onClick={goToAddCareerField} className='login-btn'>Add Career Field</button>
-        </div>        
+
         
         </>
 

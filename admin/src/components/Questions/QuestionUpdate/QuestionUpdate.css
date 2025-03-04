@@ -3,8 +3,30 @@
 }
 .input-question{
     width: 400px;
-    height: 60px;
-    margin-left:50px;
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    background-color: #E0E0E0;
+    font-size: 18px;
+    padding-left: 10px;
     margin-top: 20px;
-    margin-bottom: 20px;
+}
+
+.question-container{
+    width: 600px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.add-question-btn2{
+    width: 100px;
+}
+
+.inner-question-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }

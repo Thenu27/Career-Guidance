@@ -32,14 +32,18 @@ const Options=()=>{
 
 
     return(
-        <div className='options-page'>
-            <h1 className='welcome-title'>What do you want to do</h1>
-            <div className='options-container'>
-                <button onClick={ goToIntelligence} className='login-btn'>Update Questions</button>
-                <button onClick={goToOLevelPage} className='login-btn'>Update O/Level Subjects</button>
-                <button onClick={goToALevelPage} className='login-btn'>Update A/L Subjects</button>
-                <button onClick={goToActivitiesPage} className='login-btn'>Update Extra Curricular Activities</button>
-                <button onClick={goToCareerPage} className='login-btn'>Update Careers</button>
+        <div className='home-container'>
+            <div className='login-container options-container'>
+                <div className='options-title-container'>
+                     <h1 className='options-title'>Want to Update?</h1>
+                </div>
+                <div className='options-btn-container'>
+                    <button onClick={ goToIntelligence} className='login-btn options-btn'> Questions</button>
+                    <button onClick={goToOLevelPage} className='login-btn options-btn'> O/Level Subjects</button>
+                    <button onClick={goToALevelPage} className='login-btn options-btn'> A/L Subjects</button>
+                    <button onClick={goToActivitiesPage} className='login-btn options-btn'>Activities</button>
+                    <button onClick={goToCareerPage} className='login-btn options-btn'>Careers</button>
+                </div>
 
 
             </div>

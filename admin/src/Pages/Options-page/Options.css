@@ -1,11 +1,36 @@
 .options-container{
+    height:561px ;
+    width:512px ;
+    margin-top: 70px;
+
+}
+
+.options-btn{
+    width: 210px;
+    height: 66px;
+    margin-top: 19px;
+    font-size: 20px;
+    font-weight: 600;
+    transition: width 0.2s ease-in-out;
+}
+
+.options-btn:hover{
+    width: 250px;
+}
+
+.options-title-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0%
+}
+
+.options-btn-container{
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    padding: 40px;
-    border: 3px solid black;
-    width: 600px;
-    height: auto;
-    margin: auto;
-    margin-top: 70px;
+}
+
+.options-title{
+    font-size: 36px;
 }

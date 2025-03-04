@@ -314,10 +314,11 @@ const updateSubject=async()=>{
 
     return (
         <>
+
+            <div className='login-container career-update-container'>
             <div className='career-update-title-container'>
                 <h1 className='career-update-title'>Update Career</h1>
             </div>
-            <div className='career-update-container'>
                 <div className='career-update-bnt-container'>
                     <label className='career-update-label'>Career Name</label>
 

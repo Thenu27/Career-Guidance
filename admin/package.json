@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
    "dev": "vite",
-   "build": "vite build && rimraf ../server/admin && robocopy dist ../server/admin /E /MOVE /NFL /NDL /NJH /NJS /NC /NS > nul",
+    "build": "vite build", 
    "preview": "vite preview"
   },
   "dependencies": {
