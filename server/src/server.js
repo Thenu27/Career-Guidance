@@ -2177,14 +2177,14 @@ app.post('/api/admin/signin',async(req,res)=>{
    return res.status(StatusCodes.UNAUTHORIZED).send("Credentials are Invalid")
 })
 
-app.use('/admin', express.static(path.join(__dirname, "..", "admin")));
+app.use('/admin', express.static(path.join(__dirname, "..", "admin", "dist")));
 
 app.use(express.static(path.join(__dirname, "..", "public"), {
     extensions: ['html', 'css', 'jsx','js'],
   }));
 
-app.get('/admin/*', (req, res) => {
-    res.sendFile(path.join(__dirname, "..", "admin", "index.html"));
+  app.get('/admin/*', (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "admin", "dist", "index.html"));
 });
 
 
