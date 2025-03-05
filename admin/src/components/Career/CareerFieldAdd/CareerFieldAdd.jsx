@@ -12,10 +12,15 @@ const CareerFieldAdd = ()=>{
 
     const sendToBE=async()=>{
         if(!CareerField){
-            alert('Enter a career')
+            alert('Enter a Career Field')
             return
         }
-        try{    
+        try{  
+            
+            if(!window.confirm('Do you want to add this Career Field')){
+                return
+            }
+            
             const response = await axiosInstance.post(`${import.meta.env.VITE_APP_URL}/api/admin/careerfield/career-field-add`,{
                 CareerField
             })

@@ -16,11 +16,15 @@ const OLevelStream=()=>{
 
 
         return(
-        <div> 
+        <div className='login-container'> 
             <h1 className='stream-title'>Select Category</h1>
             <div className='options-container stream-container'>
-                    <button  className='login-btn' onClick={nextNavigation}>Local</button>
-                    <button className='login-btn'> London</button>
+                <div>
+                    <button  className='login-btn o-level-stream-btn' onClick={nextNavigation}>Local</button>
+                </div>
+                <div>
+                    <button className='login-btn o-level-stream-btn'> London</button>
+                </div>
 
             </div>
         </div>

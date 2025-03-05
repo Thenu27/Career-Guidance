@@ -319,10 +319,12 @@ const updateSubject=async()=>{
             <div className='career-update-title-container'>
                 <h1 className='career-update-title'>Update Career</h1>
             </div>
+            <div className='career-update-inner-container' >
+
                 <div className='career-update-bnt-container'>
                     <label className='career-update-label'>Career Name</label>
 
-                    {Edit ?<input type='text' onChange={(e)=>handleOnChange(e.target.value,0)} value={CareerName} className='career-update-bnt2 career-name-btn'/>:
+                    {Edit ?<input type='text' onChange={(e)=>handleOnChange(e.target.value,0)} value={CareerName} className='career-update-bnt2 career-name-btn career-input'/>:
                     <button className='career-update-bnt '>{CareerName}</button>
                     }
                     
@@ -331,7 +333,7 @@ const updateSubject=async()=>{
             <div className='career-update-bnt-container'>
                     <label className='career-update-label'>Career Id</label>
 
-                    {Edit ?<input type='number' onChange={(e)=>handleOnChange(e.target.value,1)} value={CareerId} className='career-update-bnt2 career-name-btn'/>:
+                    {Edit ?<input type='number' onChange={(e)=>handleOnChange(e.target.value,1)} value={CareerId} className='career-update-bnt2 career-name-btn career-input'/>:
                     <button className='career-update-bnt '>{CareerId}</button>
                     }
                     
@@ -340,31 +342,25 @@ const updateSubject=async()=>{
 
                 <div className='career-update-bnt-container'>
                     
-                    <button className='career-update-bnt'>
-                        Linguistic
-                    </button>
-                    {Edit?<input value={CareerLinguistic} onChange={(e)=>handleOnChange(e.target.value,8)} className='career-update-bnt' type='number'/>:
-                    <button  className='career-update-bnt2'>{CareerLinguistic}</button>}    
+                    <label className='career-update-label'>Linguistic (IQ1)</label>
+                    {Edit?<input value={CareerLinguistic} onChange={(e)=>handleOnChange(e.target.value,8)} className='career-update-bnt career-input career-input' type='number'/>:
+                    <button  className='career-update-bnt'>{CareerLinguistic}</button>}    
 
                 </div>
 
                 <div className='career-update-bnt-container'>
                     
-                    <button className='career-update-bnt'>
-                        Logical
-                    </button>
-                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,9)} value={CareerLogical} className='career-update-bnt' type='number'/>:
+                    <label className='career-update-label'>Logical (IQ2)</label>
+                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,9)} value={CareerLogical} className='career-update-bnt career-input' type='number'/>:
                     <button  className='career-update-bnt2'>{CareerLogical}</button>}    
 
                 </div>
 
                 <div className='career-update-bnt-container'>
                     
-                    <button className='career-update-bnt'>
-                        Spatial
-                    </button>
-                    {Edit?<input value={CareerSpatial} onChange={(e)=>handleOnChange(e.target.value,10)} className='career-update-bnt' type='number'/>:
-                    <button  className='career-update-bnt2'>{CareerSpatial}</button>}    
+                <label className='career-update-label'>Spatial (IQ3)</label>
+                {Edit?<input value={CareerSpatial} onChange={(e)=>handleOnChange(e.target.value,10)} className='career-update-bnt career-input' type='number'/>:
+                <button  className='career-update-bnt2'>{CareerSpatial}</button>}    
 
                 </div>
 
@@ -372,13 +368,13 @@ const updateSubject=async()=>{
                 
 
                 <div className='career-update-bnt-container'>
-                    <button>Non Iq Intelligence 01</button>
+                <label className='career-update-label'>Non-IQ-Intelligence1</label>
                     {Edit?<label className="dropdown">
                                 <div class="dd-button intelligence-input">
                                 {Non_Iq_Intelligence1}
                                 </div>
 
-                                <input  type="checkbox" className="dd-input" id="test"/>
+                                <input  type="checkbox" className="dd-input career-input" id="test"/>
 
                                 {dropdownData(1)}
 
@@ -391,13 +387,13 @@ const updateSubject=async()=>{
 
                 {/* Intelligence 02 */}
                 <div className='career-update-bnt-container'>
-                    <button>Non Iq Intelligence 02</button>
+                <label className='career-update-label'>Non-IQ-Intelligence2</label>
                     {Edit?<label className="dropdown">
                                 <div class="dd-button intelligence-input">
                                 {Non_Iq_Intelligence2}
                                 </div>
 
-                                <input  type="checkbox" className="dd-input" id="test"/>
+                                <input  type="checkbox" className="dd-input career-input" id="test"/>
 
                                 {dropdownData(2)}
 
@@ -411,13 +407,13 @@ const updateSubject=async()=>{
 
                 {/* Intelligence 03 */}
                 <div className='career-update-bnt-container'>
-                    <button>Non Iq Intelligence 03</button>
+                <label className='career-update-label'>Non-IQ-Intelligence3</label>
                     {Edit?<label className="dropdown">
                                 <div class="dd-button intelligence-input">
                                 {Non_Iq_Intelligence3}
                                 </div>
 
-                                <input  type="checkbox" className="dd-input" id="test"/>
+                                <input  type="checkbox" className="dd-input career-input" id="test"/>
 
                                 {dropdownData(3)}
 
@@ -429,13 +425,13 @@ const updateSubject=async()=>{
                 </div>
 
                 <div className='career-update-bnt-container'>
-                    <button>Non Iq Intelligence 03</button>
+                <label className='career-update-label'>Non-IQ-Intelligence4</label>
                     {Edit?<label className="dropdown">
                                 <div class="dd-button intelligence-input">
                                     {Non_Iq_Intelligence4}
                                 </div>
 
-                                <input  type="checkbox" className="dd-input" id="test"/>
+                                <input  type="checkbox" className="dd-input career-input" id="test"/>
 
                                 {dropdownData(4)}
 
@@ -448,10 +444,8 @@ const updateSubject=async()=>{
 
                 <div className='career-update-bnt-container'>
                     
-                    <button className='career-update-bnt'>
-                        Specialization 01
-                    </button>
-                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,4)} value={Specialization1} className='career-update-bnt2'/>:
+                <label className='career-update-label'>Specialization 01</label>
+                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,4)} value={Specialization1} className='career-update-bnt2 career-input'/>:
                     <button className='career-update-bnt2'>
                         {Specialization1}
                     </button>}
@@ -459,55 +453,47 @@ const updateSubject=async()=>{
                 </div>
 
                 <div className='career-update-bnt-container'>
-                    <button className='career-update-bnt'>
-                        Specialization 02
-                    </button>
-                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,5)} value={Specialization2} className='career-update-bnt2'/>:
+                <label className='career-update-label'>Specialization 02</label>
+                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,5)} value={Specialization2} className='career-update-bnt2 career-input'/>:
                     <button className='career-update-bnt2'>
                         {Specialization2}
                     </button>}
                 </div>
 
                 <div className='career-update-bnt-container'>
-                    <button className='career-update-bnt'>
-                        Specialization 03
-                    </button>
-                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,6)} value={Specialization3} className='career-update-bnt2'/>:
+                <label className='career-update-label'>Specialization 03</label>
+                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,6)} value={Specialization3} className='career-update-bnt2 career-input'/>:
                     <button className='career-update-bnt2'>
                         {Specialization3}
                     </button>}
                 </div>
 
                 <div className='career-update-bnt-container'>
-                    <button className='career-update-bnt'>
-                        Specialization 04
-                    </button>
-                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,7)} value={Specialization4} className='career-update-bnt2'/>:
+                <label className='career-update-label'>Specialization 04</label>
+                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,7)} value={Specialization4} className='career-update-bnt2 career-input'/>:
                     <button className='career-update-bnt2'>
                         {Specialization4}
                     </button>}
                 </div>
-                <div className='alevel-update-btn-container career-edit-delete-container'>
-                    <div>
+
+
+            </div>
+
+            <div className='alevel-update-btn-container career-edit-delete-container'>
+                    <div className='career-edit-btn-container'>
                         {Edit?<button onClick={updateSubject}  className='career-edit-btn'>Update</button>:
                         <button onClick={handleEditClick}  className='career-edit-btn'>Edit</button>}
                     </div>
                     <div className='ol-delete-container career-delete-container'>
                         <button
                             onClick={()=>{handleDelete(SelectedCareerDetails[0].career,SelectedCareerDetails[0].career_id)}}
-                            className='login-btn ol-delete-btn'
+                            className='login-btn ol-delete-btn career-delete-btn'
                         >
                             Delete
                         </button>
-                        <img
-                            onClick={()=>{handleDelete(SelectedCareerDetails[0].career,SelectedCareerDetails[0].career_id)}}
-                            className='ol-delete-icon'
-                            src={DeleteIcon}
-                            alt="Delete icon"
-                        />
-                    </div>
 
-            </div>
+                    </div>
+                    </div>
 
             </div>
         </>

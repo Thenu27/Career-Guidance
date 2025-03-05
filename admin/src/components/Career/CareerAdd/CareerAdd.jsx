@@ -153,42 +153,43 @@ const CareerAdd = () => {
 
     return (
         <>
+
+            <div className='login-container ol-add-container career-add-input-container'>
             <div className='ol-add-header'>
-                <h1 className='ol-add-title'>Enter the necessary details</h1>
+                <h1 className='ol-add-title career-add-title'>Enter the necessary details</h1>
             </div>
-            <div className='ol-add-container career-add-input-container'>
                 <div className='ol-add-inner-container career-add-inner-input-container'>
 
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Enter Career Id</label>
-                        <input type='number' value={NewCareerId} onChange={(event)=>{handleCareerIdOnChange(event)}} className='ol-input' />
+                        <input type='number' value={NewCareerId} onChange={(event)=>{handleCareerIdOnChange(event)}} className='ol-input career-input' />
                     </div>
 
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Enter Career Name</label>
-                        <input type='text' value={NewCareer} onChange={(event)=>{handleCareerOnChange(event)}} className='ol-input' />
+                        <input type='text' value={NewCareer} onChange={(event)=>{handleCareerOnChange(event)}} className='ol-input career-input ' />
                     </div>
 
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Linguistic Value</label>
-                        <input type='number' value={LinguisticScore} onChange={(event)=>{handleLinguisticValue(event)}} className='ol-input' />
+                        <input type='number' value={LinguisticScore} onChange={(event)=>{handleLinguisticValue(event)}} className='ol-input career-input' />
                     </div>
 
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Logical Value</label>
-                        <input type='number' value={LogicalScore} onChange={(event)=>{handleLogicalValue(event)}} className='ol-input' />
+                        <input type='number' value={LogicalScore} onChange={(event)=>{handleLogicalValue(event)}} className='ol-input career-input' />
                     </div>
 
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Spatial Value</label>
-                        <input type='number' value={SpatialScore} onChange={(event)=>{handleSpatialValue(event)}} className='ol-input' />
+                        <input type='number' value={SpatialScore} onChange={(event)=>{handleSpatialValue(event)}} className='ol-input career-input' />
                     </div>
 
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Selected Non Iq Intelligence 01</label>
                         <label className="dropdown">
                             <div className="dd-button">{SelectedNonIq01}</div>
-                            <input type="checkbox" className="dd-input" id="test" />
+                            <input type="checkbox" className="dd-input career-input" id="test" />
                             <ul className="dd-menu">
                                 <li onClick={() => handleSelectedNonIq01('Logical-Mathematical')}>Logical-Mathematical</li>
                                 <li onClick={() => handleSelectedNonIq01('Linguistic')}>Linguistic</li>
@@ -208,7 +209,7 @@ const CareerAdd = () => {
                         <label className='ol-input-label'>Select Non Iq intelligence 02</label>
                         <label className="dropdown">
                             <div className="dd-button">{SelectedNonIq02}</div>
-                            <input type="checkbox" className="dd-input" id="test" />
+                            <input type="checkbox" className="dd-input career-input" id="test" />
                             <ul className="dd-menu">
                                 <li onClick={() => handleSelectedNonIq02('Logical-Mathematical')}>Logical-Mathematical</li>
                                 <li onClick={() => handleSelectedNonIq02('Linguistic')}>Linguistic</li>
@@ -228,7 +229,7 @@ const CareerAdd = () => {
                         <label className='ol-input-label'>Select Non Iq intelligence 03</label>
                         <label className="dropdown">
                             <div className="dd-button">{SelectedNonIq03}</div>
-                            <input type="checkbox" className="dd-input" id="test" />
+                            <input type="checkbox" className="dd-input career-input" id="test" />
                             <ul className="dd-menu">
                                 <li onClick={() => handleSelectedNonIq03('Logical-Mathematical')}>Logical-Mathematical</li>
                                 <li onClick={() => handleSelectedNonIq03('Linguistic')}>Linguistic</li>
@@ -256,7 +257,7 @@ const CareerAdd = () => {
                         <label className='ol-input-label'>Select Non Iq intelligence 04</label>
                         <label className="dropdown">
                             <div className="dd-button">{SelectedNonIq04}</div>
-                            <input type="checkbox" className="dd-input" id="test" />
+                            <input type="checkbox" className="dd-input career-input" id="test" />
                             <ul className="dd-menu">
                                 <li onClick={() => handleSelectedNonIq04('Logical-Mathematical')}>Logical-Mathematical</li>
                                 <li onClick={() => handleSelectedNonIq04('Linguistic')}>Linguistic</li>
@@ -274,26 +275,26 @@ const CareerAdd = () => {
 
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Enter Specialization 01</label>
-                        <input type='text' value={Specialization01} onChange={(event)=>{handleSpecialization01OnChange(event)}} className='ol-input' />
+                        <input type='text' value={Specialization01} onChange={(event)=>{handleSpecialization01OnChange(event)}} className='ol-input career-input' />
                     </div>
                     <div className='ol-input-container'>
                         <label className='ol-input-label career-input-label'>Enter Specialization 02</label>
-                        <input type='text' value={Specialization02} onChange={(event)=>{handleSpecialization02OnChange(event)}} className='ol-input' />
+                        <input type='text' value={Specialization02} onChange={(event)=>{handleSpecialization02OnChange(event)}} className='ol-input career-input' />
                     </div>
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Enter Specialization 03</label>
-                        <input type='text' value={Specialization03} onChange={(event)=>{handleSpecialization03OnChange(event)}} className='ol-input' />
+                        <input type='text' value={Specialization03} onChange={(event)=>{handleSpecialization03OnChange(event)}} className='ol-input career-input' />
                     </div>
 
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Enter Specialization 04</label>
-                        <input type='text' value={Specialization04} onChange={(event)=>{handleSpecialization04OnChange(event)}} className='ol-input' />
+                        <input type='text' value={Specialization04} onChange={(event)=>{handleSpecialization04OnChange(event)}} className='ol-input career-input' />
                     </div>
                 </div>
 
-                <div className='add-ol-btn-container'>
+                <div className='add-ol-btn-container add-career-btn-container'>
                     <button
-                        className='add-ol-btn'
+                        className='add-ol-btn add-career-btn'
                         onClick={handleAdd}
                     >
                         Add

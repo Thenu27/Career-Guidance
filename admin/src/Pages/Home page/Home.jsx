@@ -12,7 +12,7 @@ const Home=()=>{
             <div className='login-container'>
                 <h1 className='welcome-title'>Welcome to the University Guide Admin Page</h1>
                 <div className='login-btn-container'>
-                    <button onClick={goToLogin} className='login-btn'>Login</button>
+                    <button onClick={goToLogin} className='login-btn home-login-btn'>Login</button>
                 </div>
             </div>
 

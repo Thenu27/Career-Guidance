@@ -35,6 +35,16 @@
    margin-top: 34px;
 }
 
+.signin-btn{
+   transition: width 0.2s ease-in-out;
+}
+
+.signin-btn:hover{
+   width: 230px;
+   background-color: #006657;
+}
+
+
 .signin-btn-container{
    width: 100%;
    display: flex;

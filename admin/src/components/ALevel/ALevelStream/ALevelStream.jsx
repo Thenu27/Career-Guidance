@@ -46,11 +46,11 @@ const ALevelStream = () => {
 };
 
   return (
-    <div>
+    <div className='login-container a-level-stream-container'>
       <h1 className="stream-title">Select Stream</h1>
       <div className="options-container stream-container">
         <button
-          className="login-btn"
+          className="login-btn stream-btn"
           onClick={() => {
             setSubject(1);
             nextNavigation();
@@ -59,7 +59,7 @@ const ALevelStream = () => {
           Physical Science
         </button>
         <button
-          className="login-btn"
+          className="login-btn stream-btn"
           onClick={() => {
             setSubject(2);
             nextNavigation();
@@ -68,7 +68,7 @@ const ALevelStream = () => {
           Bio Science
         </button>
         <button
-          className="login-btn"
+          className="login-btn stream-btn"
           onClick={() => {
             setSubject(3);
             nextNavigation();
@@ -77,7 +77,7 @@ const ALevelStream = () => {
           Commerce
         </button>
         <button
-          className="login-btn"
+          className="login-btn stream-btn"
           onClick={() => {
             setSubject(4);
             nextNavigation();
@@ -86,7 +86,7 @@ const ALevelStream = () => {
           Arts
         </button>
         <button
-          className="login-btn"
+          className="login-btn stream-btn"
           onClick={() => {
             setSubject(5);
             nextNavigation();

@@ -229,19 +229,20 @@ const updateSubject=async()=>{
     return (
         <>
 
-        <div className='add-sub-activity-title-container'>
-            <h1 className='add-sub-activity-title'>Update Acitvity </h1>
-        </div>
-          <div className='sub-activity-add-container'>
+
+          <div className='login-container sub-activity-add-container'>
+            <div className='add-sub-activity-title-container'>
+                <h1 className='add-sub-activity-title'>Update Acitvity </h1>
+            </div>
                 <div className='add-sub-activity-input-container'>
-                    <label className='add-sub-activity-label'>Sub Acitvity</label>
-                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,0)} type='text' value={SubActivityName}  className='alevel-update-input-subject'/>:
-                        <button className='alevel-update-intelligene'>{SubActivityName}</button>}
+                    <label className='ol-input-label'>Sub Activity</label>
+                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,0)} type='text' value={SubActivityName}  className='alevel-update-input-subject sub-activity-name-input'/>:
+                        <button className='alevel-update-intelligene sub-activity-update-name'>{SubActivityName}</button>}
                           </div>
 
                 <div className='add-sub-activity-input-container'>
-                    {Edit?<label className="dropdown">
-                                <div class="dd-button intelligence-input">
+                    {Edit?<label className="dropdown ">
+                                <div class="dd-button intelligence-input ">
                                 {Intelligence1}
                                 </div>
 
@@ -250,10 +251,10 @@ const updateSubject=async()=>{
                                 {dropdownData(1)}
 
                                 </label>: 
-                                <button className='add-sub-activity-intelligence'>{Intelligence1}</button> }
+                                <button className='add-sub-activity-intelligence sub-activity-label'>{Intelligence1}</button> }
                     
-                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,1)} type='number' value={Score1} className='alevel-update-score'/>:
-                     <button className='add-sub-activity-score'>{Score1}</button>}
+                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,1)} type='number' value={Score1} className='alevel-update-score sub-activity-score'/>:
+                     <button className='add-sub-activity-score sub-activity-label-score'>{Score1}</button>}
 
                 </div>
 
@@ -268,10 +269,10 @@ const updateSubject=async()=>{
                                 {dropdownData(2)}
 
                                 </label>: 
-                                <button className='add-sub-activity-intelligence'>{Intelligence2}</button> }
+                                <button className='add-sub-activity-intelligence sub-activity-label'>{Intelligence2}</button> }
                     
-                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,2)} type='number' value={Score2} className='alevel-update-score'/>:
-                     <button className='add-sub-activity-score'>{Score2}</button>}
+                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,2)} type='number' value={Score2} className='alevel-update-score sub-activity-score'/>:
+                     <button className='add-sub-activity-score sub-activity-label-score'>{Score2}</button>}
 
                 </div>
 
@@ -286,10 +287,10 @@ const updateSubject=async()=>{
                                 {dropdownData(3)}
 
                                 </label>: 
-                                <button className='add-sub-activity-intelligence'>{Intelligence3}</button> }
+                                <button className='add-sub-activity-intelligence sub-activity-label'>{Intelligence3}</button> }
                     
-                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,3)} type='number' value={Score3} className='alevel-update-score'/>:
-                     <button className='add-sub-activity-score'>{Score3}</button>}
+                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,3)} type='number' value={Score3} className='alevel-update-score sub-activity-score'/>:
+                     <button className='add-sub-activity-score sub-activity-label-score'>{Score3}</button>}
 
                 </div>
 
@@ -307,13 +308,7 @@ const updateSubject=async()=>{
                     >
                         Delete
                     </button>
-                    <img
-                        onClick={()=>handleDelete(SubActivityData[0]?.sub_activity_id)}
 
-                        className='ol-delete-icon'
-                        src={DeleteIcon}
-                        alt="Delete icon"
-                    />
                 </div>
                 </div>
 

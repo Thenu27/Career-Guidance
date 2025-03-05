@@ -1,42 +1,56 @@
 .update-container{
     width: 600px;
-    min-height: 550px;
+    min-height: 600px;
     border: 1px solid black;
     margin: auto;
+    margin-top: 30px;
 }
 .update-intlligence-container{
     height: 50px;
     margin-top: 15px;
-
 }
 
 .intelligence-btn{
     height: 100%;
     width: 50%;
-    margin-left: 5px;
+    margin-left: 25px;
 }
 
 .mi_score{
-    height: 100%;
-    margin-left: 150px;
+    height: 90%;
+    margin-left: 100px;
+    width: 100px;
+    font-size: 18px;
+    border-radius: 10px;
+
 }
 
 .score-input{
-    width: 60px;
+    width: 100px;
+    text-align: center;
+    background-color: #E0E0E0;
+    border: none;
+    font-family: 'Mulish',sans-serif;
 }
 .update-category-container{
     margin-top: 100px;
 }
 .category{
     width: 100px;
+    border-radius: 10px;
 }
 
 .ol-delete-container{
     display: flex;
     flex-direction: row;
-    width: 200px;
+    width: 220px;
     margin: auto;
 }
+
+.ol-delete-btn:hover{
+    width: 100%;
+}
+
 
 .ol-delete-btn{
     background-color: rgb(251, 38, 38);
@@ -46,6 +60,7 @@
     color: white;
     font-size: 16px;
     cursor: pointer;
+    transition: width 0.1s ease-in-out;
 
 }
 
@@ -55,15 +70,26 @@
 
 .ol-edit-btn-container{
     width: 200px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .ol-btn-container{
-    margin-top: 70px;
+    margin-top: 50px;
     display: flex;
     flex-direction: row;
     height: 50px;
     flex-direction: row-reverse;
 
+
+}
+
+
+.ol-edit-btn:hover{
+    width:200px;
 }
 
 .ol-edit-btn{
@@ -73,14 +99,27 @@
     color: rgb(0, 0, 0);
     font-size: 16px;
     cursor: pointer;
-    margin-left: 60px;
+    background-color: #006657;
+    color: white;
+    transition: width 0.1s ease-out;
+
 }
 .ol-name-update-btn{
     height: 100%;
+    width: 250px;
+    font-size: 18px;
+    border-radius: 10px;
+    font-family: 'Mulish',sans-serif;
+    background-color: #E0E0E0;
+    border: none;
+    padding-left: 10px;
+    color: black;
+
+    font-weight: 500;
 }
 
 .ol-name-update-container{
-    width: 400px;
+    width: 100%;
     height: 50px;
     margin: auto;
     display: flex;
@@ -97,9 +136,21 @@
 
 
 .ol-name-update-label{
-    font-size: 25px;
+    font-size: 22px;
+    font-weight: 600;
 }
 
 .intelligence-input{
    min-width: 200px;
+   background-color: #E0E0E0;
+}
+
+.intelligence-btn{
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+.intelligence-input-btn{
+    background-color: #E0E0E0;
+
 }

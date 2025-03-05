@@ -1,0 +1,11 @@
+.al-header{
+    margin-top: 15px;
+}
+
+
+
+.al-subject-inner-container{
+    width: 70%;
+    height: 60%;
+    overflow-y: auto;
+}

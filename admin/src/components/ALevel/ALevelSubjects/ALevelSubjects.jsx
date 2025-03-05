@@ -55,16 +55,16 @@ const ALevelSubjects =()=>{
 
     return(
         <>
-        <div className='ol-header'>
+ 
+        <div className='login-container subject-container ol-subject-container'>
+        <div className='ol-header al-header'>
             <p className='welcome-title olevel-title '>This is the Alevel subjects</p>
                 {/* <div  className='switch-container'>
                   <button className='login-btn switch-btn'></button>
 
                 </div> */}
         </div>
-  
-        <div className='subject-container ol-subject-container'>
-            <div className='subject-inner-container'>
+            <div className='subject-inner-container al-subject-inner-container'>
                 {ShowSubjects().map((subj,index)=>{
                     return<button onClick={()=>{goToALUpdate(); handleSubjectClick(subj.subject_id)}} className='subject' key={index}>{subj.subject}</button>
                 })}

@@ -13,6 +13,7 @@ margin: auto;
     width: 600px;
     border: 1px solid black;
     margin: auto;
+    margin-top: 70px;
 }
 .add-sub-activity-input-container{
     margin-top: 20px;
@@ -44,13 +45,26 @@ margin: auto;
 
 .sub-activities-edit-btn-container{
     margin-top: auto;
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
 
 .sub-activities-edit-btn{
-    width: 150px;
+    width: 70%;
     height: 50px;
-    margin-left: 20px;
+    transition: width 0.1s ease-in-out;
+    background-color: #006657;
+    font-family: 'Mulish',sans-serif;
+    font-size: 18px;
+    border-radius: 10px;
     
+}
+
+
+.sub-activities-edit-btn:hover{
+    width:100% ;
 }
 
 .sub-activities-btn-container{
@@ -58,3 +72,47 @@ margin: auto;
     flex-direction: row;
 }
 
+.sub-activity-update-name{
+    border-radius: 10px;
+    height: 50px;
+}
+
+.sub-activity-label{
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+.sub-activity-label-score{
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+.sub-activities-btn-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.sub-activity-score{
+    background-color: #E0E0E0;
+    border-radius: 10px;
+    width: 70px;
+    text-align: center;
+    border: none;
+    font-family: 'Mulish',sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.sub-activity-name-input{
+    background-color: #E0E0E0;
+    border-radius: 10px;
+    height: 40px;
+    width: 200px;
+    border: none;
+    text-align: center;
+    font-family: 'Mulish',sans-serif;
+    font-size: 18px;
+
+}

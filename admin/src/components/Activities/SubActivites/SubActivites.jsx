@@ -88,39 +88,35 @@ const SubActivities = () => {
 
   return (
     <>
+
+      <div className='login-container sub-activities-container'>
+
       <div className='sub-acitvities-title-container'>
         <h1 className='sub-acitvities-title'>Sub Activities</h1>
       </div>
-      <div className='sub-activities-container'>
         {SubActivities.length === 0 ? (
           <p>No sub-activities available. Please select a main activity or add new ones.</p>
         ) : (
           <div className='sub-activities-inner-container'>
             {SubActivities.map((activity) => (
-              <button onClick={()=>{goToUpdateSubActivity();handleClick(activity.sub_activity)}} key={activity.id} className='sub-activity-btn'>
+              <button onClick={()=>{goToUpdateSubActivity();handleClick(activity.sub_activity)}} key={activity.id} className='login-btn sub-activity-btn'>
                 {activity.sub_activity}
               </button>
             ))}
           </div>
         )}
-        <div className='add-activity-btn-container'>
-          <button onClick={goToSubActivityAdd} className='login-btn add-activity-btn'>Add Sub Activity</button>
+
+        <div className='add-activity-add-delete-container'>
+            <div className='add-sub-acitvity-btn-container'>
+              <button onClick={goToSubActivityAdd} className='add-sub-activity-btn'>Add Sub Activity</button>
+            </div>
+            <div className='add-sub-acitvity-btn-container'>
+              <button className='login-btn ol-delete-btn sub-activity-delete-btn' onClick={()=>{handleDelete(SelectedMainActivity)}}>Delete </button>
+
+            </div>
+       </div>
         </div>
-                        <div className='ol-delete-container sub-activities-delete-container'>
-                            <button
-                                className='login-btn ol-delete-btn'
-                                onClick={()=>{handleDelete(SelectedMainActivity)}}
-                            >
-                                Delete
-                            </button>
-                            <img
-                                onClick={()=>{handleDelete(SelectedMainActivity)}}
-                                className='ol-delete-icon'
-                                src={DeleteIcon}
-                                alt="Delete icon"
-                            />
-                        </div>
-      </div>
+
     </>
   );
 };

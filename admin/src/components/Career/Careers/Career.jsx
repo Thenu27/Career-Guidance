@@ -81,7 +81,7 @@ const Career = () => {
             );
 
             if (response.data === 'Career field Deleted') {
-                alert('Career deleted successfully');
+                alert('Career Field deleted successfully');
             } 
         } catch (error) {
             console.log(error)

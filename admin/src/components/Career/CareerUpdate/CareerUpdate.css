@@ -1,65 +1,125 @@
 .career-update-container{
     display: flex;
+    /* align-items: center;
+    justify-content: center; */
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 50px;
     margin: auto;
-    border: 1px solid ;
     width:700px;
-    min-height: 850px;
+    min-height: 950px;
+    border: 1px solid black;
+    margin-top: 20px;
 }
 .career-update-bnt-container{
     display: flex;
     flex-direction: row;
-    width: 90%;
-    justify-content: space-around;
-    margin-top: 10px;
+    width: 80%;
+    justify-content: space-between;
+    margin: auto;
+    margin-top: 18px;
 }
 
 .career-update-bnt{
-    width: 240px;
-    height: 50px;
+    min-width: 340px;
+   min-height: 39px;
+    font-size: 18px;
+    border-radius: 10px;
 }
 
 .career-update-bnt2{
-    width: 140px;
-    height: 50px;
-    margin-left: 20px;
+    width: 340px;
+    height: 39px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
 }
 
 .career-update-label{
     font-size: 20px;
     text-align: center;
     align-content: center;
+    font-weight: 600;
 }
 .career-update-title-container{
     width: 700px;
-    margin: auto;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .career-update-title{
-    padding-top: 50px;
     text-align: center;
+    padding-top: 20px;
 }
 
 .career-edit-btn{
     width: 150px;
     height: 50px;
+    background-color: #006657;
+    border-radius: 10px;
+    font-size: 25px;
+    transition: width 0.1s ease-in-out;
+}
+
+.career-edit-btn:hover{
+    width: 200px;
 }
 
 .career-edit-delete-container{
     display: flex;
     flex-direction: row;
-    gap: 20px;
-    min-width: 400px;
+    justify-content: space-evenly;
+    min-width: 500px;
+    margin: auto;
+    margin-top: 45px;
+
 }
 
 .career-delete-container{
     margin: 0%;
+    width: 230px;
+    height: 50px;
 }
 
 .career-name-btn{
     width: 400px;
    padding: 0px 10px;
 
+
+}
+
+.career-update-bnt-container{
+    width: 90%;
+}
+
+.career-update-inner-container{
+    width: 90%;
+    margin: auto;
+    justify-content: space-between;
+    /* height: 600px; */
+    margin-top: 10px
+}
+
+.career-edit-btn-container{
+    width: 200px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.career-delete-btn{
+    transition:width 0.2s ease-in-out;
+}
+
+.career-delete-btn:hover{
+    width: 100%;
+}
+
+.career-input{
+    background-color: #E0E0E0;
+    border: none;
+    font-family: 'Mulish',sans-serif;
+    padding-left: 10px;
+    border-radius: 10px;
+    
 }

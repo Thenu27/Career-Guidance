@@ -33,10 +33,10 @@ const Activities = ()=>{
      }
 
     return(
-        <div>
+        <div className='home-container'>
             <Outlet/>
             <div className='navigation-btn'>
-                <button onClick={backNavigation} className='login-btn '>Back</button>
+                <button onClick={backNavigation} className='login-btn back-btn'>Back</button>
             </div>
         </div>
     )

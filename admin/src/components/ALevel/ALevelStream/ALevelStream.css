@@ -1,0 +1,16 @@
+.a-level-stream-container{
+    height: 500px;
+}
+.stream-btn{
+    width: 200px;
+    height: 60px;
+    transition: width 0.15s ease-in-out;
+}
+
+.stream-btn:hover{
+    width: 250px;
+}
+
+.stream-container{
+    height: 70%;
+}

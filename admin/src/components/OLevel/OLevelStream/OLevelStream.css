@@ -1,3 +1,28 @@
 .stream-title{
     text-align: center;
+    padding-top: 20px;
+}
+
+
+
+.stream-container{
+    display: flex;
+    flex-direction: column;
+    height: 60%;
+    width: 100%;
+    /* border: 1px solid black; */
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.o-level-stream-btn{
+    height: 70px;
+    transition: width 0.15s ease-in-out;
+}
+
+.o-level-stream-btn:hover{
+    width: 230px;
 }

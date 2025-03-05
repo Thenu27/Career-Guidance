@@ -95,25 +95,30 @@ const OLevelSubject = ()=>{
 
     return(
         <>
-        <div className='ol-header'>
-            <p className='welcome-title olevel-title '>This is the olevel subjects</p>
-                <div onClick={toggle} className='switch-container'>
-                  <button className='login-btn switch-btn'>{ShowlocalCoreOL?'Switch to Basket subjects':'Switch to Core subjects'}</button>
 
-                </div>
-        </div>
 
        
 
 
-        <div className='subject-container ol-subject-container'>
+        <div className=' login-container subject-container ol-subject-container'>
+        <div className='ol-header'>
+            <h1 className='welcome-title olevel-title '>O/Level Subjects</h1>
+
+        </div>
             <div className='subject-inner-container'>
                 {ShowSubjects().map((subj,index)=>{
                     return<button onClick={()=>{goToUpdatePage();SelectedButton(index);}} className='subject' key={index}>{subj.subjects}</button>
                 })}
             </div>
             <div className='add-ol-subject-container'>
-                <button onClick={goToAddpage} className=' login-btn add-ol-subject-btn'> Add subject</button>
+                <div>
+                    <button onClick={goToAddpage} className=' login-btn add-ol-subject-btn'> Add subject</button>
+                </div>
+
+                <div onClick={toggle} >
+                  <button className='login-btn switch-btn'>{ShowlocalCoreOL?'Switch to Basket subjects':'Switch to Core subjects'}</button>
+                 </div>
+
             </div>
 
         </div> 

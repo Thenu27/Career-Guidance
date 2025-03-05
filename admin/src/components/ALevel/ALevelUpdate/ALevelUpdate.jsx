@@ -206,19 +206,21 @@ const handleIntelligenceChange=(value,index)=>{
 
 return (
         <>
-        <div className='alevel-update-title-container'>
-            <h1 className='alevel-update-title'>Update Subject</h1>
-        </div>
-           <div className='alevel-update-container'>
-                <div className='alevel-update-form'>
-                    <div className='alevel-update-input-container'>
-                        <label className='alevel-update-subject-label'>Subject Name</label>
-                        {Edit?<input onChange={(e)=>handleOnChange(e.target.value,0)} type='text' value={ALSubject}  className='alevel-update-input-subject'/>:
-                        <button className='alevel-update-intelligene'>{ALSubject}</button>}
-                    </div>
 
-                    <div className='alevel-update-input-container'>
-                        {Edit? <label className="dropdown">
+           <div className='login-container update-container a-level-container'>
+                <div className='alevel-update-title-container'>
+                    <h1 className='alevel-update-title'>Update Subject</h1>
+                </div>
+                <div className='alevel-update-form'>
+                    <div className='ol-name-update-container'>
+                        <label className='ol-name-update-label'>Subject Name</label>
+                        {Edit?<input onChange={(e)=>handleOnChange(e.target.value,0)} type='text' value={ALSubject}  className='ol-name-update-btn'/>:
+                        <button className='ol-name-update-btn'>{ALSubject}</button>}
+                    </div>
+                    <div className='a-level-inner-container'>
+
+                    <div className='update-intlligence-container a-level-intelligence-container'>
+                        {Edit? <label className="dropdown intelligence-input-btn">
                                 <div class="dd-button intelligence-input">
                                 {Intelligence1}
                                 </div>
@@ -228,14 +230,14 @@ return (
                                 {dropdownData(1)}
 
                                 </label>                   :
-                        <button  className='alevel-update-intelligene'>{Intelligence1}</button>}
+                        <button  className='intelligence-btn'>{Intelligence1}</button>}
                         
-                        {Edit?<input type='number' onChange={(e)=>handleOnChange(e.target.value,1)}  className='alevel-update-score'  value={Score1}/>:
-                         <button   className='alevel-update-score'>{Score1}</button>}
+                        {Edit?<input type='number' onChange={(e)=>handleOnChange(e.target.value,1)}  className='mi_score score-input'  value={Score1}/>:
+                         <button   className='mi_score'>{Score1}</button>}
                      </div>
 
-                     <div className='alevel-update-input-container'>
-                        {Edit? <label className="dropdown">
+                     <div className='update-intlligence-container'>
+                        {Edit? <label className="dropdown intelligence-input-btn">
                                 <div class="dd-button intelligence-input">
                                 {Intelligence2}
                                 </div>
@@ -245,14 +247,14 @@ return (
                                 {dropdownData(2)}
 
                                 </label>                   :
-                        <button  className='alevel-update-intelligene'>{Intelligence2}</button>}
+                        <button  className='intelligence-btn'>{Intelligence2}</button>}
                         
-                        {Edit?<input onChange={(e)=>handleOnChange(e.target.value,2)}  className='alevel-update-score' type='text' value={Score2}/>:
-                         <button type='number'  className='alevel-update-score'>{Score2}</button>}
+                        {Edit?<input onChange={(e)=>handleOnChange(e.target.value,2)}  className='mi_score score-input' type='text' value={Score2}/>:
+                         <button type='number'  className='mi_score'>{Score2}</button>}
                      </div>
 
-                     <div className='alevel-update-input-container'>
-                        {Edit? <label className="dropdown">
+                     <div className='update-intlligence-container'>
+                        {Edit? <label className="dropdown intelligence-input-btn">
                                 <div class="dd-button intelligence-input">
                                 {Intelligence3}
                                 </div>
@@ -262,22 +264,26 @@ return (
                                 {dropdownData(3)}
 
                                 </label>                   :
-                        <button  className='alevel-update-intelligene'>{Intelligence3}</button>}
+                        <button  className='intelligence-btn'>{Intelligence3}</button>}
                         
-                        {Edit?<input onChange={(e)=>handleOnChange(e.target.value,3)}  className='alevel-update-score'type='number' value={Score3}/>:
-                         <button   className='alevel-update-score'>{Score3}</button>}
+                        {Edit?<input onChange={(e)=>handleOnChange(e.target.value,3)}  className='mi_score score-input'type='number' value={Score3}/>:
+                         <button   className='mi_score'>{Score3}</button>}
+                     </div>
                      </div>
 
+                   <div className='ol-btn-container'>
 
-                    <div className='alevel-update-btn-container'>
-                        {Edit?<button onClick={()=>{handleEditClick(),updateSubject()}} className='alevel-update-btn'>Update</button>:
-                        <button onClick={handleEditClick} className='alevel-update-btn'>Edit</button>}
-                    </div>
 
-                <div className='ol-delete-container'>
-                    <button onClick={()=>{handleDelete(SelectedSubjectData.subject_id,SelectedSubjectData.subject)}} className='login-btn ol-delete-btn'>Delete</button>
-                    <img className='ol-delete-icon'  src={DeleteIcon} alt="Delete icon"/>
-                </div>
+                        <div className='ol-delete-container'>
+                            <button onClick={()=>{handleDelete(SelectedSubjectData.subject_id,SelectedSubjectData.subject)}} className='login-btn ol-delete-btn'>Delete</button>
+                        </div>
+                        <div className='ol-edit-btn-container'>
+                                {Edit?<button onClick={()=>{handleEditClick(),updateSubject()}} className='ol-edit-btn'>Update</button>:
+                                <button onClick={handleEditClick} className='ol-edit-btn'>Edit</button>}
+                            </div>
+
+                    </div>         
+
 
                 </div>
            </div>

@@ -70,10 +70,11 @@ const SubActivitiesAdd = () => {
 
     return (
         <>
+
+            <div className='login-container ol-add-container'>
             <div className='ol-add-header'>
                 <h1 className='ol-add-title'>Enter the necessary details</h1>
             </div>
-            <div className='ol-add-container'>
                 <div className='ol-add-inner-container'>
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Enter Sub Activity</label>
@@ -160,16 +161,17 @@ const SubActivitiesAdd = () => {
                             />
                         </div>
                     </div>
-                </div>
-
-                <div className='add-ol-btn-container'>
+                    <div className='add-ol-btn-container'>
                     <button
                         className='add-ol-btn'
                         onClick={handleAdd}
                     >
-                        Add
+                        Add Sub Activity
                     </button>
                 </div>
+                </div>
+
+
             </div>
 
             

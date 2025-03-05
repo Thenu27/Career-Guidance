@@ -46,3 +46,12 @@
     align-items: center;
     margin-top: 57px;
 }
+
+.home-login-btn{
+    transition: width 0.15s ease-in-out;
+}
+
+.home-login-btn:hover{
+    width: 230px;
+
+}

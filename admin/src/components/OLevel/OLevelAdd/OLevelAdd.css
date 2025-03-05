@@ -1,8 +1,9 @@
 .ol-add-container{
     width:600px;
-    height: 550px;
+    height: 500px;
     margin: auto;
     border: 2px solid black;
+    margin-top: 50px;
 }
 
 .ol-add-header{
@@ -19,41 +20,63 @@
     width: 90%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 10px;
+    margin-top: 60px;
 }
 
 .add-ol-btn-container{
     height: 70px;
-    width: 200px;
+    width: 250px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20px;
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .add-ol-btn{
     height: 100%;
-    width: 100%;
-}
-.ol-input-label{
-    font-size: 23px;
+    width: 70%;
+    border-radius: 10px;
+    background-color: #006657;
+    transition: width 0.1s ease-in-out;
+    font-size: 18px;
 }
 
+.add-ol-btn:hover{
+  width: 100%;
+}
+
+
+.ol-input-label{
+    font-size: 20px;
+    font-weight: 600;
+}
 .ol-input{
     height: 40px;
     width: 300px;
     margin-left: 30px;
+    background-color: #E0E0E0;
+    border-radius: 10px;
+    border: none;
 }
 
 .ol-input-container{
     margin-top: 20px;
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .ol-intelligence-score{
     width:50px;
-    height: 30px;
+    height: 40px;
     margin-left: 20px;
+    background-color: #E0E0E0;
+    border-radius: 10px;
+    border: none;
+
 }
 
 a {

@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import {ActivitiesContext} from '../../../Context/Activities.context'
+import {ActivitiesContext} from '../../../Context/Activities.context';
+import './MainActivities.css'
 
 
 const MainActivities = ()=>{
@@ -49,8 +50,8 @@ const MainActivities = ()=>{
     },[Activities])        
 
     return(
-        <div>
-            <h1 className='welcome-title olevel-title '>Main Activites in the Database</h1>
+        <div className='login-container main-activity-container'>
+            <h1 className='welcome-title olevel-title activity-title'>Main Activities in the Database</h1>
             <div className='subject-container'>
                 <div className='subject-inner-container'>
 
@@ -60,7 +61,7 @@ const MainActivities = ()=>{
                 </div>
 
                 <div className='add-activity-btn-container'>
-                    <button onClick={goToAddMainActivity} className='login-btn add-activity-btn'>Add Activity Field</button>
+                    <button onClick={goToAddMainActivity} className='login-btn add-question-btn'>Add Activity Field</button>
                 </div>
 
             </div>

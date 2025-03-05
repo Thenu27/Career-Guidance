@@ -214,10 +214,12 @@ const OLevelEdit = () => {
     return (
         <div>
             {/* Displaying the active subject being edited */}
+ 
+            <div className=' login-container update-container'>
             <h1 className='welcome-title olevel-title'>
-                Update Subject - {activeSubject?activeSubject.subjects:'Loading...'}
+                Update Subject
+                {/* Update Subject - {activeSubject?activeSubject.subjects:'Loading...'} */}
             </h1>
-            <div className='update-container'>
                 <div className='ol-name-update-container'>
                     <label className='ol-name-update-label'>Subject Name</label>
                     {Edit?<input onChange={(e)=>handleNameChange(e.target.value)}  className='ol-name-update-btn' type='text' value={OLSubject}/>:
@@ -227,7 +229,7 @@ const OLevelEdit = () => {
                 {[1, 2, 3].map((index) => (
                     <div className='update-intlligence-container' key={index}>
                         {Edit?
-                            <label className="dropdown">
+                            <label className="dropdown intelligence-input-btn">
 
                                     <div class="dd-button intelligence-input">
                                     {index===1?Intelligence1:index===2?Intelligence2:Intelligence3}
@@ -265,12 +267,7 @@ const OLevelEdit = () => {
                         >
                             Delete
                         </button>
-                        <img
-                            onClick={() => handleDelete(activeSubject.subject_id, activeSubject.subjects)}
-                            className='ol-delete-icon'
-                            src={DeleteIcon}
-                            alt="Delete icon"
-                        />
+
                     </div>
                     <div className='ol-edit-btn-container'>
                     
