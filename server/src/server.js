@@ -172,6 +172,7 @@ app.use((req, res, next) => {
     }
 });
 
+console.log(process.env.DATABSE_PASSWORD)
 
 db.raw('SELECT 1')
     .then(() => console.log('Database connection established successfully!'))
