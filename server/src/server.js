@@ -99,7 +99,11 @@ app.use(
             "https://cdn.jsdelivr.net",    
             "https://cdnjs.cloudflare.com" 
           ],          
-          styleSrc: ["'self'", "'unsafe-inline'"],
+          styleSrc: [
+            "'self'", 
+            "'unsafe-inline'", 
+            "https://fonts.googleapis.com" // ✅ Allow Google Fonts
+        ],
           imgSrc: ["'self'", "data:"],
           objectSrc: ["'none'"],
           upgradeInsecureRequests: [],
