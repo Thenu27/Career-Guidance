@@ -10,24 +10,24 @@ const Activities = ()=>{
     const location =useLocation();
 
     const backNavigation=()=>{
-        if(location.pathname ==='/activities'){
-         navigate('/option');
+        if(location.pathname ==='/admin/activities'){
+         navigate('/admin/option');
          return;
         }
-        if(location.pathname ==='/activities/add-main-activity'){
-            navigate('/activities');
+        if(location.pathname ==='/admin/activities/add-main-activity'){
+            navigate('/admin/activities');
             return;
         }
-        if(location.pathname ==='/activities/sub-activities'){
-            navigate('/activities');
+        if(location.pathname ==='/admin/activities/sub-activities'){
+            navigate('/admin/activities');
             return;
         }
-        if(location.pathname ==='/activities/sub-activity-update'){
-            navigate('/activities/sub-activities');
+        if(location.pathname ==='/admin/activities/sub-activity-update'){
+            navigate('/admin/activities/sub-activities');
             return;
         }
-        if(location.pathname ==='/activities/sub-activity-add'){
-            navigate('/activities/sub-activities');
+        if(location.pathname ==='/admin/activities/sub-activity-add'){
+            navigate('/admin/activities/sub-activities');
             return;
         }
      }

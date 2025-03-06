@@ -11,19 +11,19 @@ const Options=()=>{
     const navigate = useNavigate();
 
     const goToIntelligence=()=>{
-        navigate('/intelligence')
+        navigate('/admin/intelligence')
     }
 
     const goToOLevelPage=()=>{
-        navigate('/ordinarylevel')
+        navigate('/admin/ordinarylevel')
     }
 
     const goToActivitiesPage =()=>{
-        navigate('/activities')
+        navigate('/admin/activities')
     }
 
     const goToALevelPage =()=>{
-        navigate('/advancedlevel')
+        navigate('/admin/advancedlevel')
     }
 
     const goToCareerPage=()=>{

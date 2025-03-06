@@ -9,8 +9,8 @@ const OLevelStream=()=>{
 
 
     const nextNavigation = () =>{
-        if(location.pathname==='/ordinarylevel'){
-            navigate('/ordinarylevel/subjects');
+        if(location.pathname==='/admin/ordinarylevel'){
+            navigate('/admin/ordinarylevel/subjects');
         }
     }
 

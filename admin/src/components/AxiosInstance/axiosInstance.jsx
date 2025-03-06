@@ -17,7 +17,7 @@ axiosInstance.interceptors.response.use(
             console.error('Token expired or invalid. Redirecting to login...');
 
             // Redirect to the login page (using React Router or just a regular redirect)
-            window.location.href = '/login';  // You can use `history.push('/login')` if using React Router
+            window.location.href = '/admin/login';  // You can use `history.push('/login')` if using React Router
 
             // Optionally, clear any sensitive data (like tokens from localStorage/sessionStorage)
             // localStorage.removeItem('authToken');

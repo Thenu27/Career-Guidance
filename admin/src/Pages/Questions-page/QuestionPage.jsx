@@ -6,10 +6,10 @@ const QuestionPage =()=>{
 const navigate = useNavigate();    
 const location =useLocation();
     const goToIntlligencePage=()=>{
-       if(location.pathname==='/questions'){
-        navigate('/intelligence');
-       }else if(location.pathname==='/questions/add'){
-        navigate('/questions')
+       if(location.pathname==='/admin/questions'){
+        navigate('/admin/intelligence');
+       }else if(location.pathname==='/admin/questions/add'){
+        navigate('/admin/questions')
        }
     }
 

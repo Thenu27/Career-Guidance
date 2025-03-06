@@ -30,7 +30,7 @@ const CurrentQuestions = () => {
     }, [AdminQuestions]);
 
     const goToAddQuestionPage = () => {
-        navigate('/questions/add');
+        navigate('/admin/questions/add');
     };
 
     const sendQuestionToDelete = async (question,questionId) => {

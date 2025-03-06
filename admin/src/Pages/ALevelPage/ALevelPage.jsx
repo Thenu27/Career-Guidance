@@ -28,18 +28,18 @@ const ALevelPage =()=>{
     const location =useLocation();
 
     const backNavigation=()=>{
-        if(location.pathname ==='/advancedlevel'){
-         navigate('/option');
-        }else if(location.pathname ==='/advancedlevel/add'){
-         navigate('/advancedlevel/subjects');
-        }else if(location.pathname==='/advancedlevel/subjects'){
-         navigate('/advancedlevel/stream');
-        }else if(location.pathname==='/advancedlevel/add'){
-            navigate('/advancedlevel/subjects');
-        }else if(location.pathname==='/advancedlevel/stream'){
-            navigate('/advancedlevel')
-        }else if(location.pathname==='/advancedlevel/update'){
-            navigate('/advancedlevel/stream')
+        if(location.pathname ==='/admin/advancedlevel'){
+         navigate('/admin/option');
+        }else if(location.pathname ==='/admin/advancedlevel/add'){
+         navigate('/admin/advancedlevel/subjects');
+        }else if(location.pathname==='/admin/advancedlevel/subjects'){
+         navigate('/admin/advancedlevel/stream');
+        }else if(location.pathname==='/admin/advancedlevel/add'){
+            navigate('/admin/advancedlevel/subjects');
+        }else if(location.pathname==='/admin/advancedlevel/stream'){
+            navigate('/admin/advancedlevel')
+        }else if(location.pathname==='/admin/advancedlevel/update'){
+            navigate('/admin/advancedlevel/stream')
         }
      }
     return(

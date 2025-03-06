@@ -17,8 +17,8 @@ const ALevelStream = () => {
 
   // Function to handle navigation
   const nextNavigation = () => {
-    if (location.pathname === '/advancedlevel/stream') {
-      navigate('/advancedlevel/subjects');
+    if (location.pathname === '/admin/advancedlevel/stream') {
+      navigate('/admin/advancedlevel/subjects');
     }
   };
 

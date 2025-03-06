@@ -78,7 +78,7 @@ const OLevelSubject = ()=>{
     }
 
     const goToUpdatePage=()=>{
-        navigate('/ordinarylevel/update')
+        navigate('/admin/ordinarylevel/update')
     }
 
     const SelectedButton=(value)=>{
@@ -90,7 +90,7 @@ const OLevelSubject = ()=>{
     },[OLevelIndex])
 
     const goToAddpage=()=>{
-        navigate('/ordinarylevel/add')
+        navigate('/admin/ordinarylevel/add')
     }
 
     return(

@@ -21,7 +21,7 @@ import path from 'path';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: './admin',  // Ensures correct paths for built assets
+  base: '/',  // Ensures correct paths for built assets
   build: {
     outDir: path.resolve(__dirname, '../server/admin/dist'), // Store inside server/admin/dist
     emptyOutDir: true,  // Clears the output directory before building

@@ -15,11 +15,11 @@ const MainActivities = ()=>{
     const [Activities,setActivities] = useState([]);
 
     const goToAddMainActivity=()=>{
-        navigate('/activities/add-main-activity')
+        navigate('/admin/activities/add-main-activity')
     }
 
     const goToSubActivities=()=>{
-        navigate('/activities/sub-activities')
+        navigate('/admin/activities/sub-activities')
     }
 
 

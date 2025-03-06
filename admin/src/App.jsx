@@ -40,26 +40,27 @@ function App() {
     
     <Routes>
       <Route path='/admin' element={<Home/>}/>
-      <Route path='/login' element={<Singin/>}/>
+      <Route path='/admin/login' element={<Singin/>}/>
 
       <Route element={<ProtectedRoute/>}>
-        <Route path='/option' element={<Options/>}/>
-        <Route path='/intelligence' element={<IntelligencePage/>}/>
-        <Route path='/questions' element={<QuestionPage/>}>
+        <Route path='/admin/option' element={<Options/>}/>
+        
+        <Route path='/admin/intelligence' element={<IntelligencePage/>}/>
+        <Route path='/admin/questions' element={<QuestionPage/>}>
             <Route index element={<CurrentQuestions/>}/>
             <Route path="add" element={<QuestionUpdate/>}/>
 
         </Route>
         
 
-        <Route path='/ordinarylevel' element={<OLevelPage/>}>
+        <Route path='/admin/ordinarylevel' element={<OLevelPage/>}>
           <Route index element={<OLevelStream />} />
           <Route path="add" element={<OLevelAdd/>}/>
           <Route path="subjects" element={<OLevelSubject />} />
           <Route path="update" element={<OLevelEdit/>} />
 
         </Route>
-        <Route path='/activities' element={<Activities/>}>
+        <Route path='/admin/activities' element={<Activities/>}>
           <Route index element={<MainActivities/>} />
           <Route path='add-main-activity' element={<MainActivityAdd/>}/>
           <Route path='sub-activities' element={<SubActivities/>}/>
@@ -68,7 +69,7 @@ function App() {
 
         </Route>
         
-        <Route path='/advancedlevel' element={<ALevelPage/>}>
+        <Route path='/admin/advancedlevel' element={<ALevelPage/>}>
           <Route index element={<ALevelPath/>}/>
           <Route path='add' element={<ALevelAdd/>}/>
           <Route path='stream' element={<ALevelStream/>}/>

@@ -9,13 +9,13 @@ const CareerPage=()=>{
 
     const backNavigationCareer=()=>{
         if(location.pathname==='/admin/career'){
-            navigate('/option')
+            navigate('/admin/option')
         }
         if(location.pathname==='/admin/careerfield/career'){
             navigate('/admin/careerfield')
         }
         if(location.pathname==='/admin/careerfield'){
-            navigate('/option')
+            navigate('/admin/option')
         }
         if(location.pathname==='/admin/careerfield/add'){
             navigate('/admin/careerfield/career')

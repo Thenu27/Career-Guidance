@@ -13,14 +13,14 @@ const OLevelPage = ()=>{
 
 
     const backNavigation=()=>{
-       if(location.pathname ==='/ordinarylevel'){
-        navigate('/option')
-       }else if(location.pathname ==='/ordinarylevel/update'){
-        navigate('/ordinarylevel/subjects')
-       }else if(location.pathname==='/ordinarylevel/subjects'){
-        navigate('/ordinarylevel')
-       }else if(location.pathname==='/ordinarylevel/add'){
-        navigate('/ordinarylevel/subjects')
+       if(location.pathname ==='/admin/ordinarylevel'){
+        navigate('/admin/option')
+       }else if(location.pathname ==='/admin/ordinarylevel/update'){
+        navigate('/admin/ordinarylevel/subjects')
+       }else if(location.pathname==='/admin/ordinarylevel/subjects'){
+        navigate('/admin/ordinarylevel')
+       }else if(location.pathname==='/admin/ordinarylevel/add'){
+        navigate('/admin/ordinarylevel/subjects')
        }
     }
 

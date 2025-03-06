@@ -40,7 +40,7 @@ const SubActivities = () => {
   }, [SelectedSubActivity]);
 
   const goToUpdateSubActivity=()=>{
-    navigate('/activities/sub-activity-update')
+    navigate('/admin/activities/sub-activity-update')
   }
 
   const handleClick=(value)=>{
@@ -48,7 +48,7 @@ const SubActivities = () => {
   }
 
   const goToSubActivityAdd=()=>{
-    navigate('/activities/sub-activity-add')
+    navigate('/admin/activities/sub-activity-add')
   }
 
   

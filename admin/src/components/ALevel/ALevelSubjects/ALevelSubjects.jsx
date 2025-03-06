@@ -7,7 +7,7 @@ const ALevelSubjects =()=>{
     const navigate = useNavigate();
 
     const goToALUpdate=()=>{
-      navigate('/advancedlevel/update')
+      navigate('/admin/advancedlevel/update')
     }
 
     const {SelectedSubject,setSelectedSubject} = useContext(ALevelContext);
@@ -40,7 +40,7 @@ const ALevelSubjects =()=>{
       };    
 
     const goToAddPage=()=>{
-        navigate('/advancedlevel/add')
+        navigate('/admin/advancedlevel/add')
     }
 
     const handleSubjectClick=(subject_id)=>{

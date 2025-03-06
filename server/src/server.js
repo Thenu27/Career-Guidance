@@ -22,7 +22,7 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config({ path: require('path').resolve(__dirname, '..', '.env') });
 
 app.use(cors({
-    origin: ['https://www.univerlens.com','http://localhost:3001','https://univerlens.com','http://localhost:5173','http://localhost:5173/admin'],
+    origin: ['https://www.univerlens.com','http://localhost:3000','https://univerlens.com','http://localhost:5173','http://localhost:5173/api'],
     methods: ['GET', 'POST'],        // Specify the HTTP methods your API supports
     credentials: true                // Allow credentials (cookies, sessions, etc.)
 }));

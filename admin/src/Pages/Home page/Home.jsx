@@ -5,7 +5,7 @@ const Home=()=>{
     const navigate = useNavigate();
 
     const goToLogin=()=>{
-        navigate('/login')
+        navigate('/admin/login')
     }
     return(
         <div className='home-container'>

@@ -28,12 +28,12 @@ const IntelligencePage =()=>{
     const navigate = useNavigate();
 
     const goToSelectOptionPage=()=>{
-        navigate('/option');
+        navigate('/admin/option');
     }
 
     
     const goToQuestionsPage=()=>{
-        navigate('/questions');
+        navigate('/admin/questions');
     }
 
 

@@ -11,7 +11,7 @@ const Signin=()=>{
     const navigate = useNavigate();
 
     const goToSelectOptionPage =()=>{
-        navigate('/option')
+        navigate('/admin/option')
     };
 
     const handlePassword = (value)=>{

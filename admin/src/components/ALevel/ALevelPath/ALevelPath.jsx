@@ -9,8 +9,8 @@ const ALevelPath=()=>{
 
 
     const nextNavigation = () =>{
-        if(location.pathname==='/advancedlevel'){
-            navigate('/advancedlevel/stream');
+        if(location.pathname==='/admin/advancedlevel'){
+            navigate('/admin/advancedlevel/stream');
         }
 
     }
