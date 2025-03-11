@@ -17,6 +17,8 @@ import IntelligencePage from './Components/Multiple Intelligence Page/Intelligen
 import CareerFieldPage from './Components/Career-Field-Page/CareerFieldPage';
 import CareerPage from './Components/Careers-page/CareerPage';
 import SendResultToEmail from './Components/Send-Results/Send-Result-page';
+import Signup from './Components/Signup/Signup';
+import Login from './Components/Login/Login';
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
         {/* Define all application routes */}
         <Routes>
           <Route path="/" element={<Home/>}/> {/* Home page */}
+          <Route path="/Signup" element={<Signup/>}/> {/* Home page */}
+          <Route path="/login" element={<Login/>}/> {/* Home page */}
           <Route path="/Assesment" element={<Assesment/>}/> {/* Assessment page */}
           <Route path="/Option" element={<Option/>}/> {/* Options page */}
           <Route path="/ExtraCurricular" element={<ExtraCurricularPage/>}/> {/* Extra Curricular page */}

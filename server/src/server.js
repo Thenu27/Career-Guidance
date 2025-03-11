@@ -16,13 +16,15 @@ const db = require('../src/db/connectDB');
 const {getPasswordFromDB,comparePassword,getUsernameFromDB,compareUsername} = require('../src/controllers/auth');
 const {generateJwt} = require('../src/controllers/jwtController');
 const cookieParser = require("cookie-parser");
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const {clienthashPassword,createAccount} = require('./clientControllers/clientAuth');
+
 
 
 require('dotenv').config({ path: require('path').resolve(__dirname, '..', '.env') });
 
 app.use(cors({
-    origin: ['https://www.univerlens.com','http://localhost:3000','https://univerlens.com','http://localhost:5173','http://localhost:5173/api'],
+    origin: ['https://www.univerlens.com','http://localhost:3001','http://localhost:3000','https://univerlens.com','http://localhost:5173','http://localhost:5173/api'],
     methods: ['GET', 'POST'],        // Specify the HTTP methods your API supports
     credentials: true                // Allow credentials (cookies, sessions, etc.)
 }));
@@ -60,7 +62,6 @@ app.use((req, res, next) => {
 
 
 // const knex = require('knex');
-const e = require("express");
 const { STATUS_CODES } = require("http");
 const { error } = require("console");
 
@@ -113,7 +114,6 @@ app.use(
   );
 
   app.use(xssClean()); // Protect against XSS attacks
-  console.log(process.env.DATABASE_CLIENT);  // Should print 'pg'
 
 
 const store = new RedisStore({
@@ -172,7 +172,6 @@ app.use((req, res, next) => {
     }
 });
 
-console.log(process.env.DATABSE_PASSWORD)
 
 db.raw('SELECT 1')
     .then(() => console.log('Database connection established successfully!'))
@@ -1107,6 +1106,27 @@ const CheckAndMapCareer=async(intelligence_object)=>{
     // console.log("iq_available",iq_available)
 }
 
+
+app.post('/api/signup',async(req,res)=>{
+    try{
+        const {formData} = req.body
+        const existingUser = await db.select("email").from("users").where("email",formData.email);
+        if(existingUser.length>0){
+            return res.status(StatusCodes.CONFLICT).send("User already exists")
+        }
+        const hashedPassword =await clienthashPassword(formData.password)
+        console.log(hashedPassword);
+        const result = await createAccount(formData,hashedPassword);
+        if(!result){
+            return res.status(StatusCodes.BAD_REQUEST).send("Error Occured")
+        }
+        return res.status(StatusCodes.OK).send("Account Created!")
+        
+    }catch(err){
+        console.log(err)
+    }
+
+})
 
 // Endpoint for receiving assessment answers from the client
 app.post('/api/Assesment', async (req, res) => {
