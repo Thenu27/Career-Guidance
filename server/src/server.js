@@ -17,7 +17,7 @@ const {getPasswordFromDB,comparePassword,getUsernameFromDB,compareUsername} = re
 const {generateJwt} = require('../src/controllers/jwtController');
 const cookieParser = require("cookie-parser");
 const jwt = require('jsonwebtoken');
-const {clienthashPassword,createAccount} = require('./clientControllers/clientAuth');
+const {clienthashPassword,createAccount,userLogin} = require('./controllers/clientAuth');
 
 
 
@@ -1106,6 +1106,7 @@ const CheckAndMapCareer=async(intelligence_object)=>{
     // console.log("iq_available",iq_available)
 }
 
+app.post('/api/login',userLogin)
 
 app.post('/api/signup',async(req,res)=>{
     try{

@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import './Login.css';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Login = () => {
+
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -15,11 +20,33 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     console.log('Login submitted:', formData);
+    await sendToBE();
     // Add your login logic here
   };
+
+  const sendToBE=async()=>{
+    try{
+      const response = await axios.post(`${process.env.REACT_APP_URL}/api/login`,{
+        formData
+      })
+
+      if(response.status===200){
+        navigate('/Assesment')
+        alert('Login Succesful!')
+      }
+
+    }catch(err){
+      if(err.response.status===401){
+        alert("Invalid Credentials!")
+      }
+      if(err.response.status===500){
+        alert("Login Failed!")
+      }
+    }
+  }
 
   return (
     <div className="login-container">
