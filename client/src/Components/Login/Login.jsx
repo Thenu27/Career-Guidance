@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API } from '../API/Api';
+import { useAuth } from '../../context/Auth.context';
 
 const Login = () => {
 
   const navigate = useNavigate();
+  
+    const {user,checkAuth} = useAuth()
 
   const [formData, setFormData] = useState({
     email: '',
@@ -22,20 +26,22 @@ const Login = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log('Login submitted:', formData);
+    // console.log('Login submitted:', formData);
     await sendToBE();
     // Add your login logic here
   };
 
   const sendToBE=async()=>{
     try{
-      const response = await axios.post(`${process.env.REACT_APP_URL}/api/login`,{
+      const response = await API.post(`${process.env.REACT_APP_URL}/api/login`,{
         formData
-      })
+      },
+    )
 
       if(response.status===200){
+       await checkAuth()
         navigate('/Assesment')
-        alert('Login Succesful!')
+        // alert('Login Succesful!')
       }
 
     }catch(err){
@@ -47,6 +53,13 @@ const Login = () => {
       }
     }
   }
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]); 
+
 
   return (
     <div className="login-container">

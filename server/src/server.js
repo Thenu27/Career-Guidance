@@ -17,7 +17,8 @@ const {getPasswordFromDB,comparePassword,getUsernameFromDB,compareUsername} = re
 const {generateJwt} = require('../src/controllers/jwtController');
 const cookieParser = require("cookie-parser");
 const jwt = require('jsonwebtoken');
-const {clienthashPassword,createAccount,userLogin} = require('./controllers/clientAuth');
+const {clienthashPassword,createAccount,userLogin,getUserDataFromDB} = require('./controllers/clientAuth');
+const {verifyToken, generateToken} = require('../src/controllers/clientJwtController');
 
 
 
@@ -415,7 +416,6 @@ const fetchIntelligenceFromDB = async (req) => {
 
 
 
-
 const fetchOLevelSubjectFromDB = async (pathline, sessionArray) => {
     if (sessionArray.length === 0) { // Fetch only if the array is empty
         const data = await db.select('subjects').from('olevel_local_subjects').where('pathline', pathline);
@@ -506,13 +506,29 @@ const checkIfSubActivityExistInMainActivity = async (req, activityNames) => {
 };
 
 
+app.post('/api/clientAuth/logout',async(req,res)=>{
+    try{
+        res.clearCookie('token', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', // Ensure HTTPS in production
+            sameSite: 'Lax',
+        });
+        return res.status(200).json({ message: "Logged out successfully" });
+    }catch(err){
+        return res.status(400).json({ message: "Logout Unsuccesfull!" });
+    }
+
+
+})
 
 
 
 
+app.get('/api/clientAuth',verifyToken,async(req,res)=>{
+    res.send("Authentication")
+})
 
-
-app.post('/api/AdvanceLevelPage',async(req,res)=>{
+app.post('/api/AdvanceLevelPage',verifyToken,async(req,res)=>{
     try {
         const { ALevelResultsAndGrades } = req.body;
         req.session.ALevelResultsAndGrades=ALevelResultsAndGrades
@@ -548,7 +564,7 @@ app.post('/api/AdvanceLevelPage',async(req,res)=>{
 
 
 // Endpoint to get all questions for the assessment
-app.get('/api/Assesment', async (req, res) => {
+app.get('/api/Assesment',verifyToken,async (req, res) => {
     try {
         await fetchIntelligenceFromDB(req);
         const allQuestions = await getttingQuestionFromDB();
@@ -568,7 +584,7 @@ app.get('/api/Assesment', async (req, res) => {
 
 
 
-app.get('/api/Ordinarylevelpage/local-Core', async (req, res) => {
+app.get('/api/Ordinarylevelpage/local-Core',verifyToken,async (req, res) => {
     try {
         if (!req.session.OLevelLocalCoreSubjectsArray.length) {
             await fetchOLevelSubjectFromDB('Core', req.session.OLevelLocalCoreSubjectsArray);
@@ -587,7 +603,7 @@ app.get('/api/Ordinarylevelpage/local-Core', async (req, res) => {
 
 
 
-app.get('/api/Advancelevelpage', async (req, res) => {
+app.get('/api/Advancelevelpage',verifyToken,async (req, res) => {
     try {
         await getAlLocalsubjectFromDB(req);
         res.json(req.session.ALSubjects);
@@ -627,7 +643,7 @@ app.get('/api/Ordinarylevelpage/local-Basket',async(req,res)=>{
 
 
 // Endpoint for receiving O-Level results and grades data from the client
-app.post('/api/Ordinarylevelpage', async(req, res) => {
+app.post('/api/Ordinarylevelpage',verifyToken,async(req, res) => {
     try {
         const { OLevelResultsAndGrades } = req.body;
         req.session.OLevelResultsAndGrades=OLevelResultsAndGrades
@@ -707,7 +723,7 @@ app.get('/api/Activities', async (req, res) => {
 
 
 // Endpoint for receiving extracurricular activities data from the client
-app.post('/api/Activities', async(req, res) => {
+app.post('/api/Activities',verifyToken,async(req, res) => {
     try {
         const { SelectedExtraActivities } = req.body;
         req.session.SelectedExtraActivities = SelectedExtraActivities
@@ -809,7 +825,7 @@ const calculateActivitiesPercentage = async (req, Activity,level,tableType,Activ
 
 
 
-app.post("/api/Activities/results",async(req,res)=>{
+app.post("/api/Activities/results",verifyToken,async(req,res)=>{
     const {ActivitiesToSendBE,SelectedSubActivities,ActivitiesWithoutSub} = req.body;
     console.log("SelectedSubActivities",SelectedSubActivities);
     console.log("ActivitiesWithoutSub",ActivitiesWithoutSub);
@@ -1118,6 +1134,15 @@ app.post('/api/signup',async(req,res)=>{
         const hashedPassword =await clienthashPassword(formData.password)
         console.log(hashedPassword);
         const result = await createAccount(formData,hashedPassword);
+        const userData = await getUserDataFromDB(formData.email);
+        const token = generateToken(userData[0].id)
+        res.cookie("token", token, {
+            httpOnly: true, // Prevent XSS attacks
+            secure: process.env.NODE_ENV === "production", // Secure only in production
+            sameSite: "Lax", // CSRF protection
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        });
+        console.log(userData)
         if(!result){
             return res.status(StatusCodes.BAD_REQUEST).send("Error Occured")
         }
@@ -1130,7 +1155,7 @@ app.post('/api/signup',async(req,res)=>{
 })
 
 // Endpoint for receiving assessment answers from the client
-app.post('/api/Assesment', async (req, res) => {
+app.post('/api/Assesment',verifyToken, async (req, res) => {
     try {
         const { questionAndAnswers } = req.body;
         console.log("questionAndAnswers",questionAndAnswers)

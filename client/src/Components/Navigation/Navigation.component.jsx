@@ -29,15 +29,41 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navigation.style.css';
+import { API } from '../API/Api';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../../context/Auth.context"; // Import Auth Context
+import ProgressBar from '../Progress bar/Progressbar.component';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const navigate = useNavigate()
+  const { user, setUser } = useAuth();
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const logout =async()=>{
+    if(!window.confirm("Do you want to Logout!!")){
+      return
+    }
+    try{
+      const response = await API.post(`${process.env.REACT_APP_URL}/api/clientAuth/logout`,{})
+      if(response.status===200){
+        alert("Logged Out!");
+        navigate('/')
+        setUser(null);
+      }
+    }catch(err){
+      alert("Error Occured!!")
+    }
+  }
+
+  const goToLogin=()=>{
+    navigate('/login')
+  }
+
   return (
+    <>
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
@@ -67,9 +93,19 @@ const Navbar = () => {
           <li className="nav-item">
             <Link to="/profile" className="nav-link">Profile</Link>
           </li>
+          {user?<li className="nav-item">
+            <button onClick={logout}  className="nav-link logout-btn">Logout</button>
+          </li>:<li className="nav-item">
+            <button onClick={goToLogin}  className="nav-link logout-btn">Login</button>
+          </li>}
+
         </ul>
       </div>
+
     </nav>
+    <ProgressBar/>
+    </>
+
   );
 };
 

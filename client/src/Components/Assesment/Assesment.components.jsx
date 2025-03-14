@@ -6,10 +6,24 @@ import UserInformation from '../user-information-box/user-infor.components';
 import Image from '../Image/Image.components';
 import { useContext, useEffect } from 'react';
 import { ProgressContext } from '../../context/progress.context';
+import { useAuth } from '../../context/Auth.context';
+import { useNavigate } from 'react-router-dom';
 
 const Assesment = () => {
     // Accessing context to update visited pages
     const { setVisitedPages } = useContext(ProgressContext);
+    const { user, loading } = useAuth();
+
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!loading && !user) {
+          console.log(user)  
+          navigate('/login'); // ✅ Only redirect after loading is finished
+        }
+      }, [user,loading]);
+
 
     // useEffect to update visited pages when the component mounts
     useEffect(() => {
@@ -26,6 +40,8 @@ const Assesment = () => {
             CareersPage: false,
         }));
     }, []);
+
+    if (loading) return <p>Loading...</p>;
 
     return (
         <div className="question-user-container">

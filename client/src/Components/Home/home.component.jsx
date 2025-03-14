@@ -3,13 +3,14 @@ import './home.styles.css';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import { ProgressContext } from '../../context/progress.context';
+import { useAuth } from '../../context/Auth.context';
 
 const Home = () => {
     // Accessing context values
     const { setVisitedPages } = useContext(ProgressContext);
-    
     // Hook for navigation
     const navigate = useNavigate();
+    const {user,checkAuth} = useAuth()
 
     // useEffect to update visited pages when the component mounts
     useEffect(() => {
@@ -24,8 +25,13 @@ const Home = () => {
 
     // Function to navigate to the Assessment page
     const HandleNavigation = () => {
-        navigate("/Assesment");
+        if(!user){
+            navigate('/login')
+        }else{
+            navigate("/Assesment");
+        }
     };
+
 
     return (
         <div className="home-container">

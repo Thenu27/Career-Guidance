@@ -120,7 +120,10 @@
   top: 8px;
   transform: rotate(-45deg);
 }
-
+.logout-btn{
+  background-color: white;
+  color: black;
+}
 /* Responsive design */
 @media screen and (max-width: 768px) {
   .menu-icon {

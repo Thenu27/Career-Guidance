@@ -19,6 +19,7 @@ import CareerPage from './Components/Careers-page/CareerPage';
 import SendResultToEmail from './Components/Send-Results/Send-Result-page';
 import Signup from './Components/Signup/Signup';
 import Login from './Components/Login/Login';
+import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 
 function App() {
   return (
@@ -33,16 +34,19 @@ function App() {
           <Route path="/" element={<Home/>}/> {/* Home page */}
           <Route path="/Signup" element={<Signup/>}/> {/* Home page */}
           <Route path="/login" element={<Login/>}/> {/* Home page */}
-          <Route path="/Assesment" element={<Assesment/>}/> {/* Assessment page */}
-          <Route path="/Option" element={<Option/>}/> {/* Options page */}
-          <Route path="/ExtraCurricular" element={<ExtraCurricularPage/>}/> {/* Extra Curricular page */}
-          <Route path="/Ordinarylevelpage" element={<OrdinaryLevelPage/>}/> {/* Ordinary Level page */}
-          <Route path="/Advancelevelpage" element={<AdvanceLevelPage/>}/> {/* Advanced Level page */}
-          <Route path="/CalculatePage" element={<CalculatingPage/>}/> {/* Calculation page */}
-          <Route path="/IntelligencePage" element={<IntelligencePage/>}/> {/* Intelligence page */}
-          <Route path="/CareerFields" element={<CareerFieldPage/>}/> {/* Career Fields page */}
-          <Route path="/Careers" element={<CareerPage/>}/> {/* Careers page */}
-          <Route path="/SendResults" element={<SendResultToEmail/>}/> {/* Send results to email page */}
+            <Route element={<PrivateRoute/>}>
+              <Route path="/Assesment" element={<Assesment/>}/> {/* Assessment page */}
+              <Route path="/Option" element={<Option/>}/> {/* Options page */}
+              <Route path="/ExtraCurricular" element={<ExtraCurricularPage/>}/> {/* Extra Curricular page */}
+              <Route path="/Ordinarylevelpage" element={<OrdinaryLevelPage/>}/> {/* Ordinary Level page */}
+              <Route path="/Advancelevelpage" element={<AdvanceLevelPage/>}/> {/* Advanced Level page */}
+              <Route path="/CalculatePage" element={<CalculatingPage/>}/> {/* Calculation page */}
+              <Route path="/IntelligencePage" element={<IntelligencePage/>}/> {/* Intelligence page */}
+              <Route path="/CareerFields" element={<CareerFieldPage/>}/> {/* Career Fields page */}
+              <Route path="/Careers" element={<CareerPage/>}/> {/* Careers page */}
+              <Route path="/SendResults" element={<SendResultToEmail/>}/> {/* Send results to email page */}
+            </Route>
+
         </Routes>  
 
         {/* Footer - always visible */}

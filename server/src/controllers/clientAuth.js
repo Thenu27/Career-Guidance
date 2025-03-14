@@ -78,7 +78,7 @@ const userLogin = async(req,res)=>{
             sameSite: "Lax", // CSRF protection
             maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         });
-        return res.status(StatusCodes.OK).send("Login Succesfull")
+        return res.status(StatusCodes.OK).send("Login Succesfull!")
         
     }catch(err){
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Login Failed!")

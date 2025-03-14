@@ -7,6 +7,7 @@ import QuestionBox from '../QuestionBox/QuestionBox.component';
 import { useContext } from 'react';
 import { ProgressContext } from '../../context/progress.context';
 import { CareerContext } from '../../context/Career.context';
+import { API } from '../API/Api';
 
 const QuestionContainer = () => {
 
@@ -33,7 +34,7 @@ const QuestionContainer = () => {
     // Function to fetch questions from the backend
     const fetchQuestions = async () => {
         try {
-            const response = await axios.get(
+            const response = await API.get(
                 `${process.env.REACT_APP_URL}/api/Assesment`,
             );
             console.log("Questions received from the backend", response.data);

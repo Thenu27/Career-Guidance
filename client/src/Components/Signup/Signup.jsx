@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import './Signup.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import {useAuth} from '../../context/Auth.context'
 
 const Signup = () => {
 
   const navigate = useNavigate();
-
+  
+  const {user,checkAuth} = useAuth()
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -48,14 +50,16 @@ const Signup = () => {
 
 
         if(response.status===200){
+          alert('Account Created!')
+          await checkAuth();
           navigate('/Assesment')
         }
 
     }catch(err){
-      if(err.status===409){
+      if(err.response.status===409){
         alert("User already exists")
       }  
-      if(err.status===400){
+      if(err.response.status===400){
         alert("An Error Occured")
       }
         console.log(err)
