@@ -10,6 +10,7 @@ const generateToken = (userId) => {
 
 const verifyToken = (req, res, next) => {
     const token = req.cookies.token; // Read token from HTTP-only cookie
+    console.log("Token:",token)
     if (!token) return res.status(StatusCodes.UNAUTHORIZED).send("Unauthorized!");
 
     try {
@@ -17,6 +18,7 @@ const verifyToken = (req, res, next) => {
         req.user = decoded; // Attach user data to request
         next();
     } catch (err) {
+        console.log(err)
         res.status(401).json({ message: "Invalid token" });
     }
 };    

@@ -50,7 +50,8 @@ const Signup = () => {
 
 
         if(response.status===200){
-          alert('Account Created!')
+          alert('Account Created!');
+          
           await checkAuth();
           navigate('/Assesment')
         }

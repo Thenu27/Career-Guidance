@@ -2,7 +2,6 @@ import './Question-container.styles.css';
 
 // Importing necessary dependencies
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import QuestionBox from '../QuestionBox/QuestionBox.component';
 import { useContext } from 'react';
 import { ProgressContext } from '../../context/progress.context';
@@ -119,7 +118,7 @@ const QuestionContainer = () => {
     // Function to submit answers to the backend
     const answerSubmitHandler = async () => {
         try {
-            const response = await axios.post(
+            const response = await API.post(
                 `${process.env.REACT_APP_URL}/api/Assesment`,
                 { questionAndAnswers }
                 

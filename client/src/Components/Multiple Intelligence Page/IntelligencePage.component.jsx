@@ -71,12 +71,14 @@ const IntelligencePage = () => {
                 <div className='intelligence-btns-container'>
                     {intelligenceObject.map(intelligence => {
                         return (
-                            <div className='intelligence-btn tooltip' key={intelligence}>
-                                <p className='intelligence'>
-                                    {`${IdentifyIntelligence(Number(intelligence[0]))} is ${intelligence[1].intelligence_percentage.toFixed(0)}%`}
-                                </p>
+                        <div className='intelligence-btn tooltip' key={intelligence}>
+                            <div className='intelligence'>
+                                {`${IdentifyIntelligence(Number(intelligence[0]))} is ${intelligence[1].intelligence_percentage.toFixed(0)}%`}
+                            </div>
+                            <div className='tooltip-container'>
                                 <span className='tooltiptext'>Information about Intelligence</span> 
                             </div>
+                        </div>
                         );
                     })}
                 </div>

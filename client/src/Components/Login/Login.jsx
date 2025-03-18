@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { API } from '../API/Api';
 import { useAuth } from '../../context/Auth.context';
 
-const Login = () => {
 
+const Login = () => {
+  
   const navigate = useNavigate();
   
-    const {user,checkAuth} = useAuth()
+    const {user,checkAuth,login} = useAuth()
 
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
+  
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,31 +38,34 @@ const Login = () => {
       const response = await API.post(`${process.env.REACT_APP_URL}/api/login`,{
         formData
       },
+      
     )
 
       if(response.status===200){
        await checkAuth()
-        navigate('/Assesment')
+       navigate('/Assesment')
         // alert('Login Succesful!')
+        
       }
 
-    }catch(err){
-      if(err.response.status===401){
-        alert("Invalid Credentials!")
-      }
-      if(err.response.status===500){
-        alert("Login Failed!")
+    }catch(err) {
+      console.log(err);
+      if (err.response) {
+        if (err.response.status === 401) {
+          alert("Invalid Credentials!");
+        } else if (err.response.status === 500) {
+          alert("Login Failed!");
+        }
+      } else {
+        // If err.response is undefined, handle the error differently
+        alert("An error occurred. Please try again later.");
       }
     }
   }
 
-  useEffect(() => {
-    if (user) {
-      navigate("/");
-    }
-  }, [user, navigate]); 
 
 
+ 
   return (
     <div className="login-container">
       <div className="login-form-box">
@@ -90,6 +95,8 @@ const Login = () => {
           </div>
           <button type="submit" className="login-button">Login</button>
         </form>
+        <div onClick={login} className="login-button">Login With Google</div>
+
         <p className="signup-link">
           Don't have an account? <a href="/signup">Sign up</a>
         </p>

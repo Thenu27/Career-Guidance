@@ -19,6 +19,9 @@ const cookieParser = require("cookie-parser");
 const jwt = require('jsonwebtoken');
 const {clienthashPassword,createAccount,userLogin,getUserDataFromDB} = require('./controllers/clientAuth');
 const {verifyToken, generateToken} = require('../src/controllers/clientJwtController');
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+
 
 
 
@@ -26,7 +29,7 @@ require('dotenv').config({ path: require('path').resolve(__dirname, '..', '.env'
 
 app.use(cors({
     origin: ['https://www.univerlens.com','http://localhost:3001','http://localhost:3000','https://univerlens.com','http://localhost:5173','http://localhost:5173/api'],
-    methods: ['GET', 'POST'],        // Specify the HTTP methods your API supports
+    methods: ['GET', 'POST','OPTIONS'],        // Specify the HTTP methods your API supports
     credentials: true                // Allow credentials (cookies, sessions, etc.)
 }));
 app.set('trust proxy', 1);
@@ -55,6 +58,17 @@ redisClient.on('error', (err) => {
 
 app.use(cookieParser());
 
+app.use((req, res, next) => {
+    res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+    res.setHeader("Cross-Origin-Embedder-Policy", "credentialless");
+    res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+    res.setHeader("Access-Control-Allow-Origin", "https://accounts.google.com");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    next();
+});
+
 
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
@@ -66,53 +80,60 @@ app.use((req, res, next) => {
 const { STATUS_CODES } = require("http");
 const { error } = require("console");
 
-// Load database credentials from environment variables
-// const database_password = process.env.DATABASE_PASSWORD;
-// const database_name = process.env.DATABASE_NAME;
-// const database_user = process.env.DATABASE_USER;
-// const database_client = process.env.DATABASE_CLIENT;
-
-// Initialize database connection using Knex
-// const db = knex({
-//     client: process.env.DATABASE_CLIENT || 'pg',
-//         connection: {
-//         host: '127.0.0.1',
-//         user: database_user,
-//         password: database_password,
-//         database: database_name,
-//         port: process.env.DATABASE_PORT || 5432
-//     },
-// });
-
-
-
-app.use(helmet());
 
 
 
 app.use(
     helmet({
-      contentSecurityPolicy: {
-        directives: {
-          defaultSrc: ["'self'"],
-          connectSrc: ["'self'", "https://api.univerlens.com",'https://localhost:5173'],
-          scriptSrc: [
-            "'self'",                      
-            "https://cdn.jsdelivr.net",    
-            "https://cdnjs.cloudflare.com" 
-          ],          
-          styleSrc: [
-            "'self'", 
-            "'unsafe-inline'", 
-            "https://fonts.googleapis.com" // ✅ Allow Google Fonts
-        ],
-          imgSrc: ["'self'", "data:"],
-          objectSrc: ["'none'"],
-          upgradeInsecureRequests: [],
-        },
-      },
+        crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" }, // ✅ Fix Google OAuth issue
     })
-  );
+);
+
+
+
+app.use(
+    helmet({
+        contentSecurityPolicy: {
+            directives: {
+                defaultSrc: ["'self'"],
+                connectSrc: [
+                    "'self'", 
+                    "https://api.univerlens.com", 
+                    "https://accounts.google.com", 
+                    "https://oauth2.googleapis.com",
+                    "https://www.googleapis.com",  // ✅ Allow Google APIs
+                    "http://localhost:3000", // ✅ Local frontend
+                    "https://univerlens.com" // ✅ Production frontend
+                ],
+                scriptSrc: [
+                    "'self'",
+                    "'unsafe-inline'",  // ✅ Needed for Google scripts
+                    "'unsafe-eval'",  // ✅ Helps avoid Google script errors
+                    "https://cdn.jsdelivr.net",
+                    "https://cdnjs.cloudflare.com",
+                    "https://accounts.google.com"
+                ],
+                styleSrc: [
+                    "'self'", 
+                    "'unsafe-inline'",  // ✅ Needed for Google styles
+                    "https://fonts.googleapis.com",
+                    "https://accounts.google.com/gsi/style"
+                ],
+                frameSrc: [
+                    "'self'", 
+                    "https://accounts.google.com",
+                    "https://univerlens.com"
+                ],
+                imgSrc: ["'self'", "data:"],
+                objectSrc: ["'none'"],
+                upgradeInsecureRequests: [],
+            },
+        },
+    })
+);
+
+
+
 
   app.use(xssClean()); // Protect against XSS attacks
 
@@ -174,6 +195,74 @@ app.use((req, res, next) => {
 });
 
 
+passport.use(
+    new GoogleStrategy(
+        {
+            clientID:process.env.GOOGLE_CLIENT_ID,
+            clientSecret:process.env.GOOGLE_CLIENT_SECRET,
+            callbackURL: "/auth/google/callback",
+        },
+        async(accessToken,refreshToken,profile,done) => {
+
+            const email = profile.emails[0].value;
+
+            let user = await db.select("*").from("users").where("email", email).first();
+
+            if(!user){
+
+                const result = await db("users")
+                .insert({fullname: profile.displayName,
+                         email: profile.emails[0].value
+                })
+                .returning("*");
+                console.log("result",result)
+                user = {
+                    id: profile.id,
+                    fullname: profile.displayName,
+                    email: profile.emails[0].value
+                  };
+            }
+
+            return done(null, user);
+
+        }
+    )
+)
+
+passport.serializeUser((user, done) => {
+    done(null, user);
+});
+
+passport.deserializeUser((user,done)=>{
+    done(null,user);
+});
+
+app.get('/auth/google',passport.authenticate("google",{scope: ["profile","email"]}));
+
+
+app.get("/auth/google/callback",passport.authenticate("google",{failureRedirect:"/login"}),
+        (req,res)=>{
+            try{
+                console.log("Authenticated user:", req.user);
+                const token = generateToken(req.user.id)
+
+                res.cookie("token", token, {
+                    httpOnly: true, // Prevent XSS attacks
+                    secure: process.env.NODE_ENV === "production", // Secure only in production
+                    sameSite: "Lax", // CSRF protection
+                    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+                });
+
+                res.redirect("/Assesment");
+            }catch(err){
+                console.log(err)
+            }
+
+
+        }            
+)
+
+
 db.raw('SELECT 1')
     .then(() => console.log('Database connection established successfully!'))
     .catch((err) => {
@@ -181,8 +270,8 @@ db.raw('SELECT 1')
     });
 
 
-app.use(express.json());
-
+app.use(express.json({ limit: "5mb" })); 
+app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 let MainActivitiesGlobal;
 
 const fetchMainActivitiesFromDB = async (req) => {
@@ -506,6 +595,8 @@ const checkIfSubActivityExistInMainActivity = async (req, activityNames) => {
 };
 
 
+
+
 app.post('/api/clientAuth/logout',async(req,res)=>{
     try{
         res.clearCookie('token', {
@@ -525,7 +616,7 @@ app.post('/api/clientAuth/logout',async(req,res)=>{
 
 
 app.get('/api/clientAuth',verifyToken,async(req,res)=>{
-    res.send("Authentication")
+    res.status(StatusCodes.OK).send({user:req.user})
 })
 
 app.post('/api/AdvanceLevelPage',verifyToken,async(req,res)=>{
@@ -1122,7 +1213,11 @@ const CheckAndMapCareer=async(intelligence_object)=>{
     // console.log("iq_available",iq_available)
 }
 
-app.post('/api/login',userLogin)
+app.post('/api/login',userLogin);
+
+
+
+
 
 app.post('/api/signup',async(req,res)=>{
     try{
@@ -1132,7 +1227,7 @@ app.post('/api/signup',async(req,res)=>{
             return res.status(StatusCodes.CONFLICT).send("User already exists")
         }
         const hashedPassword =await clienthashPassword(formData.password)
-        console.log(hashedPassword);
+        // console.log(hashedPassword);
         const result = await createAccount(formData,hashedPassword);
         const userData = await getUserDataFromDB(formData.email);
         const token = generateToken(userData[0].id)

@@ -62,15 +62,11 @@ const userLogin = async(req,res)=>{
         const db_password = await getPasswordFromDB(email)
         const passwordMatched=await comparePassword(password,db_password);
         if(!passwordMatched){
-            console.log("password Matched:",passwordMatched)
             return res.status(StatusCodes.UNAUTHORIZED).send("Unauthorized!")
         }
         
-        console.log("password Matched:",passwordMatched)
         const userData = await getUserDataFromDB(email);
-        console.log("userData:",userData)
         const token = generateToken(userData[0].id);
-        console.log("token",token)
 
         res.cookie("token", token, {
             httpOnly: true, // Prevent XSS attacks

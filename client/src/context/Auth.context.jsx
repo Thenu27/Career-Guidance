@@ -1,5 +1,8 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import {API} from '../Components/API/Api'
+import {API} from '../Components/API/Api';
+import Cookies from "js-cookie";
+
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -8,23 +11,42 @@ export const AuthProvider = ({ children }) => {
 
   // Function to check authentication
   const checkAuth = async () => {
+
     try {
-      const res = await API.get(`${process.env.REACT_APP_URL}/api/clientAuth`); // Call any protected route
-      setUser({ id: res.data.userId }); // Store user data
-    } catch {
+
+      const response = await API.get(`${process.env.REACT_APP_URL}/api/clientAuth`)
+      console.log("response:",response)
+      setUser(response.data.user);
+
+      
+
+    } catch(err) {
       setUser(null);
+      console.log(err)
     } finally {
       setLoading(false); // Only now is the UI ready
     }
   };
 
-  useEffect(() => {
+  useEffect(() => { 
     checkAuth(); 
     // Run authentication check when app loads
   }, []);
 
+  const login = () => {
+    window.open("http://localhost:3000/auth/google", "_self");
+  };
+
+  const logout = () => {
+    API.get(`${process.env.REACT_APP_URL}/auth/logout`).then(() => {
+      Cookies.remove("token");
+      setUser(null);
+    });
+    
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser, loading, checkAuth }}>
+    <AuthContext.Provider value={{ user, setUser, loading, checkAuth ,login,logout}}>
       {children}
     </AuthContext.Provider>
   );
