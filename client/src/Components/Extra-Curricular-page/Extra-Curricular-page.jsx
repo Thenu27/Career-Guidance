@@ -10,6 +10,7 @@ import { ActivitiesContext } from '../../context/Activities.context';
 import axios from 'axios';
 import ExtraCurricularResults from './Extra-Curricular-results/Extra-Curricular-Results';
 import SubActivitiesPage from './Extra-Curricula-Sub_activities/subActivities';
+import { API } from '../API/Api';
 
 const ExtraCurricularPage = () => {
   // Accessing context values
@@ -64,7 +65,7 @@ const ExtraCurricularPage = () => {
   // Function to fetch main activities from backend
   const fetchMainActivities = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_URL}/api/Activities`);
+      const response = await API.get(`${process.env.REACT_APP_URL}/api/Activities`);
       const activities = response.data.map((activity) => activity.main_activity);
       setMainActivities(activities);
     } catch (error) {
@@ -83,7 +84,7 @@ const ExtraCurricularPage = () => {
   // Function to send selected extra-curricular activities to backend
   const sendToBackend = async () => {
     try {
-      const response = await axios.post(
+      const response = await API.post(
         `${process.env.REACT_APP_URL}/api/Activities`,
         { SelectedExtraActivities }
         
@@ -167,7 +168,7 @@ const ExtraCurricularPage = () => {
   // Function to send final results to backend
   const sendFinalResultsToBE = async () => {
     try {
-      await axios.post(
+      await API.post(
         `${process.env.REACT_APP_URL}/api/Activities/results`,
         {
           ActivitiesToSendBE,

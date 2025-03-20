@@ -5,7 +5,7 @@ import { useContext, useState } from 'react';
 import { OLevelContext } from '../../../context/OLevel.context';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import { API } from '../../API/Api';
 const OLevelResults = () => {
   // Accessing CSRF token from context
 
@@ -42,12 +42,10 @@ const OLevelResults = () => {
   // Function to send O-Level results and grades to the backend
   const sendToBackend = async () => {
     try { 
-      const response = await axios.post(
+      const response = await API.post(
         `${process.env.REACT_APP_URL}/api/Ordinarylevelpage`,
         { OLevelResultsAndGrades },
-        {
-          withCredentials: true, // Ensure cookies are sent
-        }
+
       );
 
       // console.log("New", response.data);

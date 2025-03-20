@@ -12,7 +12,7 @@ const Login = () => {
     const {user,checkAuth,login} = useAuth()
 
   const [formData, setFormData] = useState({
-    email: '',
+    email: '', 
     password: ''
   });
   
@@ -57,8 +57,8 @@ const Login = () => {
           alert("Login Failed!");
         }
       } else {
-        // If err.response is undefined, handle the error differently
-        alert("An error occurred. Please try again later.");
+      console.log (err)
+       alert("An error occurred. Please try again later.");
       }
     }
   }

@@ -10,9 +10,9 @@ const db = knex({
     client: process.env.DATABASE_CLIENT || 'pg',
         connection: {
         host: '127.0.0.1',
-        user: database_user,
-        password: database_password,
-        database: database_name,
+        user: database_user || 'admin',
+        password: database_password || 'comp@123',
+        database: database_name || 'compdbnew',
         port: process.env.DATABASE_PORT || 5432
     },
     

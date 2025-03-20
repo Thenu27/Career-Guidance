@@ -6,30 +6,30 @@ import { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProgressContext } from '../../context/progress.context';
 // import { CareerContext } from '../../context/Career.context';
-import axios from 'axios';
+import { API } from '../API/Api';
 
 const CalculatingPage = () => {
     // Accessing context values
-    const { setVisitedPages, setintelligenceScore, intelligenceScore} = useContext(ProgressContext);
+    const { setVisitedPages} = useContext(ProgressContext);
     // const {Careers,setCareers} = useContext(CareerContext)
 
-    // Function to fetch intelligence scores from the backend
-    const getIntelligenceScores = async () => {
-        try {
-            const response = await axios.get(`${process.env.REACT_APP_URL}/api/calculation`); // Backend endpoint
-            setintelligenceScore(response.data); // Store fetched intelligence scores in context
-        } catch (err) {
-            console.error('Error fetching intelligence scores:', err);
-        }
-    };
+    // // Function to fetch intelligence scores from the backend
+    // const getIntelligenceScores = async () => {
+    //     try {
+    //         const response = await API.get(`${process.env.REACT_APP_URL}/api/calculation`); // Backend endpoint
+    //         setintelligenceScore(response.data); // Store fetched intelligence scores in context
+    //     } catch (err) {
+    //         console.error('Error fetching intelligence scores:', err);
+    //     }
+    // };
 
 
 
 
-    // Fetch intelligence scores when the component mounts
-    useEffect(() => {
-        getIntelligenceScores();
-    }, []);
+    // // Fetch intelligence scores when the component mounts
+    // useEffect(() => {
+    //     getIntelligenceScores();
+    // }, []);
 
     // Log the received intelligence score for debugging
     // useEffect(() => {

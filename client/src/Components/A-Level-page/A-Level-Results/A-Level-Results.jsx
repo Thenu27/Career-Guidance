@@ -5,6 +5,7 @@ import './A-Level-Results.css';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API } from '../../API/Api';
 
 const ALevelResults = () => {
     // Accessing context values
@@ -46,23 +47,20 @@ const ALevelResults = () => {
     // Function to send results to backend
     const sendToBackend = async () => {
         try { 
-            const response = await axios.post(
+            const response = await API.post(
                 `${process.env.REACT_APP_URL}/api/AdvanceLevelPage`,
-                { ALevelResultsAndGrades }, // Data payload
-                {
-                    withCredentials: true, // Ensure cookies are sent
-                }
+                { ALevelResultsAndGrades } // Data payload
             );
 
             // Clearing stored data after sending to backend
             ALevelResultsAndGrades = {};
             // console.log("New", response.data);
 
-            // if (response.status === 200) {
-            //     console.log("ALevelResultsArray Sent to backend");
-            // } else {
-            //     console.log("ALevel Results Not sent");
-            // }
+            if (response.status === 200) {
+                console.log("ALevelResultsArray Sent to backend");
+            } else {
+                console.log("ALevel Results Not sent");
+            }
         } catch (error) {
             console.log(error, "A Level results sending failed");
         }

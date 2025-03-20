@@ -78,7 +78,7 @@ const userLogin = async(req,res)=>{
         return res.status(StatusCodes.OK).send("Login Succesfull!")
         
     }catch(err){
-        console.log(err)
+        console.log(err.response)
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Login Failed!")
     }
 }

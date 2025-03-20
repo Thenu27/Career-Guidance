@@ -4,6 +4,7 @@ import './O-Level-Subj.css';
 import OLevelMainLocalSubjects from '../O-Level-Local-Main-Subjects/O-Level-Local-MainSubjects';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API } from '../../API/Api';
 
 const OLevelSubj = () => {
     // State to store O-Level core subjects and basket subjects
@@ -13,7 +14,7 @@ const OLevelSubj = () => {
     // Function to fetch O-Level local core subjects from the backend
     const fetchOLevelLocalCoreSubjects = async () => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_URL}/api/Ordinarylevelpage/local-core`);
+            const response = await API.get(`${process.env.REACT_APP_URL}/api/Ordinarylevelpage/local-core`);
             setOLevelLocalCoreSubjt(response.data); // Update state with fetched core subjects
         } catch (error) {
             console.error("Error Fetching Subjects", error.message);
@@ -23,7 +24,7 @@ const OLevelSubj = () => {
     // Function to fetch O-Level local basket subjects from the backend
     const fetchOLevelLocalBasketSubjects = async () => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_URL}/api/Ordinarylevelpage/local-Basket`);
+            const response = await API.get(`${process.env.REACT_APP_URL}/api/Ordinarylevelpage/local-Basket`);
             setOLevelBasketSubj(response.data); // Update state with fetched basket subjects
         } catch (error) {
             console.error("Error Fetching Subjects", error.message);

@@ -49,7 +49,7 @@ const OLevelMainLocalSubjects = ({ OLevelLocalCoreSubj, OLevelBasketSubj }) => {
     return (
         <>
             {/* Title Section */}
-            <div className="O-level-box-title-container">
+            <div className="O-level-box-title-container">   
                 <h2 className="O-level-box-title">
                     Select the Common Subjects you have Done from the following
                 </h2>

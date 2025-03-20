@@ -4,12 +4,13 @@ import './A-Level-StreamBox.css';
 import { ALevelContext } from '../../../context/ALevel.context';
 import { useContext, useEffect } from 'react';
 import axios from 'axios';
+import { API } from '../../API/Api';
 
 const ALevelStreamBox = () => {
     // Function to fetch A-Level subjects from the backend
     const FetchAlSubjectFromBE = async () => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_URL}/api/Advancelevelpage`); // API call to fetch subjects
+            const response = await API.get(`${process.env.REACT_APP_URL}/api/Advancelevelpage`); // API call to fetch subjects
             setALSubjectsFromDB(response.data); // Store retrieved data in context state
             // console.log(response.data);
         } catch (error) {

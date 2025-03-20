@@ -28,7 +28,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 require('dotenv').config({ path: require('path').resolve(__dirname, '..', '.env') });
 
 app.use(cors({
-    origin: ['https://www.univerlens.com','http://localhost:3001','http://localhost:3000','https://univerlens.com','http://localhost:5173','http://localhost:5173/api'],
+    origin: ['https://api.univerlens.com','https://www.univerlens.com','http://localhost:3001','http://localhost:3000','https://univerlens.com','http://localhost:5173','http://localhost:5173/api'],
     methods: ['GET', 'POST','OPTIONS'],        // Specify the HTTP methods your API supports
     credentials: true                // Allow credentials (cookies, sessions, etc.)
 }));
@@ -62,7 +62,7 @@ app.use((req, res, next) => {
     res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
     res.setHeader("Cross-Origin-Embedder-Policy", "credentialless");
     res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
-    res.setHeader("Access-Control-Allow-Origin", "https://accounts.google.com");
+    // res.setHeader("Access-Control-Allow-Origin", "https://accounts.google.com");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
     res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -252,7 +252,7 @@ app.get("/auth/google/callback",passport.authenticate("google",{failureRedirect:
                     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
                 });
 
-                res.redirect("/Assesment");
+                res.redirect("https://univerlens.com/Assesment");
             }catch(err){
                 console.log(err)
             }
@@ -1243,6 +1243,8 @@ app.post('/api/signup',async(req,res)=>{
         
     }catch(err){
         console.log(err)
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Internal Server Error" });
+
     }
 
 })
