@@ -29,9 +29,9 @@ const ALevelMathsLocalSubjects = () => {
     };
 
     // Debugging: Log ALResultsArray whenever it changes
-    useEffect(() => {
-        console.log("ALResultsArray:", ALResultsArray);
-    }, [ALResultsArray]);
+    // useEffect(() => {
+    //     console.log("ALResultsArray:", ALResultsArray);
+    // }, [ALResultsArray]);
 
     return (
         <>

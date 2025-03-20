@@ -41,9 +41,9 @@ const OLevelSubj = () => {
     }, []);
 
     // Log OLevelBasketSubj state for debugging
-    useEffect(() => {
-        console.log("thenu", OLevelBasketSubj);
-    }, [OLevelBasketSubj]);
+    // useEffect(() => {
+    //     console.log("thenu", OLevelBasketSubj);
+    // }, [OLevelBasketSubj]);
 
     // Function to render O-Level subjects
     const renderSubject = () => {

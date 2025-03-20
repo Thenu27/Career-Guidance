@@ -24,7 +24,7 @@ const ExtraCurricularResults = () => {
     // Effect to update the final activities list when selected activities change
     useEffect(() => {
         setFinalActivitiesList(SelectedSubActivities.concat(ActivitiesWithoutSub)); // Combine selected and standalone activities
-        console.log("FinalActivitiesList", FinalActivitiesList);
+        // console.log("FinalActivitiesList", FinalActivitiesList);
     }, [SelectedSubActivities, ActivitiesWithoutSub]);
 
     // Effect to update the level state when final activities list changes
@@ -42,9 +42,9 @@ const ExtraCurricularResults = () => {
     };
 
     // Log ActivitiesToSendBE for debugging
-    useEffect(() => {
-        console.log("ActivitiesToSendBE", ActivitiesToSendBE);
-    }, [ActivitiesToSendBE]);
+    // useEffect(() => {
+    //     console.log("ActivitiesToSendBE", ActivitiesToSendBE);
+    // }, [ActivitiesToSendBE]);
 
     // Function to update the selected level for an activity
     const UpdateLevel = (activity, level, index) => {

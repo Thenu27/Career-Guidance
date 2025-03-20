@@ -19,8 +19,7 @@ const Assesment = () => {
 
     useEffect(() => {
         if (!loading && !user) {
-          console.log(user)  
-          navigate('/login'); // ✅ Only redirect after loading is finished
+          navigate('/Assesment'); // ✅ Only redirect after loading is finished
         }
       }, [user,loading]);
 

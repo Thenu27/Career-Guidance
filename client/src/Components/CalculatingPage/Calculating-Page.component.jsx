@@ -5,13 +5,13 @@ import Image from '../Image/Image.components';
 import { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProgressContext } from '../../context/progress.context';
-import { CareerContext } from '../../context/Career.context';
+// import { CareerContext } from '../../context/Career.context';
 import axios from 'axios';
 
 const CalculatingPage = () => {
     // Accessing context values
-    const { setVisitedPages, setintelligenceScore, intelligenceScore ,intelligenceObject} = useContext(ProgressContext);
-    const {Careers,setCareers} = useContext(CareerContext)
+    const { setVisitedPages, setintelligenceScore, intelligenceScore} = useContext(ProgressContext);
+    // const {Careers,setCareers} = useContext(CareerContext)
 
     // Function to fetch intelligence scores from the backend
     const getIntelligenceScores = async () => {
@@ -32,9 +32,9 @@ const CalculatingPage = () => {
     }, []);
 
     // Log the received intelligence score for debugging
-    useEffect(() => {
-        console.log('Frontend received:', intelligenceScore);
-    }, [intelligenceScore]);
+    // useEffect(() => {
+    //     console.log('Frontend received:', intelligenceScore);
+    // }, [intelligenceScore]);
 
     // Mark pages as visited in the context when this page loads
     useEffect(() => {

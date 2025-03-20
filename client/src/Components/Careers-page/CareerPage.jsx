@@ -3,10 +3,10 @@ import './CareerPage.css';
 // Importing dependencies
 import Image from '../Image/Image.components';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useContext, useCallback } from 'react';
+import { useEffect, useContext} from 'react';
 import { ProgressContext } from '../../context/progress.context';
 import { CareerContext } from '../../context/Career.context';
-import axios from 'axios';
+// import axios from 'axios';
 
 const CareerPage = () => {
     // Accessing context values
@@ -20,19 +20,19 @@ const CareerPage = () => {
             try {
                 const parsedCareers = JSON.parse(storedCareers); // ✅ Parse safely
                 setCareers(parsedCareers);
-                console.log("Careers loaded from localStorage:", parsedCareers);
+                // console.log("Careers loaded from localStorage:", parsedCareers);
             } catch (error) {
                 console.error("Error parsing careerData:", error);
             }
         } else {
-            console.warn("No careerData found in localStorage.");
+            // console.warn("No careerData found in localStorage.");
             setCareers("No Careers Found"); // ✅ Corrected this check
         }
     }, []);
 
-    useEffect(()=>{
-        console.log("Careers",Careers)
-    },[Careers])
+    // useEffect(()=>{
+    //     console.log("Careers",Careers)
+    // },[Careers])
     // Mark pages as visited when this page loads
     useEffect(() => {
         setVisitedPages(() => ({

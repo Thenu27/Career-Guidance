@@ -1,7 +1,7 @@
 import './A-Level-box.styles.css';
 
 // Importing necessary dependencies
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 
 // Importing components related to A-Level selection
@@ -19,7 +19,7 @@ const AdvanceLevelBox = () => {
    const { showALevelCategory, showALevelStreamBox, showLondonALevelCategory, showALResults } = useContext(ALevelContext);
 
    // Hook for navigation (not used here but available for future use)
-   const navigate = useNavigate();
+//    const navigate = useNavigate();
 
    // Function to determine which A-Level component to render based on context state
    const renderALevelBox = () => {

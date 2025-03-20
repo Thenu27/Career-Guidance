@@ -233,8 +233,27 @@
   }
 }
 
-/* 
-.landing-container {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* .landing-container {
   background-color: white;
   min-height: calc(100vh - 70px);
   padding: 40px 20px;
@@ -389,8 +408,7 @@
   transform: translateX(5px);
 }
 
-/* Floating illustrations */
-/* .landing-illustrations {
+.landing-illustrations {
   position: absolute;
   top: 0;
   left: 0;

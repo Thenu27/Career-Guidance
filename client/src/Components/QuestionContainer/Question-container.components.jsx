@@ -10,8 +10,8 @@ import { API } from '../API/Api';
 
 const QuestionContainer = () => {
 
-    const {intelligenceObject,setintelligenceObject} = useContext(ProgressContext);
-    const {Careers,setCareers} = useContext(CareerContext)
+    const {setintelligenceObject} = useContext(ProgressContext);
+    // const {Careers,setCareers} = useContext(CareerContext)
     // State to track the index of the question set currently displayed
     const [IndexOfQuestionShown, setIndexOfQuestionShown] = useState(0);
 
@@ -36,11 +36,11 @@ const QuestionContainer = () => {
             const response = await API.get(
                 `${process.env.REACT_APP_URL}/api/Assesment`,
             );
-            console.log("Questions received from the backend", response.data);
+            // console.log("Questions received from the backend", response.data);
             setquestions(response.data);
         } catch (error) {
-            console.log("URL", process.env.REACT_APP_URL);
-            console.error("Error Fetching Questions", error);
+            // console.log("URL", process.env.REACT_APP_URL);
+            // console.error("Error Fetching Questions", error);
         }
     };
 
@@ -123,11 +123,10 @@ const QuestionContainer = () => {
                 { questionAndAnswers }
                 
             );
-            console.log("response",response.data)
+            // console.log("response",response.data)
             //  setCareers(response.data.final_career_object);
 
             setTimeout(() => {
-                console.log("Saving Careers to localStorage...");
                 setintelligenceObject(response.data.intelligence_object);
                 localStorage.setItem("careerData", JSON.stringify(response.data.final_career_object));
                 }, 500)
@@ -138,16 +137,7 @@ const QuestionContainer = () => {
         }
     };
 
-    // useEffect(() => {
-    //     if (Careers && Object.keys(Careers).length > 0) {  // Ensure Careers is not empty
-    //         console.log("Careers received:", Careers);
-    //         localStorage.setItem("careerData", JSON.stringify(Careers));
-    //         console.log("Career Data Stored in Local Storage");
-    //     } else {
-    //         console.warn("Careers is empty or undefined, not storing in localStorage.");
-    //     }
-    // }, [Careers]);
-    
+  
     
 
     return (

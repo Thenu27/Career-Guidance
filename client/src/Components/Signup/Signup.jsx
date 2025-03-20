@@ -48,7 +48,7 @@ const Signup = () => {
         })
 
 
-
+        console.log(response)
         if(response.status===200){
           alert('Account Created!');
           
@@ -57,13 +57,16 @@ const Signup = () => {
         }
 
     }catch(err){
-      if(err.response.status===409){
-        alert("User already exists")
-      }  
-      if(err.response.status===400){
-        alert("An Error Occured")
+      if(err.response){
+        if(err.response.status===409){
+          alert("User already exists")
+        }  
+        if(err.response.status===400){
+          alert("An Error Occured")
+        }
+          console.log(err)
       }
-        console.log(err)
+
     }
   }
 

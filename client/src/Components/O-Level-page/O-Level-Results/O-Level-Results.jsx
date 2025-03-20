@@ -5,11 +5,9 @@ import { useContext, useState } from 'react';
 import { OLevelContext } from '../../../context/OLevel.context';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { CsrfContext } from '../../../context/csrf.context';
 
 const OLevelResults = () => {
   // Accessing CSRF token from context
-  const { csrfToken } = useContext(CsrfContext);
 
   // Accessing O-Level results and navigation functions from context
   const { OLevelResultsArray, goToBasketLocal } = useContext(OLevelContext);
@@ -48,18 +46,17 @@ const OLevelResults = () => {
         `${process.env.REACT_APP_URL}/api/Ordinarylevelpage`,
         { OLevelResultsAndGrades },
         {
-          headers: { 'X-XSRF-TOKEN': csrfToken }, // Include CSRF token
           withCredentials: true, // Ensure cookies are sent
         }
       );
 
-      console.log("New", response.data);
+      // console.log("New", response.data);
 
-      if (response.status === 200) {
-        console.log("OLevelResultsArray Sent to back end");
-      } else {
-        console.log("Results Not sent");
-      }
+      // if (response.status === 200) {
+      //   console.log("OLevelResultsArray Sent to back end");
+      // } else {
+      //   console.log("Results Not sent");
+      // }
     } catch (error) {
       console.log(error, "results sending failed");
     }

@@ -9,7 +9,6 @@ import { OLevelProvider } from './context/OLevel.context';
 import { ALevelProvider } from './context/ALevel.context';
 import { CareerProvider } from './context/Career.context';
 import { ActivitiesProvider } from './context/Activities.context';
-import { CsrfProvider } from './context/csrf.context';
 import { AuthProvider } from './context/Auth.context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -11,7 +11,7 @@ const ALevelStreamBox = () => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_URL}/api/Advancelevelpage`); // API call to fetch subjects
             setALSubjectsFromDB(response.data); // Store retrieved data in context state
-            console.log(response.data);
+            // console.log(response.data);
         } catch (error) {
             console.log(error);
         }
@@ -36,7 +36,7 @@ const ALevelStreamBox = () => {
     // Function to filter subjects based on the selected stream
     const renderALsubjects = (stream) => {
         const filteredSubjects = ALSubjectsFromDB.filter(subject => subject.stream === stream);
-        console.log("Filtered Subjects for Stream:", stream, filteredSubjects);
+        // console.log("Filtered Subjects for Stream:", stream, filteredSubjects);
         return filteredSubjects;
     };
 

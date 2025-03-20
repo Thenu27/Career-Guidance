@@ -10,9 +10,9 @@ const ALevelCategory = () => {
     const { ALSubjectsFromDB } = useContext(ALevelContext);
 
     // Log the fetched A-Level subjects from the database whenever they change
-    useEffect(() => {
-        console.log(ALSubjectsFromDB);
-    }, [ALSubjectsFromDB]);
+    // useEffect(() => {
+    //     console.log(ALSubjectsFromDB);
+    // }, [ALSubjectsFromDB]);
 
     // Hook for navigation
     const navigate = useNavigate();

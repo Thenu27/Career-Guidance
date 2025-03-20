@@ -19,6 +19,7 @@ const createAccount=async(formData,password)=>{
         .returning("*");
         return result     
     }catch(err){
+        console.log(err)
         throw new Error(err);
   }
         
@@ -77,6 +78,7 @@ const userLogin = async(req,res)=>{
         return res.status(StatusCodes.OK).send("Login Succesfull!")
         
     }catch(err){
+        console.log(err)
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Login Failed!")
     }
 }

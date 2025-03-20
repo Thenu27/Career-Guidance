@@ -4,11 +4,11 @@ import './Intelligence.styles.css';
 import Image from '../Image/Image.components';
 import { useNavigate } from 'react-router-dom';
 import { ProgressContext } from '../../context/progress.context';
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useContext} from 'react';
 
 const IntelligencePage = () => {
     // Accessing context values
-    const { setVisitedPages, intelligenceScore,intelligenceObject } = useContext(ProgressContext);
+    const { setVisitedPages,intelligenceObject } = useContext(ProgressContext);
 
     // useEffect to update visited pages when the component mounts
     useEffect(() => {
@@ -22,7 +22,7 @@ const IntelligencePage = () => {
             CalculatingPage: true,
             IntelligencePage: true,
         }));
-        console.log('Newly updated', intelligenceScore); // Log intelligence scores for debugging
+        // console.log('Newly updated', intelligenceScore); // Log intelligence scores for debugging
     }, []);
 
     const IdentifyIntelligence = (value) => {

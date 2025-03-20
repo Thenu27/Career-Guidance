@@ -89,11 +89,11 @@ const ExtraCurricularPage = () => {
         
       );
 
-      if (response.status === 200) {
-        console.log('Activities Sent Successfully');
-      } else {
-        console.log('Activities Not Sent Successfully');
-      }
+      // if (response.status === 200) {
+      //   console.log('Activities Sent Successfully');
+      // } else {
+      //   console.log('Activities Not Sent Successfully');
+      // }
 
       setActivitiesObj(response.data);
       setShowActivitiesSub(true);

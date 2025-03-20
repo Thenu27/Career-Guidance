@@ -44,19 +44,19 @@ const ExtraCurricularBox = () => {
     };
 
     // Log when ShowActivitiesSub changes (for debugging)
-    useEffect(() => {
-        console.log(ShowActivitiesSub);
-    }, [ShowActivitiesSub]);
+    // useEffect(() => {
+    //     console.log(ShowActivitiesSub);
+    // }, [ShowActivitiesSub]);
 
     // Log when selectedButtons state changes (for debugging)
-    useEffect(() => {
-        console.log(selectedButtons);
-    }, [selectedButtons]);
+    // useEffect(() => {
+    //     console.log(selectedButtons);
+    // }, [selectedButtons]);
 
     // Log when SubActivities state changes (for debugging)
-    useEffect(() => {
-        console.log("SubActivities", SubActivities);
-    }, [SubActivities]);
+    // useEffect(() => {
+    //     console.log("SubActivities", SubActivities);
+    // }, [SubActivities]);
 
     return (
         <>

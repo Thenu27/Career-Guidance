@@ -18,9 +18,9 @@ const SubActivitiesPage = () => {
   } = useContext(ActivitiesContext);
 
   // Log activities without sub-activities for debugging
-  useEffect(() => {
-    console.log("ActivitiesWithoutSub", ActivitiesWithoutSub);
-  }, [ActivitiesWithoutSub]);
+  // useEffect(() => {
+  //   console.log("ActivitiesWithoutSub", ActivitiesWithoutSub);
+  // }, [ActivitiesWithoutSub]);
 
   // Effect to process activities and categorize them into those with and without sub-activities
   useEffect(() => {
@@ -73,9 +73,9 @@ const SubActivitiesPage = () => {
   };
 
   // Log selected sub-activities for debugging
-  useEffect(() => {
-    console.log("SelectedMainActivities", SelectedSubActivities);
-  }, [SelectedSubActivities]);
+  // useEffect(() => {
+  //   console.log("SelectedMainActivities", SelectedSubActivities);
+  // }, [SelectedSubActivities]);
 
   return (
     <>

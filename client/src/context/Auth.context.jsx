@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     try {
 
       const response = await API.get(`${process.env.REACT_APP_URL}/api/clientAuth`)
-      console.log("response:",response)
+      // console.log("response:",response)
       setUser(response.data.user);
 
       
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = () => {
-    window.open("http://localhost:3000/auth/google", "_self");
+    window.open(`${process.env.REACT_APP_URL}/auth/google`, "_self");
   };
 
   const logout = () => {
