@@ -1,5 +1,5 @@
 /* Professional Color Palette & Typography */
-/* :root {
+:root {
   --primary-color: #0A6B52;  
   --secondary-color: #1ABC9C; 
   --accent-color: #2C3E50;  
@@ -7,33 +7,30 @@
   --text-primary: #2C3E50;
   --text-secondary: #34495E;
   --white: #FFFFFF;
-} */
+}
 
-/* Global Reset & Base Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* body {
+body {
   font-family: 'Inter', 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.6;
   color: var(--text-primary);
   background-color: var(--background-light);
-} */
+}
 
 .landing-container {
   display: flex;
-
   flex-direction: column;
   min-height: 100vh;
   gap: 15px;
   background-color: rgb(246, 246, 246);
   justify-content: center;
   align-items: center;
-  margin-top: -25px;
-
+  padding: 1rem;
 }
 
 .landing-content {
@@ -42,46 +39,53 @@
   background-color: var(--white);
   border-radius: 12px;
   box-shadow: 0 7px 35px rgba(0, 0, 0, 0.25);
-  /* padding: 4rem 3rem; */
-  padding:1rem 2rem;
+  padding: 1rem 2rem;
   text-align: center;
   display: flex;
   flex-direction: row;
-  height: 60vh;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
-.landing-page-title-container{
-  width: 90vw;
+.landing-page-title-container {
+  width: 100%;
   display: flex;
-  justify-content:center ;
+  justify-content: center;
   align-items: center;
+  margin-bottom: 1rem;
 }
-/* Typography */
+
 .landing-page-title {
   font-size: 3rem;
   color: #0A6B52;
   font-weight: 700;
-  margin-bottom: 1rem;
-  font-family: 'Mulish',sans-serif;
+  font-family: 'Mulish', sans-serif;
   text-align: center;
   text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-
 }
 
-p{
-  font-family: 'Open Sans', sans-serif;
+.landing-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
 }
 
+.book-img {
+  max-width: 100%;
+  height: auto;
+  transition: transform 0.3s ease;
+}
 
+.book-img:hover {
+  transform: scale(1.1);
+}
 
-/* Steps Container */
 .steps-container {
   display: flex;
   justify-content: space-between;
   gap: 2rem;
-  margin: 3rem 0;
-  flex-direction: row;
-
+  flex: 1;
 }
 
 .step {
@@ -95,8 +99,6 @@ p{
   position: relative;
   overflow: hidden;
   box-shadow: 0 7px 15px rgba(0, 0, 0, 0.25);
-  height: 38vh;
-
 }
 
 .step::before {
@@ -106,7 +108,7 @@ p{
   left: 0;
   width: 100%;
   height: 4px;
-  background-color:#1ABC9C;
+  background-color: #1ABC9C;
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 0.3s ease;
@@ -137,15 +139,19 @@ p{
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.step-title{
-  color:#0A6B52;
+.step-title {
+  color: #0A6B52;
   margin-bottom: 1rem;
   font-size: 1.5rem;
   font-weight: 600;
 }
 
+.step-paragraph {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 150%;
+}
 
-/* Call to Action Button */
 .start-journey-btn {
   background-color: #0A6B52;
   color: white;
@@ -157,79 +163,70 @@ p{
   cursor: pointer;
   font-weight: 600;
   letter-spacing: 0.5px;
-  transition:background-color  0.3s ease;
+  transition: background-color 0.3s ease;
   box-shadow: 0 10px 20px rgba(10, 107, 82, 0.2);
 }
 
 .start-journey-btn:hover {
   background-color: var(--secondary-color);
-  /* transform: translateY(-3px); */
-  /* box-shadow: 0 12px 22px rgba(10, 107, 82, 0.3); */
   color: black;
   border: 2px solid #1ABC9C;
 }
 
-.disclaimer {
-  color: var(--text-secondary);
-  margin-top: 2rem;
-  font-size: 0.9rem;
-  opacity: 0.8;
-}
-
-.step-paragraph{
-  color: var(--text-secondary);
-  font-size: 1.1rem;
-  line-height: 150%;
-}
-
-.book-img{
-  width: 500px;
-  transition: transform 0.3s ease;
-}
-
-.book-img:hover{
-  transform: scale(1.1);
-}
-
 /* Responsive Design */
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1024px) {
+  .landing-content {
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+  }
+
+  .landing-page-title {
+    font-size: 2.5rem;
+  }
+
   .steps-container {
+    width: 100%;
     flex-direction: column;
     gap: 1.5rem;
+    order: 1;
   }
 
-  .landing-content {
-    padding: 2.5rem 1.5rem;
+  .book-img-container{
+    order: 2;
   }
 
-  h1 {
-    font-size: 2.25rem;
+  .book-img {
+    max-width: 300px;
+    margin-bottom: 2rem;
+
   }
 
-  h2 {
-    font-size: 1.3rem;
+  .start-journey-btn {
+    width: 250px;
+    height: 60px;
+    font-size: 1.25rem;
   }
 }
 
 @media screen and (max-width: 576px) {
-  .landing-container {
-    padding: 1rem;
+  .landing-page-title {
+    font-size: 2rem;
   }
 
-  .landing-content {
-    padding: 2rem 1rem;
+  .step-title {
+    font-size: 1.3rem;
   }
 
-  h1 {
-    font-size: 1.8rem;
-  }
-
-  h2 {
-    font-size: 1.2rem;
+  .step-paragraph {
+    font-size: 1rem;
   }
 
   .start-journey-btn {
-    padding: 12px 30px;
-    font-size: 1rem;
+    width: 100%;
+    height: 50px;
+    font-size: 1.1rem;
   }
+
+
 }

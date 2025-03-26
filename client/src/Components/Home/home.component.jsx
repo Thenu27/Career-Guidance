@@ -177,7 +177,7 @@ const Home = () => {
          <h1 className='landing-page-title'>Welcome to Your Personalized Career Journey!</h1>     
       </div>
       <div className="landing-content">
-        <div>
+        <div className='book-img-container'>
           <img className='book-img' src={booklover}/>
         </div>
         <div className="steps-container">
