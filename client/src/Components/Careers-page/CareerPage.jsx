@@ -105,7 +105,7 @@ const CareerPage = () => {
             {/* Page Title */}
             <div className="career-field-box-title-container career-page-title">
                 <h2 className="career-field-box-title">
-                    Congratulations! Based on your MIP Score, we’ve curated careers that align with your strengths.
+                Congrats! We've matched careers to your top strengths.
                 </h2>
             </div>
 
@@ -119,8 +119,8 @@ const CareerPage = () => {
 
                 {/* Moderate Career Section */}
                 <div className="career-box">
+                <h2 className="career-type">Moderate Career</h2>
                     <div className="chosen-career-box">{renderModerateCareers()}</div>
-                    <h2 className="career-type">Moderate Career</h2>
                 </div>
 
                 {/* Satisfactory Career Section */}
@@ -140,11 +140,6 @@ const CareerPage = () => {
                 <button onClick={goToSendResultPage} className="nextbtn">
                     Send Results
                 </button>
-            </div>
-
-            {/* Frog Image */}
-            <div className="career-page-frog">
-                <Image />
             </div>
         </div>
     );

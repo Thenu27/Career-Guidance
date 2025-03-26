@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { ProgressContext } from '../../context/progress.context';
 // import { CareerContext } from '../../context/Career.context';
 import { API } from '../API/Api';
+import Spinner from '../Spinner/Spinner';
 
 const CalculatingPage = () => {
     // Accessing context values
@@ -67,16 +68,8 @@ const CalculatingPage = () => {
     }, [navigate]);
 
     return (
-        <div className='calculating-page-container'>
-            {/* Frog image display */}
-            <div className='calculating-frog'>
-                <Image />
-            </div>
-
-            {/* Title section */}
-            <div className='calculating-title-container'>
-                <h1 className='calculating-title'>Calculating Multiple Intelligence Score</h1>
-            </div>
+        <div className='spinner-container'>
+        <Spinner/>
         </div>
     );
 };

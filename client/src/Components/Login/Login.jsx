@@ -3,6 +3,8 @@ import './Login.css';
 import { useNavigate } from 'react-router-dom';
 import { API } from '../API/Api';
 import { useAuth } from '../../context/Auth.context';
+import GoogleButton from 'react-google-button'; // ✅ Import Google Button
+
 
 
 const Login = () => {
@@ -95,7 +97,16 @@ const Login = () => {
           </div>
           <button type="submit" className="login-button">Login</button>
         </form>
-        <div onClick={login} className="login-button">Login With Google</div>
+
+        <GoogleButton onClick={login} style={{
+    backgroundColor:'white',
+    color: 'black',
+    width: '100%',
+    marginTop: '5px',
+    border:'1px solid black',
+    // Change background
+            // Ensure height is consistent
+  }} className="google-login-button"/>
 
         <p className="signup-link">
           Don't have an account? <a href="/signup">Sign up</a>

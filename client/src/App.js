@@ -20,6 +20,8 @@ import SendResultToEmail from './Components/Send-Results/Send-Result-page';
 import Signup from './Components/Signup/Signup';
 import Login from './Components/Login/Login';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
+import Spinner from './Components/Spinner/Spinner';
+import QuestionContainer from './Components/QuestionContainer/Question-container.components.jsx'
 
 function App() {
   return (
@@ -34,8 +36,8 @@ function App() {
           <Route path="/" element={<Home/>}/> {/* Home page */}
           <Route path="/Signup" element={<Signup/>}/> {/* Home page */}
           <Route path="/login" element={<Login/>}/> {/* Home page */}
-            <Route element={<PrivateRoute/>}>
-              <Route path="/Assesment" element={<Assesment/>}/> {/* Assessment page */}
+            {/* <Route element={<PrivateRoute/>}> */}
+              <Route path="/Assesment" element={<QuestionContainer/>}/> {/* Assessment page */}
               <Route path="/Option" element={<Option/>}/> {/* Options page */}
               <Route path="/ExtraCurricular" element={<ExtraCurricularPage/>}/> {/* Extra Curricular page */}
               <Route path="/Ordinarylevelpage" element={<OrdinaryLevelPage/>}/> {/* Ordinary Level page */}
@@ -45,7 +47,9 @@ function App() {
               <Route path="/CareerFields" element={<CareerFieldPage/>}/> {/* Career Fields page */}
               <Route path="/Careers" element={<CareerPage/>}/> {/* Careers page */}
               <Route path="/SendResults" element={<SendResultToEmail/>}/> {/* Send results to email page */}
-            </Route>
+              <Route path='/spinner' element={<Spinner/>}/>
+
+            {/* </Route> */}
 
         </Routes>  
 

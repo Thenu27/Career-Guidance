@@ -103,7 +103,7 @@ const Navbar = () => {
       </div>
 
     </nav>
-    <ProgressBar/>
+    {/* <ProgressBar/> */}
     </>
 
   );

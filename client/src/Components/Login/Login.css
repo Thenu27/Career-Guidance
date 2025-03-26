@@ -76,3 +76,8 @@
   .signup-link a:hover {
     text-decoration: underline;
   }
+
+  .google-login-button{
+    background-color: white;
+    margin-top: 10px;
+  }

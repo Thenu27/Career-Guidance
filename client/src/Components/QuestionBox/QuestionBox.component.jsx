@@ -26,7 +26,7 @@ const QuestionBox = ({
     // useEffect to navigate to 'Option' page when all question sets are completed
     useEffect(() => {
         if (questionsDividedIntoFive.length > 0 && IndexOfQuestionShown >= questionsDividedIntoFive.length) {
-            navigate('/Option');
+            navigate('/CalculatePage');
         }
     }, [IndexOfQuestionShown, navigate, questionsDividedIntoFive.length]);
 

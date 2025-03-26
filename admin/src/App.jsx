@@ -32,6 +32,7 @@ import CareerFieldAdd from './components/Career/CareerFieldAdd/CareerFieldAdd';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 
 import './App.css'
+import Spinner from '../../client/src/Components/Spinner/Spinner';
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
    <div className='app'>
     
     <Routes>
+
       <Route path='/admin' element={<Home/>}/>
       <Route path='/admin/login' element={<Singin/>}/>
 

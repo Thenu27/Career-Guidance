@@ -1,14 +1,19 @@
 import './Question-container.styles.css';
-
 // Importing necessary dependencies
 import { useEffect, useState } from 'react';
 import QuestionBox from '../QuestionBox/QuestionBox.component';
 import { useContext } from 'react';
 import { ProgressContext } from '../../context/progress.context';
-import { CareerContext } from '../../context/Career.context';
+// import { CareerContext } from '../../context/Career.context';
 import { API } from '../API/Api';
 
+import leftArrow from '../../assets/Arrow.svg'
+import { useNavigate } from 'react-router-dom';
+import Spinner from '../Spinner/Spinner';
+
 const QuestionContainer = () => {
+
+    const navigate = useNavigate()
 
     const {setintelligenceObject} = useContext(ProgressContext);
     // const {Careers,setCareers} = useContext(CareerContext)
@@ -30,17 +35,24 @@ const QuestionContainer = () => {
     // State to store fetched questions
     const [questions, setquestions] = useState({});
 
+    const [loading,setLoading] = useState(false)
+
     // Function to fetch questions from the backend
     const fetchQuestions = async () => {
         try {
+            setLoading(true)
             const response = await API.get(
                 `${process.env.REACT_APP_URL}/api/Assesment`,
             );
             // console.log("Questions received from the backend", response.data);
-            setquestions(response.data);
+            if(response.status===200){
+                setquestions(response.data);
+                setLoading(false)
+            }
         } catch (error) {
             // console.log("URL", process.env.REACT_APP_URL);
-            // console.error("Error Fetching Questions", error);
+            console.error("Error Fetching Questions", error);
+            setLoading(false);
         }
     };
 
@@ -123,13 +135,15 @@ const QuestionContainer = () => {
                 { questionAndAnswers }
                 
             );
-            // console.log("response",response.data)
-            //  setCareers(response.data.final_career_object);
+            if(response.status===200){
+                  
+                    setTimeout(() => {
+                        setintelligenceObject(response.data.intelligence_object);
+                        localStorage.setItem("intelligenceObject",JSON.stringify(response.data.intelligence_object));
+                        localStorage.setItem("careerData", JSON.stringify(response.data.final_career_object));
+                        }, 500)
+           }
 
-            setTimeout(() => {
-                setintelligenceObject(response.data.intelligence_object);
-                localStorage.setItem("careerData", JSON.stringify(response.data.final_career_object));
-                }, 500)
 
 
         } catch (error) {
@@ -137,19 +151,27 @@ const QuestionContainer = () => {
         }
     };
 
-  
+  if(loading){
+    return(
+        <div className='spinner-container'>
+            <Spinner/>
+        </div>
+    
+    )
+
+  }
     
 
     return (
-        <>
+        <div className='assesment-page'>
             {/* Title Section */}
             <h2 className='question-container-title'>Answer the following questions to determine your MIP score</h2>
             
             {/* Question Display Section */}
             <div className='question-container'>
-                <QuestionBox 
+                <QuestionBox    
                     questions={questions} 
-                    setquestionAndAnswers={setquestionAndAnswers} 
+                    setquestionAndAnswers={setquestionAndAnswers}  
                     questionAndAnswers={questionAndAnswers} 
                     value={value} 
                     setValue={setValue} 
@@ -157,19 +179,40 @@ const QuestionContainer = () => {
                     IndexOfQuestionShown={IndexOfQuestionShown}  
                     questionsDividedIntoFive={questionsDividedIntoFive}
                 />
+
+
+
+                {IndexOfQuestionShown < questionsDividedIntoFive.length-1 ? (
+                  <div className='left-arrow-container'>
+                    <img onClick={NextBtnHandler} className='left-arrow' alt="left-arrow" src={leftArrow}/>
+                   </div>  
+                ):(
+                    <button onClick={() => { answerSubmitHandler(); NextBtnHandler(); }} className='submit-btn'>Submit</button>
+
+                )}
+
+      
+                <div className='right-arrow-container'>
+                    <img  onClick={BackBtnHandler} className='right-arrow' alt="right-arrow" src={leftArrow}/>
+                </div>        
+
+
             </div>
 
             {/* Navigation Buttons */}
-            <div className='questions-navigation-container'>
+
+            {/* <div className='questions-navigation-container'>
+
                 <button onClick={BackBtnHandler} className='nextbtn'>Back</button>
                
                 {IndexOfQuestionShown < questionsDividedIntoFive.length - 1 ? (
                     <button onClick={NextBtnHandler} className='nextbtn'>Next</button>
+                    
                 ) : (
                     <button onClick={() => { answerSubmitHandler(); NextBtnHandler(); }} className='nextbtn'>Submit</button>
                 )}
-            </div>
-        </>
+            </div> */}
+        </div>
     );
 };
 

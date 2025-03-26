@@ -654,11 +654,11 @@ app.post('/api/AdvanceLevelPage',verifyToken,async(req,res)=>{
 
 
 // Endpoint to get all questions for the assessment
-app.get('/api/Assesment',verifyToken,async (req, res) => {
+app.get('/api/Assesment',async (req, res) => {
     try {
         await fetchIntelligenceFromDB(req);
         const allQuestions = await getttingQuestionFromDB();
-        res.json(allQuestions);
+        res.status(200).json(allQuestions);
         
 
     } catch (error) {
@@ -674,7 +674,7 @@ app.get('/api/Assesment',verifyToken,async (req, res) => {
 
 
 
-app.get('/api/Ordinarylevelpage/local-Core',verifyToken,async (req, res) => {
+app.get('/api/Ordinarylevelpage/local-Core',async (req, res) => {
     try {
         if (!req.session.OLevelLocalCoreSubjectsArray.length) {
             await fetchOLevelSubjectFromDB('Core', req.session.OLevelLocalCoreSubjectsArray);
@@ -693,7 +693,7 @@ app.get('/api/Ordinarylevelpage/local-Core',verifyToken,async (req, res) => {
 
 
 
-app.get('/api/Advancelevelpage',verifyToken,async (req, res) => {
+app.get('/api/Advancelevelpage',async (req, res) => {
     try {
         await getAlLocalsubjectFromDB(req);
         res.json(req.session.ALSubjects);
@@ -1250,7 +1250,7 @@ app.post('/api/signup',async(req,res)=>{
 })
 
 // Endpoint for receiving assessment answers from the client
-app.post('/api/Assesment',verifyToken, async (req, res) => {
+app.post('/api/Assesment', async (req, res) => {
     try {
         const { questionAndAnswers } = req.body;
         console.log("questionAndAnswers",questionAndAnswers)

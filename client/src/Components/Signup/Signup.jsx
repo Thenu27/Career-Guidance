@@ -38,7 +38,6 @@ const Signup = () => {
     }
     console.log('Signup submitted:', formData);
     await sendToBE()
-    // Add your signup logic here
   };
 
   const sendToBE = async()=>{
