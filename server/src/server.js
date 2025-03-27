@@ -21,6 +21,7 @@ const {clienthashPassword,createAccount,userLogin,getUserDataFromDB} = require('
 const {verifyToken, generateToken} = require('../src/controllers/clientJwtController');
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const emailRouter = require('./Route/EmailRoute')
 
 
 
@@ -271,6 +272,9 @@ db.raw('SELECT 1')
 
 app.use(express.json({ limit: "5mb" })); 
 app.use(express.urlencoded({ extended: true, limit: "5mb" }));
+
+app.use('/api/email',emailRouter)
+
 let MainActivitiesGlobal;
 
 const fetchMainActivitiesFromDB = async (req) => {

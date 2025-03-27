@@ -1,11 +1,92 @@
 import './Send-Results-page.css';
-import Image from '../Image/Image.components';
 import { useNavigate } from 'react-router-dom';
+import { API } from '../API/Api';
+import { useEffect, useState } from 'react';
+import Spinner from '../Spinner/Spinner';
+
+
 const SendResultToEmail = ()=>{
+
+    const [email,setEmail] = useState('')
+    const [firstName,setFirstName] = useState('')
+    const [lastName,setLastName] = useState('')
+    const [score,setScore] = useState();
+
+    const [loading,setLoading] = useState(false)
+
+    useEffect(()=>{
+        const storedData = localStorage.getItem('intelligenceObject');
+        if(storedData){
+            setScore(JSON.parse(storedData))
+        }
+    },[])
+
+
+    const handleFirstNameChange=(e)=>{
+        setFirstName(e.target.value)
+    }
+    const handleEmailChange=(e)=>{
+        setEmail(e.target.value)
+    }
+    const handleLastNameChange=(e)=>{
+        setLastName(e.target.value)
+    }
 
     const navigate = useNavigate();
     const goToCareerPage=()=>{
         navigate("/Careers")
+    }
+
+    const sendEmail=async()=>{
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email)) {
+          alert('Please enter a valid email address!');
+          return;
+        }
+        if(firstName===''){
+            alert('Please enter a valid first name!');
+            return;
+
+        }
+
+        if(lastName===''){
+            alert('Please enter a valid last name!');
+            return;
+
+        }
+        setLoading(true);
+
+        try{
+            const response = await API.post(`${process.env.REACT_APP_URL}/api/email`,{email,firstName,lastName,score});
+            setLoading(true);
+            if(response.status===200){
+                setLoading(false);
+                navigate('/success')
+            }
+            if(response.status===400){
+                setLoading(false);
+                alert("Error Occured when sending Email!")
+            }
+        }catch(err){
+            console.log(err)
+            if(err.response.status===500){
+                setLoading(false);
+                alert("Internal server error!")
+            }
+        }
+    }
+
+    useEffect(()=>{
+        console.log('Email:',email)
+    })
+
+    if(loading){
+        return(
+            <div className='spinner-container'>
+                <Spinner/>
+            </div>
+        ) 
     }
 
     return(
@@ -13,25 +94,21 @@ const SendResultToEmail = ()=>{
             <div className='career-field-box-title-container send-title'>
                   <h2 className='career-field-box-title'>Fill the following details So We can send the Results to You</h2> 
             </div>
-            <div className='career-page-frog send-image'>
-                <Image/>
-
-            </div>
             <div className='details-container'>
                 <form className='details-form'>
                     <div className='input'>
                         <label  className='label' for="first-name">First Name</label>
-                        <input className='input-box' required  type='text' id="first-name" /><br/>
+                        <input onChange={handleFirstNameChange} className='input-box' required  type='text' id="first-name" /><br/>
                     </div>
 
                     <div className='input'>
                         <label className='label' for="last-name">Last Name</label>
-                        <input required className='input-box' type='text' id="last-name" /><br/>
+                        <input onChange={handleLastNameChange} required className='input-box' type='text' id="last-name" /><br/>
                     </div>
 
                     <div className='input'>
                         <label className='label' for="email">Email</label>
-                        <input required className='input-box' id="email" type='email' /><br/>
+                        <input onChange={handleEmailChange} required className='input-box' id="email" type='email' /><br/>
                     </div>
                 
                 </form>
@@ -39,7 +116,7 @@ const SendResultToEmail = ()=>{
             
             <div className='career-fieldBox-navigation send-page-navigation'>
                         <button onClick={goToCareerPage} className='nextbtn '>Back</button>
-                        <button className='nextbtn '>Send Results</button>
+                        <button onClick={sendEmail} className='nextbtn '>Send Results</button>
             </div>         
             
             

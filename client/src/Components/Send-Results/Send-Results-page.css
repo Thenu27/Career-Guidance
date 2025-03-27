@@ -1,83 +1,103 @@
+/* Send-Results-page.css */
+
 .send-results-page {
-  height: 93vh;
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(8, 1fr);
-}
-.send-title {
-  grid-column: 1/6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f4f4f4;
+  min-height: 100vh;
 }
 
-.send-image {
-  grid-column: 6/9;
-  transform: scaleX(-1);
+.send-title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.career-field-box-title {
+  font-size: 24px;
+  color: #333;
+  font-weight: 600;
+  max-width: 600px;
+  line-height: 1.4;
+}
+
+.career-page-frog {
+  margin-bottom: 30px;
 }
 
 .details-container {
-  grid-column: 1/9;
-  grid-row: 2/8;
-}
-.details-form {
-  margin: auto;
-  width: 95%;
-  height: 100%;
-  border: 5px solid black;
+  width: 100%;
+  max-width: 500px;
+  background-color: white;
+  padding: 40px;
   border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.details-form {
   display: flex;
   flex-direction: column;
-  gap: 10%;
-  padding-top: 10%;
 }
 
 .input {
-  width: 80%;
-  height: 25%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.input-box {
-  border: 3px solid rgb(0, 0, 0);
-  border-radius: 5px;
+  margin-bottom: 20px;
 }
 
 .label {
-  font-size: 120%;
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 16px;
+  font-weight: 500;
 }
 
-@media (min-width: 1400px) and (max-width: 1600px) {
-  .send-results-page {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(12, 1fr);
-  }
-  .send-image {
-    grid-column: 10/13;
-  }
+.input-box {
+  width: 100%;
+  padding: 12px;
+  border: 1.5px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
 
-  .send-title {
-    grid-column: 2/8;
-  }
+.input-box:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
 
-  .details-container {
-    grid-column: 2/8;
-    grid-row: 2/10;
-  }
-  .send-page-navigation {
-    grid-column: 2/8;
-    grid-row: 10/12;
-    height: 75%;
-  }
-  .details-form {
-    padding: 2%;
-    margin: auto;
-    gap: 0;
-  }
-  .input-box {
-    height: 50%;
-  }
-  .input {
-    height: 40%;
-  }
+.input-box:required {
+  border-color: #ff6b6b;
+}
+
+.career-fieldBox-navigation {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.nextbtn {
+  padding: 12px 24px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.nextbtn:hover {
+  background-color: #45a049;
+}
+
+.nextbtn:first-child {
+  background-color: #6c757d;
+}
+
+.nextbtn:first-child:hover {
+  background-color: #5a6268;
 }

@@ -22,6 +22,7 @@ import Login from './Components/Login/Login';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 import Spinner from './Components/Spinner/Spinner';
 import QuestionContainer from './Components/QuestionContainer/Question-container.components.jsx'
+import EmailSuccesPage from './Components/EmailSuccesPage/EmailSuccesPage.jsx';
 
 function App() {
   return (
@@ -48,6 +49,8 @@ function App() {
               <Route path="/Careers" element={<CareerPage/>}/> {/* Careers page */}
               <Route path="/SendResults" element={<SendResultToEmail/>}/> {/* Send results to email page */}
               <Route path='/spinner' element={<Spinner/>}/>
+              <Route path='/success' element={<EmailSuccesPage/>}/>
+
 
             {/* </Route> */}
 
