@@ -40,6 +40,7 @@
   width: 100%;
   max-width: 1200px;
   gap: 30px;
+  margin-top: -30px;
 }
 
 .career-box {
@@ -121,7 +122,7 @@
   margin-top: 40px;
 }
 
-.nextbtn {
+.carrer-nextbtn {
   background-color: #50c878;
   color: white;
   border: none;
@@ -133,7 +134,7 @@
   box-shadow: 0 6px 20px rgba(80, 200, 120, 0.3);
 }
 
-.nextbtn:hover {
+.carrer-nextbtn:hover {
   background-color: #3ba662;
   transform: translateY(-4px);
   box-shadow: 0 8px 25px rgba(80, 200, 120, 0.4);
@@ -143,6 +144,15 @@
   max-width: 250px;
   margin-top: 30px;
   filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+}
+
+.career-page-navigation{
+  border: none;
+}
+
+.career-submit-btn{
+  background-color: #0A6B52;
+  width: 200px;
 }
 
 @media screen and (max-width: 1024px) {

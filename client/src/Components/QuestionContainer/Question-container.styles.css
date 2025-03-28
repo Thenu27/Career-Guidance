@@ -13,12 +13,12 @@
 
 .question-container-title {
   width: 100%;
-  font-size: 2.3rem;
-  font-weight: 900;
+  font-size: 2.4rem;
+  font-weight: 700;
   line-height: 140%;
   text-align: center;
   margin-top: 0px;
-  /* margin-bottom: 20px; */
+  color: #0A6B52;
   padding: 0 1rem;
 }
 

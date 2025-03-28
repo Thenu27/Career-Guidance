@@ -134,10 +134,10 @@ const CareerPage = () => {
 
             {/* Navigation Buttons */}
             <div className="career-fieldBox-navigation career-page-navigation">
-                <button onClick={goToIntelligencePage} className="nextbtn">
+                <button onClick={goToIntelligencePage} className="carrer-nextbtn">
                     Back
                 </button>
-                <button onClick={goToSendResultPage} className="nextbtn">
+                <button onClick={goToSendResultPage} className="carrer-nextbtn career-submit-btn">
                     Send Results
                 </button>
             </div>

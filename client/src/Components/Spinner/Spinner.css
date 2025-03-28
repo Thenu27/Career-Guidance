@@ -3,7 +3,8 @@
     justify-content: center;
     align-items: center;
     height: 85vh; /* or 100vh if full screen */
-    max-width: 100vw;
+    max-width: 99vw;
+    overflow-x: hidden;
   }
   
   .spinner {

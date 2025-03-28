@@ -69,7 +69,7 @@ const CalculatingPage = () => {
 
     return (
         <div className='spinner-container'>
-        <Spinner/>
+        <   Spinner/>
         </div>
     );
 };
