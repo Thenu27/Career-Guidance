@@ -166,10 +166,20 @@ import React from 'react';
 import './home.styles.css';
 import { useNavigate } from 'react-router-dom';
 import booklover from '../../assets/book-lover-33.svg';
+import { useAuth } from '../../context/Auth.context';
 
 const Home = () => {
 
     const navigate =useNavigate()
+    const {user} = useAuth()
+
+        const HandleNavigation = () => {
+        if(!user){
+            navigate('/login')
+        }else{
+            navigate("/Assesment");
+        }
+    };
 
   return (
     <div className="landing-container">
@@ -204,7 +214,7 @@ const Home = () => {
         
         {/* <p className="disclaimer">This journey is all about you. Take your time and explore.</p> */}
       </div>
-      <button onClick={()=>{navigate('/Assesment')}} className="start-journey-btn">Start Your Journey</button>
+      <button onClick={()=>{HandleNavigation()}} className="start-journey-btn">Start Your Journey</button>
 
     </div>
   );

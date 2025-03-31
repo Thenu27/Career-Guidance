@@ -102,10 +102,9 @@ const Login = () => {
     backgroundColor:'white',
     color: 'black',
     width: '100%',
-    marginTop: '5px',
-    border:'1px solid black',
-    // Change background
-            // Ensure height is consistent
+    marginTop: '10px',
+    boxShadow: '0 1px 20px rgba(0, 0, 0, 0.35)', // Drop shadow
+
   }} className="google-login-button"/>
 
         <p className="signup-link">

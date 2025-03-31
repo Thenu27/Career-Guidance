@@ -85,13 +85,13 @@ const Navbar = () => {
             <Link to="/" className="nav-link">Home</Link>
           </li>
           <li className="nav-item">
-            <Link to="/contact" className="nav-link">Contact</Link>
+            <Link to="/" className="nav-link">Contact</Link>
           </li>
           <li className="nav-item">
-            <Link to="/about" className="nav-link">About</Link>
+            <Link to="/" className="nav-link">About</Link>
           </li>
           <li className="nav-item">
-            <Link to="/profile" className="nav-link">Profile</Link>
+            <Link to="/" className="nav-link">Profile</Link>
           </li>
           {user?<li className="nav-item">
             <button onClick={logout}  className="nav-link logout-btn">Logout</button>

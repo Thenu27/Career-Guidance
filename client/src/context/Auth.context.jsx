@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
       
 
     } catch(err) {
-      setUser(1);
+      setUser(null);
       console.log(err)
     } finally {
       setLoading(false); // Only now is the UI ready
