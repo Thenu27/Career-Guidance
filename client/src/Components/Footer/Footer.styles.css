@@ -1,5 +1,5 @@
 .career-footer {
-  background-color: #10ac84;
+  background-color: #1E40AF; /* Deep blue to match theme */
   color: #ffffff;
   padding: 50px 0 20px;
 }
@@ -24,7 +24,7 @@
 .footer-section h4 {
   margin-bottom: 15px;
   font-size: 18px;
-  border-bottom: 2px solid #1dd1a1;
+  border-bottom: 2px solid #3B82F6; /* Medium blue accent */
   padding-bottom: 10px;
   font-family: Arial, sans-serif;
 }
@@ -47,7 +47,7 @@
 }
 
 .footer-section ul li a:hover {
-  color: #f4f6f7;
+  color: #BFDBFE; /* Light blue on hover */
   text-decoration: underline;
 }
 
@@ -72,7 +72,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border-top: 1px solid #1dd1a1;
+  border-top: 1px solid #3B82F6; /* Medium blue accent */
   padding-top: 20px;
   margin-top: 30px;
 }
@@ -84,7 +84,7 @@
 
 .footer-logo {
   background-color: #ffffff;
-  color: #10ac84;
+  color: #1E40AF; /* Deep blue to match theme */
   width: 40px;
   height: 40px;
   display: flex;

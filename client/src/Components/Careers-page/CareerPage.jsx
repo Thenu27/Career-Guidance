@@ -30,10 +30,10 @@ const CareerPage = () => {
         }
     }, []);
 
-    // useEffect(()=>{
-    //     console.log("Careers",Careers)
-    // },[Careers])
-    // Mark pages as visited when this page loads
+    useEffect(()=>{
+        console.log("Careers",Careers)
+    },[Careers])
+
     useEffect(() => {
         setVisitedPages(() => ({
             home: true,
@@ -104,9 +104,7 @@ const CareerPage = () => {
         <div className="career-page">
             {/* Page Title */}
             <div className="career-field-box-title-container career-page-title">
-                <h2 className="career-field-box-title">
-                Congrats! We've matched careers to your top strengths.
-                </h2>
+                <h2 className="career-field-box-title">Congrats! We've matched careers to your top strengths.</h2>
             </div>
 
             {/* Career Boxes Container */}

@@ -18,7 +18,7 @@
   line-height: 140%;
   text-align: center;
   margin-top: 0px;
-  color: #0A6B52;
+  color: #1E40AF;
   padding: 0 1rem;
 }
 
@@ -75,14 +75,15 @@
   width: 150px;
   height: 70px;
   border-radius: 10px;
-  background-color: rgb(0, 186, 71);
+  background-color: #1E40AF;
   color: white;
   font-size: 1.1rem;
-  border:none
+  border:none;
+  transition:background-color 0.2s ease ;
 }
 
 .submit-btn:hover {
-  background-color: rgb(0, 114, 44);
+  background-color: #406bfa;
 }
 
 /* Responsive Breakpoints */

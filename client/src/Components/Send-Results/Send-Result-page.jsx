@@ -17,12 +17,12 @@ const SendResultToEmail = ()=>{
 
     useEffect(()=>{
         const storedData = localStorage.getItem('intelligenceObject');
-        if(storedData){
+        if(storedData && storedData !== 'undefined'){
             setScore(JSON.parse(storedData))
         }
 
         const storedCareers= localStorage.getItem('careerData');
-        if(storedCareers){
+        if(storedCareers && storedCareers !== 'undefined'){
             setCareers(JSON.parse(storedCareers))
         }
     },[])

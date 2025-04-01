@@ -61,12 +61,12 @@
 }
 
 .success-home-btn {
-    background-color: #4CAF50;
+    background-color: #4772ff;
     color: white;
 }
 
-.successhome-btn:hover {
-    background-color: #45a049;
+.success-home-btn:hover {
+    background-color: #83a0ff;
 }
 
 .successcareer-btn {
@@ -76,4 +76,5 @@
 
 .success-career-btn:hover {
     background-color: #5a6268;
+    color: white;
 }

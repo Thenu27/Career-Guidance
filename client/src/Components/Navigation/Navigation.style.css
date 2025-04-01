@@ -1,5 +1,5 @@
 .navbar {
-  background: linear-gradient(135deg, #00c853 0%, #1eb980 100%); /* Vibrant green gradient */
+  background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%); /* Deep to medium blue gradient */
   height: 70px;
   display: flex;
   justify-content: center;
@@ -110,11 +110,14 @@
   top: 8px;
   transform: rotate(-45deg);
 }
-.logout-btn{
+
+.logout-btn {
   background-color: white;
-  color: black;
+  color: #1E40AF; /* Deep blue to match the theme */
   border: none;
+  cursor: pointer;
 }
+
 /* Responsive design */
 @media screen and (max-width: 768px) {
   .menu-icon {
@@ -130,7 +133,7 @@
     left: -100%;
     opacity: 1;
     transition: all 0.5s ease;
-    background: linear-gradient(180deg, #00c853 0%, #1eb980 100%);
+    background: linear-gradient(180deg, #1E40AF 0%, #3B82F6 100%); /* Blue gradient for dropdown */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   }
 

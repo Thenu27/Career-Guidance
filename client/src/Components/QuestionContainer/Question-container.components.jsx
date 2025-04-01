@@ -10,8 +10,11 @@ import { API } from '../API/Api';
 import leftArrow from '../../assets/Arrow.svg'
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../Spinner/Spinner';
+import { CareerContext } from '../../context/Career.context';
+
 
 const QuestionContainer = () => {
+    const { setCareers, Careers } = useContext(CareerContext);
 
     const navigate = useNavigate()
 
@@ -36,6 +39,10 @@ const QuestionContainer = () => {
     const [questions, setquestions] = useState({});
 
     const [loading,setLoading] = useState(false)
+
+    useEffect(()=>{
+        setCareers({})
+    },[])
 
     // Function to fetch questions from the backend
     const fetchQuestions = async () => {
@@ -150,6 +157,11 @@ const QuestionContainer = () => {
             console.log("Error sending data to BE", error);
         }
     };
+
+    useEffect(()=>{
+        localStorage.removeItem('careerData');
+        localStorage.removeItem('careerData');
+    },[])
 
   if(loading){
     return(
