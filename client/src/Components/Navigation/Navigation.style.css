@@ -28,18 +28,8 @@
 }
 
 .logo {
-  background: linear-gradient(135deg, #00796b 0%, #009688 100%); /* Teal-green gradient for logo */
-  color: white;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  font-size: 1.2rem;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  width: 180px;
+  height: 50px;
 }
 
 .nav-menu {

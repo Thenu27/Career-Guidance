@@ -32,7 +32,7 @@ import './Navigation.style.css';
 import { API } from '../API/Api';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../context/Auth.context"; // Import Auth Context
-import ProgressBar from '../Progress bar/Progressbar.component';
+import logo from '../../assets/comp logo-min.png'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -67,7 +67,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          <div className="logo">UG</div>
+          <img src={logo} className="logo"/>
         </Link>
 
         {/* Hamburger menu for mobile */}

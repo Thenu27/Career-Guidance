@@ -181,6 +181,7 @@ const QuestionContainer = () => {
                 />
 
 
+                <div className='question-container-btns'>
 
                 {IndexOfQuestionShown < questionsDividedIntoFive.length-1 ? (
                   <div className='left-arrow-container'>
@@ -195,23 +196,11 @@ const QuestionContainer = () => {
                 <div className='right-arrow-container'>
                     <img  onClick={BackBtnHandler} className='right-arrow' alt="right-arrow" src={leftArrow}/>
                 </div>        
+                </div>
 
 
             </div>
 
-            {/* Navigation Buttons */}
-
-            {/* <div className='questions-navigation-container'>
-
-                <button onClick={BackBtnHandler} className='nextbtn'>Back</button>
-               
-                {IndexOfQuestionShown < questionsDividedIntoFive.length - 1 ? (
-                    <button onClick={NextBtnHandler} className='nextbtn'>Next</button>
-                    
-                ) : (
-                    <button onClick={() => { answerSubmitHandler(); NextBtnHandler(); }} className='nextbtn'>Submit</button>
-                )}
-            </div> */}
         </div>
     );
 };
