@@ -11,6 +11,7 @@ const SendResultToEmail = ()=>{
     const [firstName,setFirstName] = useState('')
     const [lastName,setLastName] = useState('')
     const [score,setScore] = useState();
+    const [careers,setCareers] = useState([])
 
     const [loading,setLoading] = useState(false)
 
@@ -19,8 +20,16 @@ const SendResultToEmail = ()=>{
         if(storedData){
             setScore(JSON.parse(storedData))
         }
+
+        const storedCareers= localStorage.getItem('careerData');
+        if(storedCareers){
+            setCareers(JSON.parse(storedCareers))
+        }
     },[])
 
+    useEffect(()=>{
+        console.log("Careers:",careers)
+    },[careers])
 
     const handleFirstNameChange=(e)=>{
         setFirstName(e.target.value)
@@ -58,7 +67,7 @@ const SendResultToEmail = ()=>{
         setLoading(true);
 
         try{
-            const response = await API.post(`${process.env.REACT_APP_URL}/api/email`,{email,firstName,lastName,score});
+            const response = await API.post(`${process.env.REACT_APP_URL}/api/email`,{email,firstName,lastName,score,careers});
             setLoading(true);
             if(response.status===200){
                 setLoading(false);
