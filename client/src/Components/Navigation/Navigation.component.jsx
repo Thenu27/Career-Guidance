@@ -32,7 +32,7 @@ import './Navigation.style.css';
 import { API } from '../API/Api';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../context/Auth.context"; // Import Auth Context
-import logo from '../../assets/comp logo-min.png'
+import logo from '../../assets/comp-logo-min.png'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
