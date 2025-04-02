@@ -1243,7 +1243,7 @@ app.post('/api/signup',async(req,res)=>{
         if(!result){
             return res.status(StatusCodes.BAD_REQUEST).send("Error Occured")
         } 
-        return res.status(StatusCodes.OK).json({msg:"Account Created!"})
+        return res.status(StatusCodes.OK).json({msg:"Account Created!"}) 
         
     }catch(err){
         console.log(err)

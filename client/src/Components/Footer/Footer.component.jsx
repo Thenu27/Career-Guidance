@@ -9,26 +9,25 @@ const Footer = () => {
                     <div className="footer-section quick-links">
                         <h4>Quick Links</h4>
                         <ul>
-                            <li><a href="/home">Home</a></li>
-                            <li><a href="/about">About Us</a></li>
-                            <li><a href="/assessment">Assessment</a></li>
-                            <li><a href="/contact">Contact</a></li>
-                            <li><a href="/profile">Profile</a></li>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/">About Us</a></li>
+                            <li><a href="/">Contact</a></li>
+                            <li><a href="/">Profile</a></li>
 
                         </ul>
                     </div>
                     <div className="footer-section support">
                         <h4>Support</h4>
                         <ul>
-                            <li><a href="/contact">Contact Us</a></li>
-                            <li><a href="/privacy">Privacy Policy</a></li>
+                            <li><a href="/">Contact Us</a></li>
+                            <li><a href="/">Privacy Policy</a></li>
                         </ul>
                     </div>
                     <div className="footer-section connect">
                         <h4>Connect With Us</h4>
                         <div className="social-links">
-                            <a href="#facebook" className="social-icon">Facebook</a>
-                            <a href="#instagram" className="social-icon">Instagram</a>
+                            <a href="/" className="social-icon">Facebook</a>
+                            <a href="/" className="social-icon">Instagram</a>
                         </div>
                     </div>
                 </div>
