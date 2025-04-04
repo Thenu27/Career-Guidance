@@ -1254,7 +1254,7 @@ app.post('/api/signup',async(req,res)=>{
 })
 
 // Endpoint for receiving assessment answers from the client
-app.post('/api/Assesment',verifyToken ,async (req, res) => {
+app.post('/api/Assesment',async (req, res) => {
     try {
         const { questionAndAnswers } = req.body;
         console.log("questionAndAnswers",questionAndAnswers)

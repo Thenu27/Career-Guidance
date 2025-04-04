@@ -166,13 +166,18 @@
   .career-box {
       width: 80%;
       max-width: 500px;
-  }
-}
-
+      max-height: 600px;
+      overflow: auto;
+  }            
+} 
+                                       
 @media screen and (max-width: 768px) {
   .career-box {
       width: 90%;
       max-width: 400px;
+      max-height: 600px;
+      overflow: auto;
+
   }
 
   .career-field-box-title {
@@ -196,5 +201,10 @@
   .career-box {
       padding: 20px;
       width: 95%;
+      max-height: 400px;
+      overflow: auto;
+
+
   }
+
 }
