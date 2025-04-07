@@ -120,6 +120,10 @@
     transform: translateY(-3px);
     box-shadow: 0 6px 18px rgba(74, 144, 226, 0.4);
   }
+
+  .selected-modal-select-btn{
+    background-color: #00a37a;
+  }
   
   /* Animations */
   @keyframes fadeIn {

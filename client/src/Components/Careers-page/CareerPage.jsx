@@ -13,9 +13,11 @@ const CareerPage = () => {
     const { setVisitedPages } = useContext(ProgressContext);
     const { setCareers, Careers } = useContext(CareerContext);
     
-    // Modal state
+    // Modal states
     const [showModal, setShowModal] = useState(false);
     const [selectedCareer, setSelectedCareer] = useState(null);
+    const [showSelectedCareersModal, setShowSelectedCareersModal] = useState(false);
+    const [selectedCareersInModal, setselectedCareersInModal] = useState([]);
 
     useEffect(() => {
         const storedCareers = localStorage.getItem("careerData");
@@ -31,6 +33,16 @@ const CareerPage = () => {
         } else {
             // console.warn("No careerData found in localStorage.");
             setCareers("No Careers Found"); // ✅ Corrected this check
+        }
+
+        // Load any selected careers from localStorage
+        const storedSelectedCareers = localStorage.getItem("selectedCareers");
+        if (storedSelectedCareers) {
+            try {
+                setselectedCareersInModal(JSON.parse(storedSelectedCareers));
+            } catch (error) {
+                console.error("Error parsing selectedCareers:", error);
+            }
         }
     }, []);
 
@@ -71,11 +83,37 @@ const CareerPage = () => {
         setShowModal(true);
     };
     
+    // Handle showing selected careers modal
+    const handleShowSelectedCareers = () => {
+        setShowSelectedCareersModal(true);
+    };
+    
+    // Handle closing selected careers modal
+    const handleCloseSelectedCareers = () => {
+        setShowSelectedCareersModal(false);
+    };
+    
     // Handle selecting a career from modal
     const handleSelectCareer = (career) => {
-        // Here you would implement logic to save the selected career
-        localStorage.setItem("selectedCareer", career);
-        alert(`You have selected ${career} as your preferred career!`);
+        // Update the selected careers list
+        const updatedSelectedCareers = [...selectedCareersInModal]; 
+        if (!updatedSelectedCareers.includes(career)) {
+            updatedSelectedCareers.push(career);
+            setselectedCareersInModal(updatedSelectedCareers);
+            
+            // Save to localStorage
+            localStorage.setItem("selectedCareers", JSON.stringify(updatedSelectedCareers));
+            alert(`You have selected ${career} as one of your preferred careers!`);
+        } else {
+            alert(`${career} is already in your selected careers list!`);
+        }
+    };
+    
+    // Handle removing a career from selected list
+    const handleRemoveCareer = (careerToRemove) => {
+        const updatedSelectedCareers = selectedCareersInModal.filter(career => career !== careerToRemove);
+        setselectedCareersInModal(updatedSelectedCareers);
+        localStorage.setItem("selectedCareers", JSON.stringify(updatedSelectedCareers));
     };
 
     // Function to render Top Careers
@@ -159,6 +197,16 @@ const CareerPage = () => {
                 </div>
             </div>
 
+            {/* Show Selected Careers Button - placed above the navigation buttons */}
+            <div className="sc-selected-careers-container">
+                <button 
+                    onClick={handleShowSelectedCareers} 
+                    className="sc-selected-careers-btn"
+                >
+                    Show Selected Careers
+                </button>
+            </div>
+
             {/* Navigation Buttons */}
             <div className="career-fieldBox-navigation career-page-navigation">
                 <button onClick={goToIntelligencePage} className="carrer-nextbtn">
@@ -175,7 +223,52 @@ const CareerPage = () => {
                 setShowModal={setShowModal}
                 selectedCareer={selectedCareer}
                 onSelectCareer={handleSelectCareer}
+                selectedCareersInModal={selectedCareersInModal}
             />
+            
+            {/* Selected Careers Modal */}
+            {showSelectedCareersModal && (
+                <div className="sc-modal-backdrop">
+                    <div className="sc-modal-content">
+                        <div className="sc-modal-header">
+                            <h2>Your Selected Careers</h2>
+                            <button 
+                                onClick={handleCloseSelectedCareers}
+                                className="sc-modal-close"
+                            >
+                                ×
+                            </button>
+                        </div>
+                        <div className="sc-modal-body">
+                            {selectedCareersInModal.length > 0 ? (
+                                <ul className="sc-careers-list">
+                                    {selectedCareersInModal.map((career, index) => (
+                                        <li key={index} className="sc-career-item">
+                                            <span>{career}</span>
+                                            <button 
+                                                onClick={() => handleRemoveCareer(career)}
+                                                className="sc-remove-btn"
+                                            >
+                                                Remove
+                                            </button>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p>You haven't selected any careers yet. Click on any career to select it.</p>
+                            )}
+                        </div>
+                        <div className="sc-modal-footer">
+                            <button 
+                                onClick={handleCloseSelectedCareers}
+                                className="sc-modal-btn"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

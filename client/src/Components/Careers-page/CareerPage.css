@@ -5,6 +5,7 @@
   padding: 50px 20px;
   background: linear-gradient(135deg, #f6f8f9 0%, #e5ebee 100%);
   min-height: 100vh;
+  position: relative;
 }
 
 .career-field-box-title-container {
@@ -155,6 +156,166 @@
   width: 200px;
 }
 
+.selected-career{
+  position: absolute;
+  background-color: red;
+  right: 10px;
+}
+
+/* Selected Careers Button Styling */
+.sc-selected-careers-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.sc-selected-careers-btn {
+  background-color: #3498db;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+}
+
+.sc-selected-careers-btn:hover {
+  background-color: #2980b9;
+}
+
+/* Modal Styling */
+.sc-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+}
+
+.sc-modal-content {
+  background-color: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.1s ease-in-out;
+}
+
+.sc-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.sc-modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #333;
+}
+
+.sc-modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.sc-modal-close:hover {
+  color: #333;
+}
+
+.sc-modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.sc-careers-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sc-career-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  background-color: #add7fb;
+  font-weight: 500;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  border-left: 4px solid #3498db;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+
+}
+
+.sc-career-item:hover{
+  transform: translateY(-3px);
+
+}
+
+.sc-remove-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.sc-remove-btn:hover {
+  background-color: #c0392b;
+}
+
+.sc-modal-footer {
+  padding: 15px 20px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #dee2e6;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sc-modal-btn {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.sc-modal-btn:hover {
+  background-color: #5a6268;
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
 
 @media screen and (max-width: 1024px) {
@@ -187,6 +348,20 @@
   .career-type {
       font-size: 20px;
   }
+
+  .sc-modal-content {
+    width: 95%;
+}
+
+.sc-career-item {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.sc-remove-btn {
+    margin-top: 10px;
+    align-self: flex-end;
+}
 }
 
 @media screen and (max-width: 480px) {

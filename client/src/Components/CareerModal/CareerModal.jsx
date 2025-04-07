@@ -1,7 +1,7 @@
 import React from 'react';
 import './CareerModal.css'; // You'll need to create this CSS file
 
-const CareerModal = ({ showModal, setShowModal, selectedCareer, onSelectCareer }) => {
+const CareerModal = ({ showModal, setShowModal, selectedCareer, onSelectCareer ,selectedCareersInModal}) => {
     if (!showModal || !selectedCareer) return null;
     
     // Career details - Mock data (you would replace with actual career data)
@@ -104,9 +104,14 @@ const CareerModal = ({ showModal, setShowModal, selectedCareer, onSelectCareer }
                     <button className="modal-cancel-btn" onClick={() => setShowModal(false)}>
                         Close
                     </button>
-                    <button className="modal-select-btn" onClick={handleSelectCareer}>
-                        Select This Career
-                    </button>
+                    {selectedCareersInModal.includes(selectedCareer)?
+                                        <button className="modal-select-btn selected-modal-select-btn" >
+                                        Selected
+                    </button>:
+                                        <button className="modal-select-btn" onClick={handleSelectCareer}>
+                                        Select This Career
+                                    </button>}
+
                 </div>
             </div>
         </div>
