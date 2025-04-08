@@ -1,10 +1,37 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
+import {API} from '../API/Api'
 import './CareerModal.css'; // You'll need to create this CSS file
 
 const CareerModal = ({ showModal, setShowModal, selectedCareer, onSelectCareer ,selectedCareersInModal}) => {
+
+const [careerDetail,setCareerDetails] = useState({});    
+
+const fetchCareerDetails = async () => { 
+    try{
+        const response = await API.post(`${process.env.REACT_APP_URL}/api/v1/client/career/details`, {selectedCareer});
+        if(response.status === 200){
+            console.log(response.data);
+            setCareerDetails(response.data[0]);
+        }
+    }catch(err){
+        console.log(err);
+
+    }
+  } 
+ 
+  useEffect(()=>{
+    console.log('careerDetai:',careerDetail);
+  },[careerDetail])
+
+
+  useEffect(() => {
+        fetchCareerDetails();
+    // Cleanup function to reset the modal state when closed
+
+  },[selectedCareer])
+
     if (!showModal || !selectedCareer) return null;
     
-    // Career details - Mock data (you would replace with actual career data)
     const careerDetails = {
         "Software Developer": {
             description: "Designs, builds, and maintains software applications and systems.",
@@ -72,7 +99,7 @@ const CareerModal = ({ showModal, setShowModal, selectedCareer, onSelectCareer ,
                 <div className="modal-content">
                     <div className="modal-section">
                         <h3>Description</h3>
-                        <p>{details.description}</p>
+                        <p>{careerDetail?careerDetail.description:'Loading..'}</p>
                     </div>
                     
                     <div className="modal-section">

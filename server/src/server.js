@@ -22,6 +22,7 @@ const {verifyToken, generateToken} = require('../src/controllers/clientJwtContro
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const emailRouter = require('./Route/EmailRoute')
+const careerRouter = require('./Route/careerRoute')
 
 
 
@@ -274,7 +275,8 @@ app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 
 app.use('/api/email',emailRouter)
-
+app.use('/api/v1/client/career',careerRouter)
+ 
 let MainActivitiesGlobal;
 
 const fetchMainActivitiesFromDB = async (req) => {
@@ -289,7 +291,7 @@ const fetchMainActivitiesFromDB = async (req) => {
     } catch (error) {
         console.error("Error fetching main activities from DB:", error.message);
     }
-};
+}; 
 
 const calculateOLevelPercentage = async (req, subject, grade) => {
     try {
@@ -987,8 +989,8 @@ const calculating_Mip_From_Questions = async (questionsObject) => {
         const sum = obj.intelligence_total;
         const totalCount = obj.intelligence_count;
 
-        console.log("sum:", sum);
-        console.log("totalCount:", totalCount);
+        // console.log("sum:", sum);
+        // console.log("totalCount:", totalCount);
 
         // Avoid division by zero
         obj.intelligence_percentage = totalCount > 0 ? (sum / (totalCount * 10)) * 100 : 0;
@@ -997,7 +999,7 @@ const calculating_Mip_From_Questions = async (questionsObject) => {
     const sortedEObject = Object.entries(intelligence_object)
                 .sort(([, a], [, b]) => Number(b.intelligence_percentage) - Number(a.intelligence_percentage))
 
-                console.log(sortedEObject);            
+                // console.log(sortedEObject);            
     return sortedEObject
     
 };
@@ -1006,9 +1008,9 @@ const calculating_Mip_From_Questions = async (questionsObject) => {
 const mapCareer=async(iq_percentages,non_iq_ids)=>{
     let final_career_object ={}
     const iq_percentages_as_numbers = iq_percentages.map(Number);
-    console.log("iq_percentages_as_numbers",iq_percentages_as_numbers)
+    // console.log("iq_percentages_as_numbers",iq_percentages_as_numbers)
     const non_iq_ids_as_numbers = non_iq_ids.slice(0, 4).map(Number);
-    console.log("non_iq_ids_as_numbers",non_iq_ids_as_numbers)
+    // console.log("non_iq_ids_as_numbers",non_iq_ids_as_numbers)
     try{
 
             const iq_careers = await db
@@ -1017,7 +1019,7 @@ const mapCareer=async(iq_percentages,non_iq_ids)=>{
                 .where("logical", "<=", iq_percentages_as_numbers[0]) 
                 .andWhere("linguistic", "<=", iq_percentages_as_numbers[1]) 
                 .andWhere("spatial", "<=", iq_percentages_as_numbers[2]); 
-            console.log("iq_careers:",iq_careers)    
+            // console.log("iq_careers:",iq_careers)    
                 
             if(iq_careers.length>0){
                 const best_careers1 = await db.select("career").from("career_table")
@@ -1051,10 +1053,10 @@ const mapCareer=async(iq_percentages,non_iq_ids)=>{
                                                                                        
 
 
-                  console.log("best_careers1",best_careers1)    
-                  console.log("best_careers2",best_careers2)                          
-                  console.log("best_careers3",best_careers3)  
-                  console.log("best_careers4",best_careers4)    
+                //   console.log("best_careers1",best_careers1)    
+                //   console.log("best_careers2",best_careers2)                          
+                //   console.log("best_careers3",best_careers3)  
+                //   console.log("best_careers4",best_careers4)    
   
                   
                   const allCareers = [
@@ -1101,7 +1103,7 @@ const mapCareer=async(iq_percentages,non_iq_ids)=>{
 
                    
                         
-                        console.log("Good_careers2",good_careers2)
+                        // console.log("Good_careers2",good_careers2)
                 
                         const good_careers_combined = [
                             ...good_careers1,
@@ -1112,7 +1114,7 @@ const mapCareer=async(iq_percentages,non_iq_ids)=>{
                         const good_careers = [...new Set(good_careers_combined)]; 
 
                         const final_good_careers = good_careers.filter(item => !best_careers_all.includes(item));
-                        console.log("final_good_careers",final_good_careers)
+                        // console.log("final_good_careers",final_good_careers)
                         final_career_object["GoodCareers"]=final_good_careers
 
                         const suitable_careers1 = await db
@@ -1135,7 +1137,7 @@ const mapCareer=async(iq_percentages,non_iq_ids)=>{
                                                     .from('career_table')
                                                     .where('non_iq_intelligence1',non_iq_ids_as_numbers[0])
                                                     .where('non_iq_intelligence2', non_iq_ids_as_numbers[1])
-                console.log("suitable_careers2",suitable_careers2);
+                // console.log("suitable_careers2",suitable_careers2);
 
                 const suitable_careers3 =  await db.select('career')
                                                     .from('career_table')
@@ -1175,7 +1177,7 @@ const mapCareer=async(iq_percentages,non_iq_ids)=>{
                         item => !best_careers_all.includes(item) && !final_good_careers.includes(item)
                       );
 
-                    console.log("final_suitable_careers",final_suitable_careers);
+                    // console.log("final_suitable_careers",final_suitable_careers);
 
                     final_career_object["SuitableCareers"]=final_suitable_careers
 
@@ -1185,7 +1187,7 @@ const mapCareer=async(iq_percentages,non_iq_ids)=>{
                 console.log("No career found")
             }
         
-           
+            
 
 
 
