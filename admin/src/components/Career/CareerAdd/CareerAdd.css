@@ -19,4 +19,39 @@
 
 }
 
+.add-task{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    height: 60px;
+    text-align: center;
+    margin-top: 20px;
+    width: 200px;
+    background-color: #ffffff;
+    border: 1px solid black;
+    color: black;
+    font-weight: 700;
+}
+
+.add-task:hover{
+    width: 250px;
+}
+
+.task{
+    height: 50px;
+    margin-top: 20px;
+    font-size: 15px;
+}
+
+
+.add-task-container{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+}
+
+
+
 

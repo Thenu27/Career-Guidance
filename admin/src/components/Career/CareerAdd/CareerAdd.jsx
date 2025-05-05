@@ -27,6 +27,8 @@ const CareerAdd = () => {
     const [Specialization03, setSpecialization03] = useState();
     const [Specialization04, setSpecialization04] = useState();
 
+    const [task,setTask] = useState([]);
+
     useEffect(()=>{
         const storedValue = localStorage.getItem("HasCareer")
         if(storedValue){
@@ -77,7 +79,8 @@ const CareerAdd = () => {
                 Specialization04,
                 NewCareer,
                 NewCareerId,
-                SelectedField
+                SelectedField,
+                task
             });
             alert("Data sent to the server")
             if(response.data==='Data added successfully!'){
@@ -125,11 +128,7 @@ const CareerAdd = () => {
             SelectedNonIq04 !== 'Select Inteligence' &&
             SpatialScore &&
             LinguisticScore &&
-            LogicalScore &&
-            Specialization01 && Specialization01.trim() !== '' &&
-            Specialization02 && Specialization02.trim() !== '' &&
-            Specialization03 && Specialization03.trim() !== '' &&
-            Specialization04 && Specialization04.trim() !== '' 
+            LogicalScore 
             
 
         ) {
@@ -150,6 +149,26 @@ const CareerAdd = () => {
     useEffect(()=>{
         console.log("New Subject",NewCareer)
     },[NewCareer])
+
+    
+  const handleAddTask = () => {
+    setTask([...task,''])
+  };
+
+  const handleTaskChange = (index,value)=>{
+    const updatedTask = [...task];
+    updatedTask[index] = value;
+    setTask(updatedTask);
+  }
+
+  useEffect(()=>{
+    console.log('task:',task)
+  },[task]);
+
+
+
+
+
 
     return (
         <>
@@ -292,12 +311,28 @@ const CareerAdd = () => {
                     </div>
                 </div>
 
+                <button onClick={handleAddTask} className='add-ol-btn add-task'>Add Task</button>
+
+                <div className='add-task-container'>
+                    {task.map((task, index) => (
+                        <input
+                            className='career-input task '
+                            key={index}
+                            type="text"
+                            value={task}
+                            onChange={(e) => handleTaskChange(index, e.target.value)}
+                            placeholder={`Task ${index + 1}`}
+                        />
+                    ))}
+                </div>            
+
+
                 <div className='add-ol-btn-container add-career-btn-container'>
                     <button
                         className='add-ol-btn add-career-btn'
                         onClick={handleAdd}
                     >
-                        Add
+                        Submit
                     </button>
                 </div>
             </div>

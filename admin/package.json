@@ -25,6 +25,5 @@
     "globals": "^15.14.0",
     "rimraf": "^6.0.1",
     "vite": "^6.0.5"
-  },
-  "proxy": "http://localhost:3000"
+  }
 }

@@ -23,6 +23,7 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const emailRouter = require('./Route/EmailRoute')
 const careerRouter = require('./Route/careerRoute')
+const {addTaskToDatabase,deleteTasksFromDatabase} = require('./controllers/adminCareerController');
 
 
 
@@ -30,7 +31,7 @@ const careerRouter = require('./Route/careerRoute')
 require('dotenv').config({ path: require('path').resolve(__dirname, '..', '.env') });
 
 app.use(cors({
-    origin: ['https://api.univerlens.com','https://www.univerlens.com','http://localhost:3001','http://localhost:3000','https://univerlens.com','http://localhost:5173','http://localhost:5173/api'],
+    origin: ['https://api.univerlens.com','https://www.univerlens.com','http://localhost:3001','http://localhost:3000','https://univerlens.com','http://localhost:5173','http://localhost:5173/api','https://api.univerlens.com/admin'],
     methods: ['GET', 'POST','OPTIONS'],        // Specify the HTTP methods your API supports
     credentials: true                // Allow credentials (cookies, sessions, etc.)
 }));
@@ -104,7 +105,9 @@ app.use(
                     "https://oauth2.googleapis.com",
                     "https://www.googleapis.com",  // ✅ Allow Google APIs
                     "http://localhost:3000", // ✅ Local frontend
-                    "https://univerlens.com" // ✅ Production frontend
+                    "https://univerlens.com",
+                    "http://localhost:5173", // ✅ add this
+                    // ✅ Production frontend
                 ],
                 scriptSrc: [
                     "'self'",
@@ -1655,8 +1658,8 @@ app.get('/api/admin/careerfield',async(req,res)=>{
 })
 
 const fetchAdminCareer=async(field)=>{
-    try{
-        const response = await db.select('career').from('career_table').where('field',field);
+    try{ 
+        const response = await db.select('*').from('career_table').where('field',field);
         console.log("Admin Career",response)
         return response
     }catch(error){
@@ -1664,6 +1667,18 @@ const fetchAdminCareer=async(field)=>{
         throw error;
     }
 }
+
+const fetchAdminTask=async(careerId)=>{
+    try{ 
+        const response = await db.select('*').from('career_tasks').where('career_id',careerId);
+        console.log("Career",response)
+        return response
+    }catch(error){
+        console.log("Error when fetching Careers from DB",error);
+        throw error;
+    }
+}
+
 
 
 app.post('/api/admin/career', async (req, res) => {
@@ -1844,9 +1859,14 @@ app.post('/api/admin/careerfield/delete',async(req,res)=>{
 
 }
 
+
+
+
+
 app.post('/api/admin/career/add', async (req, res) => {
     try {
         const {
+            task,
             SelectedNonIq01,
             SelectedNonIq02,
             SelectedNonIq03,
@@ -1866,6 +1886,7 @@ app.post('/api/admin/career/add', async (req, res) => {
 
         // Log the received data for debugging
         console.log("Received data:", {
+            task,
             SelectedNonIq01,
             SelectedNonIq02,
             SelectedNonIq03,
@@ -1897,12 +1918,17 @@ app.post('/api/admin/career/add', async (req, res) => {
         NewCareer,
         NewCareerId);
 
+        const taskResult = await addTaskToDatabase(task,NewCareerId);
+        
         if(!result){
             return res.status(StatusCodes.NOT_FOUND).send('Error occured when adding to Database')
             }
         if(result==='Id Already Exist'){
            return res.status(StatusCodes.BAD_REQUEST).send('Career ID already exists');
         }
+        // if(!taskResult){
+        //     return res.status(StatusCodes.BAD_REQUEST).send('Failed to Add Tasks');
+        // }
 
         res.status(200).send('Data added successfully!');
     } catch (error) {
@@ -1911,6 +1937,17 @@ app.post('/api/admin/career/add', async (req, res) => {
     }
 });
 
+const fetchAdminCareerTask = async(career_id)=>{
+    try{
+        const response = await db.select('*').from('career_tasks').where('career_id',career_id)
+        console.log("Task received from DB:",response)
+        return response
+
+    }catch(err){
+        console.log(err);
+        throw err;
+    }
+}
 
 const fetchAdminCareerSpecificDetails=async(career)=>{
     try{
@@ -1927,10 +1964,22 @@ const fetchAdminCareerSpecificDetails=async(career)=>{
 app.post('/api/admin/career/details',async(req,res)=>{
     try{
         const {SelectedCareer} =req.body;
-        const activities = await fetchAdminCareerSpecificDetails(SelectedCareer);
-        res.json(activities);
+        console.log('SelectedCareer:',SelectedCareer)
+        const result = await fetchAdminCareerSpecificDetails(SelectedCareer);
+        res.json(result);
     }catch(error){
-        console.error('Failed to fetch Main Activities from DB');
+        console.error('Failed to fetch Careers from DB');
+    }
+})
+
+app.post('/api/admin/career/task',async(req,res)=>{
+    try{
+        const {SelectedCareerId} =req.body;
+        console.log('SelectedCareerId:',SelectedCareerId)
+        const result = await fetchAdminCareerTask (SelectedCareerId);
+        res.status(200).json({result});
+    }catch(error){
+        console.error('Failed to fetch Careers from DB');
     }
 })
 
@@ -2000,6 +2049,7 @@ const updateCareer = async (CareerLinguistic,
 };
 
 app.post('/api/admin/career/update',async(req,res)=>{
+    console.log('Hit')
     try{
         const {
             CareerLinguistic,
@@ -2057,8 +2107,8 @@ app.post('/api/admin/career/update',async(req,res)=>{
      res.status(200).send('Career Updated Succesfully')
 
    }catch(err){
-    console.log("New Error",err)
-    res.status(404).send(`Career Id Already Exist`)
+    console.log("New Error",err.message)
+    res.status(404).send(err)
    }
 
 })
@@ -2078,12 +2128,19 @@ app.post('/api/admin/career/delete',async(req,res)=>{
         console.log("career",career);
         console.log("career id",career_id);
         const result = await deleteAdminCareerFromDB(career,career_id);
+        const delTaskResult = await deleteTasksFromDatabase(career_id);
         
         if(!result){
           return  res.status(StatusCodes.NOT_FOUND).send('Error occured when deleting the career')
         }
+
+        // if(!delTaskResult){
+        //     return  res.status(StatusCodes.NOT_FOUND).send('Error occured when deleting the career')
+        //   }
+
         res.status(StatusCodes.OK).send('Career Deleted')
     }catch(error){
+        console.log(error)
         res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({ error: 'Internal server error' });
     }
 })
@@ -2328,7 +2385,7 @@ app.use('/admin', express.static(path.join(__dirname, "..", "admin", "dist")));
 
 app.use(express.static(path.join(__dirname, "..", "public"), {
     extensions: ['html', 'css', 'jsx','js'],
-  }));
+  })); 
 
   app.get('/admin/*', (req, res) => {
     res.sendFile(path.join(__dirname, "..", "admin", "dist", "index.html"));

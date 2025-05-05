@@ -8,11 +8,26 @@ import axiosInstance from '../../AxiosInstance/axiosInstance';
 
 
 const CareerUpdate = () => {
-    const { setSelectedCareer,SelectedCareer,SelectedCareerDetails,setSelectedCareerDetails,setSelectedField,SelectedField} = useContext(CareerContext);
+    const {SelectedCareerId,setSelectedCareerId,setSelectedCareer,SelectedCareer,SelectedCareerDetails,setSelectedCareerDetails,setSelectedField,SelectedField} = useContext(CareerContext);
+    const [loading,setLoading] = useState(true)
+
+
+    useEffect(() => {
+        const storedCareer = localStorage.getItem("SelectedCareer");
+        const storedCareerId = localStorage.getItem("SelectedCareerId");
+    
+        if (storedCareer && storedCareerId) {
+            setSelectedCareer(storedCareer);
+            setSelectedCareerId(storedCareerId);
+        }
+    }, []);
+    
+
+    
 
     useEffect(()=>{
-        setSelectedCareer(localStorage.getItem("SelectedCareer"));
-    },[])
+        console.log("SelectedCareerId",SelectedCareerId)
+    },[SelectedCareerId])
 
     const [Edit,setEdit] = useState(false);  
     // const [Score1,setScore1] = useState('No Data Selected')
@@ -38,7 +53,7 @@ const CareerUpdate = () => {
     const [CareerLogical,setCareerLogical] = useState();
     const [CareerSpatial,setCareerSpatial] = useState();
 
-
+    const [task,setTask] = useState([]);
 
     useEffect(()=>{
         if (SelectedCareerDetails && SelectedCareerDetails.length > 0){
@@ -62,10 +77,31 @@ const CareerUpdate = () => {
             setCareerLogical(SelectedCareerDetails[0].logical);
             setCareerSpatial(SelectedCareerDetails[0].spatial)
 
-
-
         }
     },[SelectedCareerDetails])
+
+    const fetchTask = async()=>{
+        setLoading(true);
+        try{
+            const response = await axiosInstance.post(`${import.meta.env.VITE_APP_URL}/api/admin/career/task`,{
+                SelectedCareerId
+            })
+            console.log(response.data);
+            setTask(response.data.result)
+        }catch(err){
+            console.log(err);
+            alert("Failed to send data. Please try again.");
+        }finally{
+            setLoading(false);
+
+        }
+    }
+
+    useEffect(()=>{
+        console.log('Task:',task);
+        setLoading(false);
+
+    },[task])
 
 
     const fetchSelectedCareerDetails = async () => {
@@ -81,9 +117,13 @@ const CareerUpdate = () => {
         }
     }
 
-    useEffect(()=>{
-        fetchSelectedCareerDetails();
-    },[SelectedCareer])
+    useEffect(() => {
+        if (SelectedCareer && SelectedCareerId) {
+            fetchSelectedCareerDetails();
+            fetchTask(); // ✅ keep this only
+        }
+    }, [SelectedCareer, SelectedCareerId]);
+    
 
     useEffect(() => {
         console.log("Selected Career Details", SelectedCareerDetails);
@@ -120,7 +160,7 @@ const CareerUpdate = () => {
 
     const sendCareerToDelete = async (career,career_id) => {
         try {
-            const response = await axiosInstance.post(`${import.meta.env.VITE_APP_URL}/api/admin/career/delete`, {
+            const response = await axiosInstance.post(`/api/admin/career/delete`, {
                 career,career_id
             });
 
@@ -153,18 +193,18 @@ const CareerUpdate = () => {
     const dropdownData=(index)=>{
         return(
             <ul className="dd-menu">
-                <li onClick={()=>handleIntelligenceChange('Logical-Mathematical Intelligence',index)}>Logical-Mathematical Intelligence</li>
-                <li onClick={()=>handleIntelligenceChange('Linguistic Intelligence',index)}>Linguistic Intelligence</li>
-                <li onClick={()=>handleIntelligenceChange('Spatial Intelligence',index)}>Spatial Intelligence</li>
-                <li onClick={()=>handleIntelligenceChange('Musical Intelligence',index)}>Musical Intelligence</li>                                     
-                <li onClick={()=>handleIntelligenceChange('Bodily-Kinesthetic Intelligence',index)}>Bodily-Kinesthetic Intelligence</li>
-                <li onClick={()=>handleIntelligenceChange('Interpersonal Intelligence',index)}>Interpersonal Intelligence</li>
-                <li onClick={()=>handleIntelligenceChange('Intrapersonal Intelligence',index)}>Intrapersonal Intelligence</li>
-                <li onClick={()=>handleIntelligenceChange('Naturalistic Intelligence',index)}>Naturalistic Intelligence</li>
-                <li onClick={()=>handleIntelligenceChange('Existential Intelligence',index)}>Existential Intelligence</li>
+                <li onClick={()=>handleIntelligenceChange('Logical-Mathematical',index)}>Logical-Mathematical Intelligence</li>
+                <li onClick={()=>handleIntelligenceChange('Linguistic',index)}>Linguistic Intelligence</li>
+                <li onClick={()=>handleIntelligenceChange('Spatial',index)}>Spatial Intelligence</li>
+                <li onClick={()=>handleIntelligenceChange('Musical',index)}>Musical Intelligence</li>                                     
+                <li onClick={()=>handleIntelligenceChange('Bodily-Kinesthetic',index)}>Bodily-Kinesthetic Intelligence</li>
+                <li onClick={()=>handleIntelligenceChange('Interpersonal',index)}>Interpersonal Intelligence</li>
+                <li onClick={()=>handleIntelligenceChange('Intrapersonal',index)}>Intrapersonal Intelligence</li>
+                <li onClick={()=>handleIntelligenceChange('Naturalistic',index)}>Naturalistic Intelligence</li>
+                <li onClick={()=>handleIntelligenceChange('Existential',index)}>Existential Intelligence</li>
 
             </ul>
-        )
+        ) 
     }
     const handleIntelligenceChange=(value,index)=>{
         if(index===1){
@@ -259,7 +299,9 @@ const sendToBackEnd=async()=>{
             alert('Career Updated Succesfully')
         }
     }catch(error){
+        console.log(error)
         if(error.response.data){
+            console.log(error.response.data)
             alert('Career Id Already Exist')
 
         }else{
@@ -281,22 +323,22 @@ const updateSubject=async()=>{
         return
     }
 
-    if(Specialization1===''){
-        alert('Please Enter A Valid Specialization');
-        return
-    }
-    if(Specialization2===''){
-        alert('Please Enter A Valid  Specialization 1');
-        return
-    }
-    if(Specialization3===''){
-        alert('Please Enter A Valid  Specialization 2');
-        return
-    }
-    if(Specialization4===''){
-        alert('Please Enter A Valid  Specialization 3');
-        return
-    }
+    // if(Specialization1===''){
+    //     alert('Please Enter A Valid Specialization');
+    //     return
+    // }
+    // if(Specialization2===''){
+    //     alert('Please Enter A Valid  Specialization 1');
+    //     return
+    // }
+    // if(Specialization3===''){
+    //     alert('Please Enter A Valid  Specialization 2');
+    //     return
+    // }
+    // if(Specialization4===''){
+    //     alert('Please Enter A Valid  Specialization 3');
+    //     return
+    // }
     if(window.confirm('Are you sure you want to update the Activity \n This Action Cannot Be Undone')){
         await sendToBackEnd();
         return
@@ -311,7 +353,10 @@ const updateSubject=async()=>{
         }
     })
 
-
+    if(loading){
+        return <p>Loading..</p>
+    }
+    
     return (
         <>
 
@@ -475,6 +520,23 @@ const updateSubject=async()=>{
                         {Specialization4}
                     </button>}
                 </div>
+
+                <div className='task-container'>
+                    {Array.isArray(task) && task.map((task, index) => (
+                        <div key={index}>
+                        <label className="career-update-label">Task {index}</label>
+                        {Edit ? (
+                            <input
+                            className="career-update-bnt2 career-input"
+                            value={task}
+                            />
+                        ) : (
+                            <button className="career-update-bnt2">{task.task}</button>
+                        )}
+                        </div>
+                    ))}
+                </div>
+   
 
 
             </div>

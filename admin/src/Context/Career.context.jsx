@@ -6,7 +6,10 @@ export const CareerContext =createContext({
     SelectedCareerDetails:null,
     setSelectedCareerDetails:()=>{},
     SelectedCareer:null,
-    setSelectedCareer:()=>{}
+    setSelectedCareer:()=>{},
+    SelectedCareerId:null,
+    setSelectedCareerId:()=>{}
+
 })
 
 export const CareerProvider=({children})=>{
@@ -14,6 +17,7 @@ export const CareerProvider=({children})=>{
     const [SelectedField,setSelectedField] = useState();
     const [SelectedCareerDetails, setSelectedCareerDetails] = useState(null);
     const [SelectedCareer,setSelectedCareer] = useState();
+    const [SelectedCareerId,setSelectedCareerId] = useState();
 
 
 
@@ -24,7 +28,9 @@ export const CareerProvider=({children})=>{
             SelectedCareerDetails,
             setSelectedCareerDetails,
             SelectedCareer,
-            setSelectedCareer
+            setSelectedCareer,
+            SelectedCareerId,
+            setSelectedCareerId
         }}>
             {children}
         </CareerContext.Provider>

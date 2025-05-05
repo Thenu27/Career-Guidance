@@ -44,7 +44,7 @@ function App() {
       <Route path='/admin' element={<Home/>}/>
       <Route path='/admin/login' element={<Singin/>}/>
 
-      <Route element={<ProtectedRoute/>}>
+      {/* <Route element={<ProtectedRoute/>}> */}
         <Route path='/admin/option' element={<Options/>}/>
         
         <Route path='/admin/intelligence' element={<IntelligencePage/>}/>
@@ -88,7 +88,7 @@ function App() {
           <Route path='update' element={<CareerUpdate/>}/>
         </Route>
       
-      </Route>
+      {/* </Route> */}
       
      </Routes>
 

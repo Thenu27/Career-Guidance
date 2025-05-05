@@ -5,7 +5,7 @@
     flex-direction: column;
     margin: auto;
     width:700px;
-    min-height: 950px;
+    min-height: 1350px;
     border: 1px solid black;
     margin-top: 20px;
 }
@@ -121,5 +121,15 @@
     font-family: 'Mulish',sans-serif;
     padding-left: 10px;
     border-radius: 10px;
-    
+}
+
+.task-container{
+    height: 400px;
+    overflow: auto;
+    margin: auto;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

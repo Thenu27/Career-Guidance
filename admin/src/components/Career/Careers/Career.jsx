@@ -8,8 +8,9 @@ import axiosInstance from '../../AxiosInstance/axiosInstance';
 const Career = () => {
     const navigate = useNavigate();
     
-    const { setSelectedField, SelectedField, setSelectedCareer, SelectedCareer } = useContext(CareerContext);
+    const { setSelectedField, SelectedField, setSelectedCareer, SelectedCareer,SelectedCareerId,setSelectedCareerId } = useContext(CareerContext);
     const [CareerInField, setCareerInField] = useState([]);
+
 
     // ✅ Fetch Careers from API
     const fetchCareers = async () => {
@@ -56,14 +57,21 @@ const Career = () => {
         if (SelectedCareer) {
             console.log("Career Selected:", SelectedCareer);
             localStorage.setItem("SelectedCareer", SelectedCareer);
+            localStorage.setItem("SelectedCareerId",SelectedCareerId);
+
         }
     }, [SelectedCareer]);
 
     // ✅ Handle career selection
-    const handleOnClick = (career) => {
+    const handleOnClick = (career,careerId) => {
+        setSelectedCareerId(careerId);
         setSelectedCareer(career);
         navigate('/admin/careerfield/update');
     };
+
+    useEffect(()=>{
+        console.log("CareerFieldCares:",CareerInField)
+    },[CareerInField])
 
     // ✅ Navigate to Add Career page
     const goToAddCareerPage = () => {
@@ -101,7 +109,7 @@ const Career = () => {
                         CareerInField.map((career) => (
                             <button
                                 key={career.career_id || career.career} // ✅ Ensure unique key
-                                onClick={() => handleOnClick(career.career)}
+                                onClick={() => handleOnClick(career.career,career.career_id)}
                                 className="login-btn career-field-btn"
                             >
                                 {career.career}
