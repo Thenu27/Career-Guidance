@@ -5,9 +5,11 @@
     flex-direction: column;
     margin: auto;
     width:700px;
-    min-height: 1350px;
+    /* min-height: 1550px; */
+    height: auto;
     border: 1px solid black;
     margin-top: 20px;
+    padding-bottom:30px ;
 }
 .career-update-bnt-container{
     display: flex;
@@ -132,4 +134,49 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-top: 80px;
+}
+
+.task-sub-container{
+    border:1px solid black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+    width: 90%;
+    margin-bottom: 20px;
+    
+}
+
+.task-btn{
+    height:auto;
+    padding: 10px;
+}
+
+.task-input{
+    width: 380px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 12px;
+    
+    
+}
+
+.not-show-btn{
+    display: none;
+}
+
+.add-task-btn{
+    margin:auto
+}
+
+.add-task-btn-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
 }

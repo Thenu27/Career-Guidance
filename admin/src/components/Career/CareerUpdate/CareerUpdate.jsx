@@ -4,12 +4,15 @@ import { CareerContext } from '../../../Context/Career.context';
 import axios from 'axios';
 import DeleteIcon from '../../../assets/icon.svg';
 import axiosInstance from '../../AxiosInstance/axiosInstance';
+import {useNavigate} from 'react-router-dom'
 
 
 
 const CareerUpdate = () => {
     const {SelectedCareerId,setSelectedCareerId,setSelectedCareer,SelectedCareer,SelectedCareerDetails,setSelectedCareerDetails,setSelectedField,SelectedField} = useContext(CareerContext);
-    const [loading,setLoading] = useState(true)
+    const [loading,setLoading] = useState(true);
+
+    const navigate = useNavigate()
 
 
     useEffect(() => {
@@ -166,6 +169,7 @@ const CareerUpdate = () => {
 
             if (response.status === 200 && response.data === 'Career Deleted') {
                 alert('Career deleted successfully');
+                navigate('/admin/careerfield/career')
             } else {
                 alert('Failed to delete career. Please try again.');
             }
@@ -272,6 +276,16 @@ const CareerUpdate = () => {
 }
 
 
+const handleTaskChange = (value,index)=>{
+    const updatedTask = [...task];
+    updatedTask[index].task=value;
+    setTask(updatedTask);
+}
+
+useEffect(()=>{
+    console.log(task)
+},[task])
+
 const sendToBackEnd=async()=>{
     try{
         const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/admin/career/update`,{
@@ -289,7 +303,8 @@ const sendToBackEnd=async()=>{
             Specialization3,
             Specialization4,
             CareerDbId,
-            SelectedField
+            SelectedField,
+            task
             
         });
 
@@ -298,8 +313,9 @@ const sendToBackEnd=async()=>{
         if(response.data==='Career Updated Succesfully'){
             alert('Career Updated Succesfully')
         }
+        window.location.reload()
     }catch(error){
-        console.log(error)
+        console.log(error.response.data)
         if(error.response.data){
             console.log(error.response.data)
             alert('Career Id Already Exist')
@@ -352,6 +368,29 @@ const updateSubject=async()=>{
             setSelectedField(storedValue);
         }
     })
+
+    const handleTaskAdd = ()=>{
+        setTask([...task,{career_id:Number(SelectedCareerId),task:'',task_id:null}])
+      }
+
+    const handleDeleteTask=async(taskId)=>{
+        if(!window.confirm('Do you want to delete this Task? \n This action cannot be undone')){
+            return
+        }
+        try{
+            const response = await axiosInstance.post(`${import.meta.env.VITE_APP_URL}/api/admin/career/task/delete`,{
+                taskId
+            })
+            console.log(response.data)
+            if(response.status===200){
+                alert('Task Deleted')
+                window.location.reload(); 
+
+            }
+        }catch(err){
+            console.log(err)
+        }
+    }  
 
     if(loading){
         return <p>Loading..</p>
@@ -521,21 +560,35 @@ const updateSubject=async()=>{
                     </button>}
                 </div>
 
-                <div className='task-container'>
+                <div className='' >
                     {Array.isArray(task) && task.map((task, index) => (
-                        <div key={index}>
-                        <label className="career-update-label">Task {index}</label>
+                        <div className='career-update-bnt-container' key={index}>
+                        <label className="career-update-label">Task {index +1}</label>
                         {Edit ? (
+                            <>
                             <input
-                            className="career-update-bnt2 career-input"
-                            value={task}
+                            type='text'
+                            onChange={(e)=>{handleTaskChange(e.target.value,index)}}
+                            className="career-update-bnt2 career-input task-input"
+                            value={task.task}
                             />
+                            <img   onClick={() => handleDeleteTask(task.task_id)} className='delete-task' src={DeleteIcon}/>
+                            </>
+
                         ) : (
-                            <button className="career-update-bnt2">{task.task}</button>
+                            <button className="career-update-bnt2 task-btn">{task.task}</button>
                         )}
                         </div>
                     ))}
                 </div>
+
+                {Edit?<div className='add-task-btn-container'>
+                        <button onClick={handleTaskAdd} className='login-btn add-task-btn'>Add Task</button>
+                     </div>:
+                     <div>
+                        <button onClick={handleTaskAdd} className='login-btn not-show-btn'>Add Task</button>
+                     </div>}    
+
    
 
 

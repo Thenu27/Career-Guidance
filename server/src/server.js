@@ -24,6 +24,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const emailRouter = require('./Route/EmailRoute')
 const careerRouter = require('./Route/careerRoute')
 const {addTaskToDatabase,deleteTasksFromDatabase} = require('./controllers/adminCareerController');
+const {deleteAdminCareerTask,updateOrInsertCareerTasks} = require('./controllers/adminTaskController')
 
 
 
@@ -1861,7 +1862,23 @@ app.post('/api/admin/careerfield/delete',async(req,res)=>{
 
 
 
+app.post('/api/admin/career/task/delete',async(req,res)=>{
+    try{
+        const {taskId} = req.body;
+        console.log(taskId);
 
+        const result = await deleteAdminCareerTask(taskId);
+        if(result){
+            return res.status(200).json({ result: 'Task deleted successfully' });
+        }else{
+            return res.status(404).json({ error: 'Task not found or already deleted' });
+        }
+        
+    }catch(err){
+        console.log(err);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+})
 
 app.post('/api/admin/career/add', async (req, res) => {
     try {
@@ -2049,7 +2066,6 @@ const updateCareer = async (CareerLinguistic,
 };
 
 app.post('/api/admin/career/update',async(req,res)=>{
-    console.log('Hit')
     try{
         const {
             CareerLinguistic,
@@ -2066,9 +2082,11 @@ app.post('/api/admin/career/update',async(req,res)=>{
             Specialization3,
             Specialization4,
             CareerDbId,
-            SelectedField
+            SelectedField,
+            task
 
      } = req.body;
+     console.log("Task:",task)
      console.log("CareerLinguistic:",CareerLinguistic)
      console.log("CareerLogical:",CareerLogical)
      console.log("CareerSpatial:",CareerSpatial)
@@ -2099,7 +2117,13 @@ app.post('/api/admin/career/update',async(req,res)=>{
            Specialization3,
            Specialization4,
            CareerDbId,
-           SelectedField)
+           SelectedField);
+
+    const taskResult = await updateOrInsertCareerTasks(CareerId,task)
+    
+    if(!taskResult){
+        return res.status(StatusCodes.NOT_FOUND).send('Error occured when updating the career Tasks')
+    }
         
      if(!result){
         return res.status(StatusCodes.NOT_FOUND).send('Error occured when updating the career')
