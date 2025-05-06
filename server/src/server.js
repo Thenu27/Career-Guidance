@@ -24,7 +24,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const emailRouter = require('./Route/EmailRoute')
 const careerRouter = require('./Route/careerRoute')
 const {addTaskToDatabase,deleteTasksFromDatabase} = require('./controllers/adminCareerController');
-const {deleteAdminCareerTask,updateOrInsertCareerTasks} = require('./controllers/adminTaskController')
+const {deleteAdminCareerTask,updateOrInsertCareerTasks,updateInserTasksWhenIdChanged} = require('./controllers/adminTaskController')
 
 
 
@@ -2077,6 +2077,7 @@ app.post('/api/admin/career/update',async(req,res)=>{
             Non_Iq_Intelligence4,
             CareerName,
             CareerId,
+            OldCareerId,
             Specialization1,
             Specialization2,
             Specialization3,
@@ -2102,6 +2103,7 @@ app.post('/api/admin/career/update',async(req,res)=>{
      console.log('CareerId:',CareerId);
      console.log('SelectedField:',SelectedField);
      console.log('CareerDbId:',CareerDbId);
+     console.log('OldCareerId:',OldCareerId)
 
     const result = await updateCareer(CareerLinguistic,
         CareerLogical,
@@ -2119,11 +2121,15 @@ app.post('/api/admin/career/update',async(req,res)=>{
            CareerDbId,
            SelectedField);
 
-    const taskResult = await updateOrInsertCareerTasks(CareerId,task)
+    if(CareerId===OldCareerId){
+         const taskResult = await updateOrInsertCareerTasks(CareerId,task);
+    }else{
+        const taskResult = await updateInserTasksWhenIdChanged(CareerId,task)
+    }       
     
-    if(!taskResult){
-        return res.status(StatusCodes.NOT_FOUND).send('Error occured when updating the career Tasks')
-    }
+    // if(taskResult<1){
+    //     return res.status(StatusCodes.NOT_FOUND).send('Error occured when updating the career Tasks')
+    // }
         
      if(!result){
         return res.status(StatusCodes.NOT_FOUND).send('Error occured when updating the career')

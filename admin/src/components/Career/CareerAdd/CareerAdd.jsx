@@ -3,9 +3,12 @@ import './CareerAdd.css';
 import axios from 'axios';
 import { CareerContext } from '../../../Context/Career.context';
 import axiosInstance from '../../AxiosInstance/axiosInstance';
-
+import { useNavigate } from 'react-router-dom';
 
 const CareerAdd = () => {
+
+    const navigate = useNavigate();
+
     
     const [HasCareer,setHasCareer] = useState()
     const {setSelectedField,SelectedField} = useContext(CareerContext)
@@ -84,7 +87,8 @@ const CareerAdd = () => {
             });
             alert("Data sent to the server")
             if(response.data==='Data added successfully!'){
-                alert('Data Added Succesfully')
+                alert('Data Added Succesfully');
+                navigate('/admin/careerfield/career')
             }
         } catch (error) {
             console.error("Error sending data to the backend:", error);

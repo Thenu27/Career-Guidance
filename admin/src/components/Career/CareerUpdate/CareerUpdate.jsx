@@ -4,7 +4,8 @@ import { CareerContext } from '../../../Context/Career.context';
 import axios from 'axios';
 import DeleteIcon from '../../../assets/icon.svg';
 import axiosInstance from '../../AxiosInstance/axiosInstance';
-import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom';
+import Spinner from '../../Spinner/Spinner';
 
 
 
@@ -38,6 +39,7 @@ const CareerUpdate = () => {
     // const [Score3,setScore3] = useState('No Data Selected')
 
     const [CareerId,setCareerId] = useState();
+    const [OldCareerId, setOldCareerId] = useState(); 
     const [CareerDbId,setCareerDbId] = useState();
     
     const [Non_Iq_Intelligence1,setNon_Iq_Intelligence1] = useState('No Data Selected')
@@ -66,7 +68,8 @@ const CareerUpdate = () => {
             setNon_Iq_Intelligence3(IdentifyIntelligence(SelectedCareerDetails[0].non_iq_intelligence3))
             setNon_Iq_Intelligence4(IdentifyIntelligence(SelectedCareerDetails[0].non_iq_intelligence4))
 
-            setCareerDbId(SelectedCareerDetails[0].career_db_id)
+            setCareerDbId(SelectedCareerDetails[0].career_db_id);
+            setOldCareerId(SelectedCareerDetails[0].career_id);
 
             setSpecialization1(SelectedCareerDetails[0].s1)
             setSpecialization2(SelectedCareerDetails[0].s2)
@@ -78,7 +81,8 @@ const CareerUpdate = () => {
             
             setCareerLinguistic(SelectedCareerDetails[0].linguistic)
             setCareerLogical(SelectedCareerDetails[0].logical);
-            setCareerSpatial(SelectedCareerDetails[0].spatial)
+            setCareerSpatial(SelectedCareerDetails[0].spatial);
+
 
         }
     },[SelectedCareerDetails])
@@ -106,8 +110,10 @@ const CareerUpdate = () => {
 
     },[task])
 
+    
 
     const fetchSelectedCareerDetails = async () => {
+        setLoading(true)
         try {
             const response = await axiosInstance.post(`${import.meta.env.VITE_APP_URL}/api/admin/career/details`, {
                 SelectedCareer
@@ -117,6 +123,8 @@ const CareerUpdate = () => {
         } catch (error) {
             console.error("Error sending data to the backend:", error);
             alert("Failed to send data. Please try again.");
+        }finally{
+            setLoading(false)
         }
     }
 
@@ -298,6 +306,7 @@ const sendToBackEnd=async()=>{
             Non_Iq_Intelligence4,
             CareerName,
             CareerId,
+            OldCareerId,
             Specialization1,
             Specialization2,
             Specialization3,
@@ -311,9 +320,12 @@ const sendToBackEnd=async()=>{
         console.log("response",response.data)
 
         if(response.data==='Career Updated Succesfully'){
-            alert('Career Updated Succesfully')
+            alert('Career Updated Succesfully');
+            setSelectedCareerId(CareerId); // ← This is needed!
+            localStorage.setItem("SelectedCareerId",CareerId);
+            navigate('/admin/careerfield/career')
+
         }
-        window.location.reload()
     }catch(error){
         console.log(error.response.data)
         if(error.response.data){
@@ -393,7 +405,7 @@ const updateSubject=async()=>{
     }  
 
     if(loading){
-        return <p>Loading..</p>
+        return <div className='spinner-container'><Spinner/></div>
     }
     
     return (
