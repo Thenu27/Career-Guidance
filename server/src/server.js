@@ -25,6 +25,7 @@ const emailRouter = require('./Route/EmailRoute')
 const careerRouter = require('./Route/careerRoute')
 const {addTaskToDatabase,deleteTasksFromDatabase} = require('./controllers/adminCareerController');
 const {deleteAdminCareerTask,updateOrInsertCareerTasks,updateInserTasksWhenIdChanged} = require('./controllers/adminTaskController')
+const {saveMipOfUser} =require('./controllers/MipController.js')
 
 
 
@@ -1260,13 +1261,15 @@ app.post('/api/signup',async(req,res)=>{
 })
 
 // Endpoint for receiving assessment answers from the client
-app.post('/api/Assesment',async (req, res) => {
+app.post('/api/Assesment',verifyToken,async (req, res) => {
     try {
         const { questionAndAnswers } = req.body;
-        console.log("questionAndAnswers",questionAndAnswers)
+        // console.log("questionAndAnswers",questionAndAnswers)
         const intelligence_object =await calculating_Mip_From_Questions(questionAndAnswers);
        const careers = await CheckAndMapCareer(intelligence_object)
         // console.log("intelligence_object",intelligence_object)
+        console.log('req.user',req.user)
+        const savedData = saveMipOfUser(intelligence_object,req.user.id)
         res.status(200).json({intelligence_object:intelligence_object,final_career_object:careers});
     } catch (error) {
         res.status(500).json({ Message: "Error in Receiving Data" });

@@ -37,7 +37,7 @@ function App() {
           <Route path="/" element={<Home/>}/> {/* Home page */}
           <Route path="/Signup" element={<Signup/>}/> {/* Home page */}
           <Route path="/login" element={<Login/>}/> {/* Home page */}
-            {/* <Route element={<PrivateRoute/>}> */}
+            <Route element={<PrivateRoute/>}>
               <Route path="/Assesment" element={<QuestionContainer/>}/> {/* Assessment page */}
               <Route path="/Option" element={<Option/>}/> {/* Options page */}
               <Route path="/ExtraCurricular" element={<ExtraCurricularPage/>}/> {/* Extra Curricular page */}
@@ -50,7 +50,7 @@ function App() {
               <Route path="/SendResults" element={<SendResultToEmail/>}/> {/* Send results to email page */}
               <Route path='/spinner' element={<Spinner/>}/>
               <Route path='/success' element={<EmailSuccesPage/>}/>
-            {/* </Route> */}
+            </Route>
         </Routes>   
         <Footer/>
       </Router>

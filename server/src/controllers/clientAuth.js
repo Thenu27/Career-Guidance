@@ -67,6 +67,7 @@ const userLogin = async(req,res)=>{
         }
         
         const userData = await getUserDataFromDB(email);
+        console.log('userData',userData)
         const token = generateToken(userData[0].id);
 
         res.cookie("token", token, {

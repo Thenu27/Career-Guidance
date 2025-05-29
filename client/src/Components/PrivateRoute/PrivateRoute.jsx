@@ -4,7 +4,7 @@ import Spinner from "../Spinner/Spinner";
 
 const PrivateRoute = () => {
   const { user, loading } = useAuth();
-
+  console.log(user)
   if (loading) return <div className="spinner-container"><Spinner/></div>; // Prevents UI flickering
 
   return user ? <Outlet /> : <Navigate to="/" replace />;
