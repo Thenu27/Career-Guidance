@@ -1,4 +1,3 @@
-
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
@@ -26,6 +25,7 @@ const careerRouter = require('./Route/careerRoute')
 const {addTaskToDatabase,deleteTasksFromDatabase} = require('./controllers/adminCareerController');
 const {deleteAdminCareerTask,updateOrInsertCareerTasks,updateInserTasksWhenIdChanged} = require('./controllers/adminTaskController')
 const {saveMipOfUser} =require('./controllers/MipController.js')
+const adminCourseRouter = require('./Route/adminCourseRoute.js')
 
 
 
@@ -281,6 +281,8 @@ app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 
 app.use('/api/email',emailRouter)
 app.use('/api/v1/client/career',careerRouter)
+
+app.use('/api/v1/admin/course',adminCourseRouter)
  
 let MainActivitiesGlobal;
 

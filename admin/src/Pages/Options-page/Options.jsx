@@ -30,6 +30,10 @@ const Options=()=>{
         navigate('/admin/careerfield')
     }
 
+    const goToDegreePage=()=>{
+        navigate('/admin/higher-education')
+    }
+
 
     return(
         <div className='home-container'>
@@ -43,6 +47,7 @@ const Options=()=>{
                     <button onClick={goToALevelPage} className='login-btn options-btn'> A/L Subjects</button>
                     <button onClick={goToActivitiesPage} className='login-btn options-btn'>Activities</button>
                     <button onClick={goToCareerPage} className='login-btn options-btn'>Careers</button>
+                    <button onClick={goToDegreePage} className='login-btn options-btn'>Higher Education</button>
                 </div>
 
 
