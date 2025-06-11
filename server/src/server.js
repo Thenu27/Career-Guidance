@@ -282,7 +282,7 @@ app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 app.use('/api/email',emailRouter)
 app.use('/api/v1/client/career',careerRouter)
 
-app.use('/api/v1/admin/course',adminCourseRouter)
+app.use('/api/v1/admin/higher-education',adminCourseRouter)
  
 let MainActivitiesGlobal;
 

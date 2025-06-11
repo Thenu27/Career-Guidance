@@ -9,6 +9,7 @@ import { QuestionProvider } from './Context/Question.context.jsx';
 import { ALevelProvider } from './Context/ALevel.context.jsx';
 import { CareerProvider } from './Context/Career.context.jsx';
 import { ActivitiesProvider } from './Context/Activities.context.jsx';
+import { CoursesProvider } from './Context/CoursesContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -19,7 +20,9 @@ createRoot(document.getElementById('root')).render(
             <ALevelProvider>
               <CareerProvider>
                 <ActivitiesProvider>
-                  <App />
+                  <CoursesProvider>
+                    <App />
+                  </CoursesProvider>
                 </ActivitiesProvider>
               </CareerProvider>
             </ALevelProvider>

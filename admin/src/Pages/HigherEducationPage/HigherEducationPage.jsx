@@ -11,8 +11,8 @@ const HigherEducationPage=()=>{
         if(location.pathname==='/admin/higher-education'){
             navigate('/admin/option')
         }
-        if(location.pathname==='/admin/higher-education/degree'){
-            navigate('/admin/careerfield')
+        if(location.pathname==='/admin/higher-education/courses'){
+            navigate('/admin/higher-education')
         }
         if(location.pathname==='/admin/careerfield'){
             navigate('/admin/option')

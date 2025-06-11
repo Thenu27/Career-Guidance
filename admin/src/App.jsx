@@ -32,6 +32,7 @@ import CareerFieldAdd from './components/Career/CareerFieldAdd/CareerFieldAdd';
 import Courses from './components/Courses/Courses';
 import HigherEducationPage from './Pages/HigherEducationPage/HigherEducationPage';
 
+
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 
 
