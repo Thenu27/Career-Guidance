@@ -1,9 +1,9 @@
 import { useEffect,useState } from 'react';
 import './DegreeField.css'
-import axiosInstance from '../AxiosInstance/axiosInstance';
+import axiosInstance from '../../AxiosInstance/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
-import { CoursesContext } from '../../Context/CoursesContext';
+import { CoursesContext } from '../../../Context/CoursesContext';
 
 const DegreeField =()=>{
 

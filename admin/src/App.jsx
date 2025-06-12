@@ -29,16 +29,17 @@ import SubActivities from './components/Activities/SubActivites/SubActivites';
 import SubActivityEdit from './components/Activities/SubActivityEdit/SubActivityEdit';
 import SubActivitiesAdd from './components/Activities/SubActivitiesAdd/SubActivitiesAdd';
 import CareerFieldAdd from './components/Career/CareerFieldAdd/CareerFieldAdd';
-import Courses from './components/Courses/Courses';
+import Courses from './components/HigherEducation/Courses/Courses';
 import HigherEducationPage from './Pages/HigherEducationPage/HigherEducationPage';
-
+import CourseUpdate from './components/HigherEducation/CourseUpdate/CourseUpdate';
+import DegreeField from './components/HigherEducation/DegreeField/DegreeField';
 
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 
 
 import './App.css'
 import Spinner from '../../client/src/Components/Spinner/Spinner';
-import DegreeField from './components/DegreeField/DegreeField';
+
 
 function App() {
 
@@ -96,7 +97,8 @@ function App() {
 
         <Route path='/admin/higher-education' element={<HigherEducationPage/>}>
           <Route index element={<DegreeField/>}/>   
-          <Route path='courses' element={<Courses/>}/>   
+          <Route path='courses' element={<Courses/>}/>  
+          <Route path='courses/update' element={<CourseUpdate/>}/>
         
         </Route>
       

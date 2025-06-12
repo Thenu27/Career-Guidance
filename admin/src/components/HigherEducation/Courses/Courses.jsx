@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import './Courses.css';
 import axios from 'axios';
-import { CareerContext } from '../../Context/Career.context';
+import { CareerContext } from '../../../Context/Career.context';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../AxiosInstance/axiosInstance';
-import { CoursesContext } from '../../Context/CoursesContext';
+import axiosInstance from '../../AxiosInstance/axiosInstance';
+import { CoursesContext } from '../../../Context/CoursesContext';
 
 const Courses = () => {
 
@@ -29,6 +29,16 @@ const Courses = () => {
     fetchCourses()
     },[])
 
+    const handleCourseClick = () => {
+        navigate('/admin/higher-education/courses/update');
+    }
+
+    const handleSelectedCourse = (course_id) => {
+        // This function can be used to set the selected course in context or state
+        // For now, it just logs the course name
+        localStorage.setItem('SelectedAdminCourseId',course_id);
+    }
+
     return (
         <>
 
@@ -40,7 +50,8 @@ const Courses = () => {
                     {courses.length > 0 ? ( 
                         courses.map((course) => (
                             <button
-                                key={course.course_name} // ✅ Ensure unique key
+                                onClick={() => {handleCourseClick();handleSelectedCourse(course.course_id)}} // ✅ Handle click to navigate
+                                key={course.course_id} // ✅ Ensure unique key
                                 className="login-btn career-field-btn"
                             >
                                 {course.course_name}
