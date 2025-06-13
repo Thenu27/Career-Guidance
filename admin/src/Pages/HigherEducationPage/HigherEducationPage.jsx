@@ -14,14 +14,14 @@ const HigherEducationPage=()=>{
         if(location.pathname==='/admin/higher-education/courses'){
             navigate('/admin/higher-education')
         }
-        if(location.pathname==='/admin/careerfield'){
-            navigate('/admin/option')
+        if(location.pathname==='/admin/higher-education/courses/update'){
+            navigate('/admin/higher-education/courses')
         }
-        if(location.pathname==='/admin/careerfield/add'){
-            navigate('/admin/careerfield/career')
+        if(location.pathname==='/admin/higher-education/courses'){
+            navigate('/admin/higher-education')
         }
-        if(location.pathname==='/admin/careerfield/update'){
-            navigate('/admin/careerfield/career')
+        if(location.pathname==='/admin/higher-education/courses/add'){
+            navigate('/admin/higher-education/courses')
         }
         if(location.pathname==='/admin/careerfield/career-field-add'){
             navigate('/admin/careerfield')

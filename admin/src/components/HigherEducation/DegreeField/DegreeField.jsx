@@ -42,12 +42,16 @@ const DegreeField =()=>{
         navigate('/admin/higher-education/courses');
     }
 
+    const goToAddCourseField=()=>{
+        navigate('/admin/higher-education/course-field-add');
+    }
+
 
     return(
         <>
             <div className='login-container career-field-container'>
                 <div className='career-field-title-container'>
-                    <h1 className='career-field-title'>Choose a Career Field</h1>
+                    <h1 className='career-field-title'>Choose a Course Field</h1>
                 </div>
                     <div className='career-field-inner-container'>
 
@@ -56,9 +60,9 @@ const DegreeField =()=>{
                         })}
             
                     </div>
-                    <div className='career-field-add'>
-                    <button  className='login-btn add-question-btn'>Add Course Field</button>
-                </div>  
+                    {/* <div className='career-field-add'>
+                    <button onClick={goToAddCourseField}  className='login-btn add-question-btn'>Add Course Field</button>
+                </div>   */}
             </div>
             
             </>

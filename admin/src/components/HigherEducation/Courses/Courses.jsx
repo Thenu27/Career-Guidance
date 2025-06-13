@@ -11,9 +11,17 @@ const Courses = () => {
     const navigate = useNavigate();
     const [courses, setCourses] = useState([]);
 
-    const {SelectedCourseField} = useContext(CoursesContext);
+    const {SelectedCourseField,setSelectedCourseField} = useContext(CoursesContext);
 
-
+    useEffect(() => {
+           const storedResult =  localStorage.getItem('SelectedAdminCourseField');
+           if(storedResult){
+                setSelectedCourseField(storedResult);
+           }else{
+            alert('Sonething went wrong, Please try again');
+            navigate('/admin/higher-education');
+           }
+    },[])
 
     const fetchCourses = async () => {
         try{
@@ -27,7 +35,7 @@ const Courses = () => {
 
     useEffect(()=>{
     fetchCourses()
-    },[])
+    },[SelectedCourseField])
 
     const handleCourseClick = () => {
         navigate('/admin/higher-education/courses/update');
@@ -37,6 +45,10 @@ const Courses = () => {
         // This function can be used to set the selected course in context or state
         // For now, it just logs the course name
         localStorage.setItem('SelectedAdminCourseId',course_id);
+    }
+
+    const handleAddCourse=()=>{
+        navigate('/admin/higher-education/courses/add');
     }
 
     return (
@@ -64,12 +76,12 @@ const Courses = () => {
 
                 <div className="add-career-container">
                     <div className='add-career-btn-container'>
-                        <button  className="add-career-btn">Add Career</button>
+                        <button onClick={handleAddCourse}  className="add-career-btn">Add Course</button>
                     </div>
 
-                    <div className='add-career-btn-container'>
-                        <button className="add-career-btn delete-field-btn"> Delete</button>
-                    </div>
+                    {/* <div className='add-career-btn-container'>
+                        <button className="add-career-btn delete-field-btn">Delete</button>
+                    </div> */}
                 </div>
 
                 

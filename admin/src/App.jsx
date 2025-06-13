@@ -39,6 +39,8 @@ import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 
 import './App.css'
 import Spinner from '../../client/src/Components/Spinner/Spinner';
+import CourseAdd from './components/HigherEducation/CourseAdd/CourseAdd';
+import CourseFieldAdd from './components/HigherEducation/CourseFieldAdd/CourseFieldAdd.jsx';
 
 
 function App() {
@@ -99,6 +101,8 @@ function App() {
           <Route index element={<DegreeField/>}/>   
           <Route path='courses' element={<Courses/>}/>  
           <Route path='courses/update' element={<CourseUpdate/>}/>
+          <Route path='courses/add' element={<CourseAdd/>}/>
+          <Route path='course-field-add' element={<CourseFieldAdd/>}/>
         
         </Route>
       

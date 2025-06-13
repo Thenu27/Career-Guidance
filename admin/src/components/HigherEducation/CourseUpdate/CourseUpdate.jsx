@@ -1,11 +1,12 @@
 import { useEffect,useState} from 'react';
 import './CourseUpdate.css'
 import axiosInstance from '../../AxiosInstance/axiosInstance';
+import { useNavigate } from 'react-router-dom';
 
 const CourseUpdate= () => {
 
     const [Edit, setEdit] = useState(false);
-
+    const navigate = useNavigate();
 
     const [selectedCourseId, setSelectedCourseId] = useState(null);
     const [courseDetails, setCourseDetails] = useState({});
@@ -23,7 +24,7 @@ const CourseUpdate= () => {
     const [CourseSpecialization04,setCourseSpecialization04] = useState();
     const [Coursetitle,setCoursetitle] = useState();
     const [CourseUniversity,setCourseUniversity] = useState();
-    const [UniversityWebsite,setUniversityWebsite] = useState();
+    const [InstituteWebsite,setInstituteWebsite] = useState();
     const [CourseFees,setCourseFees] = useState();
 
     useEffect(()=>{
@@ -40,7 +41,7 @@ const CourseUpdate= () => {
         setCourseSpecialization04(courseDetails.s4|| '');
         setCoursetitle(courseDetails.title || '');
         setCourseUniversity(courseDetails.university || '');
-        setUniversityWebsite(courseDetails.website || '');
+        setInstituteWebsite(courseDetails.website || '');
         setCourseFees(courseDetails.fees || '');
     },[courseDetails])
 
@@ -64,6 +65,7 @@ const CourseUpdate= () => {
 
 
     const fetchCourseDetails = async()=>{
+          if (!selectedCourseId || isNaN(selectedCourseId)) return;
         try{
             const response = await axiosInstance.get(`/api/v1/admin/higher-education/course-details?courseId=${selectedCourseId}`);
             console.log("Course Details:", response.data);
@@ -73,6 +75,50 @@ const CourseUpdate= () => {
         }
     }
 
+
+const sendUpdatedDataToBE = async () => {
+    try {
+        const response = await axiosInstance.post(`/api/v1/admin/higher-education/course-update`, {
+            course_id: selectedCourseId,
+            course_name: CourseName.trim(),
+            course_field: CourseField.trim(),
+            course_level: CourseLevel.trim(),
+            course_url: CourseUrl.trim(),
+            duration: (Number(CourseDuration) || null),
+            institute: Courseinstitute.trim(),
+            minimum_level_category: CourseMinimumLevel.trim(),
+            s1: CourseSpecialization01.trim(),
+            s2: CourseSpecialization02.trim(),
+            s3: CourseSpecialization03.trim(),
+            s4: CourseSpecialization04.trim(),
+            title: Coursetitle.trim(),
+            course_university: CourseUniversity.trim(),
+            institute_website:InstituteWebsite.trim() , 
+            fees: (Number(CourseFees) || null)
+        });
+
+        console.log("Course updated successfully:", response);
+        if(response.status===200){
+            alert("Course updated successfully!!");
+        }
+    window.location.reload();
+    } catch (error) {
+        console.error("Error updating course:", error.response?.data || error.message);
+        alert('Error Updating Course!')
+    }
+};
+
+
+
+
+const handleUpdateClick = () => {
+
+    if(!window.confirm("Are you sure you want to update this course?")) {
+        return
+    }
+    sendUpdatedDataToBE()
+}
+
     useEffect(()=>{
         fetchCourseDetails();
     },[selectedCourseId])
@@ -80,6 +126,84 @@ const CourseUpdate= () => {
 
     const handleEditClick = () => {
         setEdit(!Edit);
+    }
+
+    const handleCourseNameChange=(event)=>{
+        setCourseName(event)
+    }
+
+    const handleCourseFieldChange=(event)=>{
+        setCourseField(event)
+    }
+
+    const handleCourseLevelChange=(event)=>{
+        setCourseLevel(event)
+    }
+
+    const handleCourseDuration=(event)=>{
+        setCourseDuration(event)
+    }
+
+    const handleCourseInstituteChange = (value) => {
+    setCourseinstitute(value);
+    };
+
+    const handleCourseMinimumLevelChange = (value) => {
+        setCourseMinimumLevel(value);
+    };
+
+    const handleSpecialization01Change = (value) => {
+        setCourseSpecialization01(value);
+    };
+
+    const handleSpecialization02Change = (value) => {
+        setCourseSpecialization02(value);
+    };
+
+    const handleSpecialization03Change = (value) => {
+        setCourseSpecialization03(value);
+    };
+
+    const handleSpecialization04Change = (value) => {
+        setCourseSpecialization04(value);
+    };
+
+    const handleCourseTitleChange = (value) => {
+        setCoursetitle(value);
+    };
+
+    const handleCourseUniversityChange = (value) => {
+        setCourseUniversity(value);
+    };
+
+    const handleInstituteWebsiteChange = (value) => {
+        setInstituteWebsite(value);
+    };
+
+    const handleCourseFeesChange = (value) => {
+        setCourseFees(value);
+    };
+
+    const handleCourseUrlChange = (value) => {
+        setCourseUrl(value);
+    };   
+
+    const deleteCourse = async () => {
+        if(!window.confirm("Are you sure you want to delete this course?")) {
+            return
+        }
+        try {
+            const response = await axiosInstance.delete(`/api/v1/admin/higher-education/course-delete?courseId=${selectedCourseId}`);
+            console.log("Course deleted successfully:", response);
+            if(response.status===200){
+                alert("Course deleted successfully!!");
+                navigate('/admin/higher-education/courses')
+
+            }
+        } catch (error) {
+            console.error("Error deleting course:", error.response?.data || error.message);
+            alert('Error Deleting Course!')
+        }
     }
 
 
@@ -95,7 +219,7 @@ const CourseUpdate= () => {
                         <div className='career-update-bnt-container'>
                             <label className='career-update-label'>Course Name</label>
         
-                            {Edit ?<input value={CourseName} type='text'  className='career-update-bnt2 career-name-btn career-input'/>:
+                            {Edit ?<input onChange={(event)=>handleCourseNameChange(event.target.value)} value={CourseName} type='text'  className='career-update-bnt2 career-name-btn career-input'/>:
                             <button className='career-update-bnt '>{CourseName}</button>
                             }
                             
@@ -105,15 +229,16 @@ const CourseUpdate= () => {
                     <div className='career-update-bnt-container'>
                         
                         <label className='career-update-label'>Course Field</label>
-                        {Edit?<input value={CourseField}  className='career-update-bnt career-input career-input' type='number'/>:
-                        <button  className='career-update-bnt'>{CourseField}</button>}    
+                        {/* {Edit?<input onChange={(event)=>handleCourseFieldChange(event.target.value)} value={CourseField} className='career-update-bnt career-input' type='text'/>: */}
+                        <button  className='career-update-bnt2'>{CourseField}</button>
+ 
     
                     </div>
     
                     <div className='career-update-bnt-container'>
                         
                         <label className='career-update-label'>Course Level</label>
-                        {Edit?<input value={CourseLevel} className='career-update-bnt career-input' type='number'/>:
+                        {Edit?<input onChange={(event)=>handleCourseLevelChange(event.target.value)} value={CourseLevel} className='career-update-bnt career-input' type='text'/>:
                         <button  className='career-update-bnt2'>{CourseLevel}</button>}    
     
                     </div>
@@ -121,15 +246,14 @@ const CourseUpdate= () => {
                     <div className='career-update-bnt-container'>
                         
                         <label className='career-update-label'>Course Duration</label>
-                        {Edit?<input value={CourseDuration} className='career-update-bnt career-input' type='number'/>:
+                        {Edit?<input onChange={(event)=>handleCourseDuration(event.target.value)} value={CourseDuration} className='career-update-bnt career-input' type='number'/>:
                         <button  className='career-update-bnt2'>{CourseDuration}</button>}    
-    
                     </div>
 
                     <div className='career-update-bnt-container'>
                         
                         <label className='career-update-label'>Minimum_Level</label>
-                        {Edit?<input value={CourseMinimumLevel} className='career-update-bnt career-input' type='number'/>:
+                        {Edit?<input onChange={(event)=>handleCourseMinimumLevelChange(event.target.value)} value={CourseMinimumLevel} className='career-update-bnt career-input' type='text'/>:
                         <button  className='career-update-bnt2'>{CourseMinimumLevel}</button>}    
     
                     </div>
@@ -137,7 +261,7 @@ const CourseUpdate= () => {
                     <div className='career-update-bnt-container'>
                         
                         <label className='career-update-label'>Institute</label>
-                        {Edit?<input value={Courseinstitute} className='career-update-bnt career-input' type='number'/>:
+                        {Edit?<input onChange={(event)=>handleCourseInstituteChange(event.target.value)} value={Courseinstitute} className='career-update-bnt career-input' type='text'/>:
                         <button  className='career-update-bnt2'>{Courseinstitute}</button>}    
     
                     </div>
@@ -145,16 +269,16 @@ const CourseUpdate= () => {
                     <div className='career-update-bnt-container'>
                         
                         <label className='career-update-label'>Course University</label>
-                        {Edit?<input value={CourseUniversity} className='career-update-bnt career-input' type='number'/>:
+                        {Edit?<input onChange={(event)=>handleCourseUniversityChange(event.target.value)} value={CourseUniversity} className='career-update-bnt career-input' type='text'/>:
                         <button  className='career-update-bnt2'>{CourseUniversity}</button>}    
     
                     </div>
  
-        
+
                     <div className='career-update-bnt-container'>
                         
                         <label className='career-update-label'>Specialization 01</label>
-                            {Edit?<input value={CourseSpecialization01} className='career-update-bnt2 career-input'/>:
+                            {Edit?<input onChange={(event)=>handleSpecialization01Change(event.target.value)} value={CourseSpecialization01} className='career-update-bnt2 career-input'/>:
                             <button className='career-update-bnt2'>
                                 {CourseSpecialization01}
                             </button>}
@@ -163,7 +287,7 @@ const CourseUpdate= () => {
                     <div className='career-update-bnt-container'>
                         
                         <label className='career-update-label'>Specialization 02</label>
-                            {Edit?<input value={CourseSpecialization02} className='career-update-bnt2 career-input'/>:
+                            {Edit?<input onChange={(event)=>handleSpecialization02Change(event.target.value)} value={CourseSpecialization02} className='career-update-bnt2 career-input'/>:
                             <button className='career-update-bnt2'>
                                 {CourseSpecialization02}
                             </button>}
@@ -172,7 +296,7 @@ const CourseUpdate= () => {
                     <div className='career-update-bnt-container'>
                         
                         <label className='career-update-label'>Specialization 03</label>
-                            {Edit?<input value={CourseSpecialization03} className='career-update-bnt2 career-input'/>:
+                            {Edit?<input onChange={(event)=>handleSpecialization03Change(event.target.value)}value={CourseSpecialization03} className='career-update-bnt2 career-input'/>:
                             <button className='career-update-bnt2'>
                                 {CourseSpecialization03}
                             </button>}
@@ -181,7 +305,7 @@ const CourseUpdate= () => {
                     <div className='career-update-bnt-container'>
                         
                         <label className='career-update-label'>Specialization 04</label>
-                            {Edit?<input value={CourseSpecialization04} className='career-update-bnt2 career-input'/>:
+                            {Edit?<input onChange={(event)=>handleSpecialization04Change(event.target.value)} value={CourseSpecialization04} className='career-update-bnt2 career-input'/>:
                             <button className='career-update-bnt2'>
                                 {CourseSpecialization04}
                             </button>}
@@ -191,7 +315,7 @@ const CourseUpdate= () => {
                     <div className='career-update-bnt-container'>
                         
                         <label className='career-update-label'>Title</label>
-                            {Edit?<input value={Coursetitle} className='career-update-bnt2 career-input'/>:
+                            {Edit?<input onChange={(event)=>handleCourseTitleChange(event.target.value)} value={Coursetitle} className='career-update-bnt2 career-input'/>:
                             <button className='career-update-bnt2'>
                                 {Coursetitle}
                         </button>}
@@ -201,23 +325,44 @@ const CourseUpdate= () => {
                     <div className='career-update-bnt-container'>
                         
                         <label className='career-update-label'>Fees</label>
-                            {Edit?<input value={CourseFees} className='career-update-bnt2 career-input'/>:
+                            {Edit?<input type='number' onChange={(event)=>handleCourseFeesChange(event.target.value)} value={CourseFees} className='career-update-bnt2 career-input'/>:
                             <button className='career-update-bnt2'>
                                 {CourseFees}
                         </button>}
 
                     </div>     
+
+                    <div className='career-update-bnt-container'>
+                        
+                        <label className='career-update-label'>Institute Website</label>
+                            {Edit?<input type='text' onChange={(event)=>handleInstituteWebsiteChange(event.target.value)} value={InstituteWebsite} className='career-update-bnt2 career-input'/>:
+                            <button className='career-update-bnt2'>
+                                {InstituteWebsite}
+                        </button>}
+
+                    </div>   
+
+                     <div className='career-update-bnt-container'>
+                        
+                        <label className='career-update-label'>Course URL</label>
+                            {Edit?<input type='text' onChange={(event)=>handleCourseUrlChange(event.target.value)} value={CourseUrl} className='career-update-bnt2 career-input '/>:
+                            <button className='career-update-bnt2 course-url'>
+                                {CourseUrl}
+                        </button>}
+
+                    </div>                    
     
                     </div>
     
                 <div className='alevel-update-btn-container career-edit-delete-container'>
                         <div className='career-edit-btn-container'>
-                            {Edit?<button  className='career-edit-btn'>Update</button>:
+                            {Edit?<button onClick={handleUpdateClick} className='career-edit-btn'>Update</button>:
                             <button onClick={handleEditClick}   className='career-edit-btn'>Edit</button>}
                         </div>
                         <div className='ol-delete-container career-delete-container'>
                             <button
                                className='login-btn ol-delete-btn career-delete-btn'
+                               onClick={deleteCourse}
                             >
                                 Delete
                             </button>
