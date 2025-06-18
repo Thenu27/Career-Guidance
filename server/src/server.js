@@ -26,8 +26,8 @@ const {addTaskToDatabase,deleteTasksFromDatabase} = require('./controllers/admin
 const {deleteAdminCareerTask,updateOrInsertCareerTasks,updateInserTasksWhenIdChanged} = require('./controllers/adminTaskController')
 const {saveMipOfUser} =require('./controllers/MipController.js')
 const adminCourseRouter = require('./Route/adminCourseRoute.js')
-
-
+const adminCareerRouter = require('./Route/adminCareerRoute.js')
+const adminSpatializationRouter = require('./Route/adminSpatializationRoute.js');
 
 
 require('dotenv').config({ path: require('path').resolve(__dirname, '..', '.env') });
@@ -274,15 +274,17 @@ db.raw('SELECT 1')
     .catch((err) => {
         console.error('Database connection failed:', err.message);
     });
-
+  
 
 app.use(express.json({ limit: "5mb" })); 
 app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 
 app.use('/api/email',emailRouter)
 app.use('/api/v1/client/career',careerRouter)
-
+app.use('/api/v1/admin/career',adminCareerRouter)
 app.use('/api/v1/admin/higher-education',adminCourseRouter)
+app.use('/api/v1/admin/spcialization', careerRouter);
+app.use('/api/v1/admin/spatialization',adminSpatializationRouter);
  
 let MainActivitiesGlobal;
 

@@ -51,12 +51,28 @@ const fetchCourseInfo=async(req,res)=>{
         const result = await db('degrees')
                        .select("*")
                        .where('course_id',Number(courseId))
+        
 
         if(!result || result.length === 0) {
             throw new Error('No courses info Dound');
         }
+
+        const specialization_names = await db('specializations')
+        .select('name')
+        .where(function () {
+            this.where('id', result[0].specialization_1)
+                .orWhere('id', result[0].specialization_2)
+                .orWhere('id', result[0].specialization_3)
+                .orWhere('id', result[0].specialization_4);
+        });
+
+        if(!specialization_names || specialization_names.length === 0) {
+            throw new Error('No specializations found for the course');
+        }
         console.log(result)
-        res.status(StatusCodes.OK).json({course_info:result})              
+        console.log('specialization_names',specialization_names)
+
+        res.status(StatusCodes.OK).json({course_info:result,specialization_names:specialization_names});              
 
     }catch(err){
         console.error('DB Error:', err);
@@ -150,10 +166,10 @@ const AddingAdminCourse=async(req,res)=>{
                        .insert({
                                 'course_name':course_name,
                                 'course_field':course_field,
-                                's1':s1,
-                                's2':s2,
-                                's3':s3,
-                                's4':s4,
+                                'specialization_1':s1,
+                                'specialization_2':s2,
+                                'specialization_3':s3,
+                                'specialization_4':s4,
                                 'duration':duration,
                                 'fees':fees,
                                 'course_level':course_level,
@@ -218,6 +234,42 @@ const  AddCourseField=async(req,res)=>{
     }
 }
 
+const fetchAllSpecializations = async (req, res) => {
+    try{
+        const result = await db('specializations')
+            .select('*')
+        if (!result || result.length === 0) {
+            return res.status(404).json({ error: 'No specializations found' });
+        }
+        console.log(result);
+
+        res.status(200).json({ specializations: result });
+    }catch(err){
+        console.log(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+
+const fetchAdminCourseSpecialization = async (req, res) => {
+    try {
+        const {course_id} = req.body;
+        const result = await knex('degrees')
+        .select('specialization_1','specialization_2','specialization_3','specialization_4')
+        .where('course_id', course_id);
+
+        if(!result || result.length === 0) {
+            return res.status(404).json({ error: 'No specializations found for the given course_id' });
+        }
+        console.log(result)
+
+        res.status(200).json({specialization:result});
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};  
+
 
 module.exports={
     fetchCourseFields,
@@ -226,5 +278,7 @@ module.exports={
     updateAdminCourseChange,
     AddingAdminCourse,
     deleteAdminCourse,
-    AddCourseField
+    AddCourseField,
+    fetchAllSpecializations,
+    fetchAdminCourseSpecialization
 } 

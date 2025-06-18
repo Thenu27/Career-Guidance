@@ -10,6 +10,7 @@ const CourseUpdate= () => {
 
     const [selectedCourseId, setSelectedCourseId] = useState(null);
     const [courseDetails, setCourseDetails] = useState({});
+    const [AllSpecializations, setAllSpecializations] = useState([]);
 
     const [CourseName,setCourseName] = useState();
     const [CourseField,setCourseField] = useState();
@@ -27,23 +28,48 @@ const CourseUpdate= () => {
     const [InstituteWebsite,setInstituteWebsite] = useState();
     const [CourseFees,setCourseFees] = useState();
 
+useEffect(() => {
+  const info = courseDetails?.course_info?.[0];
+
+  if (!info) return;
+        const spec = courseDetails?.specialization_names || [];
+        setCourseName(info.course_name || '');
+        setCourseField(info.course_field || '');
+        setCourseLevel(info.course_level || '');
+        setCourseUrl(info.course_url || '');
+        setCourseDuration(info.duration || '');
+        setCourseinstitute(info.institute || '');
+        setCourseMinimumLevel(info.minimum_level_category || '');
+        setCoursetitle(info.title || '');
+        setCourseUniversity(info.university || '');
+        setInstituteWebsite(info.website || '');
+        setCourseFees(info.fees || '');
+
+        setCourseSpecialization01(spec[0]?.name || '');
+        setCourseSpecialization02(spec[1]?.name || '');
+        setCourseSpecialization03(spec[2]?.name || '');
+        setCourseSpecialization04(spec[3]?.name || '');
+}, [courseDetails]);
+
+
+const fetchAllSpecilization = async () => {
+    try {
+        const response = await axiosInstance.get('/api/v1/admin/higher-education/specialization');
+
+        const sorted = response.data.specializations.sort((a, b) =>
+            a.name.localeCompare(b.name)
+        );
+
+        setAllSpecializations(sorted);
+    } catch (err) {
+        console.error("Error fetching specializations:", err);
+    }
+};
+
+
     useEffect(()=>{
-        setCourseName(courseDetails.course_name || '');
-        setCourseField(courseDetails.course_field || '');
-        setCourseLevel(courseDetails.course_level || '');
-        setCourseUrl(courseDetails.course_url || '');
-        setCourseDuration(courseDetails.duration || '');
-        setCourseinstitute(courseDetails.institute || '');
-        setCourseMinimumLevel(courseDetails.minimum_level_category || '');
-        setCourseSpecialization01(courseDetails.s1 || '');
-        setCourseSpecialization02(courseDetails.s2 || '');
-        setCourseSpecialization03(courseDetails.s3 || '');
-        setCourseSpecialization04(courseDetails.s4|| '');
-        setCoursetitle(courseDetails.title || '');
-        setCourseUniversity(courseDetails.university || '');
-        setInstituteWebsite(courseDetails.website || '');
-        setCourseFees(courseDetails.fees || '');
-    },[courseDetails])
+        fetchAllSpecilization();
+    },[])
 
 
 
@@ -68,8 +94,7 @@ const CourseUpdate= () => {
           if (!selectedCourseId || isNaN(selectedCourseId)) return;
         try{
             const response = await axiosInstance.get(`/api/v1/admin/higher-education/course-details?courseId=${selectedCourseId}`);
-            console.log("Course Details:", response.data);
-            setCourseDetails(response.data.course_info[0]); // Assuming the response is an array with one object
+            setCourseDetails(response.data); // Assuming the response is an array with one object
         }catch(error){
             console.error("Error fetching course details", error);
         }
@@ -278,44 +303,90 @@ const handleUpdateClick = () => {
                     <div className='career-update-bnt-container'>
                         
                         <label className='career-update-label'>Specialization 01</label>
-                            {Edit?<input onChange={(event)=>handleSpecialization01Change(event.target.value)} value={CourseSpecialization01} className='career-update-bnt2 career-input'/>:
-                            <button className='career-update-bnt2'>
-                                {CourseSpecialization01}
-                            </button>}
-                      </div>
+                            {Edit?
+                    <div className='specialization-select-container'>
+                        <select  className='ol-input career-input specialization-select-option'>
+                            <option className='specialization-name' value="">{CourseSpecialization01}</option>
+                                {AllSpecializations.map((spec) => (
+                                <option className='specialization-name career-input' key={spec.id} value={spec.id}>
+                                    {spec.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>:
+                      <button className='career-update-bnt2'>
+                          {CourseSpecialization01}
+                      </button>}
+                    </div>
     
                     <div className='career-update-bnt-container'>
                         
                         <label className='career-update-label'>Specialization 02</label>
-                            {Edit?<input onChange={(event)=>handleSpecialization02Change(event.target.value)} value={CourseSpecialization02} className='career-update-bnt2 career-input'/>:
-                            <button className='career-update-bnt2'>
-                                {CourseSpecialization02}
-                            </button>}
-                      </div>
+                            {Edit?
+                    <div className='specialization-select-container'>
+                        <select className='ol-input career-input specialization-select-option'>
+                            <option className='specialization-name career-input' value="">{CourseSpecialization02}</option>
+                                {AllSpecializations.map((spec) => (
+                                <option className='specialization-name career-input' key={spec.id} value={spec.id}>
+                                    {spec.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>:
+                      <button className='career-update-bnt2'>
+                          {CourseSpecialization02}
+                      </button>}
+                    </div>
     
+
                     <div className='career-update-bnt-container'>
                         
                         <label className='career-update-label'>Specialization 03</label>
-                            {Edit?<input onChange={(event)=>handleSpecialization03Change(event.target.value)}value={CourseSpecialization03} className='career-update-bnt2 career-input'/>:
-                            <button className='career-update-bnt2'>
-                                {CourseSpecialization03}
-                            </button>}
-                      </div>
+                            {Edit?
+                    <div className='specialization-select-container'>
+                        <select  className='ol-input career-input specialization-select-option'>
+                            <option className='career-input specialization-name' value="">{CourseSpecialization03}</option>
+                                {AllSpecializations.map((spec) => (
+                                <option className='career-input specialization-name' key={spec.id} value={spec.id}>
+                                    {spec.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>:
+                      <button className='career-update-bnt2'>
+                          {CourseSpecialization03}
+                      </button>}
+                    </div>
     
+
+
                     <div className='career-update-bnt-container'>
                         
                         <label className='career-update-label'>Specialization 04</label>
-                            {Edit?<input onChange={(event)=>handleSpecialization04Change(event.target.value)} value={CourseSpecialization04} className='career-update-bnt2 career-input'/>:
-                            <button className='career-update-bnt2'>
-                                {CourseSpecialization04}
-                            </button>}
+                            {Edit?
+                    <div className='specialization-select-container'>
+                        <select  className='ol-input career-input specialization-select-option'>
+                            <option className='specialization-name' value="">{CourseSpecialization04}</option>
+                                {AllSpecializations.map((spec) => (
+                                <option className='specialization-name' key={spec.id} value={spec.id}>
+                                    {spec.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>:
+                      <button className='career-update-bnt2'>
+                          {CourseSpecialization04}
+                      </button>}
                     </div>
 
- 
+                    <button onClick={()=>navigate('/admin/add-specialization')} className='career-update-bnt2 add-spatialization-btn'>
+                        Add Spatialization
+                    </button>         
+
                     <div className='career-update-bnt-container'>
                         
                         <label className='career-update-label'>Title</label>
-                            {Edit?<input onChange={(event)=>handleCourseTitleChange(event.target.value)} value={Coursetitle} className='career-update-bnt2 career-input'/>:
+                            {Edit?<input onChange={(event)=>handleCourseTitleChange(event.target.value)} value={Coursetitle} className='career-input career-update-bnt2 career-input'/>:
                             <button className='career-update-bnt2'>
                                 {Coursetitle}
                         </button>}

@@ -25,6 +25,9 @@ const CourseAdd = () => {
     const [InstituteWebsite,setInstituteWebsite] = useState();
     const [CourseFees,setCourseFees] = useState();
 
+    const [AllSpecializations, setAllSpecializations] = useState([]);
+
+
     const handleCourseNameChange=(event)=>{
         setCourseName(event)
     }
@@ -45,21 +48,21 @@ const CourseAdd = () => {
         setCourseMinimumLevel(value);
     };
 
-    const handleSpecialization01Change = (value) => {
-        setCourseSpecialization01(value);
-    };
+    // const handleSpecialization01Change = (value) => {
+    //     setCourseSpecialization01(value);
+    // };
 
-    const handleSpecialization02Change = (value) => {
-        setCourseSpecialization02(value);
-    };
+    // const handleSpecialization02Change = (value) => {
+    //     setCourseSpecialization02(value);
+    // };
 
-    const handleSpecialization03Change = (value) => {
-        setCourseSpecialization03(value);
-    };
+    // const handleSpecialization03Change = (value) => {
+    //     setCourseSpecialization03(value);
+    // };
 
-    const handleSpecialization04Change = (value) => {
-        setCourseSpecialization04(value);
-    };
+    // const handleSpecialization04Change = (value) => {
+    //     setCourseSpecialization04(value);
+    // };
 
     const handleCourseTitleChange = (value) => {
         setCoursetitle(value);
@@ -96,6 +99,24 @@ const CourseAdd = () => {
     },[])
 
 
+    const fetchAllSpecilization=async()=>{
+        try{
+            const response = await axiosInstance.get('/api/v1/admin/higher-education/specialization');
+            setAllSpecializations(response.data.specializations);
+        }catch(err){
+            console.error("Error fetching specializations:", err);
+        }
+    }
+
+    useEffect(()=>{
+        fetchAllSpecilization()
+    },[])
+
+    useEffect(()=>{
+        console.log('AllSpecializations',AllSpecializations)
+    },[AllSpecializations])
+
+
 
     const sendUpdatedDataToBE = async () => {
     try {
@@ -107,10 +128,10 @@ const CourseAdd = () => {
             duration: (Number(CourseDuration) || null),
             institute: (Courseinstitute || '').trim(),
             minimum_level_category: (CourseMinimumLevel || '').trim(),
-            s1: (CourseSpecialization01 || '').trim(),
-            s2: (CourseSpecialization02 || '').trim(),
-            s3: (CourseSpecialization03 || '').trim(),
-            s4: (CourseSpecialization04 || '').trim(),
+            s1: (CourseSpecialization01),
+            s2: (CourseSpecialization02),
+            s3: (CourseSpecialization03),
+            s4: (CourseSpecialization04),
             title: (Coursetitle || '').trim(),
             university: (CourseUniversity || '').trim(),
             website: (InstituteWebsite || '').trim(),
@@ -140,6 +161,24 @@ const handleSubmit = () => {
     sendUpdatedDataToBE();
 }
 
+const handleSpecilaization01Change = (selectedValue) => {
+    setCourseSpecialization01(selectedValue);
+}
+
+const handleSpecilaization02Change = (selectedValue) => {
+    setCourseSpecialization02(selectedValue);
+}
+
+const handleSpecilaization03Change = (selectedValue) => {
+    setCourseSpecialization03(selectedValue);
+}
+
+const handleSpecilaization04Change = (selectedValue) => {
+    setCourseSpecialization04(selectedValue);
+}
+
+
+
     return (
         <>
 
@@ -161,7 +200,7 @@ const handleSubmit = () => {
 
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Title</label>
-                        <input onChange={(e)=>{handleCourseTitleChange(e.target.value.h)}} type='text' className='ol-input career-input' />
+                        <input onChange={(e)=>{handleCourseTitleChange(e.target.value)}} type='text' className='ol-input career-input' />
                     </div>   
 
 
@@ -193,31 +232,60 @@ const handleSubmit = () => {
                         <input onChange={(e)=>{handleCourseUniversityChange(e.target.value)}} type='text' className='ol-input career-input' />
                     </div>
 
-                     <div className='ol-input-container'>
-                        <label className='ol-input-label'>Specialization 01</label>
-                        <input onChange={(e)=>{handleSpecialization01Change(e.target.value)}} type='text' className='ol-input career-input' />
-                    </div>
-                    
-                    <div className='ol-input-container'>
-                        <label className='ol-input-label'>Specialization 02</label>
-                        <input onChange={(e)=>{handleSpecialization02Change(e.target.value)}} type='text' className='ol-input career-input' />
-                    </div>
-                    
-                    <div className='ol-input-container'>
-                        <label className='ol-input-label'>Specialization 03</label>
-                        <input onChange={(e)=>{handleSpecialization03Change(e.target.value)}} type='text' className='ol-input career-input' />
-                    </div>  
-
-                    <div className='ol-input-container'>
-                        <label className='ol-input-label'>Specialization 04</label>
-                        <input onChange={(e)=>{handleSpecialization04Change(e.target.value)}} type='text' className='ol-input career-input' />
-                    </div>  
-
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Minimum Level</label>
                         <input onChange={(e)=>{handleCourseMinimumLevelChange(e.target.value)}} type='text' className='ol-input career-input' />
                     </div>   
 
+                </div>
+
+                <div className='specialization-select-container'>
+                    <label className='ol-input-label'>Select Specialization 01</label>
+                    <select onChange={(e) => handleSpecilaization01Change(e.target.value)} className='ol-input specialization-select-option'>
+                        <option className='specialization-name' value="">Specialization 01</option>
+                        {AllSpecializations.map((spec) => (
+                        <option className='specialization-name' key={spec.id} value={spec.id}>
+                            {spec.name}
+                        </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className='specialization-select-container'>
+                    <label className='ol-input-label'>Select Specialization 02</label>
+                    <select onChange={(e) => handleSpecilaization02Change(e.target.value)} className='ol-input specialization-select-option'>
+                        <option className='specialization-name' value="">Specialization 02</option>
+                        {AllSpecializations.map((spec) => (
+                        <option onChange={handleSpecilaization02Change} className='ol-input specialization-name' key={spec.id} value={spec.id}>
+                            {spec.name}
+                        </option>
+                        ))}
+                    </select>
+                </div>
+
+
+                <div className='specialization-select-container'>
+                    <label className='ol-input-label'>Select Specialization 03</label>
+                    <select onChange={(e) => handleSpecilaization03Change(e.target.value)} className='ol-input career-inputspecialization-select-option'>
+                        <option className='specialization-name' value="">Specialization 03</option>
+                            {AllSpecializations.map((spec) => (
+                            <option className='specialization-name' key={spec.id} value={spec.id}>
+                                {spec.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className='specialization-select-container'>
+                    <label className='ol-input-label'>Select Specialization 04</label>
+                    <select onChange={(e) => handleSpecilaization04Change(e.target.value)} className='ol-input career-inputspecialization-select-option'>
+                        <option className='specialization-name' value="">Specialization 03</option>
+                            {AllSpecializations.map((spec) => (
+                            <option className='specialization-name' key={spec.id} value={spec.id}>
+                                {spec.name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 <div className='add-ol-btn-container add-career-btn-container'>

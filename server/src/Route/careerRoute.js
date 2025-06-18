@@ -6,4 +6,4 @@ router.route('/details').post(fetchCareerDetails);
 router.route('/task').post(fetchAdminTask);
 
 
-module.exports=router;
+module.exports=router; 

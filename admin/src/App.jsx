@@ -33,9 +33,8 @@ import Courses from './components/HigherEducation/Courses/Courses';
 import HigherEducationPage from './Pages/HigherEducationPage/HigherEducationPage';
 import CourseUpdate from './components/HigherEducation/CourseUpdate/CourseUpdate';
 import DegreeField from './components/HigherEducation/DegreeField/DegreeField';
-
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
-
+import AddSpatialization from './components/AddSpatialization/AddSpatialization.jsx';
 
 import './App.css'
 import Spinner from '../../client/src/Components/Spinner/Spinner';
@@ -105,6 +104,8 @@ function App() {
           <Route path='course-field-add' element={<CourseFieldAdd/>}/>
         
         </Route>
+
+        <Route path='/admin/add-specialization' element={<AddSpatialization/>}/>
       
       {/* </Route> */}
       
