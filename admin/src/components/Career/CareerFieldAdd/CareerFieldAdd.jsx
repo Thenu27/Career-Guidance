@@ -21,10 +21,11 @@ const CareerFieldAdd = ()=>{
                 return
             }
             
-            const response = await axiosInstance.post(`${import.meta.env.VITE_APP_URL}/api/admin/careerfield/career-field-add`,{
+            const response = await axiosInstance.post(`${import.meta.env.VITE_APP_URL}/api/v1/admin/career/careerfield/add`,{
                 CareerField
             })
-            if(response.data === 'New Career Field Received'){
+            console.log(response);
+            if(response.status === 200){
                 alert('New career field created')
             }else{
                 alert('Error Occured')

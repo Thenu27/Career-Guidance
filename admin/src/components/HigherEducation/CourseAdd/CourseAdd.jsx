@@ -150,16 +150,28 @@ const CourseAdd = () => {
 };
 
 const handleSubmit = () => {
-    if(CourseName.trim()==='' || CourseName===undefined) {
-        alert('Please Enter a Course Name')
-        return
+    if (CourseName?.trim() === '' || CourseName === undefined) {
+        alert('Please Enter a Course Name');
+        return;
     }
-    if(!window.confirm("Do you want to add this course?")) {
+
+    if (
+        !CourseSpecialization01 &&
+        !CourseSpecialization02 &&
+        !CourseSpecialization03 &&
+        !CourseSpecialization04
+    ) {
+        alert('Please select at least one specialization');
+        return;
+    }
+
+    if (!window.confirm("Do you want to add this course?")) {
         return;
     }
 
     sendUpdatedDataToBE();
-}
+};
+
 
 const handleSpecilaization01Change = (selectedValue) => {
     setCourseSpecialization01(selectedValue);

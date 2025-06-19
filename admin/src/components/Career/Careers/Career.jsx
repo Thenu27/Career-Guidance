@@ -15,13 +15,12 @@ const Career = () => {
     // ✅ Fetch Careers from API
     const fetchCareers = async () => {
         try {
-            const response = await axiosInstance.post('/api/admin/career', {
+            const response = await axiosInstance.post('/api/v1/admin/career/careerfield/all-careers', {
                 SelectedField
             });
+            console.log("Response from API:", response.data);
+            setCareerInField(response.data);
 
-            // ✅ Remove null values before setting state
-            const filteredCareers = response.data.filter(career => career.career !== null);
-            setCareerInField(filteredCareers);
 
         } catch (error) {
             console.error("Error when fetching careers", error);
@@ -79,16 +78,16 @@ const Career = () => {
     };
     
     const sendCareerFieldToDelete = async (CareerField) => {
-        if(!window.confirm(`Do You want to delete this "${SelectedField}" \n This action cannot be undone`)){
+        if(!window.confirm(`Do You want to delete this \n This action cannot be undone`)){
             return
         }
         try {
             const response = await axiosInstance.post(
-                `${import.meta.env.VITE_APP_URL}/api/admin/careerfield/delete`,
-                {CareerField} 
+                `${import.meta.env.VITE_APP_URL}/api/v1/admin/career/careerfield/delete`,
+                    {CareerField} 
             );
 
-            if (response.data === 'Career field Deleted') {
+            if (response.status === 200) {
                 alert('Career Field deleted successfully');
             } 
         } catch (error) {

@@ -26,7 +26,24 @@ const CareerUpdate = () => {
         }
     }, []);
     
+const fetchAllSpecilization = async () => {
+    try {
+        const response = await axiosInstance.get('/api/v1/admin/higher-education/specialization');
 
+        const sorted = response.data.specializations.sort((a, b) =>
+            a.name.localeCompare(b.name)
+        );
+
+        setAllSpecializations(sorted);
+    } catch (err) {
+        console.error("Error fetching specializations:", err);
+    }
+};
+
+
+    useEffect(()=>{
+        fetchAllSpecilization()
+    },[])
     
 
     useEffect(()=>{
@@ -34,9 +51,8 @@ const CareerUpdate = () => {
     },[SelectedCareerId])
 
     const [Edit,setEdit] = useState(false);  
-    // const [Score1,setScore1] = useState('No Data Selected')
-    // const [Score2,setScore2] = useState('No Data Selected')
-    // const [Score3,setScore3] = useState('No Data Selected')
+
+    const [AllSpecializations, setAllSpecializations] = useState([]);
 
     const [CareerId,setCareerId] = useState();
     const [OldCareerId, setOldCareerId] = useState(); 
@@ -47,45 +63,65 @@ const CareerUpdate = () => {
     const [Non_Iq_Intelligence3,setNon_Iq_Intelligence3] = useState('No Data Selected');
     const [Non_Iq_Intelligence4,setNon_Iq_Intelligence4] = useState('No Data Selected');
 
-    
-    const [Specialization1,setSpecialization1] = useState('No Data Selected')
-    const [Specialization2,setSpecialization2] = useState('No Data Selected');
-    const [Specialization3,setSpecialization3] = useState('No Data Selected');
-    const [Specialization4,setSpecialization4] = useState('No Data Selected');
 
     const [CareerName,setCareerName] = useState();
     const [CareerLinguistic,setCareerLinguistic] = useState();
     const [CareerLogical,setCareerLogical] = useState();
     const [CareerSpatial,setCareerSpatial] = useState();
 
+    
+    const [CourseSpecialization01, setCourseSpecialization01] = useState('');
+    const [CourseSpecialization02, setCourseSpecialization02] = useState('');
+    const [CourseSpecialization03, setCourseSpecialization03] = useState('');
+    const [CourseSpecialization04, setCourseSpecialization04] = useState('');
+
+    const [CourseSpecialization01Id, setCourseSpecialization01Id] = useState(null);
+    const [CourseSpecialization02Id, setCourseSpecialization02Id] = useState(null);
+    const [CourseSpecialization03Id, setCourseSpecialization03Id] = useState(null);
+    const [CourseSpecialization04Id, setCourseSpecialization04Id] = useState(null);
+
     const [task,setTask] = useState([]);
 
+useEffect(() => {
+    if (SelectedCareerDetails?.result) {
+        setLoading(true);
+        const result = SelectedCareerDetails.result;
+        const specs = SelectedCareerDetails.specializations;
+
+        setNon_Iq_Intelligence1(IdentifyIntelligence(result.non_iq_intelligence1));
+        setNon_Iq_Intelligence2(IdentifyIntelligence(result.non_iq_intelligence2));
+        setNon_Iq_Intelligence3(IdentifyIntelligence(result.non_iq_intelligence3));
+        setNon_Iq_Intelligence4(IdentifyIntelligence(result.non_iq_intelligence4));
+
+        setCareerDbId(result.career_db_id);
+        setOldCareerId(result.career_id);
+        setCareerId(result.career_id)
+
+        setCourseSpecialization01(specs[0]?.name);
+        setCourseSpecialization02(specs[1]?.name);
+        setCourseSpecialization03(specs[2]?.name);
+        setCourseSpecialization04(specs[3]?.name);
+
+        setCourseSpecialization01Id(specs[0]?.id)
+        setCourseSpecialization02Id(specs[1]?.id)
+        setCourseSpecialization03Id(specs[2]?.id)
+        setCourseSpecialization04Id(specs[3]?.id)
+
+
+        setCareerName(result.career);
+        setCareerId(result.career_id);
+
+        setCareerLinguistic(result.linguistic);
+        setCareerLogical(result.logical);
+        setCareerSpatial(result.spatial);
+
+        setLoading(false);
+    }
+}, [SelectedCareerDetails]);
+
     useEffect(()=>{
-        if (SelectedCareerDetails && SelectedCareerDetails.length > 0){
-
-            setNon_Iq_Intelligence1(IdentifyIntelligence(SelectedCareerDetails[0].non_iq_intelligence1))
-            setNon_Iq_Intelligence2(IdentifyIntelligence(SelectedCareerDetails[0].non_iq_intelligence2))
-            setNon_Iq_Intelligence3(IdentifyIntelligence(SelectedCareerDetails[0].non_iq_intelligence3))
-            setNon_Iq_Intelligence4(IdentifyIntelligence(SelectedCareerDetails[0].non_iq_intelligence4))
-
-            setCareerDbId(SelectedCareerDetails[0].career_db_id);
-            setOldCareerId(SelectedCareerDetails[0].career_id);
-
-            setSpecialization1(SelectedCareerDetails[0].s1)
-            setSpecialization2(SelectedCareerDetails[0].s2)
-            setSpecialization3(SelectedCareerDetails[0].s3)
-            setSpecialization4(SelectedCareerDetails[0].s4)
-
-            setCareerName(SelectedCareerDetails[0].career)
-            setCareerId(SelectedCareerDetails[0].career_id)
-            
-            setCareerLinguistic(SelectedCareerDetails[0].linguistic)
-            setCareerLogical(SelectedCareerDetails[0].logical);
-            setCareerSpatial(SelectedCareerDetails[0].spatial);
-
-
-        }
-    },[SelectedCareerDetails])
+        console.log('CareerName:',CareerName)
+    },[CareerName])
 
     const fetchTask = async()=>{
         setLoading(true);
@@ -105,7 +141,6 @@ const CareerUpdate = () => {
     }
 
     useEffect(()=>{
-        console.log('Task:',task);
         setLoading(false);
 
     },[task])
@@ -115,14 +150,14 @@ const CareerUpdate = () => {
     const fetchSelectedCareerDetails = async () => {
         setLoading(true)
         try {
-            const response = await axiosInstance.post(`${import.meta.env.VITE_APP_URL}/api/admin/career/details`, {
-                SelectedCareer
+            const response = await axiosInstance.post(`${import.meta.env.VITE_APP_URL}/api/v1/admin/career/careerfield/career/details`, {
+                SelectedCareerId
             });
             console.log("Response from server:", response.data);
             setSelectedCareerDetails(response.data);
         } catch (error) {
             console.error("Error sending data to the backend:", error);
-            alert("Failed to send data. Please try again.");
+            // alert("Failed to send data. Please try again.");
         }finally{
             setLoading(false)
         }
@@ -139,10 +174,6 @@ const CareerUpdate = () => {
     useEffect(() => {
         console.log("Selected Career Details", SelectedCareerDetails);
     }, [SelectedCareerDetails]);
-
-    useEffect(() => {
-        console.log("SelectedCareerin Update pae", SelectedCareer);
-    })
 
     const IdentifyIntelligence = (value) => {
         switch (value) {
@@ -171,11 +202,11 @@ const CareerUpdate = () => {
 
     const sendCareerToDelete = async (career,career_id) => {
         try {
-            const response = await axiosInstance.post(`/api/admin/career/delete`, {
-                career,career_id
+            const response = await axiosInstance.post(`/api/v1/admin/career/careerfield/career/delete`, {
+                CareerId
             });
 
-            if (response.status === 200 && response.data === 'Career Deleted') {
+            if (response.status === 200) {
                 alert('Career deleted successfully');
                 navigate('/admin/careerfield/career')
             } else {
@@ -189,9 +220,9 @@ const CareerUpdate = () => {
         }
     }
 
-    const handleDelete = async (career,career_id) => {
+    const handleDelete = async (career_id) => {
         if(window.confirm('Do you want to delete this career?\n\nThis action cannot be undone.')){
-            await sendCareerToDelete(career,career_id);
+            await sendCareerToDelete(career_id);
         }else{
             return
         }
@@ -249,22 +280,6 @@ const CareerUpdate = () => {
         setCareerId(value)
     }
 
-    if(scoreIndex===4){
-        setSpecialization1(value)
-        return
-    }
-    if(scoreIndex===5){
-        setSpecialization2(value)
-        return
-    }
-    if(scoreIndex===6){
-        setSpecialization3(value)
-        return
-    }
-    if(scoreIndex===7){
-        setSpecialization4(value)
-        return
-    }
 
     if(scoreIndex===8){
         setCareerLinguistic(value)
@@ -290,13 +305,9 @@ const handleTaskChange = (value,index)=>{
     setTask(updatedTask);
 }
 
-useEffect(()=>{
-    console.log(task)
-},[task])
-
 const sendToBackEnd=async()=>{
     try{
-        const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/admin/career/update`,{
+        const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/v1/admin/career/careerfield/career/update`,{
             CareerLinguistic,
             CareerLogical,
             CareerSpatial,           
@@ -305,21 +316,21 @@ const sendToBackEnd=async()=>{
             Non_Iq_Intelligence3,
             Non_Iq_Intelligence4,
             CareerName,
-            CareerId,
+            CareerId :Number(CareerId),
             OldCareerId,
-            Specialization1,
-            Specialization2,
-            Specialization3,
-            Specialization4,
+            CourseSpecialization01Id:Number(CourseSpecialization01Id),
+            CourseSpecialization02Id:Number(CourseSpecialization02Id),
+            CourseSpecialization03Id:Number(CourseSpecialization03Id),
+            CourseSpecialization04Id:Number(CourseSpecialization04Id),
             CareerDbId,
-            SelectedField,
+            SelectedField:Number(SelectedField),
             task
             
         });
 
         console.log("response",response.data)
 
-        if(response.data==='Career Updated Succesfully'){
+        if(response.status===200){
             alert('Career Updated Succesfully');
             setSelectedCareerId(CareerId); // ← This is needed!
             localStorage.setItem("SelectedCareerId",CareerId);
@@ -327,10 +338,10 @@ const sendToBackEnd=async()=>{
 
         }
     }catch(error){
-        console.log(error.response.data)
+        console.log('error',error)
         if(error.response.data){
             console.log(error.response.data)
-            alert('Career Id Already Exist')
+            alert('Error Occured')
 
         }else{
             alert("Failed to Update Career")
@@ -351,22 +362,6 @@ const updateSubject=async()=>{
         return
     }
 
-    // if(Specialization1===''){
-    //     alert('Please Enter A Valid Specialization');
-    //     return
-    // }
-    // if(Specialization2===''){
-    //     alert('Please Enter A Valid  Specialization 1');
-    //     return
-    // }
-    // if(Specialization3===''){
-    //     alert('Please Enter A Valid  Specialization 2');
-    //     return
-    // }
-    // if(Specialization4===''){
-    //     alert('Please Enter A Valid  Specialization 3');
-    //     return
-    // }
     if(window.confirm('Are you sure you want to update the Activity \n This Action Cannot Be Undone')){
         await sendToBackEnd();
         return
@@ -403,6 +398,22 @@ const updateSubject=async()=>{
             console.log(err)
         }
     }  
+
+    const handleSpecialization01Change = (value) => {
+        setCourseSpecialization01Id(value);
+    };
+
+    const handleSpecialization02Change = (value) => {
+        setCourseSpecialization02Id(value);
+    };
+
+    const handleSpecialization03Change = (value) => {
+        setCourseSpecialization03Id(value);
+    };
+
+    const handleSpecialization04Change = (value) => {
+        setCourseSpecialization04Id(value);
+    };
 
     if(loading){
         return <div className='spinner-container'><Spinner/></div>
@@ -537,40 +548,84 @@ const updateSubject=async()=>{
                     {/* {Edit?<input onChange={(e)=>handleOnChange(e.target.value,1)}  className='career-update-bnt2' value={Score1}/>:
                     <button className='career-update-bnt'>{Score1}</button>} */}
                 </div>        
+                    <div className='career-update-bnt-container'>
+                        
+                        <label className='career-update-label'>Specialization 01</label>
+                            {Edit?
+                    <div className='specialization-select-container'>
+                        <select onChange={(e) => handleSpecialization01Change(e.target.value)}  className='ol-input career-input specialization-select-option'>
+                            <option className='specialization-name' value="">{CourseSpecialization01}</option>
+                                {AllSpecializations.map((spec) => (
+                                <option className='specialization-name career-input' key={spec.id} value={spec.id}>
+                                    {spec.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>:
+                      <button className='career-update-bnt2'>
+                          {CourseSpecialization01}
+                      </button>}
+                    </div>
 
-                <div className='career-update-bnt-container'>
-                    
-                <label className='career-update-label'>Specialization 01</label>
-                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,4)} value={Specialization1} className='career-update-bnt2 career-input'/>:
-                    <button className='career-update-bnt2'>
-                        {Specialization1}
-                    </button>}
 
-                </div>
 
-                <div className='career-update-bnt-container'>
-                <label className='career-update-label'>Specialization 02</label>
-                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,5)} value={Specialization2} className='career-update-bnt2 career-input'/>:
-                    <button className='career-update-bnt2'>
-                        {Specialization2}
-                    </button>}
-                </div>
 
-                <div className='career-update-bnt-container'>
-                <label className='career-update-label'>Specialization 03</label>
-                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,6)} value={Specialization3} className='career-update-bnt2 career-input'/>:
-                    <button className='career-update-bnt2'>
-                        {Specialization3}
-                    </button>}
-                </div>
+                    <div className='career-update-bnt-container'>
+                        
+                        <label className='career-update-label'>Specialization 02</label>
+                            {Edit?
+                    <div className='specialization-select-container'>
+                        <select onChange={(e) => handleSpecialization02Change(e.target.value)} className='ol-input career-input specialization-select-option'>
+                            <option className='specialization-name career-input' value="">{CourseSpecialization02}</option>
+                                {AllSpecializations.map((spec) => (
+                                <option className='specialization-name career-input' key={spec.id} value={spec.id}>
+                                    {spec.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>:
+                      <button className='career-update-bnt2'>
+                          {CourseSpecialization02}
+                      </button>}
+                    </div>
 
-                <div className='career-update-bnt-container'>
-                <label className='career-update-label'>Specialization 04</label>
-                    {Edit?<input onChange={(e)=>handleOnChange(e.target.value,7)} value={Specialization4} className='career-update-bnt2 career-input'/>:
-                    <button className='career-update-bnt2'>
-                        {Specialization4}
-                    </button>}
-                </div>
+                    <div className='career-update-bnt-container'>
+                        
+                        <label className='career-update-label'>Specialization 03</label>
+                            {Edit?
+                    <div className='specialization-select-container'>
+                        <select onChange={(e) => handleSpecialization03Change(e.target.value)}  className='ol-input career-input specialization-select-option'>
+                            <option className='career-input specialization-name' value="">{CourseSpecialization03}</option>
+                                {AllSpecializations.map((spec) => (
+                                <option className='career-input specialization-name' key={spec.id} value={spec.id}>
+                                    {spec.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>:
+                      <button className='career-update-bnt2'>
+                          {CourseSpecialization03}
+                      </button>}
+                    </div>
+
+                    <div className='career-update-bnt-container'>
+                        
+                        <label className='career-update-label'>Specialization 04</label>
+                            {Edit?
+                    <div className='specialization-select-container'>
+                        <select onChange={(e) => handleSpecialization04Change(e.target.value)}  className='ol-input career-input specialization-select-option'>
+                            <option className='specialization-name' value="">{CourseSpecialization04}</option>
+                                {AllSpecializations.map((spec) => (
+                                <option className='specialization-name' key={spec.id} value={spec.id}>
+                                    {spec.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>:
+                      <button className='career-update-bnt2'>
+                          {CourseSpecialization04}
+                      </button>}
+                    </div>
 
                 <div className='' >
                     {Array.isArray(task) && task.map((task, index) => (
@@ -613,7 +668,7 @@ const updateSubject=async()=>{
                     </div>
                     <div className='ol-delete-container career-delete-container'>
                         <button
-                            onClick={()=>{handleDelete(SelectedCareerDetails[0].career,SelectedCareerDetails[0].career_id)}}
+                            onClick={()=>{handleDelete(CareerId)}}
                             className='login-btn ol-delete-btn career-delete-btn'
                         >
                             Delete

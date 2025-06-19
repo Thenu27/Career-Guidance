@@ -8,6 +8,8 @@ const CourseUpdate= () => {
     const [Edit, setEdit] = useState(false);
     const navigate = useNavigate();
 
+    const [isLoading, setIsLoading] = useState(true);
+
     const [selectedCourseId, setSelectedCourseId] = useState(null);
     const [courseDetails, setCourseDetails] = useState({});
     const [AllSpecializations, setAllSpecializations] = useState([]);
@@ -23,6 +25,10 @@ const CourseUpdate= () => {
     const [CourseSpecialization02,setCourseSpecialization02] = useState();
     const [CourseSpecialization03,setCourseSpecialization03] = useState();
     const [CourseSpecialization04,setCourseSpecialization04] = useState();
+    const [CourseSpecialization01Id,setCourseSpecialization01Id] = useState();
+    const [CourseSpecialization02Id,setCourseSpecialization02Id] = useState();
+    const [CourseSpecialization03Id,setCourseSpecialization03Id] = useState();
+    const [CourseSpecialization04Id,setCourseSpecialization04Id] = useState();
     const [Coursetitle,setCoursetitle] = useState();
     const [CourseUniversity,setCourseUniversity] = useState();
     const [InstituteWebsite,setInstituteWebsite] = useState();
@@ -49,6 +55,12 @@ useEffect(() => {
         setCourseSpecialization02(spec[1]?.name || '');
         setCourseSpecialization03(spec[2]?.name || '');
         setCourseSpecialization04(spec[3]?.name || '');
+
+        setCourseSpecialization01Id(spec[0]?.id || null);
+        setCourseSpecialization02Id(spec[1]?.id || null);
+        setCourseSpecialization03Id(spec[2]?.id || null);
+        setCourseSpecialization04Id(spec[3]?.id || null);        
+
 }, [courseDetails]);
 
 
@@ -94,7 +106,8 @@ const fetchAllSpecilization = async () => {
           if (!selectedCourseId || isNaN(selectedCourseId)) return;
         try{
             const response = await axiosInstance.get(`/api/v1/admin/higher-education/course-details?courseId=${selectedCourseId}`);
-            setCourseDetails(response.data); // Assuming the response is an array with one object
+            setCourseDetails(response.data); 
+            setIsLoading(false)// Assuming the response is an array with one object
         }catch(error){
             console.error("Error fetching course details", error);
         }
@@ -112,10 +125,10 @@ const sendUpdatedDataToBE = async () => {
             duration: (Number(CourseDuration) || null),
             institute: Courseinstitute.trim(),
             minimum_level_category: CourseMinimumLevel.trim(),
-            s1: CourseSpecialization01.trim(),
-            s2: CourseSpecialization02.trim(),
-            s3: CourseSpecialization03.trim(),
-            s4: CourseSpecialization04.trim(),
+            s1: Number(CourseSpecialization01Id),
+            s2: Number(CourseSpecialization02Id),
+            s3: Number(CourseSpecialization03Id),
+            s4: Number(CourseSpecialization04Id),
             title: Coursetitle.trim(),
             course_university: CourseUniversity.trim(),
             institute_website:InstituteWebsite.trim() , 
@@ -178,19 +191,19 @@ const handleUpdateClick = () => {
     };
 
     const handleSpecialization01Change = (value) => {
-        setCourseSpecialization01(value);
+        setCourseSpecialization01Id(value);
     };
 
     const handleSpecialization02Change = (value) => {
-        setCourseSpecialization02(value);
+        setCourseSpecialization02Id(value);
     };
 
     const handleSpecialization03Change = (value) => {
-        setCourseSpecialization03(value);
+        setCourseSpecialization03Id(value);
     };
 
     const handleSpecialization04Change = (value) => {
-        setCourseSpecialization04(value);
+        setCourseSpecialization04Id(value);
     };
 
     const handleCourseTitleChange = (value) => {
@@ -213,6 +226,10 @@ const handleUpdateClick = () => {
         setCourseUrl(value);
     };   
 
+    useEffect(()=>{
+        console.log('Course Specialization 01 Id:', CourseSpecialization01Id);
+    },[CourseSpecialization01Id])
+
     const deleteCourse = async () => {
         if(!window.confirm("Are you sure you want to delete this course?")) {
             return
@@ -230,6 +247,16 @@ const handleUpdateClick = () => {
             alert('Error Deleting Course!')
         }
     }
+
+
+if(isLoading) {
+    return (
+        <div className='loading-container'>
+            <h1 className='loading-text'>Loading...</h1>
+        </div>
+    );
+}
+
 
 
  return(
@@ -254,8 +281,8 @@ const handleUpdateClick = () => {
                     <div className='career-update-bnt-container'>
                         
                         <label className='career-update-label'>Course Field</label>
-                        {/* {Edit?<input onChange={(event)=>handleCourseFieldChange(event.target.value)} value={CourseField} className='career-update-bnt career-input' type='text'/>: */}
-                        <button  className='career-update-bnt2'>{CourseField}</button>
+                        {Edit?<input onChange={(event)=>handleCourseFieldChange(event.target.value)} value={CourseField} className='career-update-bnt career-input' type='text'/>:
+                        <button  className='career-update-bnt2'>{CourseField}</button>}
  
     
                     </div>
@@ -305,7 +332,7 @@ const handleUpdateClick = () => {
                         <label className='career-update-label'>Specialization 01</label>
                             {Edit?
                     <div className='specialization-select-container'>
-                        <select  className='ol-input career-input specialization-select-option'>
+                        <select onChange={(e) => handleSpecialization01Change(e.target.value)}  className='ol-input career-input specialization-select-option'>
                             <option className='specialization-name' value="">{CourseSpecialization01}</option>
                                 {AllSpecializations.map((spec) => (
                                 <option className='specialization-name career-input' key={spec.id} value={spec.id}>
@@ -324,7 +351,7 @@ const handleUpdateClick = () => {
                         <label className='career-update-label'>Specialization 02</label>
                             {Edit?
                     <div className='specialization-select-container'>
-                        <select className='ol-input career-input specialization-select-option'>
+                        <select onChange={(e) => handleSpecialization02Change(e.target.value)} className='ol-input career-input specialization-select-option'>
                             <option className='specialization-name career-input' value="">{CourseSpecialization02}</option>
                                 {AllSpecializations.map((spec) => (
                                 <option className='specialization-name career-input' key={spec.id} value={spec.id}>
@@ -344,7 +371,7 @@ const handleUpdateClick = () => {
                         <label className='career-update-label'>Specialization 03</label>
                             {Edit?
                     <div className='specialization-select-container'>
-                        <select  className='ol-input career-input specialization-select-option'>
+                        <select onChange={(e) => handleSpecialization03Change(e.target.value)}  className='ol-input career-input specialization-select-option'>
                             <option className='career-input specialization-name' value="">{CourseSpecialization03}</option>
                                 {AllSpecializations.map((spec) => (
                                 <option className='career-input specialization-name' key={spec.id} value={spec.id}>
@@ -365,7 +392,7 @@ const handleUpdateClick = () => {
                         <label className='career-update-label'>Specialization 04</label>
                             {Edit?
                     <div className='specialization-select-container'>
-                        <select  className='ol-input career-input specialization-select-option'>
+                        <select onChange={(e) => handleSpecialization04Change(e.target.value)}  className='ol-input career-input specialization-select-option'>
                             <option className='specialization-name' value="">{CourseSpecialization04}</option>
                                 {AllSpecializations.map((spec) => (
                                 <option className='specialization-name' key={spec.id} value={spec.id}>
@@ -379,9 +406,10 @@ const handleUpdateClick = () => {
                       </button>}
                     </div>
 
-                    <button onClick={()=>navigate('/admin/add-specialization')} className='career-update-bnt2 add-spatialization-btn'>
-                        Add Spatialization
-                    </button>         
+
+                    {Edit?<button onClick={()=>navigate('/admin/add-specialization')} className='career-update-bnt2 add-spatialization-btn'>
+                        Add New Spatialization
+                    </button>  :null}       
 
                     <div className='career-update-bnt-container'>
                         

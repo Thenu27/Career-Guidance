@@ -14,7 +14,7 @@ const CareerField =()=>{
 
     const fetchCareerField=async()=>{
         try{
-            const response = await axiosInstance.get('/api/admin/careerfield');
+            const response = await axiosInstance.get('/api/v1/admin/career/careerfield');
             console.log(response.data);
             setCareerField(response.data);
         }catch(error){
@@ -30,6 +30,9 @@ const CareerField =()=>{
         setSelectedField(field);
     }
 
+    useEffect(()=>{
+        console.log("SelectedField:",SelectedField);
+    },[SelectedField])
     useEffect(()=>{
         fetchCareerField();
     },[])
@@ -52,8 +55,8 @@ const CareerField =()=>{
             <h1 className='career-field-title'>Choose a Career Field</h1>
         </div>
             <div className='career-field-inner-container'>
-                {CareerField.map((career)=>{
-                    return <button key={career.field} onClick={()=>{goToIndividualCareerPage();handleField(career.field)}} className='login-btn career-field-btn'>{career.field}</button>
+                {CareerField.map((careerfield)=>{
+                    return <button key={careerfield.id} onClick={()=>{goToIndividualCareerPage();handleField(careerfield.id)}} className='login-btn career-field-btn'>{careerfield.field_name}</button>
                 })}
 
       

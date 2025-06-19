@@ -58,7 +58,7 @@ const fetchCourseInfo=async(req,res)=>{
         }
 
         const specialization_names = await db('specializations')
-        .select('name')
+        .select('id','name')
         .where(function () {
             this.where('id', result[0].specialization_1)
                 .orWhere('id', result[0].specialization_2)
@@ -69,8 +69,8 @@ const fetchCourseInfo=async(req,res)=>{
         if(!specialization_names || specialization_names.length === 0) {
             throw new Error('No specializations found for the course');
         }
-        console.log(result)
-        console.log('specialization_names',specialization_names)
+        // console.log(result)
+        // console.log('specialization_names',specialization_names)
 
         res.status(StatusCodes.OK).json({course_info:result,specialization_names:specialization_names});              
 
@@ -109,10 +109,10 @@ const updateAdminCourseChange=async(req,res)=>{
                        .where('course_id',Number(course_id))
                        .update({'course_name':course_name,
                                 'course_field':course_field,
-                                's1':s1,
-                                's2':s2,
-                                's3':s3,
-                                's4':s4,
+                                'specialization_1':s1,
+                                'specialization_2':s2,
+                                'specialization_3':s3,
+                                'specialization_4':s4,
                                 'duration':duration,
                                 'fees':fees,
                                 'course_level':course_level,
@@ -241,7 +241,7 @@ const fetchAllSpecializations = async (req, res) => {
         if (!result || result.length === 0) {
             return res.status(404).json({ error: 'No specializations found' });
         }
-        console.log(result);
+        // console.log(result);
 
         res.status(200).json({ specializations: result });
     }catch(err){
@@ -253,7 +253,7 @@ const fetchAllSpecializations = async (req, res) => {
 
 const fetchAdminCourseSpecialization = async (req, res) => {
     try {
-        const {course_id} = req.body;
+        const {course_id} = req.body; 
         const result = await knex('degrees')
         .select('specialization_1','specialization_2','specialization_3','specialization_4')
         .where('course_id', course_id);
@@ -261,7 +261,7 @@ const fetchAdminCourseSpecialization = async (req, res) => {
         if(!result || result.length === 0) {
             return res.status(404).json({ error: 'No specializations found for the given course_id' });
         }
-        console.log(result)
+        // console.log(result)
 
         res.status(200).json({specialization:result});
     } catch (err) {

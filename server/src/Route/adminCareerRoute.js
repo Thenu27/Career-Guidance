@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router(); 
-const {fetchCourseFields,fetchCourses,fetchCourseInfo,updateAdminCourseChange,AddingAdminCourse,deleteAdminCourse,AddCourseField} = require('../controllers/adminCourseController')
+const {addAdminCareerField,fetchAdminCareerField,fetchAdminCareersForField,deleteAdminCareerField,addAdminCareer,UpdateAdminCareer,fetchAdminCareerDetails,deleteAdminCareer} = require('../controllers/adminCareerController');  
 
-router.route('/courseField').get(fetchCourseFields)
-router.route('/courses').get(fetchCourses)
-router.route('/course-details').get(fetchCourseInfo)
-router.route('/course-update').post(updateAdminCourseChange)
-router.route('/course-add').post(AddingAdminCourse)
-router.route('/course-delete').delete(deleteAdminCourse)
-router.route('/course-field-add').post(AddCourseField)
+router.route('/careerfield').get(fetchAdminCareerField);
+router.route('/careerfield/add').post(addAdminCareerField);
+router.route('/careerfield/career/add').post(addAdminCareer);
+router.route('/careerfield/delete').post(deleteAdminCareerField);
+router.route('/careerfield/all-careers').post(fetchAdminCareersForField)
+router.route('/careerfield/career/update').post(UpdateAdminCareer)
+router.route('/careerfield/career/details').post(fetchAdminCareerDetails)
+router.route('/careerfield/career/delete').post(deleteAdminCareer)
+
 
 module.exports=router;

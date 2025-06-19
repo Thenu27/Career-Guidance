@@ -9,7 +9,8 @@ const CareerAdd = () => {
 
     const navigate = useNavigate();
 
-    
+    const [AllSpecializations, setAllSpecializations] = useState([]);
+
     const [HasCareer,setHasCareer] = useState()
     const {setSelectedField,SelectedField} = useContext(CareerContext)
     const [NewCareer,setNewCareer] = useState()
@@ -25,10 +26,10 @@ const CareerAdd = () => {
     const [SelectedNonIq04, setSelectedNonIq04] = useState('Select Inteligence');
 
 
-    const [Specialization01, setSpecialization01] = useState();
-    const [Specialization02, setSpecialization02] = useState();
-    const [Specialization03, setSpecialization03] = useState();
-    const [Specialization04, setSpecialization04] = useState();
+    const [CourseSpecialization01, setCourseSpecialization01] = useState();
+    const [CourseSpecialization02, setCourseSpecialization02] = useState();
+    const [CourseSpecialization03, setCourseSpecialization03] = useState();
+    const [CourseSpecialization04, setCourseSpecialization04] = useState();
 
     const [task,setTask] = useState([]);
 
@@ -68,26 +69,29 @@ const CareerAdd = () => {
 
     const sendToDataToBE = async () => {
         try {
-            const response = await axiosInstance.post(`${import.meta.env.VITE_APP_URL}/api/admin/career/add`, {
-                SelectedNonIq01,
-                SelectedNonIq02,
-                SelectedNonIq03,
-                SelectedNonIq04,
-                SpatialScore,
-                LogicalScore,
-                LinguisticScore,
-                Specialization01,
-                Specialization02,
-                Specialization03,
-                Specialization04,
-                NewCareer,
-                NewCareerId,
-                SelectedField,
-                task
-            });
+            if(!window.confirm('Do you want to add this Career?')){
+                return
+            }
+        const response = await axiosInstance.post(`${import.meta.env.VITE_APP_URL}/api/v1/admin/career/careerfield/career/add`, {
+            SelectedNonIq01,
+            SelectedNonIq02,
+            SelectedNonIq03,
+            SelectedNonIq04,
+            SpatialScore:Number(SpatialScore),
+            LogicalScore:Number(LogicalScore),
+            LinguisticScore:Number(LinguisticScore),
+            CourseSpecialization01: Number(CourseSpecialization01),
+            CourseSpecialization02: Number(CourseSpecialization02),
+            CourseSpecialization03: Number(CourseSpecialization03),
+            CourseSpecialization04: Number(CourseSpecialization04),
+            NewCareer,
+            NewCareerId:Number(NewCareerId),
+            SelectedField:Number(SelectedField),
+            task
+        });
             alert("Data sent to the server")
-            if(response.data==='Data added successfully!'){
-                alert('Data Added Succesfully');
+            if(response.status===200){
+                alert('Career Added Succesfully');
                 navigate('/admin/careerfield/career')
             }
         } catch (error) {
@@ -106,21 +110,7 @@ const CareerAdd = () => {
         setNewCareer(event.target.value)
     }
 
-    const handleSpecialization01OnChange=(event)=>{
-        setSpecialization01(event.target.value)
-    }
 
-    const handleSpecialization02OnChange=(event)=>{
-        setSpecialization02(event.target.value)
-    }
-
-    const handleSpecialization03OnChange=(event)=>{
-        setSpecialization03(event.target.value)
-    }
-
-    const handleSpecialization04OnChange=(event)=>{
-        setSpecialization04(event.target.value)
-    }
 
     const handleAdd = async() => {
         if (
@@ -169,11 +159,47 @@ const CareerAdd = () => {
     console.log('task:',task)
   },[task]);
 
+    const fetchAllSpecilization=async()=>{
+        try{
+            const response = await axiosInstance.get('/api/v1/admin/higher-education/specialization');
+            setAllSpecializations(response.data.specializations);
+        }catch(err){
+            console.error("Error fetching specializations:", err);
+        }
+    }
+
+    useEffect(()=>{
+        fetchAllSpecilization()
+    },[])
+
+    useEffect(()=>{
+        console.log('AllSpecializations',AllSpecializations)
+    },[AllSpecializations])
 
 
+const handleSpecilaization01Change = (selectedValue) => {
+    setCourseSpecialization01(selectedValue);
+}
 
+const handleSpecilaization02Change = (selectedValue) => {
+    setCourseSpecialization02(selectedValue);
+}
 
+const handleSpecilaization03Change = (selectedValue) => {
+    setCourseSpecialization03(selectedValue);
+}
 
+const handleSpecilaization04Change = (selectedValue) => {
+    setCourseSpecialization04(selectedValue);
+}
+
+useEffect(()=>{
+    console.log('CourseSpecialization01:', CourseSpecialization01);
+    console.log('CourseSpecialization02:', CourseSpecialization02);
+    console.log('CourseSpecialization03:', CourseSpecialization03);
+    console.log('CourseSpecialization04:', CourseSpecialization04);
+    
+},[CourseSpecialization01, CourseSpecialization02, CourseSpecialization03, CourseSpecialization04]);
 
     return (
         <>
@@ -297,23 +323,55 @@ const CareerAdd = () => {
                     </div>
 
 
-                    <div className='ol-input-container'>
-                        <label className='ol-input-label'>Enter Specialization 01</label>
-                        <input type='text' value={Specialization01} onChange={(event)=>{handleSpecialization01OnChange(event)}} className='ol-input career-input' />
-                    </div>
-                    <div className='ol-input-container'>
-                        <label className='ol-input-label career-input-label'>Enter Specialization 02</label>
-                        <input type='text' value={Specialization02} onChange={(event)=>{handleSpecialization02OnChange(event)}} className='ol-input career-input' />
-                    </div>
-                    <div className='ol-input-container'>
-                        <label className='ol-input-label'>Enter Specialization 03</label>
-                        <input type='text' value={Specialization03} onChange={(event)=>{handleSpecialization03OnChange(event)}} className='ol-input career-input' />
-                    </div>
+                <div className='specialization-select-container'>
+                    <label className='ol-input-label'>Select Specialization 1</label>
+                    <select onChange={(e) => handleSpecilaization01Change(e.target.value)} className='ol-input specialization-select-option'>
+                        <option className='specialization-name' value="">Specialization 01</option>
+                        {AllSpecializations.map((spec) => (
+                        <option  className='ol-input specialization-name' key={spec.id} value={spec.id}>
+                            {spec.name}
+                        </option>
+                        ))}
+                    </select>
+                </div>
 
-                    <div className='ol-input-container'>
-                        <label className='ol-input-label'>Enter Specialization 04</label>
-                        <input type='text' value={Specialization04} onChange={(event)=>{handleSpecialization04OnChange(event)}} className='ol-input career-input' />
-                    </div>
+                <div className='specialization-select-container'>
+                    <label className='ol-input-label'>Select Specialization 2</label>
+                    <select onChange={(e) => handleSpecilaization02Change(e.target.value)} className='ol-input specialization-select-option'>
+                        <option className='specialization-name' value="">Specialization 02</option>
+                        {AllSpecializations.map((spec) => (
+                        <option  className='ol-input specialization-name' key={spec.id} value={spec.id}>
+                            {spec.name}
+                        </option>
+                        ))}
+                    </select>
+                </div>
+
+
+                <div className='specialization-select-container'>
+                    <label className='ol-input-label'>Select Specialization 3</label>
+                    <select onChange={(e) => handleSpecilaization03Change(e.target.value)} className='ol-input specialization-select-option'>
+                        <option className='specialization-name' value="">Specialization 03</option>
+                        {AllSpecializations.map((spec) => (
+                        <option  className='ol-input specialization-name' key={spec.id} value={spec.id}>
+                            {spec.name}
+                        </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className='specialization-select-container'>
+                    <label className='ol-input-label'>Select Specialization 4</label>
+                    <select onChange={(e) => handleSpecilaization04Change(e.target.value)} className='ol-input specialization-select-option'>
+                        <option className='specialization-name' value="">Specialization 04</option>
+                        {AllSpecializations.map((spec) => (
+                        <option  className='ol-input specialization-name' key={spec.id} value={spec.id}>
+                            {spec.name}
+                        </option>
+                        ))}
+                    </select>
+                </div>
+
                 </div>
 
                 <button onClick={handleAddTask} className='add-ol-btn add-task'>Add Task</button>

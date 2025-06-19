@@ -273,7 +273,7 @@ db.raw('SELECT 1')
     .then(() => console.log('Database connection established successfully!'))
     .catch((err) => {
         console.error('Database connection failed:', err.message);
-    });
+});
   
 
 app.use(express.json({ limit: "5mb" })); 
@@ -1643,129 +1643,6 @@ app.post('/api/admin/advancedlevel/add', async (req, res) => {
     }
 });
 
-
-const fetchAdminCareersFieldsFromDB=async()=>{
-    try{
-        const response = await db("career_table").distinct("field").orderBy("field");
-        return response                 
-    }catch(error){
-        console.log("Error when Fetching Career fields from Database",error);
-        throw error;
-    }
-}
-
-
-app.get('/api/admin/careerfield',async(req,res)=>{
-    try{
-        const careersfields = await fetchAdminCareersFieldsFromDB();
-        res.json(careersfields);
-    }catch (error) {
-        console.error("Error getting Careers from Database", error);
-        res.status(500).json({ message: "Internal Server Error", error: error.message });
-    }
-})
-
-const fetchAdminCareer=async(field)=>{
-    try{ 
-        const response = await db.select('*').from('career_table').where('field',field);
-        console.log("Admin Career",response)
-        return response
-    }catch(error){
-        console.log("Error when fetching Careers from DB",error);
-        throw error;
-    }
-}
-
-const fetchAdminTask=async(careerId)=>{
-    try{ 
-        const response = await db.select('*').from('career_tasks').where('career_id',careerId);
-        console.log("Career",response)
-        return response
-    }catch(error){
-        console.log("Error when fetching Careers from DB",error);
-        throw error;
-    }
-}
-
-
-
-app.post('/api/admin/career', async (req, res) => {
-    try {
-        const {SelectedField} =req.body;
-        const career = await fetchAdminCareer(SelectedField);
-        
-        if (!career || career.length === 0) {
-            return res.status(404).json({ message: "No careers found" });
-        }
-
-        res.json(career);
-    } catch (error) {
-        console.error("Error fetching careers from the database:", error);
-        res.status(500).json({ message: "Internal Server Error", error: error.message });
-    }
-});
-
-const addCareerField = async(field)=>{
-    try{
-        const result = await db("career_table")
-        .insert({
-            field:field
-        })
-        .returning('*');
-
-        return result    
-    }catch(err){
-        throw err
-    }                        
-}
-
-app.post('/api/admin/careerfield/career-field-add',async(req,res)=>{
-    try{
-        const {CareerField} = req.body
-        if(!CareerField){
-            return res.status(400).send('No Data To Be Added')
-        }
-        const result = await addCareerField(CareerField);
-
-        if(!result){
-           return res.status(StatusCodes.NOT_FOUND).send("Error occured when adding career field")
-        }
-
-        console.log("CareerField",CareerField);
-        res.status(StatusCodes.CREATED).send('New Career Field Received')
-    }catch(err){
-        console.log(err)
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Internal Server Error")
-    }
-})
-
-const deleteCareerField = async(CareerField)=>{
-    try{
-        const response = await db('career_table').where('field',CareerField).del();
-        return response;
-    }catch(error){
-        console.error("Error deleting Career Field",error);
-        throw error;
-    }
-}
-
-app.post('/api/admin/careerfield/delete',async(req,res)=>{
-    try{
-        const {CareerField} = req.body;
-        console.log(CareerField);
-        const result = await deleteCareerField(CareerField);
-        if(!result){
-           throw new Error("Error Occured")
-        }
-        res.status(StatusCodes.OK).send('Career field Deleted')
-    }catch(error){
-        console.log(error)
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Error Occured");
-    }
-})
-
-
-
         
     const IdentifyIntelligence = (value) => {
         switch (value) {
@@ -1781,91 +1658,6 @@ app.post('/api/admin/careerfield/delete',async(req,res)=>{
             default: return 'Unknown';
         }
     };                       
-
-    const addCareerToDB = async(SelectedField, SelectedNonIq01,
-        SelectedNonIq02,
-        SelectedNonIq03,
-        SelectedNonIq04,
-        SpatialScore,
-        LogicalScore,
-        LinguisticScore,
-        Specialization01,
-        Specialization02,
-        Specialization03,
-        Specialization04,
-        NewCareer,
-        NewCareerId)=>{
-    
-        const result = await db('career_table').select('career').where('field',SelectedField);
-        console.log(result)
-
-        const non_iq_1 = IdentifyIntelligence(SelectedNonIq01);
-        const non_iq_2 = IdentifyIntelligence(SelectedNonIq02); 
-        const non_iq_3 = IdentifyIntelligence(SelectedNonIq03);
-        const non_iq_4 = IdentifyIntelligence(SelectedNonIq04);
-
-        
-        console.log("non_iq",non_iq_1,non_iq_2,non_iq_3, non_iq_4 )
-
-        const existingCareerId = await db('career_table')
-            .select('career_id')
-            .where('career_id', NewCareerId)
-            .first();
-
-        if (existingCareerId) {
-            console.log(`Error: Career ID ${NewCareerId} already exists.`);
-            return 'Id Already Exist'
-        }else{
-
-        if(result[0].career===null){
-           console.log(" No Careers")
-           const result = await db("career_table")
-           .where('field', SelectedField)
-           .update({
-               career: NewCareer,
-               career_id: NewCareerId,
-               non_iq_intelligence1: non_iq_1,
-               non_iq_intelligence2: non_iq_2,
-               non_iq_intelligence3: non_iq_3,
-               non_iq_intelligence4: non_iq_4,
-               spatial: SpatialScore,
-               logical: LogicalScore,
-               linguistic: LinguisticScore,
-               s1: Specialization01,
-               s2: Specialization02,
-               s3: Specialization03,
-               s4: Specialization04
-           })
-           .returning('*'); 
-    
-            return result
-    
-        }else{
-            const result = await db("career_table")
-            .insert({
-                career:NewCareer,
-                career_id:NewCareerId,
-                field:SelectedField,
-                non_iq_intelligence1:non_iq_1,
-                non_iq_intelligence2:non_iq_2,
-                non_iq_intelligence3:non_iq_3,
-                non_iq_intelligence4: non_iq_4,
-                spatial:SpatialScore,
-                logical:LogicalScore,
-                linguistic:LinguisticScore,
-                s1:Specialization01,
-                s2:Specialization02,
-                s3:Specialization03,
-                s4:Specialization04
-            })
-            .where('field',SelectedField)
-            .returning('*');
-    
-            return result
-        }
-    }   
-
-}
 
 
 
@@ -1887,84 +1679,11 @@ app.post('/api/admin/career/task/delete',async(req,res)=>{
     }
 })
 
-app.post('/api/admin/career/add', async (req, res) => {
-    try {
-        const {
-            task,
-            SelectedNonIq01,
-            SelectedNonIq02,
-            SelectedNonIq03,
-            SelectedNonIq04,
-            SpatialScore,
-            LogicalScore,
-            LinguisticScore,
-            Specialization01,
-            Specialization02,
-            Specialization03,
-            Specialization04,
-            NewCareer,
-            NewCareerId,
-            SelectedField
-
-        } = req.body;
-
-        // Log the received data for debugging
-        console.log("Received data:", {
-            task,
-            SelectedNonIq01,
-            SelectedNonIq02,
-            SelectedNonIq03,
-            SelectedNonIq04,
-            SpatialScore,
-            LogicalScore,
-            LinguisticScore,
-            Specialization01,
-            Specialization02,
-            Specialization03,
-            Specialization04,
-            NewCareer,
-            NewCareerId,
-            SelectedField
-
-
-        });
-       const result = await addCareerToDB(SelectedField, SelectedNonIq01,
-        SelectedNonIq02,
-        SelectedNonIq03,
-        SelectedNonIq04,
-        SpatialScore,
-        LogicalScore,
-        LinguisticScore,
-        Specialization01,
-        Specialization02,
-        Specialization03,
-        Specialization04,
-        NewCareer,
-        NewCareerId);
-
-        const taskResult = await addTaskToDatabase(task,NewCareerId);
-        
-        if(!result){
-            return res.status(StatusCodes.NOT_FOUND).send('Error occured when adding to Database')
-            }
-        if(result==='Id Already Exist'){
-           return res.status(StatusCodes.BAD_REQUEST).send('Career ID already exists');
-        }
-        // if(!taskResult){
-        //     return res.status(StatusCodes.BAD_REQUEST).send('Failed to Add Tasks');
-        // }
-
-        res.status(200).send('Data added successfully!');
-    } catch (error) {
-        console.error("Error adding data:", error);
-        res.status(500).json({ message: 'An error occurred while adding the data.' });
-    }
-});
 
 const fetchAdminCareerTask = async(career_id)=>{
     try{
         const response = await db.select('*').from('career_tasks').where('career_id',career_id)
-        console.log("Task received from DB:",response)
+        // console.log("Task received from DB:",response)
         return response
 
     }catch(err){
@@ -1972,29 +1691,8 @@ const fetchAdminCareerTask = async(career_id)=>{
         throw err;
     }
 }
+ 
 
-const fetchAdminCareerSpecificDetails=async(career)=>{
-    try{
-        const response = await db.select('*').from('career_table').where('career',career);
-        console.log("Admin Career",response)
-        return response
-    }catch(error){
-        console.log("Error when fetching Careers Details from DB",error);
-        throw error;
-    }
-}
-
-
-app.post('/api/admin/career/details',async(req,res)=>{
-    try{
-        const {SelectedCareer} =req.body;
-        console.log('SelectedCareer:',SelectedCareer)
-        const result = await fetchAdminCareerSpecificDetails(SelectedCareer);
-        res.json(result);
-    }catch(error){
-        console.error('Failed to fetch Careers from DB');
-    }
-})
 
 app.post('/api/admin/career/task',async(req,res)=>{
     try{
@@ -2007,185 +1705,6 @@ app.post('/api/admin/career/task',async(req,res)=>{
     }
 })
 
-const updateCareer = async (CareerLinguistic,
-    CareerLogical,
-    CareerSpatial,
-       Non_Iq_Intelligence1,
-       Non_Iq_Intelligence2,
-       Non_Iq_Intelligence3,
-       Non_Iq_Intelligence4,
-       CareerName,
-       CareerId,
-       Specialization1,
-       Specialization2,
-       Specialization3,
-       Specialization4,
-       CareerDbId,
-       SelectedField) => {
-
-    const non_iq_1 = IdentifyIntelligence(Non_Iq_Intelligence1);
-    const non_iq_2 = IdentifyIntelligence(Non_Iq_Intelligence2);
-    const non_iq_3 = IdentifyIntelligence(Non_Iq_Intelligence3);
-    const non_iq_4 = IdentifyIntelligence(Non_Iq_Intelligence4);   
-
-    console.log("non_iq",non_iq_1,non_iq_2,non_iq_3, non_iq_4 )
-    try {
-
-        const existingCareerId = await db('career_table')
-            .select('career_id')
-            .where('career_id', CareerId)  // Check if career_id exists
-            .andWhereNot('career_db_id', CareerDbId) // Exclude the given career_db_id
-            .first();
-
-
-        if (existingCareerId) {
-            throw new Error('Career ID already exists.');
-        }
-
-        const updatedCareer = await db("career_table")
-            .where('career_db_id', CareerDbId) // Match the row where field = careerField
-            .update({linguistic:CareerLinguistic,
-                logical:CareerLogical,
-                spatial:CareerSpatial,
-                non_iq_intelligence1:non_iq_1,
-                non_iq_intelligence2:non_iq_2,
-                non_iq_intelligence3:non_iq_3,
-                non_iq_intelligence4:non_iq_4, 
-                career:CareerName,
-                career_id:CareerId,
-                s1:Specialization1,
-                s2:Specialization2,
-                s3:Specialization3,
-                s4:Specialization4})
-            .returning('*'); // Return the updated row
-
-        if (!updatedCareer.length) {
-            console.log("No matching career found.");
-            return { error: "No career found with the given field." };
-        }
-
-        console.log("Updated career:", updatedCareer);
-        return updatedCareer;
-    } catch (error) {
-        console.error("Error updating career:", error);
-        throw error;
-    }
-};
-
-app.post('/api/admin/career/update',async(req,res)=>{
-    try{
-        const {
-            CareerLinguistic,
-            CareerLogical,
-            CareerSpatial,
-            Non_Iq_Intelligence1,
-            Non_Iq_Intelligence2,
-            Non_Iq_Intelligence3,
-            Non_Iq_Intelligence4,
-            CareerName,
-            CareerId,
-            OldCareerId,
-            Specialization1,
-            Specialization2,
-            Specialization3,
-            Specialization4,
-            CareerDbId,
-            SelectedField,
-            task
-
-     } = req.body;
-     console.log("Task:",task)
-     console.log("CareerLinguistic:",CareerLinguistic)
-     console.log("CareerLogical:",CareerLogical)
-     console.log("CareerSpatial:",CareerSpatial)
-     console.log('Non_Iq_Intelligence1:',Non_Iq_Intelligence1)
-     console.log('Non_Iq_Intelligence2:',Non_Iq_Intelligence2)
-     console.log('Non_Iq_Intelligence3:',Non_Iq_Intelligence3)
-     console.log('Non_Iq_Intelligence4:',Non_Iq_Intelligence4)
-     console.log('CareerName:',CareerName)
-     console.log('Specialization1:',Specialization1);
-     console.log('Specialization2:',Specialization2);
-     console.log('Specialization3:',Specialization3);
-     console.log('Specialization4:',Specialization4);
-     console.log('CareerId:',CareerId);
-     console.log('SelectedField:',SelectedField);
-     console.log('CareerDbId:',CareerDbId);
-     console.log('OldCareerId:',OldCareerId)
-
-    const result = await updateCareer(CareerLinguistic,
-        CareerLogical,
-        CareerSpatial,
-           Non_Iq_Intelligence1,
-           Non_Iq_Intelligence2,
-           Non_Iq_Intelligence3,
-           Non_Iq_Intelligence4,
-           CareerName,
-           CareerId,
-           Specialization1,
-           Specialization2,
-           Specialization3,
-           Specialization4,
-           CareerDbId,
-           SelectedField);
-
-    if(CareerId===OldCareerId){
-         const taskResult = await updateOrInsertCareerTasks(CareerId,task);
-    }else{
-        const taskResult = await updateInserTasksWhenIdChanged(CareerId,task)
-    }       
-    
-    // if(taskResult<1){
-    //     return res.status(StatusCodes.NOT_FOUND).send('Error occured when updating the career Tasks')
-    // }
-        
-     if(!result){
-        return res.status(StatusCodes.NOT_FOUND).send('Error occured when updating the career')
-     }      
-     res.status(200).send('Career Updated Succesfully')
-
-   }catch(err){
-    console.log("New Error",err.message)
-    res.status(404).send(err)
-   }
-
-})
-
-const deleteAdminCareerFromDB=async(career,career_id)=>{
-    try{
-        const response = await db('career_table').where('career_id',career_id).del();
-        return response;
-    }catch(error){
-        console.error("Error deleting question",error)
-    }
-}
-
-app.post('/api/admin/career/delete',async(req,res)=>{
-    try{
-        const {career,career_id} = req.body;
-        console.log("career",career);
-        console.log("career id",career_id);
-        const result = await deleteAdminCareerFromDB(career,career_id);
-        const delTaskResult = await deleteTasksFromDatabase(career_id);
-        
-        if(!result){
-          return  res.status(StatusCodes.NOT_FOUND).send('Error occured when deleting the career')
-        }
-
-        // if(!delTaskResult){
-        //     return  res.status(StatusCodes.NOT_FOUND).send('Error occured when deleting the career')
-        //   }
-
-        res.status(StatusCodes.OK).send('Career Deleted')
-    }catch(error){
-        console.log(error)
-        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({ error: 'Internal server error' });
-    }
-})
-
-
-
-
-
 const deleteAdminOLSubjectFromDB=async(subject_id)=>{
     try{
         const response = await db('olevel_local_subjects').where('subject_id',subject_id).del();
@@ -2194,9 +1713,6 @@ const deleteAdminOLSubjectFromDB=async(subject_id)=>{
         console.error("Error deleting question",error)
     }
 }
-
-
-
 
 
 app.post('/api/admin/olevel/delete',async(req,res)=>{
