@@ -89,6 +89,7 @@ const Career = () => {
 
             if (response.status === 200) {
                 alert('Career Field deleted successfully');
+                navigate('/admin/careerfield')
             } 
         } catch (error) {
             console.log(error)

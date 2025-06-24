@@ -8,7 +8,7 @@ import { CoursesContext } from '../../../Context/CoursesContext';
 const DegreeField =()=>{
 
     const [CourseField,setCourseField] = useState([]);
-    const {SelectedCourseField,setSelectedCourseField } = useContext(CoursesContext);
+    const {SelectedCourseField,setSelectedCourseField,SelectedCourseFieldId,setSelectedCourseFieldId } = useContext(CoursesContext);
 
     const navigate = useNavigate();
 
@@ -30,13 +30,16 @@ const DegreeField =()=>{
         console.log("Course Fields:", CourseField);
     },[CourseField])
 
-    const handleCourseField = (field) => {
+    const handleCourseField = (field,id) => {
         setSelectedCourseField(field);
+        setSelectedCourseFieldId(id)
     }
 
     useEffect(()=>{
         localStorage.setItem('SelectedAdminCourseField',SelectedCourseField)
-    },[SelectedCourseField])
+        localStorage.setItem('SelectedAdminCourseFieldId',SelectedCourseFieldId)
+
+    },[SelectedCourseField,SelectedCourseField])
 
     const goToCourses=()=>{
         navigate('/admin/higher-education/courses');
@@ -56,13 +59,13 @@ const DegreeField =()=>{
                     <div className='career-field-inner-container'>
 
                         {CourseField.map((course)=>{
-                            return <button onClick={() => {handleCourseField(course.course_field);goToCourses();}} key={course.course_field} className='login-btn career-field-btn'>{course.course_field}</button>
+                            return <button onClick={() => {handleCourseField(course.course_field_name,course.course_field_id);goToCourses();}} key={course.course_field_id} className='login-btn career-field-btn'>{course.course_field_name}</button>
                         })}
             
                     </div>
-                    {/* <div className='career-field-add'>
+                    <div className='career-field-add'>
                     <button onClick={goToAddCourseField}  className='login-btn add-question-btn'>Add Course Field</button>
-                </div>   */}
+                </div>  
             </div>
             
             </>

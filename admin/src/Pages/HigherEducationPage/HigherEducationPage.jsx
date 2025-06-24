@@ -17,14 +17,17 @@ const HigherEducationPage=()=>{
         if(location.pathname==='/admin/higher-education/courses/update'){
             navigate('/admin/higher-education/courses')
         }
-        if(location.pathname==='/admin/higher-education/courses'){
+        if(location.pathname==='/admin/higher-education/courses/'){
             navigate('/admin/higher-education')
         }
         if(location.pathname==='/admin/higher-education/courses/add'){
             navigate('/admin/higher-education/courses')
         }
-        if(location.pathname==='/admin/careerfield/career-field-add'){
-            navigate('/admin/careerfield')
+        if(location.pathname==='/admin/higher-education/course-field-add'){
+            navigate('/admin/higher-education/')
+        }
+        if(location.pathname==='/admin/higher-education/'){
+            navigate('/admin/option')
         }
 
     }

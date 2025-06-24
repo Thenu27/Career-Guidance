@@ -153,8 +153,12 @@ const addAdminCareer = async (req, res) => {
         res.status(200).json({msg: "Career Added Succesfully" });
 
     }catch(error){
-        console.error("Error adding career:", error);
-        res.status(500).json({ error: "Internal server error" });
+        
+        if (error.code === '23505') { // unique violation
+            return res.status(400).send('Career ID already exists');
+        }
+        console.error('Unexpected error:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 

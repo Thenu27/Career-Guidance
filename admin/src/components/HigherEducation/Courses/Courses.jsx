@@ -11,21 +11,21 @@ const Courses = () => {
     const navigate = useNavigate();
     const [courses, setCourses] = useState([]);
 
-    const {SelectedCourseField,setSelectedCourseField} = useContext(CoursesContext);
+    const {SelectedCourseFieldId,setSelectedCourseFieldId} = useContext(CoursesContext);
 
     useEffect(() => {
-           const storedResult =  localStorage.getItem('SelectedAdminCourseField');
+           const storedResult =  localStorage.getItem('SelectedAdminCourseFieldId');
            if(storedResult){
-                setSelectedCourseField(storedResult);
+                setSelectedCourseFieldId(storedResult);
            }else{
             alert('Sonething went wrong, Please try again');
             navigate('/admin/higher-education');
            }
-    },[])
+    },[SelectedCourseFieldId])
 
     const fetchCourses = async () => {
         try{
-            const response = await axiosInstance.get(`/api/v1/admin/higher-education/courses?field=${SelectedCourseField}`);
+            const response = await axiosInstance.get(`/api/v1/admin/higher-education/courses?field=${SelectedCourseFieldId}`);
             console.log(response.data.courses);
             setCourses(response.data.courses);  
         }catch(error){
@@ -33,17 +33,34 @@ const Courses = () => {
         }
     }
 
+
+    const deletingCourseField=async(SelectedCourseFieldId)=>{
+        if(!window.confirm('Are you sure want Delete this Field')){
+            return
+        }
+        try{
+            const response = await axiosInstance.post(`/api/v1/admin/higher-education/coursefield/delete`,{
+                SelectedCourseFieldId
+            });
+            console.log(response.data.courses);
+            if(response.status===200){
+                alert('CourseField Deleted Successfully')
+                navigate('/admin/higher-education')
+            }
+        }catch(error){
+            console.error("Error when fetching courses", error);
+        }
+    }
+
     useEffect(()=>{
     fetchCourses()
-    },[SelectedCourseField])
+    },[SelectedCourseFieldId])
 
     const handleCourseClick = () => {
         navigate('/admin/higher-education/courses/update');
     }
 
     const handleSelectedCourse = (course_id) => {
-        // This function can be used to set the selected course in context or state
-        // For now, it just logs the course name
         localStorage.setItem('SelectedAdminCourseId',course_id);
     }
 
@@ -64,7 +81,7 @@ const Courses = () => {
                             <button
                                 onClick={() => {handleCourseClick();handleSelectedCourse(course.course_id)}} // ✅ Handle click to navigate
                                 key={course.course_id} // ✅ Ensure unique key
-                                className="login-btn career-field-btn"
+                                className="login-btn career-field-btn course-btn"
                             >
                                 {course.course_name}
                             </button>
@@ -79,9 +96,9 @@ const Courses = () => {
                         <button onClick={handleAddCourse}  className="add-career-btn">Add Course</button>
                     </div>
 
-                    {/* <div className='add-career-btn-container'>
-                        <button className="add-career-btn delete-field-btn">Delete</button>
-                    </div> */}
+                    <div className='add-career-btn-container'>
+                        <button onClick={()=>deletingCourseField(SelectedCourseFieldId)} className="add-career-btn delete-field-btn">Delete</button>
+                    </div>
                 </div>
 
                 

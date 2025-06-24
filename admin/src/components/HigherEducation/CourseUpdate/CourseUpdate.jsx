@@ -119,16 +119,15 @@ const sendUpdatedDataToBE = async () => {
         const response = await axiosInstance.post(`/api/v1/admin/higher-education/course-update`, {
             course_id: selectedCourseId,
             course_name: CourseName.trim(),
-            course_field: CourseField.trim(),
             course_level: CourseLevel.trim(),
             course_url: CourseUrl.trim(),
             duration: (Number(CourseDuration) || null),
             institute: Courseinstitute.trim(),
             minimum_level_category: CourseMinimumLevel.trim(),
-            s1: Number(CourseSpecialization01Id),
-            s2: Number(CourseSpecialization02Id),
-            s3: Number(CourseSpecialization03Id),
-            s4: Number(CourseSpecialization04Id),
+            s1: Number(CourseSpecialization01Id)|| null,
+            s2: Number(CourseSpecialization02Id)|| null,
+            s3: Number(CourseSpecialization03Id)|| null,
+            s4: Number(CourseSpecialization04Id)|| null,
             title: Coursetitle.trim(),
             course_university: CourseUniversity.trim(),
             institute_website:InstituteWebsite.trim() , 
@@ -277,7 +276,7 @@ if(isLoading) {
                             
                     </div>
     
-    
+{/*     
                     <div className='career-update-bnt-container'>
                         
                         <label className='career-update-label'>Course Field</label>
@@ -285,7 +284,7 @@ if(isLoading) {
                         <button  className='career-update-bnt2'>{CourseField}</button>}
  
     
-                    </div>
+                    </div> */}
     
                     <div className='career-update-bnt-container'>
                         
@@ -312,9 +311,9 @@ if(isLoading) {
                     
                     <div className='career-update-bnt-container'>
                         
-                        <label className='career-update-label'>Institute</label>
+                        <label className='career-update-label '>Institute</label>
                         {Edit?<input onChange={(event)=>handleCourseInstituteChange(event.target.value)} value={Courseinstitute} className='career-update-bnt career-input' type='text'/>:
-                        <button  className='career-update-bnt2'>{Courseinstitute}</button>}    
+                        <button  className='career-update-bnt2 course-update-label'>{Courseinstitute}</button>}    
     
                     </div>
      
@@ -372,9 +371,9 @@ if(isLoading) {
                             {Edit?
                     <div className='specialization-select-container'>
                         <select onChange={(e) => handleSpecialization03Change(e.target.value)}  className='ol-input career-input specialization-select-option'>
-                            <option className='career-input specialization-name' value="">{CourseSpecialization03}</option>
+                            <option className='specialization-name career-input' value="">{CourseSpecialization03}</option>
                                 {AllSpecializations.map((spec) => (
-                                <option className='career-input specialization-name' key={spec.id} value={spec.id}>
+                                <option className='specialization-name career-input' key={spec.id} value={spec.id}>
                                     {spec.name}
                                 </option>
                             ))}

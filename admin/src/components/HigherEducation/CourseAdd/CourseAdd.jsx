@@ -27,6 +27,15 @@ const CourseAdd = () => {
 
     const [AllSpecializations, setAllSpecializations] = useState([]);
 
+    const [SelectedCourseFieldId,setSelectedCourseFieldId] = useState();
+
+  useEffect(() => {
+    const storedId = localStorage.getItem('SelectedAdminCourseFieldId');
+    if (storedId) {
+      setSelectedCourseFieldId(storedId);
+      console.log("Loaded from localStorage:", storedId);
+    }
+  }, []);
 
     const handleCourseNameChange=(event)=>{
         setCourseName(event)
@@ -48,21 +57,6 @@ const CourseAdd = () => {
         setCourseMinimumLevel(value);
     };
 
-    // const handleSpecialization01Change = (value) => {
-    //     setCourseSpecialization01(value);
-    // };
-
-    // const handleSpecialization02Change = (value) => {
-    //     setCourseSpecialization02(value);
-    // };
-
-    // const handleSpecialization03Change = (value) => {
-    //     setCourseSpecialization03(value);
-    // };
-
-    // const handleSpecialization04Change = (value) => {
-    //     setCourseSpecialization04(value);
-    // };
 
     const handleCourseTitleChange = (value) => {
         setCoursetitle(value);
@@ -102,7 +96,11 @@ const CourseAdd = () => {
     const fetchAllSpecilization=async()=>{
         try{
             const response = await axiosInstance.get('/api/v1/admin/higher-education/specialization');
-            setAllSpecializations(response.data.specializations);
+            const sorted = response.data.specializations.sort((a, b) =>
+            a.name.localeCompare(b.name)
+        );
+
+        setAllSpecializations(sorted);
         }catch(err){
             console.error("Error fetching specializations:", err);
         }
@@ -122,16 +120,16 @@ const CourseAdd = () => {
     try {
         const response = await axiosInstance.post(`/api/v1/admin/higher-education/course-add`, {
             course_name: (CourseName || '').trim(),
-            course_field: (CourseField || '').trim(),
+            course_field: (Number(SelectedCourseFieldId) || null),
             course_level: (CourseLevel || '').trim(),
             course_url: (CourseUrl || '').trim(),
             duration: (Number(CourseDuration) || null),
             institute: (Courseinstitute || '').trim(),
             minimum_level_category: (CourseMinimumLevel || '').trim(),
-            s1: (CourseSpecialization01),
-            s2: (CourseSpecialization02),
-            s3: (CourseSpecialization03),
-            s4: (CourseSpecialization04),
+            s1: Number(CourseSpecialization01)|| null,
+            s2: Number(CourseSpecialization02)|| null,
+            s3: Number(CourseSpecialization03)|| null,
+            s4: Number(CourseSpecialization04)|| null,
             title: (Coursetitle || '').trim(),
             university: (CourseUniversity || '').trim(),
             website: (InstituteWebsite || '').trim(),
@@ -140,7 +138,7 @@ const CourseAdd = () => {
 
         if(response.status===200){
             alert("Course Added successfully!!");
-            // navigate('/admin/higher-education/courses/');
+            navigate('/admin/higher-education/courses/');
         }
     window.location.reload();
     } catch (error) {
@@ -202,51 +200,51 @@ const handleSpecilaization04Change = (selectedValue) => {
 
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Enter Course Name</label>
-                        <input onChange={(e)=>{handleCourseNameChange(e.target.value)}} type='text' className='ol-input career-input ' />
+                        <input onChange={(e)=>{handleCourseNameChange(e.target.value)}} type='text' className='ol-input career-input course-input ' />
                     </div>
 
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Course Level</label>
-                        <input onChange={(e)=>{handleCourseLevelChange(e.target.value)}} type='text' className='ol-input career-input' />
+                        <input onChange={(e)=>{handleCourseLevelChange(e.target.value)}} type='text' className='ol-input career-input course-input' />
                     </div>
 
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Title</label>
-                        <input onChange={(e)=>{handleCourseTitleChange(e.target.value)}} type='text' className='ol-input career-input' />
+                        <input onChange={(e)=>{handleCourseTitleChange(e.target.value)}} type='text' className='ol-input career-input course-input' />
                     </div>   
 
 
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Course Duration</label>
-                        <input onChange={(e)=>{handleCourseDuration(e.target.value)}} type='number' className='ol-input career-input' />
+                        <input onChange={(e)=>{handleCourseDuration(e.target.value)}} type='number' className='ol-input career-input course-input' />
                     </div>
 
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Course Fees</label>
-                        <input onChange={(e)=>{handleCourseFeesChange(e.target.value)}} type='number' className='ol-input career-input' />
+                        <input onChange={(e)=>{handleCourseFeesChange(e.target.value)}} type='number' className='ol-input career-input course-input' />
                     </div>
 
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Institute</label>
-                        <input onChange={(e)=>{handleCourseInstituteChange(e.target.value)}} type='text' className='ol-input career-input' />
+                        <input onChange={(e)=>{handleCourseInstituteChange(e.target.value)}} type='text' className='ol-input career-input course-input' />
                     </div>
                     <div className='ol-input-container'>
                         <label className='ol-input-label career-input-label'>Institute Website</label>
-                        <input onChange={(e)=>{handleInstituteWebsiteChange(e.target.value)}} type='text' className='ol-input career-input' />
+                        <input onChange={(e)=>{handleInstituteWebsiteChange(e.target.value)}} type='text' className='ol-input career-input course-input' />
                     </div>
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Course URL</label>
-                        <input onChange={(e)=>{handleCourseUrlChange(e.target.value)}} type='text' className='ol-input career-input' />
+                        <input onChange={(e)=>{handleCourseUrlChange(e.target.value)}} type='text' className='ol-input career-input course-input' />
                     </div>
 
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>University</label>
-                        <input onChange={(e)=>{handleCourseUniversityChange(e.target.value)}} type='text' className='ol-input career-input' />
+                        <input onChange={(e)=>{handleCourseUniversityChange(e.target.value)}} type='text' className='ol-input career-input course-input' />
                     </div>
 
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Minimum Level</label>
-                        <input onChange={(e)=>{handleCourseMinimumLevelChange(e.target.value)}} type='text' className='ol-input career-input' />
+                        <input onChange={(e)=>{handleCourseMinimumLevelChange(e.target.value)}} type='text' className='ol-input career-input course-input' />
                     </div>   
 
                 </div>
@@ -278,7 +276,7 @@ const handleSpecilaization04Change = (selectedValue) => {
 
                 <div className='specialization-select-container'>
                     <label className='ol-input-label'>Select Specialization 03</label>
-                    <select onChange={(e) => handleSpecilaization03Change(e.target.value)} className='ol-input career-inputspecialization-select-option'>
+                    <select onChange={(e) => handleSpecilaization03Change(e.target.value)} className='ol-input specialization-select-option'>
                         <option className='specialization-name' value="">Specialization 03</option>
                             {AllSpecializations.map((spec) => (
                             <option className='specialization-name' key={spec.id} value={spec.id}>
@@ -290,8 +288,8 @@ const handleSpecilaization04Change = (selectedValue) => {
 
                 <div className='specialization-select-container'>
                     <label className='ol-input-label'>Select Specialization 04</label>
-                    <select onChange={(e) => handleSpecilaization04Change(e.target.value)} className='ol-input career-inputspecialization-select-option'>
-                        <option className='specialization-name' value="">Specialization 03</option>
+                    <select onChange={(e) => handleSpecilaization04Change(e.target.value)} className='ol-input specialization-select-option'>
+                        <option className='specialization-name' value="">Specialization 04</option>
                             {AllSpecializations.map((spec) => (
                             <option className='specialization-name' key={spec.id} value={spec.id}>
                                 {spec.name}
@@ -299,6 +297,10 @@ const handleSpecilaization04Change = (selectedValue) => {
                         ))}
                     </select>
                 </div>
+
+                <button onClick={()=>navigate('/admin/add-specialization')} className='career-update-bnt2 add-spatialization-btn'>
+                        Add New Spatialization
+                </button>  
 
                 <div className='add-ol-btn-container add-career-btn-container'>
                     <button

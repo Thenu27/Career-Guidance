@@ -3,8 +3,8 @@ const { StatusCodes } = require('http-status-codes');
 
 const fetchCourseFields = async (req,res) => {
     try {
-        const result = await db('degrees')
-            .distinct('course_field')
+        const result = await db('course_field')
+            .select('*')
 
         if (!result || result.length === 0) {
             throw new Error('No course fields found');
@@ -22,12 +22,13 @@ const fetchCourseFields = async (req,res) => {
 
 const fetchCourses = async (req,res) => {
     console.log('course is hit')
-    const {field } = req.query;
+    const {field} = req.query;
+        console.log('SelectedCourseFieldId',field)
 
     try {
         const result = await db('degrees')
             .select('course_name','course_id')
-            .where('course_field',field)
+            .where('course_field_id',field)
 
         if (!result || result.length === 0) {
             throw new Error('No courses found');
@@ -89,7 +90,6 @@ const updateAdminCourseChange=async(req,res)=>{
      const {
       course_id,
       course_name,
-      course_field,
       s1,
       s2,
       s3,
@@ -108,7 +108,6 @@ const updateAdminCourseChange=async(req,res)=>{
     const result = await db('degrees')
                        .where('course_id',Number(course_id))
                        .update({'course_name':course_name,
-                                'course_field':course_field,
                                 'specialization_1':s1,
                                 'specialization_2':s2,
                                 'specialization_3':s3,
@@ -157,15 +156,15 @@ const AddingAdminCourse=async(req,res)=>{
       minimum_level_category,
       title,
       institute,
-      institute_website,
+      website,
       course_url,
-      course_university
+      university
     } = req.body;
 
     const result =await db('degrees')
                        .insert({
                                 'course_name':course_name,
-                                'course_field':course_field,
+                                'course_field_id':course_field,
                                 'specialization_1':s1,
                                 'specialization_2':s2,
                                 'specialization_3':s3,
@@ -176,9 +175,9 @@ const AddingAdminCourse=async(req,res)=>{
                                 'minimum_level_category':minimum_level_category,
                                 'title':title,
                                 'institute':institute,
-                                'website':institute_website,                                
+                                'website':website,                                
                                 'course_url':course_url,
-                                'university':course_university
+                                'university':university
                        })
      
         console.log('result',result)
@@ -216,9 +215,9 @@ const deleteAdminCourse=async(req,res)=>{
 const  AddCourseField=async(req,res)=>{
     try{
     const {CourseField} = req.body;
-    const result = await db('degrees')
+    const result = await db('course_field')
                        .insert({
-                                'course_field':CourseField
+                                'course_field_name':CourseField
                        })
     if(!result) {
         throw new Error('Course field addition failed');
@@ -270,6 +269,28 @@ const fetchAdminCourseSpecialization = async (req, res) => {
     }
 };  
 
+const deleteCourseField=async(req,res)=>{
+    try{
+        const {SelectedCourseFieldId} = req.body;
+                const result2 = await db('degrees')
+                             .where({'course_field_id':SelectedCourseFieldId}).del()
+        const result = await db('course_field')
+        .where({'course_field_id':SelectedCourseFieldId}).del()
+        console.log(result)
+
+
+
+
+        if(!result || result.length === 0) {
+            throw new Error('Course Field deletion failed');
+        }
+        res.status(200).json({result})
+    }catch(err){
+        console.log(err);
+        res.status(500).json({ error: 'Internal Server Error' });        
+    }
+}
+
 
 module.exports={
     fetchCourseFields,
@@ -280,5 +301,6 @@ module.exports={
     deleteAdminCourse,
     AddCourseField,
     fetchAllSpecializations,
-    fetchAdminCourseSpecialization
+    fetchAdminCourseSpecialization,
+    deleteCourseField
 } 

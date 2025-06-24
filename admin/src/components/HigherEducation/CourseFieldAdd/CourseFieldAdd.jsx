@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react';
 import './CourseFieldAdd.css'
 import axios from 'axios';
 import axiosInstance from '../../AxiosInstance/axiosInstance';
+import { useNavigate } from 'react-router-dom';
 
 const CourseFieldAdd = ()=>{
+
+    const navigate = useNavigate()
 
     const [CourseField, setCourseField] = useState('');
 
@@ -19,7 +22,10 @@ const CourseFieldAdd = ()=>{
             const response = await axiosInstance.post('/api/v1/admin/higher-education/course-field-add', {
                  CourseField
             });
-            alert("Course Field Added Successfully");
+            if(response.status===200){
+                 alert("Course Field Added Successfully");
+                  navigate('/admin/higher-education')
+            }
 
         } catch (error) {
             console.error("Error when adding course field:", error);
