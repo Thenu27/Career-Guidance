@@ -41,8 +41,10 @@ const DegreeField =()=>{
 
     },[SelectedCourseField,SelectedCourseField])
 
-    const goToCourses=()=>{
-        navigate('/admin/higher-education/courses');
+
+    
+    const goToInstitutes=()=>{
+        navigate('/admin/higher-education/institutes/');
     }
 
     const goToAddCourseField=()=>{
@@ -59,7 +61,7 @@ const DegreeField =()=>{
                     <div className='career-field-inner-container'>
 
                         {CourseField.map((course)=>{
-                            return <button onClick={() => {handleCourseField(course.course_field_name,course.course_field_id);goToCourses();}} key={course.course_field_id} className='login-btn career-field-btn'>{course.course_field_name}</button>
+                            return <button onClick={() => {handleCourseField(course.course_field_name,course.course_field_id);goToInstitutes();}} key={course.course_field_id} className='login-btn career-field-btn'>{course.course_field_name}</button>
                         })}
             
                     </div>

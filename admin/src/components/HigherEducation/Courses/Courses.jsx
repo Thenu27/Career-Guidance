@@ -12,6 +12,7 @@ const Courses = () => {
     const [courses, setCourses] = useState([]);
 
     const {SelectedCourseFieldId,setSelectedCourseFieldId} = useContext(CoursesContext);
+    const [SelectedInstituteId,setSelectedInstituteId] = useState()
 
     useEffect(() => {
            const storedResult =  localStorage.getItem('SelectedAdminCourseFieldId');
@@ -23,9 +24,22 @@ const Courses = () => {
            }
     },[SelectedCourseFieldId])
 
+    useEffect(() => {
+           const storedResult =  localStorage.getItem('SelectedInstituteId');
+           if(storedResult){
+                setSelectedInstituteId(storedResult);
+           }else{
+            alert('Sonething went wrong, Please try again');
+            navigate('/admin/higher-education');
+           }
+    },[])
+
     const fetchCourses = async () => {
         try{
-            const response = await axiosInstance.get(`/api/v1/admin/higher-education/courses?field=${SelectedCourseFieldId}`);
+            const response = await axiosInstance.post(`/api/v1/admin/higher-education/courses`,{
+                SelectedInstituteId,
+                SelectedCourseFieldId
+            });
             console.log(response.data.courses);
             setCourses(response.data.courses);  
         }catch(error){

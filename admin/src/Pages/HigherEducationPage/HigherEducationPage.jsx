@@ -29,6 +29,12 @@ const HigherEducationPage=()=>{
         if(location.pathname==='/admin/higher-education/'){
             navigate('/admin/option')
         }
+        if(location.pathname ==='/admin/higher-education/institutes/'){
+            navigate('/admin/higher-education/')
+        }
+        if(location.pathname ==='/admin/higher-education/institutes/add'){
+            navigate('/admin/higher-education/institutes/')
+        }
 
     }
     return(

@@ -40,6 +40,8 @@ import './App.css'
 import Spinner from '../../client/src/Components/Spinner/Spinner';
 import CourseAdd from './components/HigherEducation/CourseAdd/CourseAdd';
 import CourseFieldAdd from './components/HigherEducation/CourseFieldAdd/CourseFieldAdd.jsx';
+import InstituteSelect from './components/HigherEducation/InstituteSelect/InstituteSelect.jsx';
+import InstituteAdd from './components/HigherEducation/InstituteAdd/InstituteAdd.jsx';
 
 
 function App() {
@@ -101,7 +103,9 @@ function App() {
           <Route path='courses' element={<Courses/>}/>  
           <Route path='courses/update' element={<CourseUpdate/>}/>
           <Route path='courses/add' element={<CourseAdd/>}/>
+          <Route path='institutes' element={<InstituteSelect/>}/>
           <Route path='course-field-add' element={<CourseFieldAdd/>}/>
+          <Route path='institutes/add' element={<InstituteAdd/>}/>
         
         </Route>
 

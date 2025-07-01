@@ -321,7 +321,7 @@ if(isLoading) {
                         
                         <label className='career-update-label'>Course University</label>
                         {Edit?<input onChange={(event)=>handleCourseUniversityChange(event.target.value)} value={CourseUniversity} className='career-update-bnt career-input' type='text'/>:
-                        <button  className='career-update-bnt2'>{CourseUniversity}</button>}    
+                        <button  className='career-update-bnt2 course-university'>{CourseUniversity}</button>}    
     
                     </div>
  

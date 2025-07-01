@@ -153,15 +153,15 @@ const handleSubmit = () => {
         return;
     }
 
-    if (
-        !CourseSpecialization01 &&
-        !CourseSpecialization02 &&
-        !CourseSpecialization03 &&
-        !CourseSpecialization04
-    ) {
-        alert('Please select at least one specialization');
-        return;
-    }
+    // if (
+    //     !CourseSpecialization01 &&
+    //     !CourseSpecialization02 &&
+    //     !CourseSpecialization03 &&
+    //     !CourseSpecialization04
+    // ) {
+    //     alert('Please select at least one specialization');
+    //     return;
+    // }
 
     if (!window.confirm("Do you want to add this course?")) {
         return;

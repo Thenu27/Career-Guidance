@@ -22,13 +22,15 @@ const fetchCourseFields = async (req,res) => {
 
 const fetchCourses = async (req,res) => {
     console.log('course is hit')
-    const {field} = req.query;
-        console.log('SelectedCourseFieldId',field)
+    const {SelectedCourseFieldId,SelectedInstituteId} = req.body;
+    console.log('SelectedCourseFieldId',SelectedCourseFieldId)
+    console.log('SelectedInstituteId',SelectedInstituteId)
 
     try {
         const result = await db('degrees')
             .select('course_name','course_id')
-            .where('course_field_id',field)
+            .where('institute_id',SelectedInstituteId)
+            .andWhere('course_field_id',SelectedCourseFieldId)
 
         if (!result || result.length === 0) {
             throw new Error('No courses found');
@@ -292,6 +294,21 @@ const deleteCourseField=async(req,res)=>{
 }
 
 
+const fetchAllInstitutes = async (req, res) => {
+    try {
+        const result = await db('institute_table')
+            .select('*');
+        if (!result || result.length === 0) {
+            return res.status(404).json({ error: 'No institutes found' });
+        }
+        console.log(result)
+        res.status(200).json({ institutes: result });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
 module.exports={
     fetchCourseFields,
     fetchCourses,
@@ -302,5 +319,6 @@ module.exports={
     AddCourseField,
     fetchAllSpecializations,
     fetchAdminCourseSpecialization,
-    deleteCourseField
+    deleteCourseField,
+    fetchAllInstitutes
 } 
