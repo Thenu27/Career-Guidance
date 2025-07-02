@@ -42,7 +42,8 @@ import CourseAdd from './components/HigherEducation/CourseAdd/CourseAdd';
 import CourseFieldAdd from './components/HigherEducation/CourseFieldAdd/CourseFieldAdd.jsx';
 import InstituteSelect from './components/HigherEducation/InstituteSelect/InstituteSelect.jsx';
 import InstituteAdd from './components/HigherEducation/InstituteAdd/InstituteAdd.jsx';
-
+import InstituteEdit from './components/HigherEducation/InstituteEdit/InstituteEdit.jsx';
+import CourseFieldEdit from './components/HigherEducation/CourseFieldEdit/CourseFieldEdit.jsx';
 
 function App() {
 
@@ -106,6 +107,8 @@ function App() {
           <Route path='institutes' element={<InstituteSelect/>}/>
           <Route path='course-field-add' element={<CourseFieldAdd/>}/>
           <Route path='institutes/add' element={<InstituteAdd/>}/>
+          <Route path='institutes/edit' element={<InstituteEdit/>}/>
+          <Route path='coursefield/edit' element={<CourseFieldEdit/>}/>
         
         </Route>
 

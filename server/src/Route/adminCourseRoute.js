@@ -9,8 +9,12 @@ const {fetchCourseFields,
        AddCourseField,
        fetchAllSpecializations,
        fetchAdminCourseSpecialization,
-        deleteCourseField,
-        fetchAllInstitutes
+        // deleteCourseField,
+        fetchAllInstitutes,
+        AddAdminInstitute,
+        fetchInstituteDataToEdit,
+        EditInstituteDataAdmin,
+        fetchCourseFieldNameToEdit
     } = require('../controllers/adminCourseController')
 
 router.route('/courseField').get(fetchCourseFields)
@@ -21,8 +25,13 @@ router.route('/course-add').post(AddingAdminCourse)
 router.route('/course-delete').delete(deleteAdminCourse)
 router.route('/course-field-add').post(AddCourseField)
 router.route('/specialization').get(fetchAllSpecializations)
-router.route('/coursefield/delete').post(deleteCourseField)
+// router.route('/coursefield/delete').post(deleteCourseField)
 router.route('/institutes').get(fetchAllInstitutes)
+router.route('/institutes/add').post(AddAdminInstitute)
+router.route('/institutes/edit').post(fetchInstituteDataToEdit)
+router.route('/institutes/edit2').post(EditInstituteDataAdmin)
+router.route('/coursefield/edit').post(fetchCourseFieldNameToEdit)
 
+  
 
 module.exports=router;

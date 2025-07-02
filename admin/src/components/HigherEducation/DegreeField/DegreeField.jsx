@@ -10,6 +10,8 @@ const DegreeField =()=>{
     const [CourseField,setCourseField] = useState([]);
     const {SelectedCourseField,setSelectedCourseField,SelectedCourseFieldId,setSelectedCourseFieldId } = useContext(CoursesContext);
 
+    const [Edit,setEdit] = useState(false);
+
     const navigate = useNavigate();
 
     const fetchCourseField=async()=>{
@@ -51,6 +53,14 @@ const DegreeField =()=>{
         navigate('/admin/higher-education/course-field-add');
     }
 
+    const handleEdit = () => {
+        setEdit(!Edit);
+    }
+
+    const handleCourseFieldEdit = (courseFieldId) => {
+        localStorage.setItem('SelectedCourseFieldIdEdit',courseFieldId);
+        navigate('/admin/higher-education/coursefield/edit');
+    }
 
     return(
         <>
@@ -58,16 +68,25 @@ const DegreeField =()=>{
                 <div className='career-field-title-container'>
                     <h1 className='career-field-title'>Choose a Course Field</h1>
                 </div>
-                    <div className='career-field-inner-container'>
+                    <div className='career-field-inner-container institute-container'>
 
                         {CourseField.map((course)=>{
-                            return <button onClick={() => {handleCourseField(course.course_field_name,course.course_field_id);goToInstitutes();}} key={course.course_field_id} className='login-btn career-field-btn'>{course.course_field_name}</button>
+                            return(
+                                <div className='institute-btn-container'>
+                                     <button onClick={() => {handleCourseField(course.course_field_name,course.course_field_id);goToInstitutes();}} key={course.course_field_id} className='login-btn career-field-btn'>{course.course_field_name}</button>
+                                    {Edit?<button onClick={()=>handleCourseFieldEdit(course.course_field_id)} className='insititue-edit-btn'>Edit</button>:null}
+                                
+                                </div>    
+                            ) 
                         })}
             
-                    </div>
+                    </div>              
+
                     <div className='career-field-add'>
-                    <button onClick={goToAddCourseField}  className='login-btn add-question-btn'>Add Course Field</button>
-                </div>  
+                        <button onClick={handleEdit} className='login-btn institute-edit-delete-btn'>Edit Institute</button>
+                        <button onClick={goToAddCourseField}  className='login-btn add-question-btn'>Add Course Field</button>
+
+                    </div>  
             </div>
             
             </>

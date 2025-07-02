@@ -1,0 +1,19 @@
+.institute-edit-container{
+    width: 800px;
+    padding: 30px;
+}
+
+.institute-edit-inner-container{
+    display: flex;
+    flex-direction: column;
+    gap:20px
+}
+
+.edit-institute-title{
+    margin-top: -50px;
+}
+
+.institute-input{
+    font-size: 1.2rem;
+    width: 500px;
+}

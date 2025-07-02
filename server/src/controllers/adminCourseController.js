@@ -9,7 +9,7 @@ const fetchCourseFields = async (req,res) => {
         if (!result || result.length === 0) {
             throw new Error('No course fields found');
         }
-        console.log(result)
+        // console.log(result)
         res.status(StatusCodes.OK).json({field:result})
     } catch (err) {
         console.error('DB Error:', err);
@@ -35,7 +35,7 @@ const fetchCourses = async (req,res) => {
         if (!result || result.length === 0) {
             throw new Error('No courses found');
         }
-        console.log(result)
+        // console.log(result)
         res.status(StatusCodes.OK).json({courses:result})
     } catch (err) {
         console.error('DB Error:', err);
@@ -126,7 +126,7 @@ const updateAdminCourseChange=async(req,res)=>{
 
                        })
      
-        console.log('result',result)
+        // console.log('result',result)
                    
     if(!result) {
     throw new Error('Course update failed');}
@@ -182,7 +182,7 @@ const AddingAdminCourse=async(req,res)=>{
                                 'university':university
                        })
      
-        console.log('result',result)
+        // console.log('result',result)
         res.status(StatusCodes.OK).json({message:'Course Added successfully'});
 
     }catch(err){
@@ -271,27 +271,28 @@ const fetchAdminCourseSpecialization = async (req, res) => {
     }
 };  
 
-const deleteCourseField=async(req,res)=>{
-    try{
-        const {SelectedCourseFieldId} = req.body;
-                const result2 = await db('degrees')
-                             .where({'course_field_id':SelectedCourseFieldId}).del()
-        const result = await db('course_field')
-        .where({'course_field_id':SelectedCourseFieldId}).del()
-        console.log(result)
+// const deleteCourseField=async(req,res)=>{
+//     try{
+//         const {SelectedCourseFieldId} = req.body;
+//                 console.log(SelectedCourseFieldId)
+
+//                 const result2 = await db('degrees')
+//                              .where({'course_field_id':SelectedCourseFieldId}).del()
+//         const result = await db('course_field')
+//         .where({'course_field_id':SelectedCourseFieldId}).del()
 
 
 
 
-        if(!result || result.length === 0) {
-            throw new Error('Course Field deletion failed');
-        }
-        res.status(200).json({result})
-    }catch(err){
-        console.log(err);
-        res.status(500).json({ error: 'Internal Server Error' });        
-    }
-}
+//         if(!result || result.length === 0) {
+//             throw new Error('Course Field deletion failed');
+//         }
+//         res.status(200).json({result})
+//     }catch(err){
+//         console.log(err);
+//         res.status(500).json({ error: 'Internal Server Error' });        
+//     }
+// }
 
 
 const fetchAllInstitutes = async (req, res) => {
@@ -301,13 +302,111 @@ const fetchAllInstitutes = async (req, res) => {
         if (!result || result.length === 0) {
             return res.status(404).json({ error: 'No institutes found' });
         }
-        console.log(result)
+        // console.log(result)
         res.status(200).json({ institutes: result });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
+
+const AddAdminInstitute = async (req, res) => {
+    try {
+        const { InstituteFullName, InstituteAcronym, InstituteWebSite } = req.body;
+        const result = await db('institute_table')
+            .insert({
+                'institute_name': InstituteFullName,
+                'institute_acronym': InstituteAcronym,
+                'institute_website': InstituteWebSite
+            });
+        if (!result) {
+            throw new Error('Institute addition failed');
+        }
+        res.status(StatusCodes.OK).json({ message: 'Institute added successfully' });
+    } catch (err) {
+        console.log(err);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            error: `Error adding institute: ${err.message}`
+        });
+    }
+}
+
+const fetchInstituteDataToEdit=async(req,res)=>{
+    try{
+        const { institute_id } = req.body;
+        console.log('institute_id',institute_id)
+        const result = await db('institute_table')
+            .select('*')
+            .where('institute_id', Number(institute_id));
+
+        if (!result || result.length === 0) {
+            throw new Error('No institute data found for the given ID');
+        }
+        // console.log(result)
+        res.status(StatusCodes.OK).json({ instituteData: result[0] });  
+    }catch(err){
+        console.log(err)
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            error: `Error fetching institute data to edit: ${err.message}`
+        });
+    }
+}
+
+const EditInstituteDataAdmin=async(req,res)=>{
+    try{
+        const { 
+ 
+            InstituteFullName,
+            InstituteAcronym,
+            InstituteWebSite,
+            InstituteId
+
+        } = req.body;
+
+        const result = await db('institute_table')
+            .where('institute_id',InstituteId)
+            .update({
+                'institute_name': InstituteFullName,
+                'institute_acronym': InstituteAcronym,
+                'institute_website': InstituteWebSite
+            });
+
+        if (!result) {
+            throw new Error('Institute update failed');
+        }
+        console.log('Institute updated successfully');
+        res.status(StatusCodes.OK).json({ message: 'Institute updated successfully' });
+    }catch(err){
+        console.log(err)
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            error: `Error updating institute: ${err.message}`
+        });
+    }
+}
+
+const fetchCourseFieldNameToEdit = async (req, res) => {
+    try{
+        const { id } = req.body;
+        console.log('courseFieldId to Edit',id)
+        const result = await db('course_field')
+            .select('*')
+            .where('course_field_id', Number(id));
+
+        if (!result || result.length === 0) {
+            throw new Error('No course field data found for the given ID');
+        }
+        // console.log(result)
+        res.status(StatusCodes.OK).json({ courseFieldData: result[0] });
+    }catch(err){
+        console.log(err)
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            error: `Error fetching course field data to edit: ${err.message}`
+        });
+    }
+}
+
+
+
 
 module.exports={
     fetchCourseFields,
@@ -319,6 +418,10 @@ module.exports={
     AddCourseField,
     fetchAllSpecializations,
     fetchAdminCourseSpecialization,
-    deleteCourseField,
-    fetchAllInstitutes
+    // deleteCourseField,
+    fetchAllInstitutes,
+    AddAdminInstitute,
+    fetchInstituteDataToEdit,
+    EditInstituteDataAdmin,
+    fetchCourseFieldNameToEdit
 } 

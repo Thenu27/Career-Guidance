@@ -35,8 +35,15 @@ const HigherEducationPage=()=>{
         if(location.pathname ==='/admin/higher-education/institutes/add'){
             navigate('/admin/higher-education/institutes/')
         }
+        if(location.pathname ==='/admin/higher-education/institutes/edit'){
+            navigate('/admin/higher-education/institutes/')
+        }
+        if(location.pathname ==='/admin/higher-education/coursefield/edit'){
+            navigate('/admin/higher-education/')
+        }
 
     }
+
     return(
         <div className='home-container'>
             <Outlet/>
@@ -48,3 +55,5 @@ const HigherEducationPage=()=>{
 }
 
 export default HigherEducationPage;
+
+

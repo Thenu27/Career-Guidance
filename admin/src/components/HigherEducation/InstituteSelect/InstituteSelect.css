@@ -1,0 +1,53 @@
+.institute-edit-delete-btn{
+    width: 250px;
+    background-color: rgb(102, 102, 102);
+    margin-top: 25px;
+    transition:background-color 0.2s ease-in-out
+}
+
+.institute-edit-delete-btn:hover{
+    background-color:rgb(64, 64, 64) ;
+    border: none;
+}
+
+.institute-edit-delete-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap:10px
+}
+
+.institute-container{
+    display:flex ;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap:10px
+}
+
+.institute-btn-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.insititue-edit-btn{
+    background-color: white;
+    color: red;
+    border: 1px solid red;
+    height: 30px;
+    width: 40%;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-weight: 700;
+    transition: background-color 0.1s ease-in-out ;
+    cursor: pointer;
+
+}
+
+.insititue-edit-btn:hover{
+    background-color: rgb(255, 84, 84);
+    color: white;
+}
