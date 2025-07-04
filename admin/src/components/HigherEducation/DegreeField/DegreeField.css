@@ -1,0 +1,25 @@
+.institute-edit-delete-btn-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    gap:10px
+}
+
+.delete-institute-btn{
+    background-color: white;
+    color: rgb(255, 0, 0);
+    border: 1px solid rgb(204, 0, 0);
+    height: 30px;
+    width: 40%;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-weight: 700;
+    transition: background-color 0.1s ease-in-out ;
+    cursor: pointer;
+}
+.delete-institute-btn:hover{
+    background-color: rgb(204, 0, 0);
+    color: white;
+}

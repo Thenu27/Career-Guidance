@@ -35,8 +35,8 @@
 
 .insititue-edit-btn{
     background-color: white;
-    color: red;
-    border: 1px solid red;
+    color: rgb(45, 0, 178);
+    border: 1px solid rgb(12, 0, 187);
     height: 30px;
     width: 40%;
     margin-top: 10px;
@@ -48,6 +48,6 @@
 }
 
 .insititue-edit-btn:hover{
-    background-color: rgb(255, 84, 84);
+    background-color: rgb(53, 0, 188);
     color: white;
 }

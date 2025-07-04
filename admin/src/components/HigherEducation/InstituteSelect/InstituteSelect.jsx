@@ -82,6 +82,31 @@ const InstituteSelect =()=>{
         
     }
 
+    const deleteInstitute = async (instituteId) => {
+        try{    
+
+            if(!window.confirm("Are you sure you want to delete this Institute?")) {
+                return; 
+            }
+
+            if(!window.confirm("This action cannot be undone. All Courses related to this Institute will be deleted. Are you sure?")) {
+                return; 
+
+            }
+            const response = await axiosInstance.post('/api/v1/admin/higher-education/institutes/delete', {
+                instituteId
+            })
+
+            if(response.status === 200){
+                alert("Institute deleted successfully.");
+                window.location.reload();
+            }
+        }catch(error){
+            console.error("Error deleting institute:", error);
+            alert("An error occurred while deleting the institute. Please try again.");
+        }
+    }
+
 
 
     if(!Institutes || Institutes.length<1){
@@ -102,7 +127,13 @@ const InstituteSelect =()=>{
                             return (
                                 <div className='institute-btn-container'>
                                     <button className='login-btn career-field-btn' key={institute.institute_id} onClick={() => (handleSelectedInsititue(institute.institute_id), goToCourses())} >{institute.institute_acronym}</button>
-                                    {Edit?<button onClick={()=>handleInsitituteEditBtn(institute.institute_id)} className='insititue-edit-btn'>Edit</button>:null}
+                                    {Edit?
+                                        <div className='institute-edit-delete-btn-container'>
+                                            <button onClick={()=>handleInsitituteEditBtn(institute.institute_id)} className='insititue-edit-btn'>Edit</button>
+                                             <button onClick={()=>{deleteInstitute(institute.institute_id)}}  className='delete-institute-btn'>Delete</button>
+                                           
+                                        </div>    
+                                    :null}                            
                                 </div>   
                             )
  

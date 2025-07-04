@@ -24,6 +24,7 @@ const CourseAdd = () => {
     const [CourseUniversity,setCourseUniversity] = useState();
     const [InstituteWebsite,setInstituteWebsite] = useState();
     const [CourseFees,setCourseFees] = useState();
+    const [InstituteId,setInstituteId] = useState();
 
     const [AllSpecializations, setAllSpecializations] = useState([]);
 
@@ -115,6 +116,13 @@ const CourseAdd = () => {
     },[AllSpecializations])
 
 
+    useEffect(()=>{
+        const storedFieldId = localStorage.getItem('SelectedInstituteId');
+        if(storedFieldId){
+            setInstituteId(storedFieldId);
+            console.log("Loaded from localStorage:", storedFieldId);
+        }
+    },[])
 
     const sendUpdatedDataToBE = async () => {
     try {
@@ -125,6 +133,7 @@ const CourseAdd = () => {
             course_url: (CourseUrl || '').trim(),
             duration: (Number(CourseDuration) || null),
             institute: (Courseinstitute || '').trim(),
+            institute_id: (Number(InstituteId) || null),
             minimum_level_category: (CourseMinimumLevel || '').trim(),
             s1: Number(CourseSpecialization01)|| null,
             s2: Number(CourseSpecialization02)|| null,

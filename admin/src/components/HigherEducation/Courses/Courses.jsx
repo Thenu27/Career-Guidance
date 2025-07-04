@@ -110,9 +110,9 @@ const Courses = () => {
                         <button onClick={handleAddCourse}  className="add-career-btn">Add Course</button>
                     </div>
 
-                    <div className='add-career-btn-container'>
+                    {/* <div className='add-career-btn-container'>
                         <button onClick={()=>deletingCourseField(SelectedCourseFieldId)} className="add-career-btn delete-field-btn">Delete</button>
-                    </div>
+                    </div> */}
                 </div>
 
                 

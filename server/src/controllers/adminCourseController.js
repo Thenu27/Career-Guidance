@@ -160,7 +160,8 @@ const AddingAdminCourse=async(req,res)=>{
       institute,
       website,
       course_url,
-      university
+      university,
+      institute_id
     } = req.body;
 
     const result =await db('degrees')
@@ -179,7 +180,8 @@ const AddingAdminCourse=async(req,res)=>{
                                 'institute':institute,
                                 'website':website,                                
                                 'course_url':course_url,
-                                'university':university
+                                'university':university,
+                                'institute_id':institute_id
                        })
      
         // console.log('result',result)
@@ -271,28 +273,29 @@ const fetchAdminCourseSpecialization = async (req, res) => {
     }
 };  
 
-// const deleteCourseField=async(req,res)=>{
-//     try{
-//         const {SelectedCourseFieldId} = req.body;
-//                 console.log(SelectedCourseFieldId)
+    const deleteCourseField=async(req,res)=>{
+        try{
+            const {courseFieldId} = req.body;
+                    console.log(courseFieldId)
 
-//                 const result2 = await db('degrees')
-//                              .where({'course_field_id':SelectedCourseFieldId}).del()
-//         const result = await db('course_field')
-//         .where({'course_field_id':SelectedCourseFieldId}).del()
+                    const result2 = await db('degrees')
+                                .where({'course_field_id':courseFieldId}).del()
+
+                    const result = await db('course_field')
+                    .where({'course_field_id':courseFieldId}).del()
 
 
 
 
-//         if(!result || result.length === 0) {
-//             throw new Error('Course Field deletion failed');
-//         }
-//         res.status(200).json({result})
-//     }catch(err){
-//         console.log(err);
-//         res.status(500).json({ error: 'Internal Server Error' });        
-//     }
-// }
+            if(!result || result.length === 0) {
+                throw new Error('Course Field deletion failed');
+            }
+            res.status(200).json({result})
+        }catch(err){
+            console.log(err);
+            res.status(500).json({ error: 'Internal Server Error' });        
+        }
+    }
 
 
 const fetchAllInstitutes = async (req, res) => {
@@ -396,7 +399,7 @@ const fetchCourseFieldNameToEdit = async (req, res) => {
             throw new Error('No course field data found for the given ID');
         }
         // console.log(result)
-        res.status(StatusCodes.OK).json({ courseFieldData: result[0] });
+        res.status(StatusCodes.OK).json( result[0] );
     }catch(err){
         console.log(err)
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -406,6 +409,59 @@ const fetchCourseFieldNameToEdit = async (req, res) => {
 }
 
 
+const EditCourseFieldName = async (req, res) => {
+    try{
+        const { CourseFieldName, CourseFieldId } = req.body;
+        console.log('CourseFieldName',CourseFieldName)
+        console.log('CourseFieldId',CourseFieldId)
+
+        const result = await db('course_field')
+            .where('course_field_id', Number(CourseFieldId))
+            .update({ 'course_field_name': CourseFieldName });
+
+        if (!result) {
+            throw new Error('Course field name update failed');
+        }
+        console.log('Course field name updated successfully');
+        res.status(StatusCodes.OK).json({ message: 'Course field name updated successfully' });
+
+    }catch(err){
+        console.log(err)
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            error: `Error updating course field name: ${err.message}`
+        });
+    }
+}
+
+const deleteInstituteAndCourses = async (req, res) => {
+    try{
+        const { instituteId } = req.body;
+        console.log('instituteId to delete',instituteId)
+
+        // Delete courses associated with the institute
+        const coursesDeleted = await db('degrees')
+            .where('institute_id', Number(instituteId))
+            .del();
+
+
+        // Delete the institute
+        const instituteDeleted = await db('institute_table')
+            .where('institute_id', Number(instituteId))
+            .del();
+
+        if (instituteDeleted === 0) {
+            throw new Error('Institute deletion failed');
+        }
+
+        console.log('Institute and associated courses deleted successfully');
+        res.status(StatusCodes.OK).json({ message: 'Institute and associated courses deleted successfully' });
+    }catch(err){
+        console.log(err);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            error: `Error deleting institute and courses: ${err.message}`
+        });
+    }   
+}
 
 
 module.exports={
@@ -418,10 +474,12 @@ module.exports={
     AddCourseField,
     fetchAllSpecializations,
     fetchAdminCourseSpecialization,
-    // deleteCourseField,
+    deleteCourseField,
     fetchAllInstitutes,
     AddAdminInstitute,
     fetchInstituteDataToEdit,
     EditInstituteDataAdmin,
-    fetchCourseFieldNameToEdit
+    fetchCourseFieldNameToEdit,
+    EditCourseFieldName,
+    deleteInstituteAndCourses
 } 
