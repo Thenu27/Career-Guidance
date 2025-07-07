@@ -70,7 +70,7 @@ const fetchCourseInfo=async(req,res)=>{
         });
 
         if(!specialization_names || specialization_names.length === 0) {
-            throw new Error('No specializations found for the course');
+           return res.status(StatusCodes.OK).json({course_info:result});              
         }
         // console.log(result)
         // console.log('specialization_names',specialization_names)
@@ -242,7 +242,8 @@ const fetchAllSpecializations = async (req, res) => {
         const result = await db('specializations')
             .select('*')
         if (!result || result.length === 0) {
-            return res.status(404).json({ error: 'No specializations found' });
+           return res.status(404).json({ error: 'No specializations found' });
+
         }
         // console.log(result);
 
@@ -462,6 +463,9 @@ const deleteInstituteAndCourses = async (req, res) => {
         });
     }   
 }
+
+
+// const fetchInstituteDetails=()=>{}
 
 
 module.exports={

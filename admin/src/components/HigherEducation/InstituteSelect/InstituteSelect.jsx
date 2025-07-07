@@ -31,11 +31,11 @@ const InstituteSelect =()=>{
         const response = await axiosInstance.get('/api/v1/admin/higher-education/institutes');
 
         if (response.status === 200) {
-        setInstitutes(response.data.institutes); // Assuming the `institutes` array is inside response.data
-        console.log(response.data.institutes);
+            setInstitutes(response.data.institutes); // Assuming the `institutes` array is inside response.data
+            console.log(response.data.institutes);
         } else {
-        console.error("Unexpected response status:", response.status);
-        alert("Error fetching institutes: Unexpected response status");
+            console.error("Unexpected response status:", response.status);
+            alert("Error fetching institutes: Unexpected response status");
         }
     } catch (error) {
         console.error("Error fetching institutes:", error);
@@ -60,8 +60,11 @@ const InstituteSelect =()=>{
     }, []);
 
 
-    const handleSelectedInsititue =(institute_id)=>{
+    const handleSelectedInsititue =(institute_id,institute_name,institute_website)=>{
         setSelectedInstituteId(institute_id)
+        localStorage.setItem('SelectedInstituteName',institute_name);
+        localStorage.setItem('SelectedInstituteWebsite',institute_website);   
+
     }
 
     const goToCourses=()=>{
@@ -126,7 +129,7 @@ const InstituteSelect =()=>{
                         {Institutes.map((institute)=>{
                             return (
                                 <div className='institute-btn-container'>
-                                    <button className='login-btn career-field-btn' key={institute.institute_id} onClick={() => (handleSelectedInsititue(institute.institute_id), goToCourses())} >{institute.institute_acronym}</button>
+                                    <button className='login-btn career-field-btn' key={institute.institute_id} onClick={() => (handleSelectedInsititue(institute.institute_id,institute.institute_name,institute.institute_website), goToCourses())} >{institute.institute_acronym}</button>
                                     {Edit?
                                         <div className='institute-edit-delete-btn-container'>
                                             <button onClick={()=>handleInsitituteEditBtn(institute.institute_id)} className='insititue-edit-btn'>Edit</button>

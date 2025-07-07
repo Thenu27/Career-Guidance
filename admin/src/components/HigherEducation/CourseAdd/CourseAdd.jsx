@@ -38,6 +38,22 @@ const CourseAdd = () => {
     }
   }, []);
 
+    useEffect(() => {
+    const storedId = localStorage.getItem('SelectedInstituteName');
+    if (storedId) {
+      setCourseinstitute(storedId);
+      console.log("Loaded from localStorage:", storedId);
+    }
+  }, []);
+
+    useEffect(() => {
+    const storedId = localStorage.getItem('SelectedInstituteWebsite');
+    if (storedId) {
+      setInstituteWebsite(storedId);
+      console.log("Loaded from localStorage:", storedId);
+    }
+  }, []);
+
     const handleCourseNameChange=(event)=>{
         setCourseName(event)
     }
@@ -50,9 +66,7 @@ const CourseAdd = () => {
         setCourseDuration(event)
     }
 
-    const handleCourseInstituteChange = (value) => {
-    setCourseinstitute(value);
-    };
+
 
     const handleCourseMinimumLevelChange = (value) => {
         setCourseMinimumLevel(value);
@@ -67,9 +81,6 @@ const CourseAdd = () => {
         setCourseUniversity(value);
     };
 
-    const handleInstituteWebsiteChange = (value) => {
-        setInstituteWebsite(value);
-    };
 
     const handleCourseFeesChange = (value) => {
         setCourseFees(value);
@@ -124,6 +135,7 @@ const CourseAdd = () => {
         }
     },[])
 
+
     const sendUpdatedDataToBE = async () => {
     try {
         const response = await axiosInstance.post(`/api/v1/admin/higher-education/course-add`, {
@@ -132,7 +144,7 @@ const CourseAdd = () => {
             course_level: (CourseLevel || '').trim(),
             course_url: (CourseUrl || '').trim(),
             duration: (Number(CourseDuration) || null),
-            institute: (Courseinstitute || '').trim(),
+            // institute: (Courseinstitute || '').trim(),
             institute_id: (Number(InstituteId) || null),
             minimum_level_category: (CourseMinimumLevel || '').trim(),
             s1: Number(CourseSpecialization01)|| null,
@@ -162,15 +174,15 @@ const handleSubmit = () => {
         return;
     }
 
-    // if (
-    //     !CourseSpecialization01 &&
-    //     !CourseSpecialization02 &&
-    //     !CourseSpecialization03 &&
-    //     !CourseSpecialization04
-    // ) {
-    //     alert('Please select at least one specialization');
-    //     return;
-    // }
+    if (
+        !CourseSpecialization01 &&
+        !CourseSpecialization02 &&
+        !CourseSpecialization03 &&
+        !CourseSpecialization04
+    ) {
+        alert('Please select at least one specialization');
+        return;
+    }
 
     if (!window.confirm("Do you want to add this course?")) {
         return;
@@ -235,12 +247,14 @@ const handleSpecilaization04Change = (selectedValue) => {
 
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Institute</label>
-                        <input onChange={(e)=>{handleCourseInstituteChange(e.target.value)}} type='text' className='ol-input career-input course-input' />
+                        <input value={Courseinstitute} type='text' className='ol-input career-input course-input' />
                     </div>
+
                     <div className='ol-input-container'>
                         <label className='ol-input-label career-input-label'>Institute Website</label>
-                        <input onChange={(e)=>{handleInstituteWebsiteChange(e.target.value)}} type='text' className='ol-input career-input course-input' />
+                        <input value={InstituteWebsite} type='text' className='ol-input career-input course-input' />
                     </div>
+
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Course URL</label>
                         <input onChange={(e)=>{handleCourseUrlChange(e.target.value)}} type='text' className='ol-input career-input course-input' />

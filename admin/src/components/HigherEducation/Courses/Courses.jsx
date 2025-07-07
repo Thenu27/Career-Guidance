@@ -22,7 +22,7 @@ const Courses = () => {
             alert('Sonething went wrong, Please try again');
             navigate('/admin/higher-education');
            }
-    },[SelectedCourseFieldId])
+    },[])
 
     useEffect(() => {
            const storedResult =  localStorage.getItem('SelectedInstituteId');
@@ -48,23 +48,23 @@ const Courses = () => {
     }
 
 
-    const deletingCourseField=async(SelectedCourseFieldId)=>{
-        if(!window.confirm('Are you sure want Delete this Field')){
-            return
-        }
-        try{
-            const response = await axiosInstance.post(`/api/v1/admin/higher-education/coursefield/delete`,{
-                SelectedCourseFieldId
-            });
-            console.log(response.data.courses);
-            if(response.status===200){
-                alert('CourseField Deleted Successfully')
-                navigate('/admin/higher-education')
-            }
-        }catch(error){
-            console.error("Error when fetching courses", error);
-        }
-    }
+    // const deletingCourseField=async(SelectedCourseFieldId)=>{
+    //     if(!window.confirm('Are you sure want Delete this Field')){
+    //         return
+    //     }
+    //     try{
+    //         const response = await axiosInstance.post(`/api/v1/admin/higher-education/coursefield/delete`,{
+    //             SelectedCourseFieldId
+    //         });
+    //         console.log(response.data.courses);
+    //         if(response.status===200){
+    //             alert('CourseField Deleted Successfully')
+    //             navigate('/admin/higher-education')
+    //         }
+    //     }catch(error){
+    //         console.error("Error when fetching courses", error);
+    //     }
+    // }
 
     useEffect(()=>{
     fetchCourses()
@@ -101,7 +101,7 @@ const Courses = () => {
                             </button>
                         ))
                     ) : ( 
-                        <p>No Careers Available in this Field</p> 
+                        <p>No Courses Available in this Field</p> 
                     )}
                 </div>
 

@@ -15,13 +15,13 @@ const HigherEducationPage=()=>{
             navigate('/admin/higher-education')
         }
         if(location.pathname==='/admin/higher-education/courses/update'){
-            navigate('/admin/higher-education/courses')
+            window.location.href = '/admin/higher-education/courses';
         }
-        if(location.pathname==='/admin/higher-education/courses/'){
-            navigate('/admin/higher-education')
+        if(location.pathname==='/admin/higher-education/courses'){
+            navigate('/admin/higher-education/institutes/')
         }
         if(location.pathname==='/admin/higher-education/courses/add'){
-            navigate('/admin/higher-education/courses')
+            navigate('/admin/higher-education/courses') 
         }
         if(location.pathname==='/admin/higher-education/course-field-add'){
             navigate('/admin/higher-education/')
