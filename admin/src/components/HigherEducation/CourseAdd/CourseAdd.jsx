@@ -25,9 +25,9 @@ const CourseAdd = () => {
     const [InstituteWebsite,setInstituteWebsite] = useState();
     const [CourseFees,setCourseFees] = useState();
     const [InstituteId,setInstituteId] = useState();
-
+    const [CourseLevelCategories,setCourseLevelCategories] = useState();
+    const [AllCourseLevelCategories, setAllCourseLevelCategories] = useState();
     const [AllSpecializations, setAllSpecializations] = useState([]);
-
     const [SelectedCourseFieldId,setSelectedCourseFieldId] = useState();
 
   useEffect(() => {
@@ -65,7 +65,6 @@ const CourseAdd = () => {
     const handleCourseDuration=(event)=>{
         setCourseDuration(event)
     }
-
 
 
     const handleCourseMinimumLevelChange = (value) => {
@@ -136,37 +135,60 @@ const CourseAdd = () => {
     },[])
 
 
-    const sendUpdatedDataToBE = async () => {
-    try {
-        const response = await axiosInstance.post(`/api/v1/admin/higher-education/course-add`, {
-            course_name: (CourseName || '').trim(),
-            course_field: (Number(SelectedCourseFieldId) || null),
-            course_level: (CourseLevel || '').trim(),
-            course_url: (CourseUrl || '').trim(),
-            duration: (Number(CourseDuration) || null),
-            // institute: (Courseinstitute || '').trim(),
-            institute_id: (Number(InstituteId) || null),
-            minimum_level_category: (CourseMinimumLevel || '').trim(),
-            s1: Number(CourseSpecialization01)|| null,
-            s2: Number(CourseSpecialization02)|| null,
-            s3: Number(CourseSpecialization03)|| null,
-            s4: Number(CourseSpecialization04)|| null,
-            title: (Coursetitle || '').trim(),
-            university: (CourseUniversity || '').trim(),
-            website: (InstituteWebsite || '').trim(),
-            fees: (Number(CourseFees) || null)
-        });
-
-        if(response.status===200){
-            alert("Course Added successfully!!");
-            navigate('/admin/higher-education/courses/');
+    const fetchLevelCategories=async()=>{
+        try{
+            const response = await axiosInstance.get('/api/v1/admin/higher-education/level-categories');
+            if(response.status === 200){
+                setAllCourseLevelCategories(response.data.course_levels);
+            }else{
+                alert("Error fetching level categories, please try again later!");
+            }
+        }catch(err){
+            alert("Error fetching level categories, please try again later!");
+            console.error("Error fetching level categories:", err);
         }
-    window.location.reload();
-    } catch (error) {
-        console.error("Error Adding course:", error.response?.data || error.message);
-        alert('Error Adding Course!')
     }
-};
+
+        useEffect(()=>{
+            fetchLevelCategories();
+        },[]);
+
+        useEffect(()=>{
+            console.log('Course Level Categories:', AllCourseLevelCategories);
+        },[AllCourseLevelCategories]);
+
+        const sendUpdatedDataToBE = async () => {
+        try {
+            const response = await axiosInstance.post(`/api/v1/admin/higher-education/course-add`, {
+                course_name: (CourseName || '').trim(),
+                course_field: (Number(SelectedCourseFieldId) || null),
+                course_level: (Number(CourseLevel) || null),
+                course_url: (CourseUrl || '').trim(),
+                duration: (Number(CourseDuration) || null),
+                // institute: (Courseinstitute || '').trim(),
+                institute_id: (Number(InstituteId) || null),
+                minimum_level_category: (Number(CourseLevelCategories) || null),
+                s1: Number(CourseSpecialization01)|| null,
+                s2: Number(CourseSpecialization02)|| null,
+                s3: Number(CourseSpecialization03)|| null,
+                s4: Number(CourseSpecialization04)|| null,
+                title: (Coursetitle || '').trim(),
+                university: (CourseUniversity || '').trim(),
+                website: (InstituteWebsite || '').trim(),
+                fees: (Number(CourseFees) || null),
+                minimum_level
+            });
+
+            if(response.status===200){
+                alert("Course Added successfully!!");
+                navigate('/admin/higher-education/courses/');
+            }
+        window.location.reload();
+        } catch (error) {
+            console.error("Error Adding course:", error.response?.data || error.message);
+            alert('Error Adding Course!')
+        }
+    };
 
 const handleSubmit = () => {
     if (CourseName?.trim() === '' || CourseName === undefined) {
@@ -192,23 +214,37 @@ const handleSubmit = () => {
 };
 
 
-const handleSpecilaization01Change = (selectedValue) => {
-    setCourseSpecialization01(selectedValue);
-}
+    const handleSpecilaization01Change = (selectedValue) => {
+        setCourseSpecialization01(selectedValue);
+    }
 
-const handleSpecilaization02Change = (selectedValue) => {
-    setCourseSpecialization02(selectedValue);
-}
+    const handleSpecilaization02Change = (selectedValue) => {
+        setCourseSpecialization02(selectedValue);
+    }
 
-const handleSpecilaization03Change = (selectedValue) => {
-    setCourseSpecialization03(selectedValue);
-}
+    const handleSpecilaization03Change = (selectedValue) => {
+        setCourseSpecialization03(selectedValue);
+    }
 
-const handleSpecilaization04Change = (selectedValue) => {
-    setCourseSpecialization04(selectedValue);
-}
+    const handleSpecilaization04Change = (selectedValue) => {
+        setCourseSpecialization04(selectedValue);
+    }
 
+    const handleCourselevelCategories = (selectedValue) => {
+        setCourseLevelCategories(selectedValue);
+    }
 
+    useEffect(()=>{
+        console.log('Course Level Categories:', CourseLevelCategories);
+    },[CourseLevelCategories]);
+
+    useEffect(()=>{
+        console.log('Course Level :',CourseLevel);
+    },[CourseLevel]);    
+
+    if(!AllCourseLevelCategories || !AllSpecializations) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <>
@@ -224,10 +260,17 @@ const handleSpecilaization04Change = (selectedValue) => {
                         <input onChange={(e)=>{handleCourseNameChange(e.target.value)}} type='text' className='ol-input career-input course-input ' />
                     </div>
 
-                    <div className='ol-input-container'>
+                    <div className='specialization-select-container'>
                         <label className='ol-input-label'>Course Level</label>
-                        <input onChange={(e)=>{handleCourseLevelChange(e.target.value)}} type='text' className='ol-input career-input course-input' />
-                    </div>
+                        <select onChange={(e)=>handleCourseLevelChange(e.target.value)}  className='ol-input specialization-select-option'>
+                            <option className='specialization-name' value=""></option>
+                            {AllCourseLevelCategories.map((level) => (
+                            <option className='specialization-name' key={level.id} value={level.id}>
+                                {level.qualification_title}
+                            </option>
+                            ))}
+                        </select>
+                    </div>   
 
                     <div className='ol-input-container'>
                         <label className='ol-input-label'>Title</label>
@@ -270,6 +313,17 @@ const handleSpecilaization04Change = (selectedValue) => {
                         <input onChange={(e)=>{handleCourseMinimumLevelChange(e.target.value)}} type='text' className='ol-input career-input course-input' />
                     </div>   
 
+                    <div className='specialization-select-container'>
+                        <label className='ol-input-label'>Minimum Level</label>
+                        <select onChange={(e)=>handleCourselevelCategories(e.target.value)}  className='ol-input specialization-select-option'>
+                            <option className='specialization-name' value="">Minimum Level</option>
+                            {AllCourseLevelCategories.map((level) => (
+                            <option className='specialization-name' key={level.id} value={level.id}>
+                                {level.qualification_title}
+                            </option>
+                            ))}
+                        </select>
+                    </div>                    
                 </div>
 
                 <div className='specialization-select-container'>

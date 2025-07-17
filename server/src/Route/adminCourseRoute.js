@@ -16,7 +16,8 @@ const {fetchCourseFields,
         EditInstituteDataAdmin,
         fetchCourseFieldNameToEdit,
         EditCourseFieldName,
-        deleteInstituteAndCourses   
+        deleteInstituteAndCourses,
+        fetchAdminCourseLevel   
     } = require('../controllers/adminCourseController')
 
 router.route('/courseField').get(fetchCourseFields)
@@ -35,7 +36,7 @@ router.route('/institutes/edit2').post(EditInstituteDataAdmin)
 router.route('/coursefield/edit').post(fetchCourseFieldNameToEdit)
 router.route('/coursefield/edit/name').post(EditCourseFieldName)
 router.route('/institutes/delete').post(deleteInstituteAndCourses)
-
+router.route('/level-categories').get(fetchAdminCourseLevel);
 
     
 

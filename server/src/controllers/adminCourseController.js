@@ -465,7 +465,24 @@ const deleteInstituteAndCourses = async (req, res) => {
 }
 
 
-// const fetchInstituteDetails=()=>{}
+const fetchAdminCourseLevel=async(req,res)=>{
+    try{
+        const result = await db('slqf_course_level')
+            .select('*');
+
+        if (!result || result.length === 0) {
+            throw new Error('No course levels found');
+        }
+        console.log(result)
+        res.status(StatusCodes.OK).json({course_levels:result});
+
+    }catch(err){
+        console.log(err);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            error: `Error fetching course levels: ${err.message}`
+        });
+    }
+}
 
 
 module.exports={
@@ -485,5 +502,6 @@ module.exports={
     EditInstituteDataAdmin,
     fetchCourseFieldNameToEdit,
     EditCourseFieldName,
-    deleteInstituteAndCourses
+    deleteInstituteAndCourses,
+    fetchAdminCourseLevel
 } 

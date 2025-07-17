@@ -157,11 +157,11 @@ const QuestionContainer = () => {
             console.log("Error sending data to BE", error);
         }
     };
-
-    useEffect(()=>{
-        localStorage.removeItem('careerData');
-        localStorage.removeItem('careerData');
-    },[])
+    useEffect(() => {
+        if (localStorage.getItem('careerData')) {
+            localStorage.removeItem('careerData');
+        }
+    }, []);
 
   if(loading){
     return(

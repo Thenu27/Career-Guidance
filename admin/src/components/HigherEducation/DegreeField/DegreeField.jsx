@@ -109,7 +109,7 @@ const DegreeField =()=>{
                     </div>              
 
                     <div className='career-field-add'>
-                        <button onClick={handleEdit} className='login-btn institute-edit-delete-btn'>Edit Institute</button>
+                        <button onClick={handleEdit} className='login-btn institute-edit-delete-btn'>Edit Field</button>
                         <button onClick={goToAddCourseField}  className='login-btn add-question-btn'>Add Course Field</button>
 
                     </div>  
